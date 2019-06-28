@@ -5,6 +5,7 @@ using UnityEngine;
 public class PC_Camera : MonoBehaviour
 {
     private Camera                  mCam;
+    private PC_Controller           mCont;
 
     private void Start()
     {
@@ -12,10 +13,17 @@ public class PC_Camera : MonoBehaviour
         if(!mCam){
             Debug.Log("No Cam Found");
         }
+
+        mCont = GetComponentInParent<PC_Controller>();
     }
 
     // attach a camera to whatever object you put this in.
     private void Update(){
+        //SetFreeOrientation();
+    }
+
+    private void SetFreeOrientation()
+    {
 
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");

@@ -19,6 +19,7 @@ public class PC_Controller : MonoBehaviour
     public float                    mThrowSpd = 10f;
 
     private Rigidbody               mRigid;
+    private PC_Camera               mCam;
 
     // if false, then we're doing vehicle-style controls
     private bool                    mFPSVision = true;
@@ -27,16 +28,30 @@ public class PC_Controller : MonoBehaviour
     void Start()
     {
         mRigid = GetComponent<Rigidbody>();
-        if(!mRigid){
-            Debug.Log("No Rigidbody");
+        mCam = GetComponentInChildren<PC_Camera>();
+        if(!mCam){
+            Debug.Log("No PC_Camera");
         }
     }
 
     // Update is called once per frame
     void Update()
     {
+        SetRotation();
         HandleMovement();
         HandleThrowing();
+    }
+
+    private void SetRotation()
+    {
+        // want to get rid of y component of the cameras rotation.
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        // rotate camera view around y axis.
+        transform.RotateAround(transform.position, Vector3.up, mouseX);
+        Vector3 xAx = Vector3.Cross(transform.forward, Vector3.up);
+        //transform.RotateAround(transform.position, xAx, mouseY);
     }
 
     private void HandleThrowing()
@@ -49,23 +64,25 @@ public class PC_Controller : MonoBehaviour
 
     private void HandleMovement()
     { 
-        float xVel = 0f;
-        float yVel = 0f;
-        // make our quarterback run around.
+        float sideVel = 0f;
+        float fwdVel = 0f;
+
         if(Input.GetKey(KeyCode.A)){
-            xVel -= mSpd;
+            sideVel -= mSpd;
         }
         if(Input.GetKey(KeyCode.D)){
-            xVel += mSpd;
+            sideVel += mSpd;
         }
         if(Input.GetKey(KeyCode.W)){
-            yVel += mSpd;
+            fwdVel += mSpd;
         }
         if(Input.GetKey(KeyCode.S)){
-            yVel -= mSpd;
+            fwdVel -= mSpd;
         }
 
-        // technically I should normalize the speed, but whatever.
-        mRigid.velocity = new Vector3(xVel, 0f, yVel);
+        Vector3 fwd = transform.forward * fwdVel;
+        Vector3 right = transform.right * sideVel;
+
+        mRigid.velocity = Vector3.Normalize(fwd+right) * mSpd;
     }
 }
