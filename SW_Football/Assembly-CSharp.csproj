@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\AI_MovingTarget.cs" />
      <Compile Include="Assets\Scripts\Audio\AD_Manager.cs" />
      <Compile Include="Assets\Scripts\Audio\AUD_Snd.cs" />
      <Compile Include="Assets\Scripts\DT_Types\SO_Bool.cs" />
