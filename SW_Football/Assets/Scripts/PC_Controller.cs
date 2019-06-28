@@ -14,9 +14,12 @@ public class PC_Controller : MonoBehaviour
 
     [SerializeField]
     private GameObject              mThrowPoint;
+    private float                   mThrowChrg;
+    private float                   mThrowChrgTm = 1f;          // in seconds
+    private bool                    mChargingThrow = false;
 
     public float                    mSpd = 5f;
-    public float                    mThrowSpd = 10f;
+    public float                    mThrowSpd = 100f;
 
     private Rigidbody               mRigid;
     private PC_Camera               mCam;
@@ -29,9 +32,11 @@ public class PC_Controller : MonoBehaviour
     {
         mRigid = GetComponent<Rigidbody>();
         mCam = GetComponentInChildren<PC_Camera>();
-        if(!mCam){
-            Debug.Log("No PC_Camera");
-        }
+
+        mThrowChrg = 0f;
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -56,9 +61,21 @@ public class PC_Controller : MonoBehaviour
 
     private void HandleThrowing()
     {
-        if(Input.GetMouseButtonDown(0)){
-            PROJ_Football clone = Instantiate(PF_Football, mThrowPoint.transform.position, transform.rotation);
-            clone.GetComponent<Rigidbody>().velocity = transform.forward * mThrowSpd;
+        if(Input.GetMouseButton(0)){
+            mChargingThrow = true;
+            mThrowChrg += Time.deltaTime;
+            if(mThrowChrg > mThrowChrgTm){
+                Debug.Log("Limiting Charge");
+                mThrowChrg = mThrowChrgTm;
+            }
+        }
+        if(mChargingThrow){
+            if(Input.GetMouseButtonUp(0)){
+                PROJ_Football clone = Instantiate(PF_Football, mThrowPoint.transform.position, transform.rotation);
+                clone.GetComponent<Rigidbody>().velocity = mCam.transform.forward * mThrowSpd * mThrowChrg;
+                mThrowChrg = 0f;
+                mChargingThrow = false;
+            }
         }
     }
 
