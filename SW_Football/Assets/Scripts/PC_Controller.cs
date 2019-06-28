@@ -15,11 +15,12 @@ public class PC_Controller : MonoBehaviour
     [SerializeField]
     private GameObject              mThrowPoint;
     private float                   mThrowChrg;
-    private float                   mThrowChrgTm = 1f;          // in seconds
     private bool                    mChargingThrow = false;
 
+    [SerializeField]
+    private DT_Player               PlayerData;
+
     public float                    mSpd = 5f;
-    public float                    mThrowSpd = 100f;
 
     private Rigidbody               mRigid;
     private PC_Camera               mCam;
@@ -66,20 +67,20 @@ public class PC_Controller : MonoBehaviour
         if(Input.GetMouseButton(0)){
             mChargingThrow = true;
             mThrowChrg += Time.deltaTime;
-            if(mThrowChrg > mThrowChrgTm){
-                mThrowChrg = mThrowChrgTm;
+            if(mThrowChrg > PlayerData._ThrowChargeTime){
+                mThrowChrg = PlayerData._ThrowChargeTime;
             }
         }
         if(mChargingThrow){
             if(Input.GetMouseButtonUp(0)){
                 PROJ_Football clone = Instantiate(PF_Football, mThrowPoint.transform.position, transform.rotation);
-                clone.GetComponent<Rigidbody>().velocity = mCam.transform.forward * mThrowSpd * mThrowChrg;
+                clone.GetComponent<Rigidbody>().velocity = mCam.transform.forward * PlayerData._ThrowSpd * (mThrowChrg/PlayerData._ThrowChargeTime);
                 mThrowChrg = 0f;
                 mChargingThrow = false;
             }
         }
 
-        mUI.ThrowBar(mThrowChrg);
+        mUI.ThrowBar(mThrowChrg/PlayerData._ThrowChargeTime);
     }
 
     private void HandleMovement()

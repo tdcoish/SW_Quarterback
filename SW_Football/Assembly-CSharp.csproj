@@ -67,6 +67,7 @@
      <Compile Include="Assets\Scripts\PC_Controller.cs" />
      <Compile Include="Assets\Scripts\PC_UI.cs" />
      <Compile Include="Assets\Scripts\PROJ_Football.cs" />
+     <Compile Include="Assets\Scripts\SO_Data\DT_Player.cs" />
      <Compile Include="Assets\Scripts\Utilities\LifeSpan.cs" />
      <Compile Include="Assets\Scripts\Utilities\SingletonBehaviour.cs" />
  <Reference Include="Unity.Timeline.Editor">
