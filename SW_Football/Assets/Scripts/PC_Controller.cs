@@ -66,7 +66,12 @@ public class PC_Controller : MonoBehaviour
     {
         if(Input.GetMouseButton(0)){
             mChargingThrow = true;
-            mThrowChrg += Time.deltaTime;
+            // I'll let them press shift to slowly charge.
+            if(Input.GetKey(KeyCode.LeftShift)){
+                mThrowChrg += Time.deltaTime/PlayerData._ShiftChargeSlow;    
+            }else{
+                mThrowChrg += Time.deltaTime;
+            }
             if(mThrowChrg > PlayerData._ThrowChargeTime){
                 mThrowChrg = PlayerData._ThrowChargeTime;
             }
