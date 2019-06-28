@@ -57,6 +57,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\PC_Camera.cs" />
      <Compile Include="Assets\Scripts\PC_Controller.cs" />
+     <Compile Include="Assets\Scripts\PC_UI.cs" />
      <Compile Include="Assets\Scripts\PROJ_Football.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Programming/SW_Quarterback/SW_Quarterback/SW_Football/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

@@ -112,7 +112,8 @@ MonoBehaviour:
     type: 3}
   mThrowPoint: {fileID: 8715241793636834110}
   mSpd: 5
-  mThrowSpd: 10
+  mThrowSpd: 100
+  mUI: {fileID: 0}
 --- !u!54 &375416082
 Rigidbody:
   m_ObjectHideFlags: 0

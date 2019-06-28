@@ -23,6 +23,8 @@ public class PC_Controller : MonoBehaviour
 
     private Rigidbody               mRigid;
     private PC_Camera               mCam;
+    [SerializeField]
+    private PC_UI                   mUI;
 
     // if false, then we're doing vehicle-style controls
     private bool                    mFPSVision = true;
@@ -65,7 +67,6 @@ public class PC_Controller : MonoBehaviour
             mChargingThrow = true;
             mThrowChrg += Time.deltaTime;
             if(mThrowChrg > mThrowChrgTm){
-                Debug.Log("Limiting Charge");
                 mThrowChrg = mThrowChrgTm;
             }
         }
@@ -77,6 +78,8 @@ public class PC_Controller : MonoBehaviour
                 mChargingThrow = false;
             }
         }
+
+        mUI.ThrowBar(mThrowChrg);
     }
 
     private void HandleMovement()
