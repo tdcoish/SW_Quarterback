@@ -55,10 +55,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Audio\AD_Manager.cs" />
+     <Compile Include="Assets\Scripts\Audio\AUD_Snd.cs" />
+     <Compile Include="Assets\Scripts\DT_Types\SO_Bool.cs" />
+     <Compile Include="Assets\Scripts\DT_Types\SO_Float.cs" />
+     <Compile Include="Assets\Scripts\DT_Types\SO_Int.cs" />
+     <Compile Include="Assets\Scripts\DT_Types\SO_Transform.cs" />
+     <Compile Include="Assets\Scripts\GE_System\GE_Event.cs" />
+     <Compile Include="Assets\Scripts\GE_System\GE_Listener.cs" />
      <Compile Include="Assets\Scripts\PC_Camera.cs" />
      <Compile Include="Assets\Scripts\PC_Controller.cs" />
      <Compile Include="Assets\Scripts\PC_UI.cs" />
      <Compile Include="Assets\Scripts\PROJ_Football.cs" />
+     <Compile Include="Assets\Scripts\Utilities\LifeSpan.cs" />
+     <Compile Include="Assets\Scripts\Utilities\SingletonBehaviour.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Programming/SW_Quarterback/SW_Quarterback/SW_Football/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
