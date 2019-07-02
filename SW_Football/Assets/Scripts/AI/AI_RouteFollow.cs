@@ -13,7 +13,7 @@ public class AI_RouteFollow : MonoBehaviour
 
     private float               mSpd = 2f;
 
-    private AI_Route            mRoute;
+    public AI_Route             mRoute;
     private Vector3             mCurGoal;
 
     [SerializeField]
@@ -51,7 +51,6 @@ public class AI_RouteFollow : MonoBehaviour
             }
             mCurGoal = mRoute.mPath[0] + transform.position;
             Instantiate(mSpotGoal, mCurGoal, transform.rotation);
-            Debug.Log("Goal: " + mCurGoal);
         }
     }
 }
