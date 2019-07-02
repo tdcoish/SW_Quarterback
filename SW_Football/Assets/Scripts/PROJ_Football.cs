@@ -16,6 +16,8 @@ public class PROJ_Football : MonoBehaviour
     void Update()
     {
         Vector3 vel = mRigid.velocity;
-        transform.rotation = Quaternion.LookRotation(vel);
+
+        if(vel != Vector3.zero)
+            transform.rotation = Quaternion.LookRotation(vel);
     }
 }

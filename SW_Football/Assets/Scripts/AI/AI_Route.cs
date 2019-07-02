@@ -13,64 +13,43 @@ public class AI_Route : MonoBehaviour
     // gonna have other things, like which receiver we are, etcetera.
     public string               mNameOfFile = "FakePlay.txt";
 
+    public List<Vector3> mPath;
+
     void Start()
     {
-        Debug.Log("Path: " + Application.dataPath);
-        Debug.Log("Path: " + (Application.dataPath + "/Plays"));
+        mPath = new List<Vector3>();
+
         string path = Application.dataPath + "/Plays/";
 
-        // huh, so apparently this actually works.
-        string[] fileNames = Directory.GetFiles(Application.dataPath + "/Plays");
-        for(int i=0; i<fileNames.Length; i++){
-            Debug.Log("File: " + fileNames[i]);
-        }
-
-        // alright here's where we read in the route.
+        // read in the route from File IO
         string file = File.ReadAllText(path + mNameOfFile);
-        Debug.Log("File Insides: " + file);
 
-        // now we make a list? of all the positions to go to.
-        List<Vector3> mPath = new List<Vector3>();
-        // for the file, when we get to the (, the contents are x, then y)
-        int pos = 0;
-        int breaker = 0;
         while(true){
 
             if(!file.Contains("(") || !file.Contains(")")){
                 break;
             }
             
-            // get the first spot
+            // get the next spot
             string sSpot = StartAndEndString(file, '(', ')');
 
             // break the spot down into its two positions.
             string xSpot = StartAndEndString(sSpot, '(', ',');
             xSpot = xSpot.Replace("(", "");
             xSpot = xSpot.Replace(",", "");
-
             string ySpot = StartAndEndString(sSpot, ',', ')');
             ySpot = ySpot.Replace(",", "");
             ySpot = ySpot.Replace(")", "");
+            //myString = Regex.Replace(myString, @"[;,\t\r ]|[\n]{2}", "\n");
 
             Vector3 vSpot = new Vector3();
             vSpot.x = float.Parse(xSpot);
             vSpot.y = float.Parse(ySpot);
-            Debug.Log("Spot0: " + vSpot.x + "," + vSpot.y);
 
             mPath.Add(vSpot);
-            foreach(var spot in mPath){
-                Debug.Log("PathSpot: " + spot);
-            }
 
-            //myString = Regex.Replace(myString, @"[;,\t\r ]|[\n]{2}", "\n");
-
-
+            // skip ahead to the next position
             file = file.Substring(file.IndexOf(')')+1);
-            Debug.Log("File Now: " + file);
-            
-            breaker++;
-            if(breaker > 3)
-                break;
         }
     }
 
