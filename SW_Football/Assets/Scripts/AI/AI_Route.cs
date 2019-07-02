@@ -49,6 +49,11 @@ public class AI_Route : MonoBehaviour
             // skip ahead to the next position
             sRoute = sRoute.Substring(sRoute.IndexOf(')')+1);
         }
+
+        // now we print out the route 
+        foreach(var spot in mPath){
+            Debug.Log("Spot: " + spot);
+        }
     }
 
     // returns the first substring that starts with first char, and ends with last char.

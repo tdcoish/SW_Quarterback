@@ -28,6 +28,7 @@ public class AI_RouteFollow : MonoBehaviour
             mCurGoal = mRoute.mPath[0] + transform.position;
             mCurGoal.y = 0f;
             Instantiate(mSpotGoal, mCurGoal, transform.rotation);
+            Debug.Log("Goal: " + mCurGoal);
         }
     }
 
@@ -51,6 +52,8 @@ public class AI_RouteFollow : MonoBehaviour
             }
             mCurGoal = mRoute.mPath[0] + transform.position;
             Instantiate(mSpotGoal, mCurGoal, transform.rotation);
+            Debug.Log("Goal: " + mCurGoal);
+
         }
     }
 }

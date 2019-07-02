@@ -15,27 +15,35 @@ public class PLY_Controller : MonoBehaviour
     // for now, set up the receivers in the gameworld first.
     public List<AI_Route>       mRoutes;
 
-    void Start()
+    void Awake()
     {
         string sPlay = File.ReadAllText(Application.dataPath + "/Plays/" + mPlayName);
 
         // now the difference is that we pass off lines to AI_Route, 
         // instead of having the individual route do everything.
+        int plyInd = 0;
+        int strInd = 0;
         while(true)
         {
-            int lBreak = sPlay.IndexOf('\n');
+            if(strInd == sPlay.Length){
+                return;
+            }
+
+            int lBreak = sPlay.IndexOf('\n', strInd);
             string sLine;
             if(lBreak != -1){
                 sLine = sPlay.Substring(0, sPlay.IndexOf('\n'));
+                strInd = sPlay.IndexOf('\n');
             }else{
                 sLine = sPlay;
+                strInd = sPlay.Length;      // will throw error.
             }
 
-            // now pass of the line, to the AI_Route
-            mRoutes[0].ReceiveRoute(sLine);
+            // now pass off the line, to the AI_Route
+            mRoutes[plyInd++].ReceiveRoute(sLine);
 
-            if(!mPlayName.Contains("---")){
-                break;
+            if(plyInd >= mRoutes.Count){
+                return;
             }
         }
     }
