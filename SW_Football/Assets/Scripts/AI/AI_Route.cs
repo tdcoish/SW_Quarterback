@@ -13,12 +13,10 @@ public class AI_Route : MonoBehaviour
     // gonna have other things, like which receiver we are, etcetera.
     public string               mNameOfFile = "FakePlay.txt";
 
-    public List<Vector3> mPath;
+    public List<Vector3> mPath = new List<Vector3>();
 
-    void Start()
+    void Awake()
     {
-        mPath = new List<Vector3>();
-
         string path = Application.dataPath + "/Plays/";
 
         // read in the route from File IO
@@ -44,13 +42,15 @@ public class AI_Route : MonoBehaviour
 
             Vector3 vSpot = new Vector3();
             vSpot.x = float.Parse(xSpot);
-            vSpot.y = float.Parse(ySpot);
+            vSpot.z = float.Parse(ySpot);           // needs to be z or they'll try to move upwards.
 
             mPath.Add(vSpot);
 
             // skip ahead to the next position
             file = file.Substring(file.IndexOf(')')+1);
         }
+
+        // Debug.Log("Path: " + mPath[0]);
     }
 
     // returns the first substring that starts with first char, and ends with last char.
