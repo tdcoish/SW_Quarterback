@@ -10,26 +10,26 @@ using System.Text.RegularExpressions;
 public class AI_Route : MonoBehaviour
 {
 
-    // gonna have other things, like which receiver we are, etcetera.
-    public string               mNameOfFile = "FakePlay.txt";
-
     public List<Vector3> mPath = new List<Vector3>();
 
     void Awake()
     {
-        string path = Application.dataPath + "/Plays/";
 
-        // read in the route from File IO
-        string file = File.ReadAllText(path + mNameOfFile);
+    }
 
+    /****************************************************************************************
+    Takes a string with data for the route, converts it to actual positions.
+    ************************************************************************************** */
+    public void ReceiveRoute(string sRoute)
+    {
         while(true){
 
-            if(!file.Contains("(") || !file.Contains(")")){
+            if(!sRoute.Contains("(") || !sRoute.Contains(")")){
                 break;
             }
             
             // get the next spot
-            string sSpot = StartAndEndString(file, '(', ')');
+            string sSpot = StartAndEndString(sRoute, '(', ')');
 
             // break the spot down into its two positions.
             string xSpot = StartAndEndString(sSpot, '(', ',');
@@ -47,10 +47,8 @@ public class AI_Route : MonoBehaviour
             mPath.Add(vSpot);
 
             // skip ahead to the next position
-            file = file.Substring(file.IndexOf(')')+1);
+            sRoute = sRoute.Substring(sRoute.IndexOf(')')+1);
         }
-
-        // Debug.Log("Path: " + mPath[0]);
     }
 
     // returns the first substring that starts with first char, and ends with last char.
