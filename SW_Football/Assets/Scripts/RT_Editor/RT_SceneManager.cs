@@ -25,7 +25,6 @@ public class RT_SceneManager : MonoBehaviour
         
         string sLine = string.Empty;
         while((sLine = sReader.ReadLine()) != null){
-            Debug.Log("Line: " + sLine);
             // use this line to set up our players.
             Vector3 posOnField = mFootballField.transform.position;
             string sSpot = UT_Strings.StartAndEndString(sLine, '[', ']');
@@ -33,7 +32,6 @@ public class RT_SceneManager : MonoBehaviour
             sSpotX = UT_Strings.DeleteMultipleChars(sSpotX, "[,");
             string sSpotZ = UT_Strings.StartAndEndString(sSpot, ',', ']');
             sSpotZ = UT_Strings.DeleteMultipleChars(sSpotZ, ",]");
-            Debug.Log("X: " + sSpotX + "\nY: " + sSpotZ);
 
             // now we place the player on the screen according to the width and height.
             float unitsToPixel = 0.01f;     // unity default
@@ -41,7 +39,9 @@ public class RT_SceneManager : MonoBehaviour
             posOnField.x += float.Parse(sSpotX)*unitsToPixel * fieldYardsToPixels;
             posOnField.y += float.Parse(sSpotZ) * unitsToPixel * fieldYardsToPixels;
 
-            Instantiate(RefPlayer, posOnField, mFootballField.transform.rotation);
+            RT_Player ply = Instantiate(RefPlayer, posOnField, mFootballField.transform.rotation);
+            ply.mTag = sLine.Substring(0, sLine.IndexOf(':'));
+            Debug.Log("Tag: " + ply.mTag);
         }
 
     }
