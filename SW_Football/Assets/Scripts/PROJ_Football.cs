@@ -17,7 +17,10 @@ public class PROJ_Football : MonoBehaviour
     {
         Vector3 vel = mRigid.velocity;
 
-        if(vel != Vector3.zero)
+        if(vel != Vector3.zero){
             transform.rotation = Quaternion.LookRotation(vel);
+            vel *= 0.999f;
+            mRigid.velocity = vel;
+        }
     }
 }

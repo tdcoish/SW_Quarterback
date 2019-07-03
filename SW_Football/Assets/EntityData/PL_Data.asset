@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: PL_Data
   m_EditorClassIdentifier: 
   _ThrowChargeTime: 0.5
-  _ThrowSpd: 30
+  _ThrowSpd: 25
   _ShiftChargeSlow: 2
