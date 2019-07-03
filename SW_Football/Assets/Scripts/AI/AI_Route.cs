@@ -11,6 +11,7 @@ public class AI_Route : MonoBehaviour
 {
 
     public List<Vector3> mPath = new List<Vector3>();
+    public Vector3          mStartPos;
 
     void Awake()
     {
@@ -20,8 +21,9 @@ public class AI_Route : MonoBehaviour
     /****************************************************************************************
     Takes a string with data for the route, converts it to actual positions.
     ************************************************************************************** */
-    public void ReceiveRoute(string sRoute)
+    public void ReceiveRoute(string sRoute, Vector3 snapPoint)
     {
+        string sCopy = sRoute;
         while(true){
 
             if(!sRoute.Contains("(") || !sRoute.Contains(")")){
@@ -29,20 +31,20 @@ public class AI_Route : MonoBehaviour
             }
             
             // get the next spot
-            string sSpot = StartAndEndString(sRoute, '(', ')');
+            string sNode = StartAndEndString(sRoute, '(', ')');
 
             // break the spot down into its two positions.
-            string xSpot = StartAndEndString(sSpot, '(', ',');
-            xSpot = xSpot.Replace("(", "");
-            xSpot = xSpot.Replace(",", "");
-            string ySpot = StartAndEndString(sSpot, ',', ')');
-            ySpot = ySpot.Replace(",", "");
-            ySpot = ySpot.Replace(")", "");
+            string nodeX = StartAndEndString(sNode, '(', ',');
+            nodeX = nodeX.Replace("(", "");
+            nodeX = nodeX.Replace(",", "");
+            string nodeY = StartAndEndString(sNode, ',', ')');
+            nodeY = nodeY.Replace(",", "");
+            nodeY = nodeY.Replace(")", "");
             //myString = Regex.Replace(myString, @"[;,\t\r ]|[\n]{2}", "\n");
 
             Vector3 vSpot = new Vector3();
-            vSpot.x = float.Parse(xSpot);
-            vSpot.z = float.Parse(ySpot);           // needs to be z or they'll try to move upwards.
+            vSpot.x = float.Parse(nodeX);
+            vSpot.z = float.Parse(nodeY);           // needs to be z or they'll try to move upwards.
 
             mPath.Add(vSpot);
 
@@ -51,9 +53,28 @@ public class AI_Route : MonoBehaviour
         }
 
         // now we print out the route 
-        foreach(var spot in mPath){
-            Debug.Log("Spot: " + spot);
+        // foreach(var spot in mPath){
+        //     Debug.Log("Spot: " + spot);
+        // }
+
+        // now we set the starting position, relative to the "snap point" passed in.
+        if(!sCopy.Contains("[") || !sCopy.Contains("]")){
+            Debug.Log("No start position found\n");
+            return;
         }
+        
+        string sSpot = StartAndEndString(sCopy, '[', ']');
+        string xSpot = StartAndEndString(sSpot, '[', ',');
+        xSpot = xSpot.Replace("[", "");
+        xSpot = xSpot.Replace(",", "");
+        string ySpot = StartAndEndString(sSpot, ',', ']');
+        ySpot = ySpot.Replace(",", "");
+        ySpot = ySpot.Replace("]", "");
+
+        mStartPos = transform.position;
+        mStartPos.x = float.Parse(xSpot) + snapPoint.x;
+        mStartPos.z = float.Parse(ySpot) + snapPoint.z;
+        transform.position = mStartPos;
     }
 
     // returns the first substring that starts with first char, and ends with last char.

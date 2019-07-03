@@ -9,11 +9,14 @@ using System.IO;
 
 public class PLY_Controller : MonoBehaviour
 {
-    public string               mPlayName = "FakePlay.txt";
+    public string               mPlayName = "DefaultPlay.txt";
 
     // AI_Route now gets passed in a string that it converts to a route.
     // for now, set up the receivers in the gameworld first.
     public List<AI_Route>       mRoutes;
+
+    [SerializeField]
+    private PLY_SnapSpot        mSnapSpot;
 
     void Awake()
     {
@@ -41,7 +44,7 @@ public class PLY_Controller : MonoBehaviour
             }
 
             // now pass off the line, to the AI_Route
-            mRoutes[plyInd++].ReceiveRoute(sLine);
+            mRoutes[plyInd++].ReceiveRoute(sLine, mSnapSpot.transform.position);
 
             // have to skip past the '\n' key
             strInd++;
