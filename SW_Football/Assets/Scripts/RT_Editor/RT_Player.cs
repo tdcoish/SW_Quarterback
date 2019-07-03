@@ -37,10 +37,4 @@ public class RT_Player : MonoBehaviour
         transform.position = Vector2.Lerp(transform.position, pos, 0.1f);
         Debug.Log("Mouse Pos: " + transform.position);
     }
-
-    void OnMouseDown()
-    {
-        // although we need to have a way of knowing when they click off of us.
-        mIsChosen = true;
-    }
 }

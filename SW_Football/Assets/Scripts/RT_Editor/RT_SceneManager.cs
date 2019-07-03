@@ -18,7 +18,7 @@ public class RT_SceneManager : MonoBehaviour
     private string              mDefaultPlay = "DefaultPlay.txt";
 
     // Load in play, then shove some RT_Player's into the football field
-    void Start()
+    void Awake()
     {
         // gonna try and use a streamreader 
         StreamReader sReader = new StreamReader(Application.dataPath+"/Plays/"+mDefaultPlay);
