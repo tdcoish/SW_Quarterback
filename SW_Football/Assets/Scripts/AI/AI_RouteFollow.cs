@@ -11,7 +11,7 @@ public class AI_RouteFollow : MonoBehaviour
 {
     private Rigidbody           mRigid;
 
-    private float               mSpd = 2f;
+    public float                mSpd = 2f;
 
     public AI_Route             mRoute;
     private Vector3             mCurGoal;

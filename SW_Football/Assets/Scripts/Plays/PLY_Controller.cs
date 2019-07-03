@@ -30,17 +30,21 @@ public class PLY_Controller : MonoBehaviour
             }
 
             int lBreak = sPlay.IndexOf('\n', strInd);
+            Debug.Log("linechar: " + lBreak);
             string sLine;
             if(lBreak != -1){
-                sLine = sPlay.Substring(0, sPlay.IndexOf('\n'));
+                sLine = sPlay.Substring(strInd, sPlay.IndexOf('\n', strInd));
                 strInd = sPlay.IndexOf('\n');
             }else{
-                sLine = sPlay;
+                sLine = sPlay.Substring(strInd, sPlay.Length-strInd);
                 strInd = sPlay.Length;      // will throw error.
             }
 
             // now pass off the line, to the AI_Route
             mRoutes[plyInd++].ReceiveRoute(sLine);
+
+            // have to skip past the '\n' key
+            strInd++;
 
             if(plyInd >= mRoutes.Count){
                 return;

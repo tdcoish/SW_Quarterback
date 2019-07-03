@@ -1,2 +1,2 @@
-WR1: (0,10)(5,0)(0,10) 		// bit of an odd route, going forward 10, right 5, then forward 10 again.
-WR2: (0,10)(5,0)(0,10) 		// bit of an odd route, going forward 10, right 5, then forward 10 again.
+WR1: (0,12)(5,0)(0,10) 		// bit of an odd route, going forward 10, right 5, then forward 10 again.
+WR2: (0,10)(15,0)(0,30) 		// bit of an odd route, going forward 10, right 5, then forward 10 again.

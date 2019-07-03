@@ -17,7 +17,7 @@ public class RT_Mouse : MonoBehaviour
         pos.z = 100f;
         transform.position = Camera.main.ScreenToWorldPoint(pos);
 
-        Debug.Log("Pos: " + transform.position);
+        // Debug.Log("Pos: " + transform.position);
 
     }
 }

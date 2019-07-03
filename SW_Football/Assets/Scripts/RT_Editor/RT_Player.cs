@@ -21,7 +21,7 @@ public class RT_Player : MonoBehaviour
         mClickedBar.SetActive(mIsChosen);
 
         if(mIsChosen){
-            FollowMouse();
+            //FollowMouse();
         }
     }
 

@@ -74,7 +74,9 @@
      <Compile Include="Assets\Scripts\PROJ_Football.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_ClickHandler.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_Mouse.cs" />
+     <Compile Include="Assets\Scripts\RT_Editor\RT_NewRoute.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_Player.cs" />
+     <Compile Include="Assets\Scripts\RT_Editor\RT_PlayerManager.cs" />
      <Compile Include="Assets\Scripts\SO_Data\DT_Player.cs" />
      <Compile Include="Assets\Scripts\TEMP_FileStoring.cs" />
      <Compile Include="Assets\Scripts\Utilities\LifeSpan.cs" />
