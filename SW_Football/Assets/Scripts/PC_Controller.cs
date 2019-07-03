@@ -27,8 +27,14 @@ public class PC_Controller : MonoBehaviour
     [SerializeField]
     private PC_UI                   mUI;
 
+    public GE_Event                 GE_QB_StartThrow;
+    public GE_Event                 GE_QB_ReleaseBall;
+
     // if false, then we're doing vehicle-style controls
     private bool                    mFPSVision = true;
+
+    [SerializeField]
+    private SO_Transform            RefPlayerPos;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +54,9 @@ public class PC_Controller : MonoBehaviour
         SetRotation();
         HandleMovement();
         HandleThrowing();
+
+        // so everyone knows our position.
+        RefPlayerPos.Val = transform;
     }
 
     private void SetRotation()
@@ -65,6 +74,9 @@ public class PC_Controller : MonoBehaviour
     private void HandleThrowing()
     {
         if(Input.GetMouseButton(0)){
+            if(!mChargingThrow){
+                GE_QB_StartThrow.Raise(null);
+            }
             mChargingThrow = true;
             // I'll let them press shift to slowly charge.
             if(Input.GetKey(KeyCode.LeftShift)){
@@ -82,6 +94,8 @@ public class PC_Controller : MonoBehaviour
                 clone.GetComponent<Rigidbody>().velocity = mCam.transform.forward * PlayerData._ThrowSpd * (mThrowChrg/PlayerData._ThrowChargeTime);
                 mThrowChrg = 0f;
                 mChargingThrow = false;
+
+                GE_QB_ReleaseBall.Raise(null);
             }
         }
 

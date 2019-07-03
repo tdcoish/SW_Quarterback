@@ -1,5 +1,5 @@
 sceneSetups:
-- path: C:/Programming/GameJams/wk_2dgame/Assets/Scenes/LVL_Playground.unity
+- path: Assets/Scenes/TestPlay.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

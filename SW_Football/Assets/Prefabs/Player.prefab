@@ -144,6 +144,9 @@ MonoBehaviour:
   PlayerData: {fileID: 11400000, guid: 5c6c54f053fe6b84c9d650708e1a93cd, type: 2}
   mSpd: 5
   mUI: {fileID: 0}
+  GE_QB_StartThrow: {fileID: 11400000, guid: 40d201a536cb4dc46b060eaa4b32bff1, type: 2}
+  GE_QB_ReleaseBall: {fileID: 11400000, guid: cc068b33e2480924485591ee46966c8a, type: 2}
+  RefPlayerPos: {fileID: 11400000, guid: aa0cdd5c33f3fed4db456a4cda6b4b00, type: 2}
 --- !u!54 &375416082
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -287,3 +290,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0adec7f0fbb909249b7b56b28c3d304a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RefPlayerCamera: {fileID: 11400000, guid: cef3c625c3251a14094e7754dc31409e, type: 2}
