@@ -37,6 +37,17 @@ public static class UT_Strings
         return s.Substring(startPos, (endPos-startPos + 1));
     }
 
+    public static string DeleteMultipleChars(string s, string c)
+    {
+        string copy = s.Substring(0);
+        for(int i=0; i<c.Length; i++)
+        {
+            copy = copy.Replace(c.Substring(i, 1), "");
+        }
+
+        return copy;
+    }
+
     // Work in progress, not called anywhere yet.
     public static string ReplaceMultiple(string s, string c, string replacer)
     {

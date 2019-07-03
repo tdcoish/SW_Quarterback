@@ -28,16 +28,21 @@ public class RT_SceneManager : MonoBehaviour
             Debug.Log("Line: " + sLine);
             // use this line to set up our players.
             Vector3 posOnField = mFootballField.transform.position;
-            Instantiate(RefPlayer, mFootballField.transform.position, mFootballField.transform.rotation);
-        }
-        
+            string sSpot = UT_Strings.StartAndEndString(sLine, '[', ']');
+            string sSpotX = UT_Strings.StartAndEndString(sSpot, '[', ',');
+            sSpotX = UT_Strings.DeleteMultipleChars(sSpotX, "[,");
+            string sSpotZ = UT_Strings.StartAndEndString(sSpot, ',', ']');
+            sSpotZ = UT_Strings.DeleteMultipleChars(sSpotZ, ",]");
+            Debug.Log("X: " + sSpotX + "\nY: " + sSpotZ);
 
-        // interesting, by the time we get to here, the streamreader is "finished"
-        // lines 2-4 show how to get back to the beginning.
-        Debug.Log(sReader.ReadToEnd());
-        sReader.DiscardBufferedData();
-        sReader.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
-        Debug.Log(sReader.ReadToEnd());
+            // now we place the player on the screen according to the width and height.
+            float unitsToPixel = 0.01f;     // unity default
+            float fieldYardsToPixels = 10f;
+            posOnField.x += float.Parse(sSpotX)*unitsToPixel * fieldYardsToPixels;
+            posOnField.y += float.Parse(sSpotZ) * unitsToPixel * fieldYardsToPixels;
+
+            Instantiate(RefPlayer, posOnField, mFootballField.transform.rotation);
+        }
 
     }
 
