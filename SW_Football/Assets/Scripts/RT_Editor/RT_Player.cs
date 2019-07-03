@@ -10,6 +10,8 @@ public class RT_Player : MonoBehaviour
 
     public bool             mIsChosen = false;
 
+    public string           mTag = "WR1";
+
     void Start()
     {
     }

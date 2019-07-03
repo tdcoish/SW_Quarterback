@@ -78,10 +78,12 @@
      <Compile Include="Assets\Scripts\RT_Editor\RT_NewRoute.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_Player.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_PlayerManager.cs" />
+     <Compile Include="Assets\Scripts\RT_Editor\RT_SceneManager.cs" />
      <Compile Include="Assets\Scripts\SO_Data\DT_Player.cs" />
      <Compile Include="Assets\Scripts\TEMP_FileStoring.cs" />
      <Compile Include="Assets\Scripts\Utilities\LifeSpan.cs" />
      <Compile Include="Assets\Scripts\Utilities\SingletonBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Utilities\UT_Strings.cs" />
      <None Include="Assets\Plays\FakePlay.txt" />
      <None Include="Assets\Plays\OtherFakePlay.txt" />
      <None Include="Assets\Plays\DefaultPlay.txt" />

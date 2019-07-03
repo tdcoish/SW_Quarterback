@@ -150,7 +150,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 0.38731253, g: 1, b: 0, a: 1}
   m_FlipX: 0
@@ -176,6 +176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mClickedBar: {fileID: 1230206527}
   mIsChosen: 0
+  mTag: WR1
 --- !u!50 &2146336525
 Rigidbody2D:
   serializedVersion: 4

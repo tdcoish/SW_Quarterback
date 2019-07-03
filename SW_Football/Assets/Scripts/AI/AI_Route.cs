@@ -63,11 +63,11 @@ public class AI_Route : MonoBehaviour
             return;
         }
         
-        string sSpot = StartAndEndString(sCopy, '[', ']');
-        string xSpot = StartAndEndString(sSpot, '[', ',');
+        string sSpot = UT_Strings.StartAndEndString(sCopy, '[', ']');
+        string xSpot = UT_Strings.StartAndEndString(sSpot, '[', ',');
         xSpot = xSpot.Replace("[", "");
         xSpot = xSpot.Replace(",", "");
-        string ySpot = StartAndEndString(sSpot, ',', ']');
+        string ySpot = UT_Strings.StartAndEndString(sSpot, ',', ']');
         ySpot = ySpot.Replace(",", "");
         ySpot = ySpot.Replace("]", "");
 
