@@ -1,6 +1,6 @@
-WR1: (0,5)(-5,5)(0,15)(-5,-10) 	LINEUP: [-20, 0]	// bit of an odd route, going forward 10, right 5, then forward 10 again.
-WR2: (0,10)(15,0)(0,50) 	LINEUP: [10, -1]	
-WR3: (0,20)(-5,5)(0, -5)    LINEUP: [20, 0]
+WR1: (0,5)(-5,5)(0,15)(-5,-10) 	LINEUP: [-20,0]	// bit of an odd route, going forward 10, right 5, then forward 10 again.
+WR2: (0,10)(15,0)(0,50) 	LINEUP: [10,-1]	
+WR3: (0,20)(-5,5)(0,-5)    LINEUP: [20,0]
 OL1: ()	LINEUP: [-5,-0.5]
 OL2: () LINEUP: [0,0]
 OL3: () LINEUP: [5,-0.5]

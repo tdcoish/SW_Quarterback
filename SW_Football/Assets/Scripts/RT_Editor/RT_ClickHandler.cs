@@ -31,33 +31,17 @@ public class RT_ClickHandler : MonoBehaviour
                 rPlayers[i].mIsChosen = false;
             }
 
-            Debug.Log("here");
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
             
             if(hit.collider != null)
             {
-                Debug.Log ("Target Position: " + hit.collider.gameObject.transform.position);
+                // Debug.Log ("Target Position: " + hit.collider.gameObject.transform.position);
                 if(hit.collider.GetComponent<RT_Player>() != null){
-                    Debug.Log("Hit RT_Player");
                     hit.collider.GetComponent<RT_Player>().mIsChosen = true;
                 }
             }
 
         }
 
-    }
-
-    /// <summary>
-    /// Cast a ray from the mouse to the target object
-    /// Then sets the target position of the ability to that object.
-    /// </summary>
-    public void ScreenMouseRay()
-    {
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = 5f;
- 
-        Vector2 v = Camera.main.ScreenToWorldPoint(mousePosition);
- 
-        Collider2D[] col = Physics2D.OverlapPointAll(v);
     }
 }
