@@ -13,28 +13,42 @@ public class PLY_Controller : MonoBehaviour
 
     // AI_Route now gets passed in a string that it converts to a route.
     // for now, set up the receivers in the gameworld first.
+    public GameObject           RefAthlete;
     public List<AI_Route>       mRoutes;
+
+    public GameObject           RefSnapSpot;
 
     [SerializeField]
     private PLY_SnapSpot        mSnapSpot;
 
     void Awake()
     {
-        // now the difference is that we pass off lines to AI_Route, 
-        // instead of having the individual route do everything.
-        int plyInd = 0;
+        SetUpPlay();
+    }
 
+    private void SetUpPlay()
+    {
+        //if we've already instantiated players, delete them
+        for(int i=0; i<mRoutes.Count; i++){
+            Destroy(mRoutes[i].gameObject);
+        }
+        mRoutes = new List<AI_Route>();
+         
         StreamReader sReader = new StreamReader(Application.dataPath +"/Plays/"+mPlayName);
         string sLine = string.Empty;
         while((sLine = sReader.ReadLine()) != null)
         {
-            Debug.Log("Line: " + sLine);
-            mRoutes[plyInd++].ReceiveRoute(sLine, mSnapSpot.transform.position);
+            var clone = Instantiate(RefAthlete, transform.position, transform.rotation);
+            clone.GetComponent<AI_Route>().ReceiveRoute(sLine, mSnapSpot.transform.position);
+            mRoutes.Add(clone.GetComponent<AI_Route>());
         }
     }
 
+    // If they press i, restart the play.
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.I)){
+            SetUpPlay();
+        }
     }
 }

@@ -81,6 +81,7 @@
      <Compile Include="Assets\Scripts\RT_Editor\RT_SceneManager.cs" />
      <Compile Include="Assets\Scripts\SO_Data\DT_Player.cs" />
      <Compile Include="Assets\Scripts\TEMP_FileStoring.cs" />
+     <Compile Include="Assets\Scripts\Utilities\GM_Grounded.cs" />
      <Compile Include="Assets\Scripts\Utilities\LifeSpan.cs" />
      <Compile Include="Assets\Scripts\Utilities\SingletonBehaviour.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_Strings.cs" />

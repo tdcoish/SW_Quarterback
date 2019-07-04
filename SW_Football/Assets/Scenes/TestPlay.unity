@@ -560,10 +560,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mPlayName: FakePlay.txt
+  RefAthlete: {fileID: 7233204231284589399, guid: c55640fa166094248a182340bed2a7a0,
+    type: 3}
   mRoutes:
   - {fileID: 1791455132}
   - {fileID: 188555347}
   - {fileID: 756790051}
+  RefSnapSpot: {fileID: 0}
   mSnapSpot: {fileID: 731942329}
 --- !u!4 &975319591
 Transform:
@@ -1098,7 +1101,7 @@ PrefabInstance:
     - target: {fileID: 8715241792742129380, guid: 3fcb15e83f59e7544a78d44040e4602c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.472725
+      value: 24.35
       objectReference: {fileID: 0}
     - target: {fileID: 8715241792742129380, guid: 3fcb15e83f59e7544a78d44040e4602c,
         type: 3}
@@ -1433,16 +1436,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2594927262255425537, guid: c55640fa166094248a182340bed2a7a0,
-        type: 3}
-      propertyPath: mSpotGoal
-      value: 
-      objectReference: {fileID: 1723624529}
-    - target: {fileID: 2594927262255425537, guid: c55640fa166094248a182340bed2a7a0,
-        type: 3}
-      propertyPath: mSpd
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c55640fa166094248a182340bed2a7a0, type: 3}
 --- !u!114 &1791455132 stripped
@@ -1610,7 +1603,7 @@ PrefabInstance:
     - target: {fileID: 6820216918020583805, guid: 17359fa8ef9d8fb4d83a3dc8a8847406,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.06
+      value: 24.23
       objectReference: {fileID: 0}
     - target: {fileID: 6820216918020583805, guid: 17359fa8ef9d8fb4d83a3dc8a8847406,
         type: 3}

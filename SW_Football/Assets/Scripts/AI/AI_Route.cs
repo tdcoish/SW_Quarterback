@@ -9,8 +9,7 @@ using System.Text.RegularExpressions;
 
 public class AI_Route : MonoBehaviour
 {
-
-    public List<Vector3> mPath = new List<Vector3>();
+    public List<Vector3>    mPath;
     public Vector3          mStartPos;
 
     void Awake()
@@ -23,6 +22,8 @@ public class AI_Route : MonoBehaviour
     ************************************************************************************** */
     public void ReceiveRoute(string sRoute, Vector3 snapPoint)
     {
+        mPath = new List<Vector3>();
+        
         string sCopy = sRoute;
         while(true){
 
