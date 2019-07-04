@@ -16,8 +16,6 @@ public class PLY_Controller : MonoBehaviour
     public GameObject           RefAthlete;
     public List<AI_Route>       mRoutes;
 
-    public GameObject           RefSnapSpot;
-
     [SerializeField]
     private PLY_SnapSpot        mSnapSpot;
 

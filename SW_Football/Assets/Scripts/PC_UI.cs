@@ -5,6 +5,7 @@ public class PC_UI : MonoBehaviour
 {
 
     public Image            mBar;
+    public Text             mScoreTxt;
 
     // if the pc_controller is winding up.
     private bool            mIsWindingUp;
@@ -18,6 +19,8 @@ public class PC_UI : MonoBehaviour
     private SO_Transform        RefPlayerCamera;
 
     private float               chargePct;
+
+    private float               score = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +54,11 @@ public class PC_UI : MonoBehaviour
 
     public void QB_ThrewBall(){
         mIsWindingUp = false;
+    }
+
+    public void REC_TargetHit(){
+        score += 100f;
+        mScoreTxt.text = "Score: " + score;
     }
     
 }
