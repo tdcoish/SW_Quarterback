@@ -29,12 +29,15 @@ public class PC_Controller : MonoBehaviour
 
     public GE_Event                 GE_QB_StartThrow;
     public GE_Event                 GE_QB_ReleaseBall;
+    public GE_Event                 GE_QB_StopThrow;
 
     // if false, then we're doing vehicle-style controls
     private bool                    mFPSVision = true;
 
     [SerializeField]
     private SO_Transform            RefPlayerPos;
+
+    private bool                    mCanThrow = true;
 
     // Start is called before the first frame update
     void Start()
@@ -73,30 +76,47 @@ public class PC_Controller : MonoBehaviour
 
     private void HandleThrowing()
     {
-        if(Input.GetMouseButton(0)){
-            if(!mChargingThrow){
-                GE_QB_StartThrow.Raise(null);
-            }
-            mChargingThrow = true;
-            // I'll let them press shift to slowly charge.
-            if(Input.GetKey(KeyCode.LeftShift)){
-                mThrowChrg += Time.deltaTime/PlayerData._ShiftChargeSlow;    
-            }else{
-                mThrowChrg += Time.deltaTime;
-            }
-            if(mThrowChrg > PlayerData._ThrowChargeTime){
-                mThrowChrg = PlayerData._ThrowChargeTime;
-            }
-        }
-        if(mChargingThrow){
-            if(Input.GetMouseButtonUp(0)){
-                PROJ_Football clone = Instantiate(PF_Football, mThrowPoint.transform.position, transform.rotation);
-                clone.GetComponent<Rigidbody>().velocity = mCam.transform.forward * PlayerData._ThrowSpd * (mThrowChrg/PlayerData._ThrowChargeTime);
-                mThrowChrg = 0f;
-                mChargingThrow = false;
+        if(mCanThrow){
 
-                GE_QB_ReleaseBall.Raise(null);
+            // RMB stops throw
+            if(Input.GetMouseButton(1)){
+                GE_QB_StopThrow.Raise(null);
+                return;
             }
+
+            if(Input.GetMouseButton(0)){
+                if(!mChargingThrow){
+                    GE_QB_StartThrow.Raise(null);
+                }
+                mChargingThrow = true;
+                // I'll let them press shift to slowly charge.
+                if(Input.GetKey(KeyCode.LeftShift)){
+                    mThrowChrg += Time.deltaTime/PlayerData._ShiftChargeSlow;    
+                }else{
+                    mThrowChrg += Time.deltaTime;
+                }
+                if(mThrowChrg > PlayerData._ThrowChargeTime){
+                    mThrowChrg = PlayerData._ThrowChargeTime;
+                }
+            }
+
+            if(mChargingThrow){
+                // if they hold down the shift key, then we make the charge go down.
+                if(Input.GetKey(KeyCode.LeftControl)){
+                    mThrowChrg -= Time.deltaTime;
+                    if(mThrowChrg < 0f) mThrowChrg = 0f;
+                }
+
+                if(Input.GetMouseButtonUp(0)){
+                    PROJ_Football clone = Instantiate(PF_Football, mThrowPoint.transform.position, transform.rotation);
+                    clone.GetComponent<Rigidbody>().velocity = mCam.transform.forward * PlayerData._ThrowSpd * (mThrowChrg/PlayerData._ThrowChargeTime);
+                    mThrowChrg = 0f;
+                    mChargingThrow = false;
+
+                    GE_QB_ReleaseBall.Raise(null);
+                }
+            }
+
         }
 
         mUI.ThrowBar(mThrowChrg/PlayerData._ThrowChargeTime);
@@ -124,5 +144,19 @@ public class PC_Controller : MonoBehaviour
         Vector3 right = transform.right * sideVel;
 
         mRigid.velocity = Vector3.Normalize(fwd+right) * mSpd;
+    }
+
+    // They clutch the ball and decide not to throw.
+    public void ThrowStopped()
+    {
+        mCanThrow = false;
+        mChargingThrow = false;
+        mThrowChrg = 0f;
+        Invoke("CanThrowAgain", 1.0f);
+    }
+
+    private void CanThrowAgain()
+    {
+        mCanThrow = true;
     }
 }

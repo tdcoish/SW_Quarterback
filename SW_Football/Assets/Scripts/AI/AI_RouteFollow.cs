@@ -27,7 +27,6 @@ public class AI_RouteFollow : MonoBehaviour
         if(mRoute.mPath.Count != 0){
             mCurGoal = mRoute.mPath[0] + transform.position;
             mCurGoal.y = 0f;
-            Debug.Log("Goal: " + mCurGoal);
             Instantiate(mPathMarker, mCurGoal, transform.rotation);
         }
         // ground entity.
@@ -57,7 +56,6 @@ public class AI_RouteFollow : MonoBehaviour
                 return;
             }
             mCurGoal = mRoute.mPath[0] + transform.position;
-            Debug.Log("Goal: " + mCurGoal);
             Instantiate(mPathMarker, mCurGoal, transform.rotation);
         }
     }

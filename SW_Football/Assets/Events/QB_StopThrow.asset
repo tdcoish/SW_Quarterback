@@ -9,9 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb1fa5b5e157ffe4e9c2a1f8ebee2d96, type: 3}
-  m_Name: PL_Data
+  m_Script: {fileID: 11500000, guid: cb7d73b5aeea7cd409e1098ca722132d, type: 3}
+  m_Name: QB_StopThrow
   m_EditorClassIdentifier: 
-  _ThrowChargeTime: 1
-  _ThrowSpd: 26
-  _ShiftChargeSlow: 2
