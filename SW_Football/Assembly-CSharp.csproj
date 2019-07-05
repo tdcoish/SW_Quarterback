@@ -87,10 +87,12 @@
      <Compile Include="Assets\Scripts\Utilities\LifeSpan.cs" />
      <Compile Include="Assets\Scripts\Utilities\SingletonBehaviour.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_Strings.cs" />
+     <None Include="Assets\Plays\stick.txt" />
      <None Include="Assets\Plays\FakePlay.txt" />
      <None Include="Assets\Plays\OtherFakePlay.txt" />
      <None Include="Assets\Plays\play01.txt" />
      <None Include="Assets\Plays\DefaultPlay.txt" />
+     <None Include="Assets\Plays\cross.txt" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Programming/SW_Quarterback/SW_Quarterback/SW_Football/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

@@ -280,6 +280,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mSpd: 4
   mRoute: {fileID: 0}
+  mPathMarker: {fileID: 1537644790932588708, guid: 74fac868df438d742a422e83d09399af,
+    type: 3}
 --- !u!114 &1791455132
 MonoBehaviour:
   m_ObjectHideFlags: 0

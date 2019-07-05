@@ -16,6 +16,9 @@ public class AI_RouteFollow : MonoBehaviour
     public AI_Route             mRoute;
     private Vector3             mCurGoal;
 
+    [SerializeField]
+    private GameObject          mPathMarker;
+
     void Start()
     {
         mRigid = GetComponent<Rigidbody>();  
@@ -25,6 +28,7 @@ public class AI_RouteFollow : MonoBehaviour
             mCurGoal = mRoute.mPath[0] + transform.position;
             mCurGoal.y = 0f;
             Debug.Log("Goal: " + mCurGoal);
+            Instantiate(mPathMarker, mCurGoal, transform.rotation);
         }
         // ground entity.
         GM_Grounded grounder = GetComponentInChildren<GM_Grounded>();
@@ -54,7 +58,7 @@ public class AI_RouteFollow : MonoBehaviour
             }
             mCurGoal = mRoute.mPath[0] + transform.position;
             Debug.Log("Goal: " + mCurGoal);
-
+            Instantiate(mPathMarker, mCurGoal, transform.rotation);
         }
     }
 
