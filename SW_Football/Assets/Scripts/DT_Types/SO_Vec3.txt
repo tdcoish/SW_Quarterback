@@ -1,0 +1,7 @@
+using UnityEngine;
+
+[CreateAssetMenu(fileName="SO_Float", menuName="VARS/SO_Float")]
+public class SO_Float : ScriptableObject {
+
+	public float 	Val;
+}

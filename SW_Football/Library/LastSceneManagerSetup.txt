@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/TestPlay.unity
+- path: Assets/Scenes/ThrowTesting.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

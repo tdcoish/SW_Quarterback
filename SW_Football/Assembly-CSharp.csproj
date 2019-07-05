@@ -67,10 +67,12 @@
      <Compile Include="Assets\Scripts\DT_Types\SO_Float.cs" />
      <Compile Include="Assets\Scripts\DT_Types\SO_Int.cs" />
      <Compile Include="Assets\Scripts\DT_Types\SO_Transform.cs" />
+     <Compile Include="Assets\Scripts\DT_Types\SO_Vec3.cs" />
      <Compile Include="Assets\Scripts\GE_System\GE_Event.cs" />
      <Compile Include="Assets\Scripts\GE_System\GE_Listener.cs" />
      <Compile Include="Assets\Scripts\PC_Camera.cs" />
      <Compile Include="Assets\Scripts\PC_Controller.cs" />
+     <Compile Include="Assets\Scripts\PC_ThrowTrajectory.cs" />
      <Compile Include="Assets\Scripts\PC_UI.cs" />
      <Compile Include="Assets\Scripts\Plays\PLY_Controller.cs" />
      <Compile Include="Assets\Scripts\Plays\PLY_SnapSpot.cs" />
@@ -88,6 +90,7 @@
      <Compile Include="Assets\Scripts\Utilities\SingletonBehaviour.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_Strings.cs" />
      <None Include="Assets\Plays\stick.txt" />
+     <None Include="Assets\Scripts\DT_Types\SO_Vec3.txt" />
      <None Include="Assets\Plays\FakePlay.txt" />
      <None Include="Assets\Plays\OtherFakePlay.txt" />
      <None Include="Assets\Plays\play01.txt" />

@@ -14,7 +14,9 @@ public class PC_Controller : MonoBehaviour
 
     [SerializeField]
     private GameObject              mThrowPoint;
-    private float                   mThrowChrg;
+    public float                    mThrowChrg;
+    public SO_Float                 mCurThrowPwr;
+    public SO_Vec3                  mThrowAngle;
     private bool                    mChargingThrow = false;
 
     [SerializeField]
@@ -98,6 +100,10 @@ public class PC_Controller : MonoBehaviour
                 if(mThrowChrg > PlayerData._ThrowChargeTime){
                     mThrowChrg = PlayerData._ThrowChargeTime;
                 }
+
+                // now we update the vector3 representing the angle we're throwing at.
+                mThrowAngle.Val = mCam.transform.forward;
+                mCurThrowPwr.Val = mThrowChrg * PlayerData._ThrowSpd;
             }
 
             if(mChargingThrow){
