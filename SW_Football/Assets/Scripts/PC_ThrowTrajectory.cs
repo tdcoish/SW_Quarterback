@@ -42,17 +42,23 @@ public class PC_ThrowTrajectory : MonoBehaviour
     {
         if(mRender){
 
-            // calculate the trajectory over x seconds.
+            // calculate the trajectory over x seconds, technically I should be calculating for the length of time it takes to hit the ground.
             float timeToCalcFor = 2f;
             Vector3 spot = QBRef.Val.position;
 
-            float yPow = mThrowPower.Val;
-            float fwdPow = mThrowPower.Val;
+            // this is the raw power multiplied by the angle in the y axis
+            float yPow = Mathf.Cos(Mathf.Deg2Rad*Vector3.Angle(mThrowAngle.Val, Vector3.up)) * mThrowPower.Val;
 
             for(int i=0; i<10; i++){
                spot = QBRef.Val.position;
-               spot += i/10f * (fwdPow * timeToCalcFor) * QBRef.Val.forward;
-            //    spot.y += i/10f * ((4f*timeToCalcFor) - (Physics.gravity.magnitude * i/10f * i/10f));
+
+               float timeStep = i/10f * timeToCalcFor;
+               spot += QBRef.Val.forward * timeStep * mThrowPower.Val * Mathf.Abs(Mathf.Cos(Vector3.Angle(mThrowAngle.Val, QBRef.Val.forward)));
+
+               // calculating y needs two parts. initial velocity + time, minus gravity *time*time / 2.0f
+               float y = timeStep * yPow;
+                y -= Physics.gravity.magnitude * timeStep * timeStep / 2.0f;
+                spot.y += y;
                mPoints[i] = spot;
             }
 
