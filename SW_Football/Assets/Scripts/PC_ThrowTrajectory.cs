@@ -46,7 +46,7 @@ public class PC_ThrowTrajectory : MonoBehaviour
         if(mRender){
             Vector3 spot = QBRef.Val.position;
 
-            float fwdSpd = Mathf.Abs(Mathf.Cos(Vector3.Angle(mThrowAngle.Val, QBRef.Val.forward))) * mThrowPower.Val;
+            float fwdSpd = Mathf.Abs(Mathf.Cos(Mathf.Deg2Rad*Vector3.Angle(mThrowAngle.Val, QBRef.Val.forward))) * mThrowPower.Val;
             // this is the raw power multiplied by the angle in the y axis
             float ySpd = Mathf.Cos(Mathf.Deg2Rad*Vector3.Angle(mThrowAngle.Val, Vector3.up)) * mThrowPower.Val;
 
@@ -57,7 +57,7 @@ public class PC_ThrowTrajectory : MonoBehaviour
                spot = QBRef.Val.position;
 
                float timeStep = i/10f * tm;
-               spot += QBRef.Val.forward * timeStep * mThrowPower.Val * Mathf.Abs(Mathf.Cos(Vector3.Angle(mThrowAngle.Val, QBRef.Val.forward)));
+               spot += QBRef.Val.forward * timeStep * fwdSpd;
 
                // calculating y needs two parts. initial velocity + time, minus gravity *time*time / 2.0f
                float y = timeStep * ySpd;
