@@ -33,6 +33,9 @@ public class PC_ThrowTrajectory : MonoBehaviour
     [SerializeField]
     private SO_Transform        QBRef;
 
+    [SerializeField]
+    private GameObject          PointSphere;
+
     void Start()
     {
         mPoints = new Vector3[10];
@@ -41,29 +44,31 @@ public class PC_ThrowTrajectory : MonoBehaviour
     void Update()
     {
         if(mRender){
-
-            // calculate the trajectory over x seconds, technically I should be calculating for the length of time it takes to hit the ground.
-            float timeToCalcFor = 2f;
             Vector3 spot = QBRef.Val.position;
 
+            float fwdSpd = Mathf.Abs(Mathf.Cos(Vector3.Angle(mThrowAngle.Val, QBRef.Val.forward))) * mThrowPower.Val;
             // this is the raw power multiplied by the angle in the y axis
-            float yPow = Mathf.Cos(Mathf.Deg2Rad*Vector3.Angle(mThrowAngle.Val, Vector3.up)) * mThrowPower.Val;
+            float ySpd = Mathf.Cos(Mathf.Deg2Rad*Vector3.Angle(mThrowAngle.Val, Vector3.up)) * mThrowPower.Val;
+
+            // calculate the time it takes for the y val to get to it's negative, so we only render an arc until roughly the ground.
+            float tm = ySpd/Physics.gravity.magnitude * 2f;
 
             for(int i=0; i<10; i++){
                spot = QBRef.Val.position;
 
-               float timeStep = i/10f * timeToCalcFor;
+               float timeStep = i/10f * tm;
                spot += QBRef.Val.forward * timeStep * mThrowPower.Val * Mathf.Abs(Mathf.Cos(Vector3.Angle(mThrowAngle.Val, QBRef.Val.forward)));
 
                // calculating y needs two parts. initial velocity + time, minus gravity *time*time / 2.0f
-               float y = timeStep * yPow;
+               float y = timeStep * ySpd;
                 y -= Physics.gravity.magnitude * timeStep * timeStep / 2.0f;
                 spot.y += y;
                mPoints[i] = spot;
             }
 
             for(int i=0; i<9; i++){
-                Debug.DrawLine(mPoints[i], mPoints[i+1], Color.green, 2f);
+                Debug.DrawLine(mPoints[i], mPoints[i+1], Color.green, 0.1f);
+                Instantiate(PointSphere, mPoints[i], transform.rotation);
             }
         }
     }
