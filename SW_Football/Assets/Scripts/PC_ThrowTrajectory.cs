@@ -55,6 +55,8 @@ public class PC_ThrowTrajectory : MonoBehaviour
 
             for(int i=0; i<10; i++){
                spot = QBRef.Val.position;
+               // okay this is a hack, I'm just tired of this spawning from the center of the body, not the camera.
+               spot.y += 1f;
 
                float timeStep = i/10f * tm;
                spot += QBRef.Val.forward * timeStep * fwdSpd;

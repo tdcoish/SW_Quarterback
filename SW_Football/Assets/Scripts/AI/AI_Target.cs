@@ -22,7 +22,6 @@ public class AI_Target : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(other.GetComponent<PROJ_Football>() != null){
-            Debug.Log("Hit Target");
             HitTarget.Raise(null);
         }
     }

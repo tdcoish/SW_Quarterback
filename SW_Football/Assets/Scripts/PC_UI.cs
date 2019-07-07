@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+// Want to draw little bar representing the maximum "point" of the current throw.
 public class PC_UI : MonoBehaviour
 {
 
     public Image            mBar;
+    public Image            mMaxLine;
     public Text             mScoreTxt;
 
     // if the pc_controller is winding up.
-    private bool            mIsWindingUp;
+    private bool            mIsWindingUp = false;
 
     [SerializeField]
     private GameObject          RefFootballPathNode;
@@ -18,14 +20,18 @@ public class PC_UI : MonoBehaviour
     [SerializeField]
     private SO_Transform        RefPlayerCamera;
 
-    private float               chargePct;
+    [SerializeField]
+    private DT_Player           PlayerData;         // used for max throw power at a minimum
+    [SerializeField]
+    private SO_Float            CurrentThrowMaxCharge;      // they could hit ctrl to take something off of it.
+    [SerializeField]
+    private SO_Float            CurThrowPwr;
 
     private float               score = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        mBar = GetComponentInChildren<Image>();
     }
 
     // Update is called once per frame
@@ -33,19 +39,17 @@ public class PC_UI : MonoBehaviour
     {
         // render balls along trajectory
         if(mIsWindingUp){
-            // shouldn't be too hard to calculate the x and y trajectory.
-            float y = RefPlayerCamera.Val.position.y;
-            Vector3 dir = RefPlayerCamera.Val.forward;
 
-            // calculate the time it will take for the football to come down to the ground.
-            // for now just hardcode the throw power as 10f
+            ShowThrowBar();
+
         }
+
     }
 
-    public void ThrowBar(float chrgPct)
+    public void ShowThrowBar()
     {
-        mBar.fillAmount = chrgPct;
-        chargePct = chrgPct;
+        mBar.fillAmount = CurThrowPwr.Val / PlayerData._ThrowSpd;
+        mMaxLine.fillAmount = CurrentThrowMaxCharge.Val / PlayerData._ThrowSpd;
     }
 
     public void QB_Charging(){
@@ -54,6 +58,8 @@ public class PC_UI : MonoBehaviour
 
     public void QB_ThrewBall(){
         mIsWindingUp = false;
+        mBar.fillAmount = 0f;
+        mMaxLine.fillAmount = 1f;
     }
 
     public void REC_TargetHit(){

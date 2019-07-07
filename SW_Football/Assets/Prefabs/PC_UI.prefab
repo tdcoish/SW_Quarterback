@@ -160,7 +160,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4834740863477010219}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b69b15a9521d9564fb0d2d2d3e74cb53, type: 3}
   m_Name: 
@@ -169,6 +169,8 @@ MonoBehaviour:
   mThrowPower: {fileID: 11400000, guid: a834c5fb3075e004caf4607214965b26, type: 2}
   mThrowAngle: {fileID: 11400000, guid: 84c7a5618441c1a40b7f1931d95b33e5, type: 2}
   QBRef: {fileID: 11400000, guid: aa0cdd5c33f3fed4db456a4cda6b4b00, type: 2}
+  PointSphere: {fileID: 8080094120214037563, guid: 11b9b244e11781344af68741a48f90d8,
+    type: 3}
 --- !u!114 &4834740863477010210
 MonoBehaviour:
   m_ObjectHideFlags: 0

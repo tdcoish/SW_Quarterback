@@ -17,6 +17,7 @@ public class PC_Controller : MonoBehaviour
     public float                    mThrowChrg;
     public SO_Float                 mCurThrowPwr;
     public SO_Vec3                  mThrowAngle;
+    public SO_Float                 mCurThrowMaxChrg;
     private bool                    mChargingThrow = false;
 
     [SerializeField]
@@ -89,6 +90,8 @@ public class PC_Controller : MonoBehaviour
             if(Input.GetMouseButton(0)){
                 if(!mChargingThrow){
                     GE_QB_StartThrow.Raise(null);
+                    Debug.Log("Throw event");
+                    mCurThrowMaxChrg.Val = PlayerData._ThrowSpd;
                 }
                 mChargingThrow = true;
                 // I'll let them press shift to slowly charge.
@@ -103,19 +106,21 @@ public class PC_Controller : MonoBehaviour
 
                 // now we update the vector3 representing the angle we're throwing at.
                 mThrowAngle.Val = mCam.transform.forward;
-                mCurThrowPwr.Val = mThrowChrg * PlayerData._ThrowSpd;
+                mCurThrowPwr.Val = mThrowChrg * mCurThrowMaxChrg.Val;
             }
 
             if(mChargingThrow){
                 // if they hold down the shift key, then we make the charge go down.
                 if(Input.GetKey(KeyCode.LeftControl)){
-                    mThrowChrg -= Time.deltaTime;
+                    // mThrowChrg -= Time.deltaTime;
+                    mCurThrowMaxChrg.Val -= Time.deltaTime * 10f;        // you take off 5 force per second
+                    Debug.Log("Max Throw Power: " + mCurThrowMaxChrg.Val);
                     if(mThrowChrg < 0f) mThrowChrg = 0f;
                 }
 
                 if(Input.GetMouseButtonUp(0)){
                     PROJ_Football clone = Instantiate(PF_Football, mThrowPoint.transform.position, transform.rotation);
-                    clone.GetComponent<Rigidbody>().velocity = mCam.transform.forward * PlayerData._ThrowSpd * (mThrowChrg/PlayerData._ThrowChargeTime);
+                    clone.GetComponent<Rigidbody>().velocity = mCam.transform.forward * mCurThrowMaxChrg.Val * (mThrowChrg/PlayerData._ThrowChargeTime);
                     mThrowChrg = 0f;
                     mChargingThrow = false;
 
@@ -124,8 +129,6 @@ public class PC_Controller : MonoBehaviour
             }
 
         }
-
-        mUI.ThrowBar(mThrowChrg/PlayerData._ThrowChargeTime);
     }
 
     private void HandleMovement()

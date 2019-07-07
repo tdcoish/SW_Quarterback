@@ -4,7 +4,7 @@
 public class DT_Player : ScriptableObject
 {
     public float                _ThrowChargeTime = 2f;
-    public float                _ThrowSpd = 20f;
+    public float                _ThrowSpd = 25f;
     public float                _ShiftChargeSlow = 3f;      // how much slower they charge the throw power with shift
 
 }
