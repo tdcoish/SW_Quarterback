@@ -13,7 +13,7 @@ public class RT_SceneManager : MonoBehaviour
     private GameObject          mFootballField;
 
     [SerializeField]
-    private RT_Player           RefPlayer;
+    private RT_Player           PF_Player;
 
     [SerializeField]
     private string              mDefaultPlay = "DefaultPlay.txt";
@@ -24,6 +24,9 @@ public class RT_SceneManager : MonoBehaviour
     [SerializeField]
     private Text                mSelectedPlayerInfo;
 
+    [SerializeField]
+    private GameObject          PF_RouteNode;
+    private bool                mRouteToolOpened = false;
 
     public List<RT_Player> rPlayers;
 
@@ -49,7 +52,7 @@ public class RT_SceneManager : MonoBehaviour
             posOnField.x += float.Parse(sSpotX)*unitsToPixel * fieldYardsToPixels;
             posOnField.y += float.Parse(sSpotZ) * unitsToPixel * fieldYardsToPixels;
 
-            RT_Player ply = Instantiate(RefPlayer, posOnField, mFootballField.transform.rotation);
+            RT_Player ply = Instantiate(PF_Player, posOnField, mFootballField.transform.rotation);
             ply.mTag = sLine.Substring(0, sLine.IndexOf(':'));
             Debug.Log("Tag: " + ply.mTag);
         }
@@ -75,11 +78,34 @@ public class RT_SceneManager : MonoBehaviour
     // One of the things we do, is update the Type input field with the correct RT_Player struct
     void Update()
     {
-        int chosenPlayer = GetActivePlayerIndex();
-        if(chosenPlayer == -1){
+        int actInd = GetActivePlayerIndex();
+
+        // When the user presses the mouse, we handle making things active or not.
+        // also change things based on whether we are placing route nodes.
+        if(Input.GetMouseButtonDown(0)){
+
+            if(mRouteToolOpened){
+                Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                pos.z = 90;
+                Instantiate(PF_RouteNode, pos, transform.rotation);
+            }
+
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            
+            if(hit.collider != null)
+            {
+                if(hit.collider.GetComponent<RT_Player>() != null){
+                    hit.collider.GetComponent<RT_Player>().mIsChosen = true;
+                    if(actInd != -1) rPlayers[actInd].mIsChosen = false;
+                }
+            }
+        }
+
+        actInd = GetActivePlayerIndex();
+        if(actInd == -1){
             mSelectedPlayerInfo.text = "NO PLAYER CHOSEN";
         }else{
-            mSelectedPlayerInfo.text = "TYPE: " + rPlayers[chosenPlayer].mTag;
+            mSelectedPlayerInfo.text = "TYPE: " + rPlayers[actInd].mTag;
         }
     }
 
@@ -92,5 +118,26 @@ public class RT_SceneManager : MonoBehaviour
         }
 
         return -1;
+    }
+
+
+    // when they press the New Route button, we start into the adding route nodes.
+    public void BT_NewRoute()
+    {
+        mRouteToolOpened = true;
+
+        // we also spawn a new route at the feet of whichever player is currently active.
+        int actInd = GetActivePlayerIndex();
+        if(actInd != -1){
+            Debug.Log("Should be a route node now");
+            Instantiate(PF_RouteNode, rPlayers[actInd].transform.position, transform.rotation);
+        }else{
+            Debug.Log("Problem, no player active");
+        }
+    }
+
+    public void BT_DoneRoute()
+    {
+        mRouteToolOpened = false;
     }
 }
