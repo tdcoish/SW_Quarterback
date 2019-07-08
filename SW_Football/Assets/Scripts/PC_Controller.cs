@@ -90,16 +90,11 @@ public class PC_Controller : MonoBehaviour
             if(Input.GetMouseButton(0)){
                 if(!mChargingThrow){
                     GE_QB_StartThrow.Raise(null);
-                    Debug.Log("Throw event");
                     mCurThrowMaxChrg.Val = PlayerData._ThrowSpd;
                 }
                 mChargingThrow = true;
-                // I'll let them press shift to slowly charge.
-                if(Input.GetKey(KeyCode.LeftShift)){
-                    mThrowChrg += Time.deltaTime/PlayerData._ShiftChargeSlow;    
-                }else{
-                    mThrowChrg += Time.deltaTime;
-                }
+
+                mThrowChrg += Time.deltaTime;
                 if(mThrowChrg > PlayerData._ThrowChargeTime){
                     mThrowChrg = PlayerData._ThrowChargeTime;
                 }
@@ -111,10 +106,8 @@ public class PC_Controller : MonoBehaviour
 
             if(mChargingThrow){
                 // if they hold down the shift key, then we make the charge go down.
-                if(Input.GetKey(KeyCode.LeftControl)){
-                    // mThrowChrg -= Time.deltaTime;
+                if(Input.GetKey(KeyCode.LeftShift)){
                     mCurThrowMaxChrg.Val -= Time.deltaTime * 10f;        // you take off 5 force per second
-                    Debug.Log("Max Throw Power: " + mCurThrowMaxChrg.Val);
                     if(mThrowChrg < 0f) mThrowChrg = 0f;
                 }
 

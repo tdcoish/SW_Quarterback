@@ -2,6 +2,7 @@
 Runs when the editor starts. Shoves default play onto the screen
 *************************************************************************************/
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 using System.Collections.Generic;
 
@@ -16,6 +17,15 @@ public class RT_SceneManager : MonoBehaviour
 
     [SerializeField]
     private string              mDefaultPlay = "DefaultPlay.txt";
+
+    [SerializeField]
+    private InputField          mPlayNameEnter;
+
+    [SerializeField]
+    private Text                mSelectedPlayerInfo;
+
+
+    public List<RT_Player> rPlayers;
 
     // Load in play, then shove some RT_Player's into the football field
     void Awake()
@@ -46,13 +56,41 @@ public class RT_SceneManager : MonoBehaviour
 
     }
 
+    void Start()
+    {
+        rPlayers = new List<RT_Player>();
+
+        var objs = FindObjectsOfType<RT_Player>();
+        foreach(RT_Player ply in objs){
+            rPlayers.Add(ply);
+        }
+    }
+
     private Vector3 GetStartPos(string line)
     {
         return Vector3.zero;
     }
 
+
+    // One of the things we do, is update the Type input field with the correct RT_Player struct
     void Update()
     {
-        
+        int chosenPlayer = GetActivePlayerIndex();
+        if(chosenPlayer == -1){
+            mSelectedPlayerInfo.text = "NO PLAYER CHOSEN";
+        }else{
+            mSelectedPlayerInfo.text = "TYPE: " + rPlayers[chosenPlayer].mTag;
+        }
+    }
+
+    int GetActivePlayerIndex()
+    {
+        for(int i=0; i<rPlayers.Count; i++){
+            if(rPlayers[i].mIsChosen){
+                return i;
+            }
+        }
+
+        return -1;
     }
 }
