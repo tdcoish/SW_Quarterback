@@ -50,7 +50,6 @@ public class RT_SceneManager : MonoBehaviour
 
             RT_Player ply = Instantiate(PF_Player, posOnField, mFootballField.transform.rotation);
             ply.mTag = sLine.Substring(0, sLine.IndexOf(':'));
-            Debug.Log("Tag: " + ply.mTag);
         }
 
     }

@@ -4,6 +4,12 @@ Handles creating new routes for the RT_SceneManager
 using UnityEngine;
 using System.Collections.Generic;
 
+public struct RT_Route{
+    public string                       mPlayerTag;
+    public List<GameObject>             mNodes;
+    // public LineRenderer                 mLineRenderer;
+}
+
 public class RT_RouteTool : MonoBehaviour
 {
 
@@ -14,11 +20,15 @@ public class RT_RouteTool : MonoBehaviour
 
     public bool                     mRouteToolOpened = false;
 
-    public List<Vector3>            mCurRoute;
+    public RT_Route                 mCurRoute;
+
+    // for now I'm giving us the line renderer. Migrate this out later.
+    public LineRenderer             mLineRenderer;
 
     void Start()
     {
         cEdMan = GetComponentInParent<RT_SceneManager>();
+        mLineRenderer = GetComponent<LineRenderer>();
     }
 
     void Update()
@@ -37,8 +47,7 @@ public class RT_RouteTool : MonoBehaviour
                     if(hit.collider.GetComponent<RT_Field>() != null){
                         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                         pos.z = 90;
-                        Instantiate(PF_RouteNode, pos, transform.rotation);
-                        mCurRoute.Add(pos);
+                        SpawnPoint(pos);
                     }
                 }
             }
@@ -48,14 +57,16 @@ public class RT_RouteTool : MonoBehaviour
     // when they press the New Route button, we start into the adding route nodes.
     public void BT_NewRoute()
     {
-        mCurRoute = new List<Vector3>();
         mRouteToolOpened = true;
+        
+        mCurRoute = new RT_Route();
+        mCurRoute.mNodes = new List<GameObject>();
 
         // we also spawn a new route at the feet of whichever player is currently active.
         int actInd = cEdMan.GetActivePlayerIndex();
         if(actInd != -1){
-            Instantiate(PF_RouteNode, cEdMan.rPlayers[actInd].transform.position, transform.rotation);
-            mCurRoute.Add(cEdMan.rPlayers[actInd].transform.position);
+            mCurRoute.mPlayerTag = cEdMan.rPlayers[actInd].mTag; 
+            SpawnPoint(cEdMan.rPlayers[actInd].transform.position);
         }else{
             Debug.Log("Problem, no player active");
         }
@@ -68,7 +79,13 @@ public class RT_RouteTool : MonoBehaviour
 
     public void SpawnPoint(Vector3 pos){
         var clone = Instantiate(PF_RouteNode, pos, transform.rotation);
+        mCurRoute.mNodes.Add(clone);
+        mLineRenderer.positionCount = mCurRoute.mNodes.Count;
 
-        mCurRoute.Add(pos);
+        // ugly hack, but whatever.
+        Vector3 lineSpot = clone.transform.position; lineSpot.z = 0;
+        mLineRenderer.SetPosition(mCurRoute.mNodes.Count-1, lineSpot);
+        // mCurRoute.mLineRenderer.SetPosition(mCurRoute.mNodes.Count-1, clone.transform.position);
+        // mCurRoute.Add(pos);
     }
 }

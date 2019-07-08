@@ -34,7 +34,7 @@ public class PC_ThrowTrajectory : MonoBehaviour
     private SO_Transform        QBRef;
 
     [SerializeField]
-    private GameObject          PointSphere;
+    private GameObject          PF_PointSphere;
 
     void Start()
     {
@@ -70,7 +70,7 @@ public class PC_ThrowTrajectory : MonoBehaviour
 
             for(int i=0; i<9; i++){
                 Debug.DrawLine(mPoints[i], mPoints[i+1], Color.green, 0.1f);
-                Instantiate(PointSphere, mPoints[i], transform.rotation);
+                Instantiate(PF_PointSphere, mPoints[i], transform.rotation);
             }
         }
     }
