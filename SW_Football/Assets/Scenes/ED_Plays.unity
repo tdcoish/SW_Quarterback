@@ -120,18 +120,27 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &57282342 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4734412463011446458, guid: 50ca97e71cce4374d86d00c3987a0bfb,
+--- !u!1 &57282341 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4734412463011446459, guid: 50ca97e71cce4374d86d00c3987a0bfb,
     type: 3}
   m_PrefabInstance: {fileID: 4734412463114761199}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!114 &57282343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57282341}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 656b26f70091c954d8098057cee43068, type: 3}
+  m_Script: {fileID: 11500000, guid: 66db9d4d02cce4c44b55f8d510eab6e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PF_RouteNode: {fileID: 1319262817}
+  mRouteToolOpened: 0
+  mCurRoute: []
 --- !u!1 &67470445
 GameObject:
   m_ObjectHideFlags: 0
@@ -861,7 +870,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 57282342}
+      - m_Target: {fileID: 57282343}
         m_MethodName: BT_DoneRoute
         m_Mode: 1
         m_Arguments:
@@ -1199,6 +1208,8 @@ GameObject:
   - component: {fileID: 1031847997}
   - component: {fileID: 1031847999}
   - component: {fileID: 1031847998}
+  - component: {fileID: 1031848000}
+  - component: {fileID: 1031848001}
   m_Layer: 5
   m_Name: Football Field
   m_TagString: Untagged
@@ -1262,6 +1273,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1031847996}
   m_CullTransparentMesh: 0
+--- !u!61 &1031848000
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031847996}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 1.0260925, y: 2.3168564}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 498.60046, y: 495.34625}
+  m_EdgeRadius: 0
+--- !u!114 &1031848001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031847996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e821e46ccd0e6d448854a83c95fe8c89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1041377737
 GameObject:
   m_ObjectHideFlags: 0
@@ -1466,7 +1515,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 57282342}
+      - m_Target: {fileID: 57282343}
         m_MethodName: BT_NewRoute
         m_Mode: 1
         m_Arguments:
@@ -1759,6 +1808,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1311490860}
   m_CullTransparentMesh: 0
+--- !u!1 &1319262817 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1011276866755354362, guid: 9b839e3feb914db43a09893b6cc0f216,
+    type: 3}
+  m_PrefabInstance: {fileID: 1011276865507656859}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1489803441
 GameObject:
   m_ObjectHideFlags: 0

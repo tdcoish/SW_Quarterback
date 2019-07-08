@@ -3,7 +3,7 @@
 *************************************************************************************/
 using UnityEngine;
 
-public class RT_RouteCreator : MonoBehaviour
+public class RT_Field : MonoBehaviour
 {
     void Start()
     {

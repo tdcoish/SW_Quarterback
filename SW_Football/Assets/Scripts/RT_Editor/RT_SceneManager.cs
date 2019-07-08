@@ -24,11 +24,7 @@ public class RT_SceneManager : MonoBehaviour
     [SerializeField]
     private Text                mSelectedPlayerInfo;
 
-    [SerializeField]
-    private GameObject          PF_RouteNode;
-    private bool                mRouteToolOpened = false;
-
-    public List<RT_Player> rPlayers;
+    public List<RT_Player>      rPlayers;
 
     // Load in play, then shove some RT_Player's into the football field
     void Awake()
@@ -84,12 +80,6 @@ public class RT_SceneManager : MonoBehaviour
         // also change things based on whether we are placing route nodes.
         if(Input.GetMouseButtonDown(0)){
 
-            if(mRouteToolOpened){
-                Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                pos.z = 90;
-                Instantiate(PF_RouteNode, pos, transform.rotation);
-            }
-
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
             
             if(hit.collider != null)
@@ -109,7 +99,7 @@ public class RT_SceneManager : MonoBehaviour
         }
     }
 
-    int GetActivePlayerIndex()
+    public int GetActivePlayerIndex()
     {
         for(int i=0; i<rPlayers.Count; i++){
             if(rPlayers[i].mIsChosen){
@@ -120,24 +110,4 @@ public class RT_SceneManager : MonoBehaviour
         return -1;
     }
 
-
-    // when they press the New Route button, we start into the adding route nodes.
-    public void BT_NewRoute()
-    {
-        mRouteToolOpened = true;
-
-        // we also spawn a new route at the feet of whichever player is currently active.
-        int actInd = GetActivePlayerIndex();
-        if(actInd != -1){
-            Debug.Log("Should be a route node now");
-            Instantiate(PF_RouteNode, rPlayers[actInd].transform.position, transform.rotation);
-        }else{
-            Debug.Log("Problem, no player active");
-        }
-    }
-
-    public void BT_DoneRoute()
-    {
-        mRouteToolOpened = false;
-    }
 }
