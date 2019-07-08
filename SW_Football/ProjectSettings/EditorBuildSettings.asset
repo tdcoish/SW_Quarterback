@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/ThrowTesting.unity
+    guid: ae9d1f9514d982f4ebc076cb8bc90a29
+  - enabled: 1
+    path: Assets/Scenes/ED_Plays.unity
+    guid: 17f639548afb0db4eb4d06dc65966603
+  - enabled: 1
+    path: Assets/Scenes/TestPlay.unity
+    guid: 0e4aec29def972344a5ded73fb58e2f6
   m_configObjects: {}

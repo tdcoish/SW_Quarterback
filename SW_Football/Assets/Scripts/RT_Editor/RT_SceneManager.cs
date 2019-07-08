@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class RT_SceneManager : MonoBehaviour
 {
@@ -95,6 +96,12 @@ public class RT_SceneManager : MonoBehaviour
             mSelectedPlayerInfo.text = "NO PLAYER CHOSEN";
         }else{
             mSelectedPlayerInfo.text = "TYPE: " + rPlayers[actInd].mTag;
+        }
+
+
+        // cut this out, just for demo
+        if(Input.GetKeyDown(KeyCode.U)){
+            SceneManager.LoadScene("ThrowTesting");
         }
     }
 

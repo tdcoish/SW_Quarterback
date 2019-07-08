@@ -82,6 +82,7 @@
      <Compile Include="Assets\Scripts\RT_Editor\RT_NewRoute.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_Player.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_PlayerManager.cs" />
+     <Compile Include="Assets\Scripts\RT_Editor\RT_Route.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_RouteTool.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_SceneManager.cs" />
      <Compile Include="Assets\Scripts\SO_Data\DT_Player.cs" />
