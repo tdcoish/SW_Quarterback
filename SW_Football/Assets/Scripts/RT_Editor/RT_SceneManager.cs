@@ -20,7 +20,7 @@ public class RT_SceneManager : MonoBehaviour
     private string              mDefaultPlay = "DefaultPlay.txt";
 
     [SerializeField]
-    private InputField          mPlayNameEnter;
+    public InputField           mPlayNameEnter;
 
     [SerializeField]
     private Text                mSelectedPlayerInfo;
@@ -98,11 +98,6 @@ public class RT_SceneManager : MonoBehaviour
             mSelectedPlayerInfo.text = "TYPE: " + rPlayers[actInd].mTag;
         }
 
-
-        // cut this out, just for demo
-        if(Input.GetKeyDown(KeyCode.U)){
-            SceneManager.LoadScene("ThrowTesting");
-        }
     }
 
     public int GetActivePlayerIndex()

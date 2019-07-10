@@ -16,6 +16,7 @@ public class RT_RouteTool : MonoBehaviour
 
     public RT_Route                 PF_RouteObj;
     public RT_Route                 mCurRoute;
+    public List<RT_Route>           rRoutes;
 
     // for now I'm giving us the line renderer. Migrate this out later.
     // public LineRenderer             mLineRenderer;
@@ -23,6 +24,7 @@ public class RT_RouteTool : MonoBehaviour
     void Start()
     {
         cEdMan = GetComponentInParent<RT_SceneManager>();
+        rRoutes = new List<RT_Route>();
     }
 
     void Update()
@@ -63,6 +65,8 @@ public class RT_RouteTool : MonoBehaviour
         
         mCurRoute.mPlayerTag = cEdMan.rPlayers[actInd].mTag; 
         SpawnPoint(cEdMan.rPlayers[actInd].transform.position);
+
+        rRoutes.Add(mCurRoute);
     }
 
     public void BT_DoneRoute()
@@ -79,4 +83,6 @@ public class RT_RouteTool : MonoBehaviour
         Vector3 lineSpot = clone.transform.position; lineSpot.z = 0;
         mCurRoute.mLineRenderer.SetPosition(mCurRoute.mNodes.Count-1, lineSpot);
     }
+
+
 }

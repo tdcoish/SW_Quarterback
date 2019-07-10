@@ -237,6 +237,19 @@ MonoBehaviour:
   PF_RouteObj: {fileID: 1165703481852070772, guid: cca2bae6c1dac7e4d8fc16b60fd21dee,
     type: 3}
   mCurRoute: {fileID: 0}
+  rRoutes: []
+--- !u!114 &57282344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57282341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f371647187d7ad741a4d1a01a39de844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &67470445
 GameObject:
   m_ObjectHideFlags: 0
@@ -1488,7 +1501,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1041377740}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 57282344}
+        m_MethodName: SavePlay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1041377740
