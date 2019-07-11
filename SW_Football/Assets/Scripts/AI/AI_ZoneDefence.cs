@@ -21,6 +21,9 @@ public class AI_ZoneDefence : MonoBehaviour
     [SerializeField]
     private SO_Vec3             rValidFootball;
     
+    public Vector3              mZoneSpot;
+    public bool                 mAbleToMove = true;
+    
     [Tooltip("Max height the ball can be for us to still tip")]
     public float                mHeightOfInfluence = 2f;
 
@@ -33,7 +36,11 @@ public class AI_ZoneDefence : MonoBehaviour
     // for now, they just chill, until the ball is thrown.
     void Update()
     {
-        if(!mBreakOnBall) return;
+        if(!mBreakOnBall){
+            if(mAbleToMove) MoveToZoneSpot();
+            
+            return;
+        };
 
         // GoDirectlyToBall();
         InterceptBall();
@@ -43,6 +50,48 @@ public class AI_ZoneDefence : MonoBehaviour
     public void BreakOnBall()
     {
         mBreakOnBall = true;
+    }
+
+    // given at the start of the play.
+    public void ReceivePlayAssignment(string sAssign, Vector3 snapPoint)
+    {
+        // our starting alignment first.
+        string sLineup = UT_Strings.StartAndEndString(sAssign, '[', ']');
+        string sXStart = UT_Strings.StartAndEndString(sLineup, '[', ',');
+        sXStart = sXStart.Replace("[", "");
+        sXStart = sXStart.Replace(",", "");
+        string sYStart = UT_Strings.StartAndEndString(sLineup, ',', ']');
+        sYStart = sYStart.Replace(",", "");
+        sYStart = sYStart.Replace("]", "");
+
+        Vector3 lSpot = new Vector3();
+        lSpot.x = float.Parse(sXStart) + snapPoint.x;
+        lSpot.z = float.Parse(sYStart) + snapPoint.z;
+        lSpot.y = 1f;
+        transform.position = lSpot;
+
+        // our zone position second
+        string sPos = UT_Strings.StartAndEndString(sAssign, '(', ')');
+        string sXPos = UT_Strings.StartAndEndString(sPos, '(', ',');
+        sXPos = sXPos.Replace(",", "");
+        sXPos = sXPos.Replace("(", "");
+        string sYPos = UT_Strings.StartAndEndString(sPos, ',', ')');
+        sYPos = sYPos.Replace(",", "");
+        sYPos = sYPos.Replace(")", "");
+
+        Vector3 vSpot = new Vector3();
+        vSpot.x = float.Parse(sXPos);
+        vSpot.z = float.Parse(sYPos);
+        vSpot.y = 0f;
+        mZoneSpot = vSpot + transform.position;
+    }
+
+    void MoveToZoneSpot()
+    {
+        if(Vector3.Distance(transform.position, mZoneSpot) < 1f){
+            return;
+        }
+        cRigid.velocity = Vector3.Normalize(mZoneSpot - transform.position) * mMaxVel;
     }
 
     // stupidest one, they just run straight to the ball. Leads to them always moving forwards

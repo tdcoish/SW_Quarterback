@@ -9,12 +9,15 @@ using System.IO;
 
 public class PLY_Controller : MonoBehaviour
 {
-    public string               mPlayName = "DefaultPlay.txt";
+    public string               mOffPlayName = "DefaultPlay";
+    public string               mDefPlayName = "Cover2";
 
     // AI_Route now gets passed in a string that it converts to a route.
     // for now, set up the receivers in the gameworld first.
     public GameObject           RefAthlete;
     public List<AI_Route>       mRoutes;
+    public GameObject           PF_Defender;
+    public List<AI_ZoneDefence> mDefenders;
 
     [SerializeField]
     private PLY_SnapSpot        mSnapSpot;
@@ -32,13 +35,24 @@ public class PLY_Controller : MonoBehaviour
         }
         mRoutes = new List<AI_Route>();
          
-        StreamReader sReader = new StreamReader(Application.dataPath +"/Plays/"+mPlayName);
+        StreamReader sReader = new StreamReader(Application.dataPath +"/Plays/"+mOffPlayName+".txt");
         string sLine = string.Empty;
         while((sLine = sReader.ReadLine()) != null)
         {
             var clone = Instantiate(RefAthlete, transform.position, transform.rotation);
             clone.GetComponent<AI_Route>().ReceiveRoute(sLine, mSnapSpot.transform.position);
             mRoutes.Add(clone.GetComponent<AI_Route>());
+        }
+
+        // Now we set up the defenders.
+        mDefenders = new List<AI_ZoneDefence>();
+        sReader = new StreamReader(Application.dataPath+"/Plays/Defense/"+mDefPlayName+".txt");
+        sLine = string.Empty;
+        while((sLine = sReader.ReadLine()) != null)
+        {
+            var clone = Instantiate(PF_Defender, transform.position, transform.rotation);
+            clone.GetComponent<AI_ZoneDefence>().ReceivePlayAssignment(sLine, mSnapSpot.transform.position);
+            mDefenders.Add(clone.GetComponent<AI_ZoneDefence>());
         }
     }
 

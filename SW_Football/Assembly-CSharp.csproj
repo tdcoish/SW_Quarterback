@@ -103,6 +103,7 @@
      <None Include="Assets\Plays\FakePlay.txt" />
      <None Include="Assets\Plays\OtherFakePlay.txt" />
      <None Include="Assets\Plays\play01.txt" />
+     <None Include="Assets\Plays\Defense\Cover2.txt" />
      <None Include="Assets\Plays\DefaultPlay.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\RandoPlay.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\temptla.txt" />

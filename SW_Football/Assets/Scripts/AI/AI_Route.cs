@@ -32,13 +32,13 @@ public class AI_Route : MonoBehaviour
             }
             
             // get the next spot
-            string sNode = StartAndEndString(sRoute, '(', ')');
+            string sNode = UT_Strings.StartAndEndString(sRoute, '(', ')');
 
             // break the spot down into its two positions.
-            string nodeX = StartAndEndString(sNode, '(', ',');
+            string nodeX = UT_Strings.StartAndEndString(sNode, '(', ',');
             nodeX = nodeX.Replace("(", "");
             nodeX = nodeX.Replace(",", "");
-            string nodeY = StartAndEndString(sNode, ',', ')');
+            string nodeY = UT_Strings.StartAndEndString(sNode, ',', ')');
             nodeY = nodeY.Replace(",", "");
             nodeY = nodeY.Replace(")", "");
             //myString = Regex.Replace(myString, @"[;,\t\r ]|[\n]{2}", "\n");
@@ -52,11 +52,6 @@ public class AI_Route : MonoBehaviour
             // skip ahead to the next position
             sRoute = sRoute.Substring(sRoute.IndexOf(')')+1);
         }
-
-        // now we print out the route 
-        // foreach(var spot in mPath){
-        //     Debug.Log("Spot: " + spot);
-        // }
 
         // now we set the starting position, relative to the "snap point" passed in.
         if(!sCopy.Contains("[") || !sCopy.Contains("]")){
@@ -76,38 +71,6 @@ public class AI_Route : MonoBehaviour
         mStartPos.x = float.Parse(xSpot) + snapPoint.x;
         mStartPos.z = float.Parse(ySpot) + snapPoint.z;
         transform.position = mStartPos;
-    }
-
-    // returns the first substring that starts with first char, and ends with last char.
-    // eg. "Help(0,5)(10,5)" Would return (0,5) if we passed in (s, '(',')')
-    private string StartAndEndString(string s, char cStart, char cEnd)
-    {
-        int startPos = -1;
-        for(int i=0; i<s.Length; i++)
-        {
-            if(s[i] == cStart){
-                startPos = i;
-                break;
-            }
-        }
-        if(startPos == -1){
-            return "START CHAR NOT FOUND\n";
-        }
-
-        bool foundEnd = false;
-        int endPos = startPos+1;
-        for(int i=endPos; i<s.Length; i++){
-            if(s[i] == cEnd){
-                endPos = i;
-                foundEnd = true;
-                break;
-            }
-        }
-        if(!foundEnd){
-            return "END CHAR NOT FOUND\n";
-        }
-
-        return s.Substring(startPos, (endPos-startPos + 1));
     }
 
     void Update()

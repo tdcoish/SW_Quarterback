@@ -202,9 +202,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b0b68cf1893e0b4ab613e9f2722a974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mMaxVel: 8
+  mMaxVel: 4
   mBreakOnBall: 0
   rValidFootball: {fileID: 11400000, guid: 1897fc8717b9b2e498497c1e5d709db3, type: 2}
+  mZoneSpot: {x: 0, y: 0, z: 0}
+  mAbleToMove: 1
   mHeightOfInfluence: 3.5
 --- !u!114 &8654152096983792837
 MonoBehaviour:
