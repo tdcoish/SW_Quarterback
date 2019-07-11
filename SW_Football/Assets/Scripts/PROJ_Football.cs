@@ -6,6 +6,9 @@ public class PROJ_Football : MonoBehaviour
 {
     private Rigidbody               mRigid;
 
+    [SerializeField]
+    private SO_Vec3                 mPos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +18,7 @@ public class PROJ_Football : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        mPos.Val = transform.position;
         Vector3 vel = mRigid.velocity;
 
         if(vel != Vector3.zero){
