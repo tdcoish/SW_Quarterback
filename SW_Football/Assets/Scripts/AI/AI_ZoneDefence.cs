@@ -1,5 +1,10 @@
 ﻿/*************************************************************************************
 For now, just waits for the ball to be thrown, then breaks on the ball.
+
+if the ball is already below our height, then we care if it's going up or down.
+if it's going up and below, we'll just do some quick and dirty calculation of if we're
+3m within the ball, and then we move towards the ball.
+if further, then we move to the point where it has come down enough on the other side.
 *************************************************************************************/
 using UnityEngine;
 
@@ -37,7 +42,6 @@ public class AI_ZoneDefence : MonoBehaviour
     // triggered by ball thrown event
     public void BreakOnBall()
     {
-        Debug.Log("Breaking on ball");
         mBreakOnBall = true;
     }
 
@@ -80,49 +84,34 @@ public class AI_ZoneDefence : MonoBehaviour
         // since it's a parabola, we should get two points representing that height.
         Vector3 ballvel = fBallRef.GetComponent<Rigidbody>().velocity;
         float mag = Vector3.Magnitude(ballvel);
-
-        // first, let's calculate if the ball is on the way up, or on the way down.
-        float upDot = Vector3.Dot(Vector3.up, Vector3.Normalize(ballvel)); 
-        if(upDot >= 0f){
-            // Debug.Log("Ball going up");
-        }else{
-            // Debug.Log("Ball going down");
-        }
-
-        // if the ball is already below our height, then we care if it's going up or down.
-        // if it's going up and below, we'll just do some quick and dirty calculation of if we're
-        // 3m within the ball, and then we move towards the ball.
-        // if further, then we move to the point where it has come down enough on the other side.
         
         // if it's beneath our max height
-        if(fBallRef.transform.position.y <= mHeightOfInfluence)
+        if(fBallRef.transform.position.y < mHeightOfInfluence)
         {
             // if the ball is going down, just move to the ball
-            if(upDot <= 0f){
+            // or if we're really close (DLine) move directly to the ball.
+            if(ballvel.y <= 0f || Vector3.Distance(transform.position, fBallRef.transform.position) < 1f){
                 spotToMoveTo = fBallRef.transform.position;
             }else{
-                // now we have to calc the right spot
+                // theoretically I should be figuring out where the ball lands and then going there, but I just don't want to.
                 float yDisToGo = fBallRef.transform.position.y - mHeightOfInfluence;
-                // use that to get the time
-                // d = v0t + 1/2at^2
-                // d/t = v0 + 1/2at
-                // v1 = v0 + 1/2at
-                // apparently have to use two formulas
-                // vf^2 = vi^2 + 2ad
-                // vf = vi + at
-                // t = (sqrt(vi^2 + 2ad) - vi)/a            // all together
-                // t = (vf - vi)/a                          // calc vf first
+                float finalVel = Mathf.Sqrt(Mathf.Abs(ballvel.y*ballvel.y + 2*Physics.gravity.magnitude*yDisToGo)) * -1f;      // kind of cheating, since we have a negative y vel, which Sqrt ruins
+                float tm = Mathf.Abs((finalVel - ballvel.y))/Physics.gravity.magnitude; 
 
-                //float tm = (Mathf.Sqrt(ballvel.y*ballvel.y + 2*Physics.gravity.magnitude*yDisToGo) - ballvel.y)/Physics.gravity.magnitude;
-
-               // Debug.Log("Time: " + tm);
+                // now we calc the spot in that forward vector.
+                // lol, just chop out the y comp
+                Vector3 fwdComp = ballvel;
+                fwdComp.y = 0f;
+                
+                spotToMoveTo = fBallRef.transform.position + fwdComp*tm;
+                spotToMoveTo.y = 0f;
             }
         }else{
             // now we just calc the spot when it will be within reach.
             // start by calculating the time it needs.
             // omfg this took forever.
             float yDisToGo = fBallRef.transform.position.y - mHeightOfInfluence;
-            float finalVel = Mathf.Sqrt(ballvel.y*ballvel.y + 2*Physics.gravity.magnitude*yDisToGo) * -1f;      // kind of cheating, since we have a negative y vel, which Sqrt ruins
+            float finalVel = Mathf.Sqrt(Mathf.Abs(ballvel.y*ballvel.y + 2*Physics.gravity.magnitude*yDisToGo)) * -1f;      // kind of cheating, since we have a negative y vel, which Sqrt ruins
             float tm = Mathf.Abs((finalVel - ballvel.y))/Physics.gravity.magnitude; 
 
             // now we calc the spot in that forward vector.
@@ -142,5 +131,10 @@ public class AI_ZoneDefence : MonoBehaviour
     {
         mBreakOnBall = false;
         cRigid.velocity = Vector3.zero;
+    }
+
+    public void CalcInterceptSpot()
+    {
+        
     }
 }

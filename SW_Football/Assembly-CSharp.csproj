@@ -95,6 +95,8 @@
      <Compile Include="Assets\Scripts\Utilities\LifeSpan.cs" />
      <Compile Include="Assets\Scripts\Utilities\SingletonBehaviour.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_Strings.cs" />
+     <None Include="Assets\Plays\HulkSmash.txt" />
+     <None Include="Assets\Plays\EditorCreatedPlays\DoubleSmash.txt" />
      <None Include="Assets\Plays\stick.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\whatevs.txt" />
      <None Include="Assets\Scripts\DT_Types\SO_Vec3.txt" />
@@ -107,6 +109,7 @@
      <None Include="Assets\Plays\cross.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\adsfdas.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\HB_Wheel.txt" />
+     <None Include="Assets\Plays\EditorCreatedPlays\HulkSmash.txt" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Programming/SW_Quarterback/SW_Quarterback/SW_Football/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
