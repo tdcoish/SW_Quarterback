@@ -82,6 +82,7 @@
      <Compile Include="Assets\Scripts\RT_Editor\RT_NewRoute.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_Player.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_PlayerManager.cs" />
+     <Compile Include="Assets\Scripts\RT_Editor\RT_PlayReader.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_PlayWriter.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_Route.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_RouteTool.cs" />
@@ -103,6 +104,7 @@
      <None Include="Assets\Plays\EditorCreatedPlays\temptla.txt" />
      <None Include="Assets\Plays\cross.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\adsfdas.txt" />
+     <None Include="Assets\Plays\EditorCreatedPlays\HB_Wheel.txt" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Programming/SW_Quarterback/SW_Quarterback/SW_Football/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

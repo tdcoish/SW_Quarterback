@@ -10,11 +10,9 @@ using UnityEngine.SceneManagement;
 public class RT_SceneManager : MonoBehaviour
 {
 
-    [SerializeField]
-    private GameObject          mFootballField;
+    public GameObject           mFootballField;
 
-    [SerializeField]
-    private RT_Player           PF_Player;
+    public RT_Player            PF_Player;
 
     [SerializeField]
     private string              mDefaultPlay = "DefaultPlay.txt";
@@ -27,37 +25,18 @@ public class RT_SceneManager : MonoBehaviour
 
     public List<RT_Player>      rPlayers;
 
+    private RT_PlayReader       cPlayReader;
+
     // Load in play, then shove some RT_Player's into the football field
     void Awake()
     {
-        // gonna try and use a streamreader 
-        StreamReader sReader = new StreamReader(Application.dataPath+"/Plays/"+mDefaultPlay);
-        
-        string sLine = string.Empty;
-        while((sLine = sReader.ReadLine()) != null){
-            // use this line to set up our players.
-            Vector3 posOnField = mFootballField.transform.position;
-            string sSpot = UT_Strings.StartAndEndString(sLine, '[', ']');
-            string sSpotX = UT_Strings.StartAndEndString(sSpot, '[', ',');
-            sSpotX = UT_Strings.DeleteMultipleChars(sSpotX, "[,");
-            string sSpotZ = UT_Strings.StartAndEndString(sSpot, ',', ']');
-            sSpotZ = UT_Strings.DeleteMultipleChars(sSpotZ, ",]");
-
-            // now we place the player on the screen according to the width and height.
-            float unitsToPixel = 0.01f;     // unity default
-            float fieldYardsToPixels = 10f;
-            posOnField.x += float.Parse(sSpotX)*unitsToPixel * fieldYardsToPixels;
-            posOnField.y += float.Parse(sSpotZ) * unitsToPixel * fieldYardsToPixels;
-            posOnField.z = 0f;
-
-            RT_Player ply = Instantiate(PF_Player, posOnField, mFootballField.transform.rotation);
-            ply.mTag = sLine.Substring(0, sLine.IndexOf(':'));
-        }
-
+        cPlayReader = GetComponent<RT_PlayReader>();
     }
 
     void Start()
     {
+        cPlayReader.ReadInPlay(mDefaultPlay);
+
         rPlayers = new List<RT_Player>();
 
         var objs = FindObjectsOfType<RT_Player>();
@@ -88,10 +67,6 @@ public class RT_SceneManager : MonoBehaviour
                 if(hit.collider.GetComponent<RT_Player>() != null){
                     hit.collider.GetComponent<RT_Player>().mIsChosen = true;
                     if(actInd != -1) rPlayers[actInd].mIsChosen = false;
-                }
-                else{
-                    Debug.Log("Missed");
-                    Debug.Log("Hit: " + hit.collider.gameObject);
                 }
             }
         }
