@@ -85,43 +85,7 @@ public class AI_ZoneDefence : MonoBehaviour
         Vector3 ballvel = fBallRef.GetComponent<Rigidbody>().velocity;
         float mag = Vector3.Magnitude(ballvel);
         
-        // if it's beneath our max height
-        if(fBallRef.transform.position.y < mHeightOfInfluence)
-        {
-            // if the ball is going down, just move to the ball
-            // or if we're really close (DLine) move directly to the ball.
-            if(ballvel.y <= 0f || Vector3.Distance(transform.position, fBallRef.transform.position) < 1f){
-                spotToMoveTo = fBallRef.transform.position;
-            }else{
-                // theoretically I should be figuring out where the ball lands and then going there, but I just don't want to.
-                float yDisToGo = fBallRef.transform.position.y - mHeightOfInfluence;
-                float finalVel = Mathf.Sqrt(Mathf.Abs(ballvel.y*ballvel.y + 2*Physics.gravity.magnitude*yDisToGo)) * -1f;      // kind of cheating, since we have a negative y vel, which Sqrt ruins
-                float tm = Mathf.Abs((finalVel - ballvel.y))/Physics.gravity.magnitude; 
-
-                // now we calc the spot in that forward vector.
-                // lol, just chop out the y comp
-                Vector3 fwdComp = ballvel;
-                fwdComp.y = 0f;
-                
-                spotToMoveTo = fBallRef.transform.position + fwdComp*tm;
-                spotToMoveTo.y = 0f;
-            }
-        }else{
-            // now we just calc the spot when it will be within reach.
-            // start by calculating the time it needs.
-            // omfg this took forever.
-            float yDisToGo = fBallRef.transform.position.y - mHeightOfInfluence;
-            float finalVel = Mathf.Sqrt(Mathf.Abs(ballvel.y*ballvel.y + 2*Physics.gravity.magnitude*yDisToGo)) * -1f;      // kind of cheating, since we have a negative y vel, which Sqrt ruins
-            float tm = Mathf.Abs((finalVel - ballvel.y))/Physics.gravity.magnitude; 
-
-            // now we calc the spot in that forward vector.
-            // lol, just chop out the y comp
-            Vector3 fwdComp = ballvel;
-            fwdComp.y = 0f;
-            
-            spotToMoveTo = fBallRef.transform.position + fwdComp*tm;
-            spotToMoveTo.y = 0f;
-        }
+        spotToMoveTo = CalcMoveSpot(fBallRef);
 
         // now we just move to the spot.
         cRigid.velocity = mMaxVel * Vector3.Normalize(spotToMoveTo - transform.position);
@@ -133,8 +97,40 @@ public class AI_ZoneDefence : MonoBehaviour
         cRigid.velocity = Vector3.zero;
     }
 
-    public void CalcInterceptSpot()
+    public Vector3 CalcMoveSpot(PROJ_Football fBallRef)
     {
+        Vector3 ballVel = fBallRef.GetComponent<Rigidbody>().velocity;
+
+        if(fBallRef.transform.position.y < mHeightOfInfluence)
+        {
+            if(ballVel.y <= 0f || Vector3.Distance(transform.position, fBallRef.transform.position) < 1f){
+                return fBallRef.transform.position;
+            }else{
+                // theoretically I should be figuring out where the ball lands and then going there, but I just don't want to.
+                return CalcInterceptSpot(fBallRef);
+            }
+        }else{
+            return CalcInterceptSpot(fBallRef);
+        }
+    }
+
+    public Vector3 CalcInterceptSpot(PROJ_Football fBallRef)
+    {
+        Vector3 ballVel = fBallRef.GetComponent<Rigidbody>().velocity;
+        Vector3 spotToMoveTo = new Vector3();
+
+        float yDisToGo = fBallRef.transform.position.y - mHeightOfInfluence;
+        float finalVel = Mathf.Sqrt(Mathf.Abs(ballVel.y*ballVel.y + 2*Physics.gravity.magnitude*yDisToGo)) * -1f;      // kind of cheating, since we have a negative y vel, which Sqrt ruins
+        float tm = Mathf.Abs((finalVel - ballVel.y))/Physics.gravity.magnitude; 
+
+        // now we calc the spot in that forward vector.
+        // lol, just chop out the y comp
+        Vector3 fwdComp = ballVel;
+        fwdComp.y = 0f;
         
+        spotToMoveTo = fBallRef.transform.position + fwdComp*tm;
+        spotToMoveTo.y = 0f;
+
+        return spotToMoveTo;
     }
 }

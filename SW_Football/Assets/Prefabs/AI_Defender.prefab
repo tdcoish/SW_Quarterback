@@ -205,7 +205,7 @@ MonoBehaviour:
   mMaxVel: 8
   mBreakOnBall: 0
   rValidFootball: {fileID: 11400000, guid: 1897fc8717b9b2e498497c1e5d709db3, type: 2}
-  mHeightOfInfluence: 2
+  mHeightOfInfluence: 3.5
 --- !u!114 &8654152096983792837
 MonoBehaviour:
   m_ObjectHideFlags: 0
