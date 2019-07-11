@@ -48,6 +48,7 @@ public class RT_SceneManager : MonoBehaviour
             float fieldYardsToPixels = 10f;
             posOnField.x += float.Parse(sSpotX)*unitsToPixel * fieldYardsToPixels;
             posOnField.y += float.Parse(sSpotZ) * unitsToPixel * fieldYardsToPixels;
+            posOnField.z = 0f;
 
             RT_Player ply = Instantiate(PF_Player, posOnField, mFootballField.transform.rotation);
             ply.mTag = sLine.Substring(0, sLine.IndexOf(':'));
@@ -87,6 +88,10 @@ public class RT_SceneManager : MonoBehaviour
                 if(hit.collider.GetComponent<RT_Player>() != null){
                     hit.collider.GetComponent<RT_Player>().mIsChosen = true;
                     if(actInd != -1) rPlayers[actInd].mIsChosen = false;
+                }
+                else{
+                    Debug.Log("Missed");
+                    Debug.Log("Hit: " + hit.collider.gameObject);
                 }
             }
         }
