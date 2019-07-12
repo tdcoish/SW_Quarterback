@@ -33,6 +33,9 @@ public class PLY_Controller : MonoBehaviour
         for(int i=0; i<mRoutes.Count; i++){
             Destroy(mRoutes[i].gameObject);
         }
+        for(int i=0; i<mDefenders.Count; i++){
+            Destroy(mDefenders[i].gameObject);
+        }
         mRoutes = new List<AI_Route>();
          
         StreamReader sReader = new StreamReader(Application.dataPath +"/Plays/"+mOffPlayName+".txt");

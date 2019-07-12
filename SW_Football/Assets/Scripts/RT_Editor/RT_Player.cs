@@ -12,10 +12,6 @@ public class RT_Player : MonoBehaviour
 
     public string           mTag = "WR1";
 
-    void Start()
-    {
-    }
-
     void Update()
     {
 

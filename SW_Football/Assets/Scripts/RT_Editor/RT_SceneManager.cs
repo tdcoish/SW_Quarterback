@@ -21,6 +21,9 @@ public class RT_SceneManager : MonoBehaviour
     public InputField           mPlayNameEnter;
 
     [SerializeField]
+    private Text                mPositionText;
+
+    [SerializeField]
     private Text                mSelectedPlayerInfo;
 
     public List<RT_Player>      rPlayers;
@@ -75,6 +78,7 @@ public class RT_SceneManager : MonoBehaviour
         if(actInd == -1){
             mSelectedPlayerInfo.text = "NO PLAYER CHOSEN";
         }else{
+            mPositionText.text = "X: " + rPlayers[actInd].transform.position.x*10f + ", Y: " + rPlayers[actInd].transform.position.y*10f;
             mSelectedPlayerInfo.text = "TYPE: " + rPlayers[actInd].mTag;
         }
 

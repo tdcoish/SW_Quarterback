@@ -33,7 +33,7 @@ public class RT_PlayReader : MonoBehaviour
             float unitsToPixel = 0.01f;     // unity default
             float fieldYardsToPixels = 10f;
             posOnField.x += float.Parse(sSpotX)*unitsToPixel * fieldYardsToPixels;
-            posOnField.y += float.Parse(sSpotZ) * unitsToPixel * fieldYardsToPixels;
+            posOnField.y += float.Parse(sSpotZ)*unitsToPixel * fieldYardsToPixels;
             posOnField.z = 0f;
 
             RT_Player ply = Instantiate(cEdMan.PF_Player, posOnField, cEdMan.mFootballField.transform.rotation);

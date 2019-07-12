@@ -88,10 +88,10 @@ public class AI_ZoneDefence : MonoBehaviour
 
     void MoveToZoneSpot()
     {
-        if(Vector3.Distance(transform.position, mZoneSpot) < 1f){
-            return;
-        }
         cRigid.velocity = Vector3.Normalize(mZoneSpot - transform.position) * mMaxVel;
+        if(Vector3.Distance(transform.position, mZoneSpot) < 1f){
+            cRigid.velocity *= 0.5f;
+        }
     }
 
     // stupidest one, they just run straight to the ball. Leads to them always moving forwards
