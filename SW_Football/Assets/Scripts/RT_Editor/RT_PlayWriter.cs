@@ -31,6 +31,12 @@ public class RT_PlayWriter : MonoBehaviour
                 Vector3 nodePos = cRouteTool.rRoutes[i].mNodes[j].transform.position;
                 fileContents += "(" + cRouteTool.rRoutes[i].mNodes[j].transform.position.x + "," + cRouteTool.rRoutes[i].mNodes[j].transform.position.y + ")";
             }
+
+            // convert from where they are on the field to our coordinates, which unfortunately requires a lot of code
+            // Vector3 yrdPos = cRouteTool.rRoutes[i].mNodes[0].transform.position;
+            // yrdPos -= cEdManager.mFootballField.transform.position;
+            
+            
             fileContents += "\tLINEUP: [" + cRouteTool.rRoutes[i].mNodes[0].transform.position.x + "," + cRouteTool.rRoutes[i].mNodes[0].transform.position.y + "]";
 
             fileContents += "\n";
