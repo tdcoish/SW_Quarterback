@@ -96,8 +96,10 @@
      <Compile Include="Assets\Scripts\Utilities\SingletonBehaviour.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_Strings.cs" />
      <None Include="Assets\Plays\HulkSmash.txt" />
+     <None Include="Assets\Plays\EditorCreatedPlays\Cover3Beater.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\DoubleSmash.txt" />
      <None Include="Assets\Plays\stick.txt" />
+     <None Include="Assets\Plays\EditorCreatedPlays\sdf.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\whatevs.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\TestingAbain.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\TESTINGBABY.txt" />

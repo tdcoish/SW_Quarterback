@@ -3123,5 +3123,10 @@ PrefabInstance:
       propertyPath: mPositionText
       value: 
       objectReference: {fileID: 1632001501}
+    - target: {fileID: 4734412463011446458, guid: 50ca97e71cce4374d86d00c3987a0bfb,
+        type: 3}
+      propertyPath: mDefaultPlay
+      value: Cover3Beater
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50ca97e71cce4374d86d00c3987a0bfb, type: 3}

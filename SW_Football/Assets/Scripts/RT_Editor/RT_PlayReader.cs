@@ -17,7 +17,7 @@ public class RT_PlayReader : MonoBehaviour
     public void ReadInPlay(string sPlayName)
     {
         // gonna try and use a streamreader 
-        StreamReader sReader = new StreamReader(Application.dataPath+"/Plays/"+sPlayName);
+        StreamReader sReader = new StreamReader(Application.dataPath+"/Plays/EditorCreatedPlays/"+sPlayName+".txt");
         
         string sLine = string.Empty;
         while((sLine = sReader.ReadLine()) != null){

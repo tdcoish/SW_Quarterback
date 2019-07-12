@@ -17,8 +17,4 @@ public class RT_Route : MonoBehaviour
         mLineRenderer = GetComponent<LineRenderer>();
     }
 
-    void Update()
-    {
-        
-    }
 }
