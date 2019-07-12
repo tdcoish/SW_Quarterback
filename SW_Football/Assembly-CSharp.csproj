@@ -99,7 +99,10 @@
      <None Include="Assets\Plays\EditorCreatedPlays\DoubleSmash.txt" />
      <None Include="Assets\Plays\stick.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\whatevs.txt" />
+     <None Include="Assets\Plays\EditorCreatedPlays\TestingAbain.txt" />
+     <None Include="Assets\Plays\EditorCreatedPlays\TESTINGBABY.txt" />
      <None Include="Assets\Scripts\DT_Types\SO_Vec3.txt" />
+     <None Include="Assets\Plays\EditorCreatedPlays\Testd.txt" />
      <None Include="Assets\Plays\FakePlay.txt" />
      <None Include="Assets\Plays\OtherFakePlay.txt" />
      <None Include="Assets\Plays\play01.txt" />
@@ -107,10 +110,13 @@
      <None Include="Assets\Plays\DefaultPlay.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\RandoPlay.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\temptla.txt" />
+     <None Include="Assets\Plays\EditorCreatedPlays\Testasdlkfj.txt" />
+     <None Include="Assets\Plays\EditorCreatedPlays\TESTINGWhatevs.txt" />
      <None Include="Assets\Plays\cross.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\adsfdas.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\HB_Wheel.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\HulkSmash.txt" />
+     <None Include="Assets\Plays\EditorCreatedPlays\Testsdl.txt" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Programming/SW_Quarterback/SW_Quarterback/SW_Football/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

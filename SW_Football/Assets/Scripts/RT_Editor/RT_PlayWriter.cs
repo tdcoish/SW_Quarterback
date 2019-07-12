@@ -28,20 +28,30 @@ public class RT_PlayWriter : MonoBehaviour
             fileContents += cRouteTool.rRoutes[i].mPlayerTag + ": ";
             // now we get the route.
             for(int j=0; j<cRouteTool.rRoutes[i].mNodes.Count; j++){
-                Vector3 nodePos = cRouteTool.rRoutes[i].mNodes[j].transform.position;
-                fileContents += "(" + cRouteTool.rRoutes[i].mNodes[j].transform.position.x + "," + cRouteTool.rRoutes[i].mNodes[j].transform.position.y + ")";
+                Vector3 nodePos = PixelsToYardsConversion(cRouteTool.rRoutes[i].mNodes[j].transform.position);
+
+                fileContents += "(" + string.Format("{0:0.0}", nodePos.x) + "," + string.Format("{0:0.0}", nodePos.y) + ")";
             }
 
             // convert from where they are on the field to our coordinates, which unfortunately requires a lot of code
-            // Vector3 yrdPos = cRouteTool.rRoutes[i].mNodes[0].transform.position;
-            // yrdPos -= cEdManager.mFootballField.transform.position;
+            Vector3 yrdPos = PixelsToYardsConversion(cRouteTool.rRoutes[i].mNodes[0].transform.position);
             
-            
-            fileContents += "\tLINEUP: [" + cRouteTool.rRoutes[i].mNodes[0].transform.position.x + "," + cRouteTool.rRoutes[i].mNodes[0].transform.position.y + "]";
-
+            fileContents += "\tLINEUP: [" + string.Format("{0:0.0}", yrdPos.x) + "," + string.Format("{0:0.0}", yrdPos.y)+ "]";
             fileContents += "\n";
         }
 
         File.WriteAllText(path, fileContents);
+    }
+
+    Vector2 PixelsToYardsConversion(Vector3 pos)
+    {
+        Vector3 yrdPos = pos;
+        yrdPos -= cEdManager.mFootballField.transform.position;
+        float pxToYrd = 53.34f / cEdManager.mFootballField.GetComponent<RectTransform>().rect.width;
+        yrdPos.x /= pxToYrd;
+        yrdPos.y /= pxToYrd;
+        yrdPos.z = 0f;
+
+        return yrdPos;
     }
 }
