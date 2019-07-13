@@ -44,6 +44,12 @@ public class PLY_Controller : MonoBehaviour
         {
             var clone = Instantiate(RefAthlete, transform.position, transform.rotation);
             clone.GetComponent<AI_Route>().ReceiveRoute(sLine, mSnapSpot.transform.position);
+            clone.GetComponent<AI_Athlete>().mTag = UT_Strings.StartAndEndString(sLine, ':');
+            Debug.Log("Tag: " + clone.GetComponent<AI_Athlete>().mTag);
+            if(clone.GetComponent<AI_Athlete>().mTag.Contains("G")){
+                Destroy(clone);
+                continue;
+            }
             mRoutes.Add(clone.GetComponent<AI_Route>());
         }
 

@@ -166,6 +166,7 @@ GameObject:
   - component: {fileID: 2594927262255425537}
   - component: {fileID: 1791455132}
   - component: {fileID: 1694597529}
+  - component: {fileID: 446076488524952048}
   m_Layer: 0
   m_Name: AI_Receiver
   m_TagString: Untagged
@@ -308,6 +309,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b28076ab561394db7fde94be8bfb7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &446076488524952048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7233204231284589399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e1fbc0385a2f9446b0e749aa89df183, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTag: NON
 --- !u!1 &7343177965764156118
 GameObject:
   m_ObjectHideFlags: 0

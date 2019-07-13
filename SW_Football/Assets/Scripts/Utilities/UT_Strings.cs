@@ -37,6 +37,25 @@ public static class UT_Strings
         return s.Substring(startPos, (endPos-startPos + 1));
     }
 
+    public static string StartAndEndString(string s, char cEnd, bool inclusive = false)
+    {
+        int charPos = -1;
+        for(int i=0; i<s.Length; i++){
+            if(s[i] == cEnd){
+                charPos = i;
+                break;
+            }
+        }
+        if(charPos == -1){
+            return "CHAR NOT FOUND\n";
+        }
+
+        if(!inclusive){
+            return s.Substring(0, charPos);
+        }
+        return s.Substring(0, charPos+1);
+    }
+
     public static string DeleteMultipleChars(string s, string c)
     {
         string copy = s.Substring(0);

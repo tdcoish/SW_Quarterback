@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\AI\AI_Athlete.cs" />
      <Compile Include="Assets\Scripts\AI\AI_MovingTarget.cs" />
      <Compile Include="Assets\Scripts\AI\AI_Receiver.cs" />
      <Compile Include="Assets\Scripts\AI\AI_Route.cs" />
@@ -110,6 +111,7 @@
      <None Include="Assets\Plays\play01.txt" />
      <None Include="Assets\Plays\Defense\Cover2.txt" />
      <None Include="Assets\Plays\DefaultPlay.txt" />
+     <None Include="Assets\Plays\EditorCreatedPlays\TestCov3Beat.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\RandoPlay.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\temptla.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Testasdlkfj.txt" />

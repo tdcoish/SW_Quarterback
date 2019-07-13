@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/DefenceTesting.unity
+- path: Assets/Scenes/ED_Plays.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
