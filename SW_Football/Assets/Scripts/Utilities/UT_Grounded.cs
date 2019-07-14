@@ -3,7 +3,7 @@ Attach to feet of gameobject that should remain on ground.
 *************************************************************************************/
 using UnityEngine;
 
-public class GM_Grounded : MonoBehaviour
+public class UT_Grounded : MonoBehaviour
 {
     [SerializeField]
     private float distance = 1f;

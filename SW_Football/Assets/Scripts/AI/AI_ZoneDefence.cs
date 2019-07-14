@@ -27,6 +27,8 @@ public class AI_ZoneDefence : MonoBehaviour
     [Tooltip("Max height the ball can be for us to still tip")]
     public float                mHeightOfInfluence = 2f;
 
+    public GE_Event             GE_FB_Intercept;
+
     void Start()
     {
         cRigid = GetComponent<Rigidbody>();
@@ -181,5 +183,18 @@ public class AI_ZoneDefence : MonoBehaviour
         spotToMoveTo.y = 0f;
 
         return spotToMoveTo;
+    }
+
+
+    // if the football hits us, we intercept it.
+    void OnColliderEnter(Collision other)
+    {
+        Debug.Log("Hit something");
+
+        if(other.gameObject.GetComponent<PROJ_Football>())
+        {
+            Debug.Log("Hit football");
+            GE_FB_Intercept.Raise(null);
+        }
     }
 }

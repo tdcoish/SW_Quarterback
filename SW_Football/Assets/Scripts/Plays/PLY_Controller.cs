@@ -22,6 +22,9 @@ public class PLY_Controller : MonoBehaviour
     [SerializeField]
     private PLY_SnapSpot        mSnapSpot;
 
+    [SerializeField]
+    private GE_Event            GE_PLY_Restart;
+
     void Awake()
     {
         SetUpPlay();
@@ -29,6 +32,8 @@ public class PLY_Controller : MonoBehaviour
 
     private void SetUpPlay()
     {
+        GE_PLY_Restart.Raise(null);
+
         //if we've already instantiated players, delete them
         for(int i=0; i<mRoutes.Count; i++){
             Destroy(mRoutes[i].gameObject);

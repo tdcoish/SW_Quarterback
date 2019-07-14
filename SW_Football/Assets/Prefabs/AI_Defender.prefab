@@ -225,6 +225,7 @@ MonoBehaviour:
   mZoneSpot: {x: 0, y: 0, z: 0}
   mAbleToMove: 1
   mHeightOfInfluence: 3.5
+  GE_FB_Intercept: {fileID: 11400000, guid: cb7a6724ab4b26b4b922dc9be8e89106, type: 2}
 --- !u!114 &8654152096983792837
 MonoBehaviour:
   m_ObjectHideFlags: 0

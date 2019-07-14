@@ -71,6 +71,7 @@
      <Compile Include="Assets\Scripts\DT_Types\SO_Transform.cs" />
      <Compile Include="Assets\Scripts\DT_Types\SO_Vec3.cs" />
      <Compile Include="Assets\Scripts\Environment\EN_FieldGround.cs" />
+     <Compile Include="Assets\Scripts\GameManagement\GM_Manager.cs" />
      <Compile Include="Assets\Scripts\GE_System\GE_Event.cs" />
      <Compile Include="Assets\Scripts\GE_System\GE_Listener.cs" />
      <Compile Include="Assets\Scripts\PC_Camera.cs" />
@@ -92,9 +93,9 @@
      <Compile Include="Assets\Scripts\RT_Editor\RT_SceneManager.cs" />
      <Compile Include="Assets\Scripts\SO_Data\DT_Player.cs" />
      <Compile Include="Assets\Scripts\TEMP_FileStoring.cs" />
-     <Compile Include="Assets\Scripts\Utilities\GM_Grounded.cs" />
      <Compile Include="Assets\Scripts\Utilities\LifeSpan.cs" />
      <Compile Include="Assets\Scripts\Utilities\SingletonBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Utilities\UT_Grounded.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_Strings.cs" />
      <None Include="Assets\Plays\HulkSmash.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Cover3Beater.txt" />

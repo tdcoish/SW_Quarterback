@@ -41,7 +41,7 @@ public class AI_RouteFollow : MonoBehaviour
             Instantiate(mPathMarker, mCurGoal, transform.rotation);
         }
         // ground entity.
-        GM_Grounded grounder = GetComponentInChildren<GM_Grounded>();
+        UT_Grounded grounder = GetComponentInChildren<UT_Grounded>();
         Vector3 pos = transform.position;
         pos.y -= grounder.DisFromGround();
         transform.position = pos;

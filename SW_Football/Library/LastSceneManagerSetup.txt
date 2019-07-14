@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/ED_Plays.unity
+- path: Assets/Scenes/SN_GameTest.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
