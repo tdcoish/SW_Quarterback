@@ -15,9 +15,24 @@ public class GM_Manager : MonoBehaviour
     [SerializeField]
     private Text                rPlayRes;
 
+    private bool                mBallSnapped = false;
+    public GE_Event             GE_BALL_SNAP;
+
     void Start()
     {
         PlayRestart();
+    }
+
+    void Update()
+    {
+        if(!mBallSnapped){
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                GE_BALL_SNAP.Raise(null);
+                mBallSnapped = true;
+            }
+
+        }
     }
 
     public void OnIncompletion()

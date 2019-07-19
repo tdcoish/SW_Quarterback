@@ -9,4 +9,23 @@ public class AI_Athlete : MonoBehaviour
     // we take the entire line in and find our tag.
     public string               mTag = "NON";
     
+    public bool                 mWaitForSnap = true;
+
+    private Rigidbody           rBody;
+
+    void Start()
+    {
+        rBody = GetComponent<Rigidbody>();
+
+        if(mWaitForSnap){
+            rBody.constraints = RigidbodyConstraints.FreezePosition;
+        }
+    }
+
+    public void OnSnap()
+    {
+        Debug.Log("Ball Snapped");
+        mWaitForSnap = false;
+        rBody.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY;
+    }
 }

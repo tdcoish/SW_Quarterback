@@ -1110,6 +1110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mPlayOngoing: 1
   rPlayRes: {fileID: 130460850}
+  GE_BALL_SNAP: {fileID: 11400000, guid: 1e620a29f3e9e5e47bc875cbc3330609, type: 2}
 --- !u!114 &1354821213
 MonoBehaviour:
   m_ObjectHideFlags: 0
