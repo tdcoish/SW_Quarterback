@@ -24,8 +24,14 @@ public class AI_Athlete : MonoBehaviour
 
     public void OnSnap()
     {
-        Debug.Log("Ball Snapped");
         mWaitForSnap = false;
         rBody.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY;
+    }
+
+    public void OnPlayOver()
+    {
+        mWaitForSnap = true;
+        rBody.velocity = Vector3.zero;
+        rBody.constraints = RigidbodyConstraints.FreezePosition;
     }
 }

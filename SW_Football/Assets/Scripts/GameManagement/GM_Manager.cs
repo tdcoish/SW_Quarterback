@@ -4,9 +4,28 @@ So, place the ball, bring up the play selection, snap the ball, figure out when 
 is over, and do it again. Halftime, end of game, etcetera. Basically the metagame.
 
 For now, just figure out when the play is over and whether it was successful or not.
+
+Need to keep track of where the "football" is. 
 *************************************************************************************/
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
+
+
+// for now just the basic loop of 
+// Select play
+// Pre snap
+// Hike ball, play running.
+// Play ends somehow.
+// Over and over again.
+
+public enum GAME_STATE
+{
+    PLAYSELECT,
+    PRESNAP,
+    RUNNING,
+    RESOLUTION
+}
 
 public class GM_Manager : MonoBehaviour
 {
@@ -15,11 +34,22 @@ public class GM_Manager : MonoBehaviour
     [SerializeField]
     private Text                rPlayRes;
 
+    [SerializeField]
+    private Text                rPlayState;
+
     private bool                mBallSnapped = false;
     public GE_Event             GE_BALL_SNAP;
 
+    public PLY_SnapSpot         mSnapSpot;
+
+    public AI_Athlete[]         rAthletes;
+
+    public GAME_STATE           mGameState;
+
     void Start()
     {
+        mGameState = GAME_STATE.PRESNAP;
+
         PlayRestart();
     }
 
@@ -30,9 +60,12 @@ public class GM_Manager : MonoBehaviour
             {
                 GE_BALL_SNAP.Raise(null);
                 mBallSnapped = true;
+                mGameState = GAME_STATE.RUNNING;
             }
 
         }
+
+        rPlayState.text = "STATE: " + mGameState;
     }
 
     public void OnIncompletion()
@@ -57,11 +90,21 @@ public class GM_Manager : MonoBehaviour
             rPlayRes.text = "Play Res: Catch";
             PlayOver();
         }
+        
+        Vector3 snapPos = FindObjectOfType<PROJ_Football>().transform.position;
+        snapPos.y = 0.2f;
+        mSnapSpot.transform.position = snapPos;
     }
 
     private void PlayOver()
     {
+        mGameState = GAME_STATE.RESOLUTION;
+        mBallSnapped = false;
         mPlayOngoing = false;
+        rAthletes = FindObjectsOfType<AI_Athlete>();
+        for(int i=0; i<rAthletes.Length; i++){
+            rAthletes[i].OnPlayOver();
+        }
     }
 
     public void PlayRestart()
