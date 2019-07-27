@@ -29,8 +29,8 @@ public enum GAME_STATE
 
 public class DownAndDistance
 {
-    public int          mDown = 1;
-    public int          mDis = 10;
+    public int              mDown = 1;
+    public float            mDis = 10;
 }
 
 public class QuarterTime
@@ -59,6 +59,7 @@ public class GM_Manager : MonoBehaviour
     public GE_Event             GE_BALL_SNAP;
 
     public PLY_SnapSpot         mSnapSpot;
+    public PLY_FirstDownMark    mFirstDownSpot;
 
     public AI_Athlete[]         rAthletes;
 
@@ -85,6 +86,9 @@ public class GM_Manager : MonoBehaviour
         mDownAndDis = new DownAndDistance();
         mScores = new GameScore();
         mGameState = GAME_STATE.PRESNAP;
+
+        // kind of a hack, move this later.
+        SetFirstDownSpot();
 
         PlayRestart();
     }
@@ -155,6 +159,9 @@ public class GM_Manager : MonoBehaviour
         for(int i=0; i<rAthletes.Length; i++){
             rAthletes[i].OnPlayOver();
         }
+
+        // manage down, distance gets updated when we render the text
+        mDownAndDis.mDown++;
     }
 
     public void PlayRestart()
@@ -187,7 +194,9 @@ public class GM_Manager : MonoBehaviour
 
     private void SetDownAndDisText()
     {
-        rDownAndDis.text = NumContraction(mDownAndDis.mDown) + " and " + mDownAndDis.mDis;
+        mDownAndDis.mDis = mFirstDownSpot.transform.position.z - mSnapSpot.transform.position.z;
+        double roundedDis = System.Math.Round((double)mDownAndDis.mDis, 0);
+        rDownAndDis.text = NumContraction(mDownAndDis.mDown) + " and " + roundedDis;
     }
     private void SetTimeAndQuarterText()
     {
@@ -225,5 +234,12 @@ public class GM_Manager : MonoBehaviour
         }
 
         mSnapSpot.transform.position = snapPos;
+    }
+
+    private void SetFirstDownSpot()
+    {
+        Vector3 spot = mSnapSpot.transform.position;
+        spot.z += 10f;
+        mFirstDownSpot.transform.position = spot;
     }
 }
