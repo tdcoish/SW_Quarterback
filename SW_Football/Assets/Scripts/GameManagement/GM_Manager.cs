@@ -65,6 +65,8 @@ public class GM_Manager : MonoBehaviour
 
     public GAME_STATE           mGameState;
 
+    public PC_Controller        rPlayer;
+
     // quarter, time left.
     // down, distance, etcetera
     // game score.
@@ -141,13 +143,12 @@ public class GM_Manager : MonoBehaviour
     public void OnCatch()
     {
         if(mPlayOngoing){
+            Vector3 snapPos = FindObjectOfType<PROJ_Football>().transform.position;
+            snapPos.y = 0.2f;
+            mSnapSpot.transform.position = snapPos;
             rPlayRes.text = "Play Res: Catch";
             PlayOver();
-        }
-        
-        Vector3 snapPos = FindObjectOfType<PROJ_Football>().transform.position;
-        snapPos.y = 0.2f;
-        mSnapSpot.transform.position = snapPos;
+        }      
     }
 
     private void PlayOver()
@@ -162,6 +163,12 @@ public class GM_Manager : MonoBehaviour
 
         // manage down, distance gets updated when we render the text
         mDownAndDis.mDown++;
+
+        // alright, now some logic, if we've gone past the chains, set up new downs.
+        if(mSnapSpot.transform.position.z > mFirstDownSpot.transform.position.z){
+            SetUpNewDowns();
+        }
+        // if we've gone past fourth down, turnover on downs.
     }
 
     public void PlayRestart()
@@ -171,6 +178,9 @@ public class GM_Manager : MonoBehaviour
         rPlayRes.text = "Play Res: Ongoing";
 
         SetSnapBetweenHashes();
+        Vector3 pos = mSnapSpot.transform.position;
+        pos.z -= 3;
+        rPlayer.transform.position = pos;
     }
 
     private string NumContraction(int num)
@@ -196,7 +206,11 @@ public class GM_Manager : MonoBehaviour
     {
         mDownAndDis.mDis = mFirstDownSpot.transform.position.z - mSnapSpot.transform.position.z;
         double roundedDis = System.Math.Round((double)mDownAndDis.mDis, 0);
-        rDownAndDis.text = NumContraction(mDownAndDis.mDown) + " and " + roundedDis;
+        string disText = roundedDis.ToString();
+        if(roundedDis == 0){
+            disText = "inches";
+        }
+        rDownAndDis.text = NumContraction(mDownAndDis.mDown) + " and " + disText;
     }
     private void SetTimeAndQuarterText()
     {
@@ -219,6 +233,13 @@ public class GM_Manager : MonoBehaviour
     {
         mScores.mHomeScore += 7;
         rHomeScore.text = "Home: " + mScores.mHomeScore;
+
+        // now we need to shove the snap spot back to the 20 yard line.
+        Vector3 pos = mSnapSpot.transform.position;
+        pos.z = 30;
+        mSnapSpot.transform.position = pos;
+
+        SetUpNewDowns();
     }
 
     // here we need to make sure the snap spot is between the hashes.
@@ -241,5 +262,12 @@ public class GM_Manager : MonoBehaviour
         Vector3 spot = mSnapSpot.transform.position;
         spot.z += 10f;
         mFirstDownSpot.transform.position = spot;
+    }
+
+    private void SetUpNewDowns()
+    {
+        mDownAndDis.mDis = 10;
+        mDownAndDis.mDown = 1;
+        SetFirstDownSpot();
     }
 }

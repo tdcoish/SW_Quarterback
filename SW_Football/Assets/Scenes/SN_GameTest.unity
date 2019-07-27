@@ -787,6 +787,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &799641854 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1690815594}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078937ce689994344bf7c90b1dc906d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &803353488
 GameObject:
   m_ObjectHideFlags: 0
@@ -1858,6 +1870,7 @@ MonoBehaviour:
   mFirstDownSpot: {fileID: 872229725}
   rAthletes: []
   mGameState: 0
+  rPlayer: {fileID: 799641854}
   rHomeScore: {fileID: 207258547}
   rAwayScore: {fileID: 1807927050}
   rDownAndDis: {fileID: 1686817002}
