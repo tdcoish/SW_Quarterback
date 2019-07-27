@@ -147,8 +147,18 @@ public class GM_Manager : MonoBehaviour
             snapPos.y = 0.2f;
             mSnapSpot.transform.position = snapPos;
             rPlayRes.text = "Play Res: Catch";
-            PlayOver();
+            //PlayOver();
         }      
+    }
+
+    public void OnTackle(){
+        if(mPlayOngoing){
+            Vector3 snapPos = FindObjectOfType<PROJ_Football>().transform.position;
+            snapPos.y = 0.2f;
+            mSnapSpot.transform.position = snapPos;
+            rPlayRes.text = "Play Res: Tackle";
+            PlayOver();
+        }
     }
 
     private void PlayOver()
@@ -181,6 +191,12 @@ public class GM_Manager : MonoBehaviour
         Vector3 pos = mSnapSpot.transform.position;
         pos.z -= 3;
         rPlayer.transform.position = pos;
+
+        // delete all footballs from the scene
+        PROJ_Football[] footballs = FindObjectsOfType<PROJ_Football>();
+        for(int i=0; i<footballs.Length; i++){
+            //Destroy(footballs[i].gameObject);
+        }
     }
 
     private string NumContraction(int num)

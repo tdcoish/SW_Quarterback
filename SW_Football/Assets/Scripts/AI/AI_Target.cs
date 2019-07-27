@@ -13,11 +13,15 @@ public class AI_Target : MonoBehaviour
     public bool                     mCaughtBall = false;
 
     private AI_Receiver             mOwner;
+    private AI_Runner               cRunner;
 
     public bool                     mInEndzone = false;
 
+    private GameObject              rFootball;
+
     void Start()
     {
+        cRunner = GetComponentInParent<AI_Runner>();
         mOwner = GetComponentInParent<AI_Receiver>();
     }
 
@@ -36,6 +40,17 @@ public class AI_Target : MonoBehaviour
         if(other.GetComponent<PROJ_Football>() != null){
             mCaughtBall = true;
             HitTarget.Raise(null);
+
+            if(cRunner != null){
+                cRunner.mActivated = true;
+                PROJ_Football fBallRef = FindObjectOfType<PROJ_Football>();
+                cRunner.rFootball = fBallRef;
+                Rigidbody rigid = fBallRef.GetComponent<Rigidbody>();
+                rigid.velocity = Vector3.zero;
+                rigid.useGravity = false;
+                rigid.detectCollisions = false;
+                fBallRef.transform.parent = transform.parent;
+            }
 
             // but now we also need to check if we're within an endzone.
             if(mInEndzone){

@@ -171,6 +171,7 @@ GameObject:
   - component: {fileID: 1694597529}
   - component: {fileID: 446076488524952048}
   - component: {fileID: 883901585}
+  - component: {fileID: 1568070792}
   m_Layer: 0
   m_Name: AI_Receiver
   m_TagString: Untagged
@@ -355,6 +356,20 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: Response, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &1568070792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7233204231284589399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8566ce74133aefd42bfbaf7f9bc8d2f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GE_Tackled: {fileID: 11400000, guid: cfc6c24b5c4381d4fa9fa146b9a58fd2, type: 2}
+  mActivated: 0
 --- !u!1 &7343177965764156118
 GameObject:
   m_ObjectHideFlags: 0

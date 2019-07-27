@@ -1,0 +1,68 @@
+﻿/*************************************************************************************
+This script takes over when any designated runner has the ball. For now all we do is 
+run directly to the endzone.
+*************************************************************************************/
+using UnityEngine;
+
+public class AI_Runner : MonoBehaviour
+{
+
+    public GE_Event             GE_Tackled;
+
+    private Rigidbody           rBody;
+
+    public bool                 mActivated = false;
+
+    // will get filled in if they are carrying the ball. For some reason transform.parent is not working.
+    public PROJ_Football        rFootball;
+
+    private AI_RouteFollow      cRouteFollow;
+
+    void Start()
+    {
+        cRouteFollow = GetComponent<AI_RouteFollow>();
+        if(!cRouteFollow){
+            Debug.Log("No route follow");
+        }
+
+        rBody = GetComponent<Rigidbody>();
+        if(!rBody){
+            Debug.Log("No rbody");
+        }
+    }
+
+    // just make us run to the endzone for now.
+    void Update()
+    {
+        // wow this was actually fairly easy.
+        // when we get tackled, set activated to false.
+        if(mActivated){
+            Vector3 vel = new Vector3();
+            vel.z = cRouteFollow.mSpd;
+            rBody.velocity = vel;
+
+            if(rFootball != null){
+                Vector3 pos = transform.position;
+                pos.y += 2f;
+                rFootball.transform.position = Vector3.MoveTowards(rFootball.transform.position, pos, 2f);
+            }
+        }
+    }
+
+    // something feels vaguely off with this.
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.GetComponent<AI_Tackler>()){
+            Debug.Log("Got tackled");
+
+            GE_Tackled.Raise(null);
+
+            // now we want to release the ball from our grasp.
+            PROJ_Football fBall = GetComponentInChildren<PROJ_Football>();
+            if(fBall){
+                Debug.Log("Foudn fball");
+                fBall.transform.parent = null;
+            }
+        }
+    }
+}

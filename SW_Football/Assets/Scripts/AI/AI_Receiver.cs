@@ -6,7 +6,6 @@ using UnityEngine;
 public class AI_Receiver : MonoBehaviour
 {
 
-
     private AI_Target       mTarget;
 
     void Start()

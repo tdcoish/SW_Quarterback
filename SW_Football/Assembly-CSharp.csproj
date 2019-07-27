@@ -61,6 +61,8 @@
      <Compile Include="Assets\Scripts\AI\AI_Route.cs" />
      <Compile Include="Assets\Scripts\AI\AI_RouteFollow.cs" />
      <Compile Include="Assets\Scripts\AI\AI_RouteNode.cs" />
+     <Compile Include="Assets\Scripts\AI\AI_Runner.cs" />
+     <Compile Include="Assets\Scripts\AI\AI_Tackler.cs" />
      <Compile Include="Assets\Scripts\AI\AI_Target.cs" />
      <Compile Include="Assets\Scripts\AI\AI_ZoneDefence.cs" />
      <Compile Include="Assets\Scripts\Audio\AD_Manager.cs" />

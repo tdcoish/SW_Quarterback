@@ -1801,6 +1801,7 @@ GameObject:
   - component: {fileID: 1354821210}
   - component: {fileID: 1354821216}
   - component: {fileID: 1354821217}
+  - component: {fileID: 1354821218}
   m_Layer: 0
   m_Name: GM_Manager
   m_TagString: Untagged
@@ -2007,6 +2008,34 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1354821212}
         m_MethodName: OnScore
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: Response, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &1354821218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1354821209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8d4f195d4e0ed4c8a7d2fc136c5311, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: cfc6c24b5c4381d4fa9fa146b9a58fd2, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1354821212}
+        m_MethodName: OnTackle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
