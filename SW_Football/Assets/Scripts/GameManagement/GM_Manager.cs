@@ -36,7 +36,7 @@ public class DownAndDistance
 public class QuarterTime
 {
     public int              mQuarter = 1;       // convert 5+ to OT1, OT2...
-    public int              mTime = 300;          // time left in quarter.
+    public float            mTime = 301;          // time left in quarter.
 }
 
 public class GameScore
@@ -109,6 +109,12 @@ public class GM_Manager : MonoBehaviour
         // testing scores
         if(Input.GetKeyDown(KeyCode.U)){
             GE_HOME_SCORE.Raise(null);
+        }
+
+        // make the timer count down.
+        if(mGameState == GAME_STATE.RUNNING)
+        {
+            mQuarTime.mTime -= Time.deltaTime;
         }
     }
 
@@ -186,7 +192,13 @@ public class GM_Manager : MonoBehaviour
     private void SetTimeAndQuarterText()
     {
         rQuarter.text = NumContraction(mQuarTime.mQuarter);
-        rTime.text = mQuarTime.mTime.ToString();
+        // setting time is a little more involved, since we need to convert from say, 320, to 5:20
+        // since we do need a second 0, or it will look weird if we have 5:01, 5:0, 4:59, that's why the extra weirdness.
+        int tm = (int)mQuarTime.mTime;
+        int minTm = tm/60;
+        int secTenTm = (tm%60)/10;
+        int secTm = (tm%60) %10;
+        rTime.text = minTm + ":" + secTenTm + secTm;
     }
     private void SetScoreText()
     {
