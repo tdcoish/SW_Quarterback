@@ -88,7 +88,7 @@ public class GM_Manager : MonoBehaviour
 
     void Update()
     {
-        if(!mBallSnapped){
+        if(!mBallSnapped && mGameState == GAME_STATE.PRESNAP){
             if(Input.GetKeyDown(KeyCode.Space))
             {
                 GE_BALL_SNAP.Raise(null);
@@ -148,6 +148,7 @@ public class GM_Manager : MonoBehaviour
 
     public void PlayRestart()
     {
+        mGameState = GAME_STATE.PRESNAP;
         mPlayOngoing = true;
         rPlayRes.text = "Play Res: Ongoing";
 
