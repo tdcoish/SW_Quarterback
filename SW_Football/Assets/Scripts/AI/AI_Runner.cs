@@ -53,14 +53,13 @@ public class AI_Runner : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.transform.GetComponent<AI_Tackler>()){
-            Debug.Log("Got tackled");
 
-            GE_Tackled.Raise(null);
 
             // now we want to release the ball from our grasp.
             PROJ_Football fBall = GetComponentInChildren<PROJ_Football>();
             if(fBall){
-                Debug.Log("Foudn fball");
+                GE_Tackled.Raise(null);
+                mActivated = false;
                 fBall.transform.parent = null;
             }
         }

@@ -151,6 +151,7 @@ public class GM_Manager : MonoBehaviour
         }      
     }
 
+    // We once again see the issue with events needing to be in the correct order.
     public void OnTackle(){
         if(mPlayOngoing){
             Vector3 snapPos = FindObjectOfType<PROJ_Football>().transform.position;
@@ -251,9 +252,16 @@ public class GM_Manager : MonoBehaviour
         rHomeScore.text = "Home: " + mScores.mHomeScore;
 
         // now we need to shove the snap spot back to the 20 yard line.
-        Vector3 pos = mSnapSpot.transform.position;
-        pos.z = 30;
-        mSnapSpot.transform.position = pos;
+        // Debug.Log("Snap should be at 20");
+        // Vector3 pos = mSnapSpot.transform.position;
+        // pos.z = 30;
+        // mSnapSpot.transform.position = pos;
+
+        Vector3 snapPos = mSnapSpot.transform.position;
+        snapPos.z = 30;
+        mSnapSpot.transform.position = snapPos;
+        rPlayRes.text = "Play Res: Touchdown";
+        PlayOver();
 
         SetUpNewDowns();
     }
