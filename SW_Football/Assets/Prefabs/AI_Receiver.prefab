@@ -105,6 +105,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitTarget: {fileID: 11400000, guid: b0c825ba58b1d05419b373b3d1ac0ea5, type: 2}
+  GE_Touchdown: {fileID: 11400000, guid: 0157e84e29744c74ab1680d403b8cbdd, type: 2}
+  mCaughtBall: 0
+  mInEndzone: 0
 --- !u!1 &881229304
 GameObject:
   m_ObjectHideFlags: 0

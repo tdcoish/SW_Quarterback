@@ -71,6 +71,7 @@
      <Compile Include="Assets\Scripts\DT_Types\SO_Transform.cs" />
      <Compile Include="Assets\Scripts\DT_Types\SO_Vec3.cs" />
      <Compile Include="Assets\Scripts\Environment\EN_FieldGround.cs" />
+     <Compile Include="Assets\Scripts\GameManagement\GM_Endzone.cs" />
      <Compile Include="Assets\Scripts\GameManagement\GM_Manager.cs" />
      <Compile Include="Assets\Scripts\GE_System\GE_Event.cs" />
      <Compile Include="Assets\Scripts\GE_System\GE_Listener.cs" />

@@ -27,6 +27,24 @@ public enum GAME_STATE
     RESOLUTION
 }
 
+public class DownAndDistance
+{
+    public int          mDown = 1;
+    public int          mDis = 10;
+}
+
+public class QuarterTime
+{
+    public int              mQuarter = 1;       // convert 5+ to OT1, OT2...
+    public int              mTime = 300;          // time left in quarter.
+}
+
+public class GameScore
+{
+    public int              mHomeScore = 0;
+    public int              mAwayScore = 0;
+}
+
 public class GM_Manager : MonoBehaviour
 {
     public bool                 mPlayOngoing = true;
@@ -46,8 +64,23 @@ public class GM_Manager : MonoBehaviour
 
     public GAME_STATE           mGameState;
 
+    // quarter, time left.
+    // down, distance, etcetera
+    // game score.
+    public QuarterTime          mQuarTime;
+    public DownAndDistance      mDownAndDis;
+    public GameScore            mScores;
+
+    public Text                 rHomeScore;
+    public Text                 rAwayScore;
+
+    public GE_Event             GE_HOME_SCORE;
+
     void Start()
     {
+        mQuarTime = new QuarterTime();
+        mDownAndDis = new DownAndDistance();
+        mScores = new GameScore();
         mGameState = GAME_STATE.PRESNAP;
 
         PlayRestart();
@@ -66,6 +99,12 @@ public class GM_Manager : MonoBehaviour
         }
 
         rPlayState.text = "STATE: " + mGameState;
+
+
+        // testing scores
+        if(Input.GetKeyDown(KeyCode.U)){
+            GE_HOME_SCORE.Raise(null);
+        }
     }
 
     public void OnIncompletion()
@@ -111,5 +150,29 @@ public class GM_Manager : MonoBehaviour
     {
         mPlayOngoing = true;
         rPlayRes.text = "Play Res: Ongoing";
+
+        SetSnapBetweenHashes();
+    }
+
+    // kinda need to know who scored.
+    public void OnScore()
+    {
+        mScores.mHomeScore += 7;
+        rHomeScore.text = "Home: " + mScores.mHomeScore;
+    }
+
+    // here we need to make sure the snap spot is between the hashes.
+    // hashes are 25.8 yards from the sidelines. We're doing everything in meters, which is fine.
+    private void SetSnapBetweenHashes()
+    {
+        Vector3 snapPos = mSnapSpot.transform.position;
+        if(snapPos.x < 25.8f){
+            snapPos.x = 25.8f;
+        }
+        if(snapPos.x > 53-25.8f){
+            snapPos.x = 53-25.8f;
+        }
+
+        mSnapSpot.transform.position = snapPos;
     }
 }
