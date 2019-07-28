@@ -1015,7 +1015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c395cb0642f2374c90ad31b8e22f03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mOffPlayName: cross
+  mOffPlayName: Stick_03
   mDefPlayName: Cover2
   RefAthlete: {fileID: 7233204231284589399, guid: c55640fa166094248a182340bed2a7a0,
     type: 3}
@@ -1026,6 +1026,7 @@ MonoBehaviour:
   mDefenders: []
   mSnapSpot: {fileID: 63016778}
   GE_PLY_Restart: {fileID: 11400000, guid: 3637237bc63e7544d84099963866ee7f, type: 2}
+  mLoadFromEditorFolder: 1
 --- !u!4 &873426596
 Transform:
   m_ObjectHideFlags: 0
@@ -2370,6 +2371,10 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 375416082, guid: 3fcb15e83f59e7544a78d44040e4602c, type: 3}
+      propertyPath: m_AngularDrag
+      value: 159.12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fcb15e83f59e7544a78d44040e4602c, type: 3}

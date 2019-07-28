@@ -18,6 +18,8 @@ public class AI_Runner : MonoBehaviour
 
     private AI_RouteFollow      cRouteFollow;
 
+    public GE_Event             GE_Touchdown;
+
     void Start()
     {
         cRouteFollow = GetComponent<AI_RouteFollow>();
@@ -61,6 +63,17 @@ public class AI_Runner : MonoBehaviour
                 GE_Tackled.Raise(null);
                 mActivated = false;
                 fBall.transform.parent = null;
+            }
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(mActivated){
+            if(other.GetComponent<GM_Endzone>()){
+                Debug.Log("Here");
+                GE_Touchdown.Raise(null);
+                mActivated = false;
             }
         }
     }

@@ -370,6 +370,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GE_Tackled: {fileID: 11400000, guid: cfc6c24b5c4381d4fa9fa146b9a58fd2, type: 2}
   mActivated: 0
+  rFootball: {fileID: 0}
+  GE_Touchdown: {fileID: 11400000, guid: 0157e84e29744c74ab1680d403b8cbdd, type: 2}
 --- !u!1 &7343177965764156118
 GameObject:
   m_ObjectHideFlags: 0

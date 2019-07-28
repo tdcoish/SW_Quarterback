@@ -32,14 +32,24 @@ public class RT_PlayWriter : MonoBehaviour
         RT_Player[] rPlayers = FindObjectsOfType<RT_Player>();
         for(int i=0; i<rPlayers.Length; i++){
 
+            // first we make sure that they're on the field.
+            // otherwise my test players will screw up the save.
+            Vector3 testPos = PixelsToYardsConversion(rPlayers[i].transform.position);
+            if(testPos.x < -27f || testPos.x > 27f){
+                Debug.Log("Off screen, not writing");
+                continue;
+            }
+
             fileContents += rPlayers[i].mTag + ": ";
 
             // get the tag and find if there are any routes with that tag.
             for(int j=0; j<cRouteTool.rRoutes.Count; j++){
                 // if tags match, write all the nodes
                 if(cRouteTool.rRoutes[j].mPlayerTag == rPlayers[i].mTag){
-                    for(int k=0; k<cRouteTool.rRoutes[j].mNodes.Count; k++){
+                    for(int k=1; k<cRouteTool.rRoutes[j].mNodes.Count; k++){
+                        // converting from raw yards to yards relative to the starting position.
                         Vector3 nodePos = PixelsToYardsConversion(cRouteTool.rRoutes[j].mNodes[k].transform.position);
+                        nodePos -= (Vector3)PixelsToYardsConversion(cRouteTool.rRoutes[j].mNodes[k-1].transform.position);
                         fileContents += "(" + string.Format("{0:0.0}", nodePos.x) + "," + string.Format("{0:0.0}", nodePos.y) + ")";
                     }
                 }

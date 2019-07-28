@@ -126,6 +126,10 @@ public class AI_ZoneDefence : MonoBehaviour
     void InterceptBall()
     {
         PROJ_Football fBallRef = FindObjectOfType<PROJ_Football>();
+        if(fBallRef == null){
+            Debug.Log("No football in scene, still trying to intercept");
+            return;
+        }
         Vector3 spotToMoveTo = new Vector3();
 
         Vector3 dis = fBallRef.transform.position - transform.position;

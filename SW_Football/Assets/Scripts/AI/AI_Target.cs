@@ -52,10 +52,6 @@ public class AI_Target : MonoBehaviour
                 fBallRef.transform.parent = transform.parent;
             }
 
-            // but now we also need to check if we're within an endzone.
-            if(mInEndzone){
-                GE_Touchdown.Raise(null);
-            }
         }
     }
 

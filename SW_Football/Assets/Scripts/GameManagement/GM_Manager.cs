@@ -143,9 +143,6 @@ public class GM_Manager : MonoBehaviour
     public void OnCatch()
     {
         if(mPlayOngoing){
-            Vector3 snapPos = FindObjectOfType<PROJ_Football>().transform.position;
-            snapPos.y = 0.2f;
-            mSnapSpot.transform.position = snapPos;
             rPlayRes.text = "Play Res: Catch";
             //PlayOver();
         }      

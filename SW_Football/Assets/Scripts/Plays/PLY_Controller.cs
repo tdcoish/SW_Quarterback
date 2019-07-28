@@ -25,6 +25,8 @@ public class PLY_Controller : MonoBehaviour
     [SerializeField]
     private GE_Event            GE_PLY_Restart;
 
+    public bool                 mLoadFromEditorFolder = false;
+
     void Awake()
     {
         SetUpPlay();
@@ -42,8 +44,13 @@ public class PLY_Controller : MonoBehaviour
             Destroy(mDefenders[i].gameObject);
         }
         mRoutes = new List<AI_Route>();
-         
-        StreamReader sReader = new StreamReader(Application.dataPath +"/Plays/"+mOffPlayName+".txt");
+        
+        string path = Application.dataPath+"/Plays/";
+        if(mLoadFromEditorFolder){
+            path += "EditorCreatedPlays/";
+        }
+        path += mOffPlayName+".txt";
+        StreamReader sReader = new StreamReader(path);
         string sLine = string.Empty;
         while((sLine = sReader.ReadLine()) != null)
         {
