@@ -22,7 +22,7 @@ public class AI_RouteFollow : MonoBehaviour
 {
     private Rigidbody           mRigid;
 
-    public float                mSpd = 2f;
+    private AI_Athlete          cAthlete;
 
     public AI_Route             mRoute;
     private Vector3             mCurGoal;
@@ -32,6 +32,10 @@ public class AI_RouteFollow : MonoBehaviour
 
     void Start()
     {
+        cAthlete = GetComponent<AI_Athlete>();
+        if(!cAthlete){
+            Debug.Log("No athlete comp");
+        }
         mRigid = GetComponent<Rigidbody>();  
         mRoute = GetComponentInChildren<AI_Route>();  
 
@@ -58,7 +62,7 @@ public class AI_RouteFollow : MonoBehaviour
         // set it's rotation to the next node.
         transform.rotation = Quaternion.LookRotation((mCurGoal - transform.position), Vector3.up);
 
-        mRigid.velocity = transform.forward * mSpd;
+        mRigid.velocity = transform.forward * cAthlete.mSpd;
 
         // if we're somewhat close to our node, then now move to the next one.
         if(Vector3.Distance(transform.position, mCurGoal) < 1.5f){

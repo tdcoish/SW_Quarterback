@@ -17,11 +17,16 @@ public class AI_Runner : MonoBehaviour
     public PROJ_Football        rFootball;
 
     private AI_RouteFollow      cRouteFollow;
+    private AI_Athlete          cAthlete;
 
     public GE_Event             GE_Touchdown;
 
     void Start()
     {
+        cAthlete = GetComponent<AI_Athlete>();
+        if(!cAthlete){
+            Debug.Log("No athlete comp");
+        }
         cRouteFollow = GetComponent<AI_RouteFollow>();
         if(!cRouteFollow){
             Debug.Log("No route follow");
@@ -40,7 +45,7 @@ public class AI_Runner : MonoBehaviour
         // when we get tackled, set activated to false.
         if(mActivated){
             Vector3 vel = new Vector3();
-            vel.z = cRouteFollow.mSpd;
+            vel.z = cAthlete.mSpd;
             rBody.velocity = vel;
 
             if(rFootball != null){
