@@ -1,11 +1,19 @@
 ﻿/*************************************************************************************
 Just generally a component that all players are going to have in common.
+
+Each athlete has all the attributes, such as spd, agility, throw power, really everything.
+I'm not going to add any attribute until I actually am using it though.
 *************************************************************************************/
 using UnityEngine;
 using System.IO;
 
+// Unfortunately, if I hide this in a struct, I can't see these in the editor.
+
 public class AI_Athlete : MonoBehaviour
 {
+    public float            mSpd;
+    public float            mThrPwr;
+
     // we take the entire line in and find our tag.
     public string               mTag = "NON";
     
@@ -16,6 +24,9 @@ public class AI_Athlete : MonoBehaviour
     void Start()
     {
         rBody = GetComponent<Rigidbody>();
+
+        mSpd = 5f;
+        mThrPwr = 25f;
 
         if(mWaitForSnap){
             rBody.constraints = RigidbodyConstraints.FreezePosition;

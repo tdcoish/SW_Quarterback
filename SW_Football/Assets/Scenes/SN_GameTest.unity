@@ -1015,8 +1015,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c395cb0642f2374c90ad31b8e22f03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mOffPlayName: Stick_03
-  mDefPlayName: Cover2
+  mOffPlayName: Rando_01
+  mDefPlayName: Cover3
   RefAthlete: {fileID: 7233204231284589399, guid: c55640fa166094248a182340bed2a7a0,
     type: 3}
   mRoutes:

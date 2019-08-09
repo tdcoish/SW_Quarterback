@@ -13,7 +13,7 @@ public class AI_ZoneDefence : MonoBehaviour
 
     private Rigidbody           cRigid;
 
-    public float                mMaxVel = 3f;
+    public AI_Athlete           cAthlete;
 
     [SerializeField]
     private bool                mBreakOnBall;
@@ -31,6 +31,7 @@ public class AI_ZoneDefence : MonoBehaviour
 
     void Start()
     {
+        cAthlete = GetComponent<AI_Athlete>();
         cRigid = GetComponent<Rigidbody>();
         mBreakOnBall = false;
     }
@@ -90,7 +91,7 @@ public class AI_ZoneDefence : MonoBehaviour
 
     void MoveToZoneSpot()
     {
-        cRigid.velocity = Vector3.Normalize(mZoneSpot - transform.position) * mMaxVel;
+        cRigid.velocity = Vector3.Normalize(mZoneSpot - transform.position) * cAthlete.mSpd;
         if(Vector3.Distance(transform.position, mZoneSpot) < 1f){
             cRigid.velocity *= 0.5f;
         }
@@ -102,7 +103,7 @@ public class AI_ZoneDefence : MonoBehaviour
         // calculate the straight distance.
         Vector3 dis = rValidFootball.Val - transform.position;
         dis = Vector3.Normalize(dis);
-        cRigid.velocity = dis * mMaxVel;
+        cRigid.velocity = dis * cAthlete.mSpd;
     }
 
     // Ignores other players. They find the shortest path based on the football velocity and move there.
@@ -117,9 +118,9 @@ public class AI_ZoneDefence : MonoBehaviour
 
         // go to the right.
         if(Vector3.Dot(fBallRef.transform.right, dis) >= 0f){
-            cRigid.velocity = mMaxVel * fBallRef.transform.right;
+            cRigid.velocity = cAthlete.mSpd * fBallRef.transform.right;
         }else{
-            cRigid.velocity = mMaxVel * -fBallRef.transform.right;
+            cRigid.velocity = cAthlete.mSpd * -fBallRef.transform.right;
         }
     }
 
@@ -143,7 +144,7 @@ public class AI_ZoneDefence : MonoBehaviour
         spotToMoveTo = CalcMoveSpot(fBallRef);
 
         // now we just move to the spot.
-        cRigid.velocity = mMaxVel * Vector3.Normalize(spotToMoveTo - transform.position);
+        cRigid.velocity = cAthlete.mSpd * Vector3.Normalize(spotToMoveTo - transform.position);
     }
 
     public void OnBallHitsGround()

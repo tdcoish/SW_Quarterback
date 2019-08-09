@@ -117,10 +117,12 @@
      <None Include="Assets\Plays\OtherFakePlay.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Sail_01.txt" />
      <None Include="Assets\Plays\play01.txt" />
+     <None Include="Assets\Plays\Defense\Cover3.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Stick_02.txt" />
      <None Include="Assets\Plays\Defense\Cover2.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Smash.txt" />
      <None Include="Assets\Plays\DefaultPlay.txt" />
+     <None Include="Assets\Plays\EditorCreatedPlays\Rando_01.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\TestCov3Beat.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\RandoPlay.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\temptla.txt" />
