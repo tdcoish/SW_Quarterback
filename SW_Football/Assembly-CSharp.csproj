@@ -56,12 +56,14 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\AI\AI_Athlete.cs" />
+     <Compile Include="Assets\Scripts\AI\AI_Blocker.cs" />
      <Compile Include="Assets\Scripts\AI\AI_MovingTarget.cs" />
      <Compile Include="Assets\Scripts\AI\AI_Receiver.cs" />
      <Compile Include="Assets\Scripts\AI\AI_Route.cs" />
      <Compile Include="Assets\Scripts\AI\AI_RouteFollow.cs" />
      <Compile Include="Assets\Scripts\AI\AI_RouteNode.cs" />
      <Compile Include="Assets\Scripts\AI\AI_Runner.cs" />
+     <Compile Include="Assets\Scripts\AI\AI_Rusher.cs" />
      <Compile Include="Assets\Scripts\AI\AI_Tackler.cs" />
      <Compile Include="Assets\Scripts\AI\AI_Target.cs" />
      <Compile Include="Assets\Scripts\AI\AI_ZoneDefence.cs" />
@@ -81,6 +83,7 @@
      <Compile Include="Assets\Scripts\PC_Controller.cs" />
      <Compile Include="Assets\Scripts\PC_ThrowTrajectory.cs" />
      <Compile Include="Assets\Scripts\PC_UI.cs" />
+     <Compile Include="Assets\Scripts\Plays\HACK_PlyControl.cs" />
      <Compile Include="Assets\Scripts\Plays\PLY_Controller.cs" />
      <Compile Include="Assets\Scripts\Plays\PLY_FirstDownMark.cs" />
      <Compile Include="Assets\Scripts\Plays\PLY_SnapSpot.cs" />
