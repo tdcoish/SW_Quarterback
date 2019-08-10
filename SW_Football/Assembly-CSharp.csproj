@@ -65,6 +65,7 @@
      <Compile Include="Assets\Scripts\AI\AI_Runner.cs" />
      <Compile Include="Assets\Scripts\AI\AI_Rusher.cs" />
      <Compile Include="Assets\Scripts\AI\AI_Tackler.cs" />
+     <Compile Include="Assets\Scripts\AI\AI_TakesShove.cs" />
      <Compile Include="Assets\Scripts\AI\AI_Target.cs" />
      <Compile Include="Assets\Scripts\AI\AI_ZoneDefence.cs" />
      <Compile Include="Assets\Scripts\Audio\AD_Manager.cs" />

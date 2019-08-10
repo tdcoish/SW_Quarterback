@@ -153,6 +153,7 @@ GameObject:
   - component: {fileID: 4095565675239599878}
   - component: {fileID: 4532476631938357863}
   - component: {fileID: 838687973159036415}
+  - component: {fileID: 8464361822505635435}
   m_Layer: 0
   m_Name: AI_Blocker
   m_TagString: Untagged
@@ -266,6 +267,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mSpd: 0
   mThrPwr: 0
+  mBull: 0
+  mWgt: 0
+  mAnc: 0
   mTag: NON
   mWaitForSnap: 1
 --- !u!114 &4532476631938357863
@@ -319,8 +323,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d3c98e9b1f8484388b1fdcb24244ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mForceApplied: 0
+  mForceDir: {x: 0, y: 0, z: 0}
   RefRandoSpotMarker: {fileID: 1537644790932588708, guid: 74fac868df438d742a422e83d09399af,
     type: 3}
+--- !u!114 &8464361822505635435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6523208524226141601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2814ec77812a3c84c9a9f804a99e26bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mAllForces: {x: 0, y: 0, z: 0}
 --- !u!1 &6561359894581576736
 GameObject:
   m_ObjectHideFlags: 0

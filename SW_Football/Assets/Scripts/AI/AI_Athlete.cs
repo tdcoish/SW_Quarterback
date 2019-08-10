@@ -13,10 +13,14 @@ public class AI_Athlete : MonoBehaviour
 {
     public float            mSpd;
     public float            mThrPwr;
+    public float            mBull;
+    public float            mWgt;
+    public float            mAnc;                       // basically how much strenght they can move themselves with. eg. 300 lbsm/s for giant OG.
+    // public float            mHandPlc;               // for block leverage. Will determine reductions and buffs for moves
 
     // we take the entire line in and find our tag.
     public string               mTag = "NON";
-    
+
     public bool                 mWaitForSnap = true;
 
     private Rigidbody           rBody;

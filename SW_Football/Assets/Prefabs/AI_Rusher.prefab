@@ -202,6 +202,7 @@ GameObject:
   - component: {fileID: 6688075598007860620}
   - component: {fileID: 6688075598007860659}
   - component: {fileID: 3748750054559367397}
+  - component: {fileID: 9128385462367434265}
   m_Layer: 0
   m_Name: AI_Rusher
   m_TagString: Untagged
@@ -315,6 +316,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mSpd: 0
   mThrPwr: 0
+  mBull: 0
+  mWgt: 0
+  mAnc: 0
   mTag: NON
   mWaitForSnap: 1
 --- !u!114 &6688075598248156158
@@ -410,6 +414,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mActive: 0
+--- !u!114 &9128385462367434265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7554486018457215006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2814ec77812a3c84c9a9f804a99e26bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mAllForces: {x: 0, y: 0, z: 0}
 --- !u!1 &8661705473364039061
 GameObject:
   m_ObjectHideFlags: 0
