@@ -28,10 +28,6 @@ public class AI_Blocker : MonoBehaviour
     private AI_Rusher           refRusher;
     private PC_Controller       refPlayer;
 
-    // sort of simulating getting shoved.
-    public float                mForceApplied;
-    public Vector3              mForceDir;
-
     private bool                mActive = false;
 
     void Start()
@@ -61,31 +57,25 @@ public class AI_Blocker : MonoBehaviour
             //cRigid.velocity *= (100f-mForceApplied)/100f;
  
             // for now, just calculate if our rusher is within our sphere of influence.
-            if(Vector3.Distance(transform.position, refRusher.transform.position) < 2f && !mShoved){
+            if(Vector3.Distance(transform.position, refRusher.transform.position) < 2f){
 
-                // now we need to simulate for both of them the effects of each other on them.
-                // force is applied, divided by handfighting skill, then we minus mAnc, then we get the real force.
-                mForceApplied = refRusher.GetComponent<AI_Athlete>().mBull;
-                mForceApplied -= cAthlete.mAnc;
+                Vector3 shoveDir = transform.position - refRusher.transform.position;
+                shoveDir.y = 0f;
+                shoveDir = Vector3.Normalize(shoveDir);
+                shoveDir *= refRusher.GetComponent<AI_Athlete>().mBull;
+                AI_Shove shove = new AI_Shove(shoveDir, refRusher.GetComponent<AI_Athlete>().mTag);
+                cTakeShove.TakeShove(shove);
 
-                mForceDir = Vector3.Normalize(transform.position - refRusher.transform.position);
             }
 
             // now we apply the affect of force to our velocity.
-            if(mForceApplied > 0f){
-
-                Vector3 forceVel = mForceDir;
-                forceVel *= cAthlete.mSpd;
-                forceVel *= mForceApplied;
-
-                // have to account for weight of course.
-                forceVel /= cAthlete.mWgt;
-                cRigid.velocity += forceVel;
+            cTakeShove.RecalculateShoves();
+            if(cTakeShove.mAllForces.magnitude > 0f){
+                
+                Debug.Log("Shove force to vel: " + cTakeShove.mAllForces);
+                cRigid.velocity += cTakeShove.mAllForces;
             }
 
-            // shoves decay to zero after 1 second max.
-            mForceApplied -= Time.deltaTime * 100f;
-            if(mForceApplied < 0f) mForceApplied = 0f;
         }
 
 

@@ -17,7 +17,7 @@ public class AI_Shove{
     public Vector3              mForce;
     public string               mShover;
 
-    AI_Shove(Vector3 vForce, string sShover)
+    public AI_Shove(Vector3 vForce, string sShover)
     {
         mForce = vForce;
         mShover = sShover;
@@ -29,7 +29,7 @@ public class AI_TakesShove : MonoBehaviour
 
     private AI_Athlete          cAthlete;
 
-    public List<AI_Shove>               mShoves;
+    public List<AI_Shove>       mShoves;
 
     // the cumulative direction and strength of forces on a player.
     // most of the time there will be just one force, however, there may be quite a bit more.
@@ -38,7 +38,7 @@ public class AI_TakesShove : MonoBehaviour
     private void Start()
     {
         cAthlete = GetComponent<AI_Athlete>();
-        
+
         mShoves = new List<AI_Shove>();
     }
     
@@ -64,21 +64,39 @@ public class AI_TakesShove : MonoBehaviour
             }
         }
 
-        Debug.Log("Still here");
-
         mShoves.Add(shove);
     }
 
-    private void RecalculateShoves()
+    /***************************************************************************************************************
+    It will be unusual for a player to have multiple shoves acting upon them simultaneously. However, in the case where 
+    this is true, such as double teams, we need to add up all the shove vectors. Then we dampen all of them through stats.
+
+    1) Divide shove by hand fighting - currently not it
+    2) Minus by internal strength
+    3) Divide result by weight.
+    If shove is now negative, then we just ignore the shove completely. In this respect, if a 350 lbs NT gets hit by a punter, 
+    there's no movement at all.
+    ************************************************************************************************************** */
+    public void RecalculateShoves()
     {
         mAllForces = Vector3.zero;
 
-        // now here's where we calc the actual strength
+        // add up all the shoves.
         for(int i=0; i<mShoves.Count; i++)
         {
             mAllForces += mShoves[i].mForce;
         }
-        // wow, that was easy.
+
+        float mag = mAllForces.magnitude;
+        //mag /= cAthlete.handPlacement;
+        mag -= cAthlete.mAnc;
+        mag /= cAthlete.mWgt;
+        if(mag < 0f) mag = 0f;
+        mAllForces *= (mag / mAllForces.magnitude);
+
+        if(mag > 0f){
+            Debug.Log("Mag: " + mag);
+        }
     }
 
     // This is going to get a lot more complicated eventually, but for now we just quickly dampen any shoves.
