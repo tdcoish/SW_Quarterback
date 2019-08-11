@@ -12,6 +12,13 @@ the axis of acceleration and how it differs from the current velocity.
 
 You know what, we can view our own legs as giving us "shoves" in certain directions. Yeah. That
 works for now.
+
+Wait, there's a problem. Some huge guy with no quick twitch muscle fibers may have all the 
+strength in the world, but very little power. So he won't accelerate himself very well, but he 
+will be really hard to stop. That means that his ability to power through blockers will be better
+than this stat would make you think, but his acceleration would be worse than this stat makes it.
+
+Then again, force is force, and this is probably close enough.
 *************************************************************************************/
 using UnityEngine;
 
@@ -38,10 +45,12 @@ public class AI_Burst : MonoBehaviour
     }
 
     // Some script calls us and tells us which direction we would like to go. 
-    // We then try to accelerate in that direction.
-    public void FCalcAcceleration(Vector3 dir)
+    // We then "shove" ourselves in that direction.
+    public void FCalcBurst(Vector3 dir)
     {
 
+        dir.y = 0f;
+        dir = Vector3.Normalize(dir);
         // burst decays linearly to zero.
         // // ultimately have to do this based on pythagorean direction. Imagine accelerating to side at full speed.
         // float fBrst = cAthlete.mBrst / (1 - (cRigid.velocity.magnitude / cAthlete.mSpd));
@@ -63,23 +72,21 @@ public class AI_Burst : MonoBehaviour
         }
 
         vInCorrectDir *= cRigid.velocity.magnitude;
+        
+        AI_Shove shove = new AI_Shove();
 
         if(vInCorrectDir > cAthlete.mSpd){
             Debug.Log("Going too fast");
+            shove.mForce = Vector3.zero;
+            shove.mShover = "SELF";
+            cTakesShove.FTakeShove(shove, true);
             return;
-        }        
-        float acc = cAthlete.mBrst * Time.deltaTime;
-        acc /= cAthlete.mWgt;
-
-        Debug.Log("Acc: " + acc);
-
-        // now we accelerate in the direction we want.
-        Vector3 newVel = cRigid.velocity + dir*acc;
-        // now keep the velocity well within the bounds.
-        if(newVel.magnitude > cAthlete.mSpd){
-            newVel *= cAthlete.mSpd/newVel.magnitude;
-            Debug.Log("Need to slow down");
         }
-        cRigid.velocity = newVel;
+
+        shove.mForce = dir * cAthlete.mBrst;
+        shove.mShover = "SELF";
+        cTakesShove.FTakeShove(shove, true);
+
+        Debug.Log("Shove force from own legs: " + shove.mForce);
     }
 }

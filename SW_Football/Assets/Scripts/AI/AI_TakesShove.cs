@@ -17,7 +17,7 @@ public class AI_Shove{
     public Vector3              mForce;
     public string               mShover;
 
-    public AI_Shove(Vector3 vForce, string sShover)
+    public AI_Shove(Vector3 vForce = new Vector3(), string sShover = "NONAME")
     {
         mForce = vForce;
         mShover = sShover;
@@ -47,19 +47,21 @@ public class AI_TakesShove : MonoBehaviour
         DampenShovesOverTime();
     }
 
-    public void TakeShove(AI_Shove shove)
+    public void FTakeShove(AI_Shove shove, bool alwaysOverrideOld = false)
     {
         // since players can't double shove, we first delete any existing shove by that player
         for(int i=0; i<mShoves.Count; i++){
             if(mShoves[i].mShover == shove.mShover)
             {
                 // if the player pushed them harder in the past, don't remove the shove.
-                if(mShoves[i].mForce.magnitude > shove.mForce.magnitude){
-                    Debug.Log("Existing shove harder");
-                    return;
+                if(!alwaysOverrideOld){
+                    if(mShoves[i].mForce.magnitude > shove.mForce.magnitude){
+                        Debug.Log("Existing shove harder");
+                        return;
+                    }
                 }
+                Debug.Log("Removed shove: " + mShoves[i].mShover);
                 mShoves.RemoveAt(i);
-                Debug.Log("Removed existing shove");
                 break;
             }
         }
@@ -76,27 +78,50 @@ public class AI_TakesShove : MonoBehaviour
     3) Divide result by weight.
     If shove is now negative, then we just ignore the shove completely. In this respect, if a 350 lbs NT gets hit by a punter, 
     there's no movement at all.
+
+
+    Since I changed the system to where you can "shove" yourself to get yourself moving, we need to first add up all the 
+    enemy shoves, deal with those, then add up our own shoves. Then we get our total shoving.
     ************************************************************************************************************** */
-    public void RecalculateShoves()
+    public void FRecalculateShoves()
     {
+
+        Vector3 vSelfForces = Vector3.zero;
+
+        Vector3 vEnemyForces = Vector3.zero;
+        Debug.Log("Enemy forces: " + vEnemyForces);
         mAllForces = Vector3.zero;
 
         // add up all the shoves.
         for(int i=0; i<mShoves.Count; i++)
         {
-            mAllForces += mShoves[i].mForce;
+            if(mShoves[i].mShover == "SELF"){
+                vSelfForces += mShoves[i].mForce;
+            }else{
+                vEnemyForces += mShoves[i].mForce;
+            }
         }
 
-        float mag = mAllForces.magnitude;
-        mag *= (100f-cAthlete.mBks)/100f;           // so 20 block shedding reduces blocks by 20%
-        mag -= cAthlete.mAnc;
-        mag /= cAthlete.mWgt;
-        if(mag < 0f) mag = 0f;
-        mAllForces *= (mag / mAllForces.magnitude);
+        // now we reduce the cumulative effects of enemy shoving.
+        float mag = vEnemyForces.magnitude;
+        if(mag != 0f){
+            mag *= (100f-cAthlete.mBks)/100f;           // so 20 block shedding reduces blocks by 20%
+            mag -= cAthlete.mAnc;
+            mag /= cAthlete.mWgt;
+            if(mag < 0f) mag = 0f;
 
-        if(mag > 0f){
-            Debug.Log("Mag: " + mag);
+            vEnemyForces *= (mag / vEnemyForces.magnitude);
         }
+
+        Debug.Log("Enemy forces: " + vEnemyForces);
+
+        // now we divide our self shoves by our weight.
+        vSelfForces /= cAthlete.mWgt;
+        Debug.Log("Self forces: " + vSelfForces);
+
+        // finally, we just add up the forces of both here.
+        mAllForces = vEnemyForces + vSelfForces;
+        Debug.Log("Total forces : " + mAllForces);
     }
 
     // This is going to get a lot more complicated eventually, but for now we just quickly dampen any shoves.

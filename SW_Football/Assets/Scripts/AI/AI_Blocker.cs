@@ -51,12 +51,7 @@ public class AI_Blocker : MonoBehaviour
             midSpot += dis;
 
             // get our burst to accelerate us in that direction.
-            cBurst.FCalcAcceleration(midSpot - transform.position);
-
-            // Vector3 vel = midSpot - transform.position;
-            // vel = Vector3.Normalize(vel);
-            // vel *= cAthlete.mSpd;
-            // cRigid.velocity = vel;
+            cBurst.FCalcBurst(midSpot - transform.position);
  
             // for now, just calculate if our rusher is within our sphere of influence.
             if(Vector3.Distance(transform.position, refRusher.transform.position) < 2f){
@@ -66,15 +61,17 @@ public class AI_Blocker : MonoBehaviour
                 shoveDir = Vector3.Normalize(shoveDir);
                 shoveDir *= refRusher.GetComponent<AI_Athlete>().mBull;
                 AI_Shove shove = new AI_Shove(shoveDir, refRusher.GetComponent<AI_Athlete>().mTag);
-                cTakeShove.TakeShove(shove);
+                cTakeShove.FTakeShove(shove);
             }
 
             // now we apply the affect of force to our velocity.
-            cTakeShove.RecalculateShoves();
+            cTakeShove.FRecalculateShoves();
             if(cTakeShove.mAllForces.magnitude > 0f){
                 
                 Debug.Log("Shove force to vel: " + cTakeShove.mAllForces);
                 cRigid.velocity += cTakeShove.mAllForces;
+            }else{
+                Debug.Log("No shoving forces");
             }
 
         }

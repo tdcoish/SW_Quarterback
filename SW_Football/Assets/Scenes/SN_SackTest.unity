@@ -1901,6 +1901,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AI_Blocker
       objectReference: {fileID: 0}
+    - target: {fileID: 6523208524226141601, guid: c4062cc8ecda5e440b79e255429b8613,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2577162802314480833, guid: c4062cc8ecda5e440b79e255429b8613,
         type: 3}
       propertyPath: m_LocalPosition.x
