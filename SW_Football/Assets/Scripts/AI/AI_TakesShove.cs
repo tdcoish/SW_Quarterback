@@ -88,7 +88,7 @@ public class AI_TakesShove : MonoBehaviour
         }
 
         float mag = mAllForces.magnitude;
-        //mag /= cAthlete.handPlacement;
+        mag *= (100f-cAthlete.mBks)/100f;           // so 20 block shedding reduces blocks by 20%
         mag -= cAthlete.mAnc;
         mag /= cAthlete.mWgt;
         if(mag < 0f) mag = 0f;

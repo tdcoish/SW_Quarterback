@@ -57,6 +57,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\AI\AI_Athlete.cs" />
      <Compile Include="Assets\Scripts\AI\AI_Blocker.cs" />
+     <Compile Include="Assets\Scripts\AI\AI_Burst.cs" />
      <Compile Include="Assets\Scripts\AI\AI_MovingTarget.cs" />
      <Compile Include="Assets\Scripts\AI\AI_Receiver.cs" />
      <Compile Include="Assets\Scripts\AI\AI_Route.cs" />

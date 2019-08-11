@@ -16,8 +16,10 @@ public class AI_Rusher : MonoBehaviour
     private Rigidbody           cRigid;
 
     private AI_Athlete          cAthlete;
+    private AI_TakesShove       cTakesShove;
 
     //private Transform           refQuarterback;
+    private AI_Blocker              refBlocker;
     private PC_Controller           refPlayer;
 
     public bool                 mActive = false;
@@ -25,8 +27,9 @@ public class AI_Rusher : MonoBehaviour
     void Start()
     {
         cRigid = GetComponent<Rigidbody>();
-        cAthlete = GetComponent<AI_Athlete>();
 
+        cAthlete = GetComponent<AI_Athlete>();
+        cTakesShove = GetComponent<AI_TakesShove>();
     }
 
     // so we're trying to move towards the quarterback, let's just do that for now. Totally ignore blockers.
@@ -38,6 +41,21 @@ public class AI_Rusher : MonoBehaviour
             vel = Vector3.Normalize(vel);
             vel *= cAthlete.mSpd;
             cRigid.velocity = vel;
+
+            // hack in him getting pushed by the blocker.
+            if(Vector3.Distance(transform.position, refBlocker.transform.position) < 2f)
+            {
+                Vector3 shoveDir = transform.position - refBlocker.transform.position;
+                shoveDir.y = 0f;
+                shoveDir = Vector3.Normalize(shoveDir) * refBlocker.GetComponent<AI_Athlete>().mBull;
+                AI_Shove shove = new AI_Shove(shoveDir, refBlocker.GetComponent<AI_Athlete>().mTag);
+                cTakesShove.TakeShove(shove);
+            }
+
+            cTakesShove.RecalculateShoves();
+            if(cTakesShove.mAllForces.magnitude > 0f){
+                cRigid.velocity += cTakesShove.mAllForces;
+            }
         }
     }
 
@@ -49,6 +67,7 @@ public class AI_Rusher : MonoBehaviour
         cAthlete.mAnc = 200f;       // internal power
 
         refPlayer = FindObjectOfType<PC_Controller>();
+        refBlocker = FindObjectOfType<AI_Blocker>();
         mActive = true;
     }
 }

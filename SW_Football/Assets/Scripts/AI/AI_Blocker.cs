@@ -23,6 +23,7 @@ public class AI_Blocker : MonoBehaviour
 
     private AI_Athlete          cAthlete;
     private AI_TakesShove       cTakeShove;
+    private AI_Burst            cBurst;
 
     // for now I'll just give him the defender to block
     private AI_Rusher           refRusher;
@@ -36,6 +37,7 @@ public class AI_Blocker : MonoBehaviour
 
         cAthlete = GetComponent<AI_Athlete>();
         cTakeShove = GetComponent<AI_TakesShove>();
+        cBurst = GetComponent<AI_Burst>();
     }
 
     void Update()
@@ -48,13 +50,13 @@ public class AI_Blocker : MonoBehaviour
             dis/=2f;
             midSpot += dis;
 
-            Vector3 vel = midSpot - transform.position;
-            vel = Vector3.Normalize(vel);
-            vel *= cAthlete.mSpd;
-            cRigid.velocity = vel;
+            // get our burst to accelerate us in that direction.
+            cBurst.FCalcAcceleration(midSpot - transform.position);
 
-            // now we apply the effect of force.
-            //cRigid.velocity *= (100f-mForceApplied)/100f;
+            // Vector3 vel = midSpot - transform.position;
+            // vel = Vector3.Normalize(vel);
+            // vel *= cAthlete.mSpd;
+            // cRigid.velocity = vel;
  
             // for now, just calculate if our rusher is within our sphere of influence.
             if(Vector3.Distance(transform.position, refRusher.transform.position) < 2f){
@@ -65,7 +67,6 @@ public class AI_Blocker : MonoBehaviour
                 shoveDir *= refRusher.GetComponent<AI_Athlete>().mBull;
                 AI_Shove shove = new AI_Shove(shoveDir, refRusher.GetComponent<AI_Athlete>().mTag);
                 cTakeShove.TakeShove(shove);
-
             }
 
             // now we apply the affect of force to our velocity.
@@ -84,8 +85,11 @@ public class AI_Blocker : MonoBehaviour
     public void OnSnap()
     {
         cAthlete.mSpd = 0.5f;
+        cAthlete.mBull = 900f;
         cAthlete.mWgt = 300f;
-        cAthlete.mAnc = 100f;     
+        cAthlete.mAnc = 100f; 
+        cAthlete.mBks = 80f;  
+        cAthlete.mBrst = 100f;  
 
         mActive = true;
 
