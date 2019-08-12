@@ -67,11 +67,11 @@ public class AI_Rusher : MonoBehaviour
 
     public void OnSnap()
     {
-        cAthlete.mSpd = 6f;
+        cAthlete.mSpd = 20f;
         cAthlete.mBull = 600f;      // x lbsm/s. Quit a big boy
         cAthlete.mWgt = 300f;       // big boy
         cAthlete.mAnc = 200f;       // internal power
-        cAthlete.mAcc = 3f;
+        cAthlete.mAcc = 5f;
 
         refPlayer = FindObjectOfType<PC_Controller>();
         refBlocker = FindObjectOfType<AI_Blocker>();
