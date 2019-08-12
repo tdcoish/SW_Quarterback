@@ -60,7 +60,7 @@ public class AI_Rusher : MonoBehaviour
             // Debug.Log("Shove mags : " + cTakesShove.mAllForces);
             if(cTakesShove.mAllForces.magnitude > 0f){
                 // Debug.Log("All shove forces: " + cTakesShove.mAllForces);
-                cRigid.velocity += cTakesShove.mAllForces;
+                // cRigid.velocity += cTakesShove.mAllForces;
             }
         }
     }
@@ -71,7 +71,7 @@ public class AI_Rusher : MonoBehaviour
         cAthlete.mBull = 600f;      // x lbsm/s. Quit a big boy
         cAthlete.mWgt = 300f;       // big boy
         cAthlete.mAnc = 200f;       // internal power
-        cAthlete.mAcc = 5f;
+        cAthlete.mAcc = 10f;
 
         refPlayer = FindObjectOfType<PC_Controller>();
         refBlocker = FindObjectOfType<AI_Blocker>();

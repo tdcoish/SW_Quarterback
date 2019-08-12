@@ -87,7 +87,7 @@ public class AI_Acc : MonoBehaviour
 
         // okay, so now we need to actually accelerate the entity in the correct vector.
         // So what is that vector?
-        Vector3 vAccDir = Quaternion.AngleAxis(-fAccAngle, Vector3.up) * cRigid.velocity.normalized;
+        Vector3 vAccDir = Quaternion.AngleAxis(-fAccAngle, Vector3.up) * transform.forward;
         // Vector3 vAccDir = Quaternion.AngleAxis(fAccAngle, Vector3.up) * dir;
         Debug.Log("Orig Dir: " + dir);
         Debug.Log("Acc Dir: " + vAccDir);
@@ -101,11 +101,6 @@ public class AI_Acc : MonoBehaviour
         Vector3 vDirOfAcc = dir;
         Vector3 vDirAsFullSpd = dir;
 
-        // if we are standing still, we just accelerate in the right direction.
-        // if we are running full speed, then we need to accelerate in a different direction than the goal.
-        // vDirAsFullSpd is the direction of acceleration as if we were going full speed.
-
-
         // let me first calculate the ideal velocity, assuming we could perfectly accelerate to our top speed.
         Vector3 vIdealVel = dir * cAthlete.mSpd;
 
@@ -114,8 +109,11 @@ public class AI_Acc : MonoBehaviour
 
         // Vector3 vAcc = dir * acc;
         Vector3 vAcc = vAccDir * acc;
+        Debug.Log("Dir of Acc: " + vAccDir);
+        Debug.Log("Acceleration this frame: " + vAcc);
 
         cRigid.velocity = cRigid.velocity + vAcc;
+        Debug.Log("Velocity: " + cRigid.velocity);
 
         if(cRigid.velocity.magnitude > cAthlete.mSpd)
         {
@@ -125,38 +123,5 @@ public class AI_Acc : MonoBehaviour
         // Might have already done this.
         transform.forward = cRigid.velocity.normalized;
 
-
-
-
-
-        // for now, just linear acceleration. Much easier to test with.
-        // calculate the velocity IN THE DIRECTION WE WANT TO ACCELERATE IN.
-        float vInCorrectDir = Vector3.Dot(Vector3.Normalize(cRigid.velocity), Vector3.Normalize(dir));
-
-        if(vInCorrectDir <= 0f){
-            Debug.Log("Want to accelerate somewhat backwards");
-            vInCorrectDir = 0f;
-        }
-        else if(vInCorrectDir < 0.5f){
-            Debug.Log("Wants to go about 0-45 degrees from current trajectory.");
-        }
-
-        vInCorrectDir *= cRigid.velocity.magnitude;
-        
-        AI_Shove shove = new AI_Shove();
-
-        if(vInCorrectDir > cAthlete.mSpd){
-            Debug.Log("Going too fast");
-            shove.mForce = Vector3.zero;
-            shove.mShover = "SELF";
-            cTakesShove.FTakeShove(shove, true);
-            return;
-        }
-
-        shove.mForce = dir * cAthlete.mAcc;
-        shove.mShover = "SELF";
-        cTakesShove.FTakeShove(shove, true);
-
-        Debug.Log("Shove force from own legs: " + shove.mForce);
     }
 }
