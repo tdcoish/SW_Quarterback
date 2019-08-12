@@ -23,7 +23,7 @@ public class AI_Blocker : MonoBehaviour
 
     private AI_Athlete          cAthlete;
     private AI_TakesShove       cTakeShove;
-    private AI_Burst            cBurst;
+    private AI_Acc            cBurst;
 
     // for now I'll just give him the defender to block
     private AI_Rusher           refRusher;
@@ -37,7 +37,7 @@ public class AI_Blocker : MonoBehaviour
 
         cAthlete = GetComponent<AI_Athlete>();
         cTakeShove = GetComponent<AI_TakesShove>();
-        cBurst = GetComponent<AI_Burst>();
+        cBurst = GetComponent<AI_Acc>();
     }
 
     void Update()
@@ -51,7 +51,7 @@ public class AI_Blocker : MonoBehaviour
             midSpot += dis;
 
             // get our burst to accelerate us in that direction.
-            cBurst.FCalcBurst(midSpot - transform.position);
+            //cBurst.FCalcBurst(midSpot - transform.position);
  
             // for now, just calculate if our rusher is within our sphere of influence.
             if(Vector3.Distance(transform.position, refRusher.transform.position) < 2f){
@@ -86,7 +86,7 @@ public class AI_Blocker : MonoBehaviour
         cAthlete.mWgt = 300f;
         cAthlete.mAnc = 100f; 
         cAthlete.mBks = 80f;  
-        cAthlete.mBrst = 100f;  
+        cAthlete.mAcc = 100f;  
 
         mActive = true;
 
