@@ -1215,6 +1215,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: d7c33746f1c521a4cb3e598b02196ee9,
         type: 2}
+    - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
+        type: 3}
+      propertyPath: mSpd
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8715241792742129380, guid: 3fcb15e83f59e7544a78d44040e4602c,
         type: 3}
       propertyPath: m_LocalPosition.x

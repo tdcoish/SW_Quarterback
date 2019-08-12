@@ -72,25 +72,18 @@ public class AI_Acc : MonoBehaviour
 
         float fDot = Vector3.Dot(dir, transform.forward);
         float fAngle = Vector3.SignedAngle(dir, transform.forward, Vector3.up);
-        Debug.Log("Dif between acc dir and forward dir: " + fDot);
-        Debug.Log("Dif in angles: " + fAngle);
 
         // now, what should the angle be?
         float fPercentMaxSpd = cRigid.velocity.magnitude / cAthlete.mSpd;
         float fAccAngle = fAngle * (1+fPercentMaxSpd);
-        Debug.Log("Perc max spd: " + fPercentMaxSpd);
-        Debug.Log("Acc Angle: " + fAccAngle);
         if(Mathf.Abs(fAccAngle) > 180f){
             fAccAngle *= 180f/Mathf.Abs(fAccAngle);
-            Debug.Log("Would be greater than pure backwards");
         } 
 
         // okay, so now we need to actually accelerate the entity in the correct vector.
         // So what is that vector?
         Vector3 vAccDir = Quaternion.AngleAxis(-fAccAngle, Vector3.up) * transform.forward;
         // Vector3 vAccDir = Quaternion.AngleAxis(fAccAngle, Vector3.up) * dir;
-        Debug.Log("Orig Dir: " + dir);
-        Debug.Log("Acc Dir: " + vAccDir);
 
         Debug.DrawLine(transform.position, transform.position+dir*10f, Color.green);
         Debug.DrawLine(transform.position, transform.position+vAccDir*10f, Color.cyan);
@@ -109,11 +102,8 @@ public class AI_Acc : MonoBehaviour
 
         // Vector3 vAcc = dir * acc;
         Vector3 vAcc = vAccDir * acc;
-        Debug.Log("Dir of Acc: " + vAccDir);
-        Debug.Log("Acceleration this frame: " + vAcc);
 
         cRigid.velocity = cRigid.velocity + vAcc;
-        Debug.Log("Velocity: " + cRigid.velocity);
 
         if(cRigid.velocity.magnitude > cAthlete.mSpd)
         {

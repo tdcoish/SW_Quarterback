@@ -23,7 +23,7 @@ public class PC_Controller : MonoBehaviour
     [SerializeField]
     private DT_Player               PlayerData;
 
-    public float                    mSpd = 15f;
+    public float                    mSpd = 10f;
 
     private Rigidbody               mRigid;
     private PC_Camera               mCam;
