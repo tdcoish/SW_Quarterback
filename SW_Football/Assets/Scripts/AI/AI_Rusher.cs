@@ -17,7 +17,7 @@ public class AI_Rusher : MonoBehaviour
 
     private AI_Athlete          cAthlete;
     private AI_TakesShove       cTakesShove;
-    private AI_Burst            cBurst;
+    private AI_Acc            cBurst;
 
     //private Transform           refQuarterback;
     private AI_Blocker              refBlocker;
@@ -31,7 +31,7 @@ public class AI_Rusher : MonoBehaviour
 
         cAthlete = GetComponent<AI_Athlete>();
         cTakesShove = GetComponent<AI_TakesShove>();
-        cBurst = GetComponent<AI_Burst>();
+        cBurst = GetComponent<AI_Acc>();
     }
 
     // so we're trying to move towards the quarterback, let's just do that for now. Totally ignore blockers.
@@ -44,7 +44,7 @@ public class AI_Rusher : MonoBehaviour
             // vel *= cAthlete.mSpd;
             // cRigid.velocity = vel;
 
-            cBurst.FCalcBurst(refPlayer.transform.position - transform.position);
+            cBurst.FCalcAcc(refPlayer.transform.position - transform.position);
 
             // hack in him getting pushed by the blocker.
             // if(Vector3.Distance(transform.position, refBlocker.transform.position) < 2f)
@@ -57,9 +57,9 @@ public class AI_Rusher : MonoBehaviour
             // }
 
             cTakesShove.FRecalculateShoves();
-            Debug.Log("Shove mags : " + cTakesShove.mAllForces);
+            // Debug.Log("Shove mags : " + cTakesShove.mAllForces);
             if(cTakesShove.mAllForces.magnitude > 0f){
-                Debug.Log("All shove forces: " + cTakesShove.mAllForces);
+                // Debug.Log("All shove forces: " + cTakesShove.mAllForces);
                 cRigid.velocity += cTakesShove.mAllForces;
             }
         }
@@ -67,11 +67,11 @@ public class AI_Rusher : MonoBehaviour
 
     public void OnSnap()
     {
-        cAthlete.mSpd = 5f;
+        cAthlete.mSpd = 10f;
         cAthlete.mBull = 600f;      // x lbsm/s. Quit a big boy
         cAthlete.mWgt = 300f;       // big boy
         cAthlete.mAnc = 200f;       // internal power
-        cAthlete.mBrst = 10f;
+        cAthlete.mAcc = 5f;
 
         refPlayer = FindObjectOfType<PC_Controller>();
         refBlocker = FindObjectOfType<AI_Blocker>();

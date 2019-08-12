@@ -89,7 +89,7 @@ public class AI_TakesShove : MonoBehaviour
         Vector3 vSelfForces = Vector3.zero;
 
         Vector3 vEnemyForces = Vector3.zero;
-        Debug.Log("Enemy forces: " + vEnemyForces);
+        // Debug.Log("Enemy forces: " + vEnemyForces);
         mAllForces = Vector3.zero;
 
         // add up all the shoves.
@@ -113,15 +113,11 @@ public class AI_TakesShove : MonoBehaviour
             vEnemyForces *= (mag / vEnemyForces.magnitude);
         }
 
-        Debug.Log("Enemy forces: " + vEnemyForces);
-
         // now we divide our self shoves by our weight.
         vSelfForces /= cAthlete.mWgt;
-        Debug.Log("Self forces: " + vSelfForces);
 
         // finally, we just add up the forces of both here.
         mAllForces = vEnemyForces + vSelfForces;
-        Debug.Log("Total forces : " + mAllForces);
     }
 
     // This is going to get a lot more complicated eventually, but for now we just quickly dampen any shoves.
