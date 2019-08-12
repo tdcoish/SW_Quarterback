@@ -9,7 +9,7 @@ public class AI_Runner : MonoBehaviour
 
     public GE_Event             GE_Tackled;
 
-    private Rigidbody           rBody;
+    private Rigidbody           cRigid;
 
     public bool                 mActivated = false;
 
@@ -18,24 +18,17 @@ public class AI_Runner : MonoBehaviour
 
     private AI_RouteFollow      cRouteFollow;
     private AI_Athlete          cAthlete;
+    private AI_Acc              cAcc;
 
     public GE_Event             GE_Touchdown;
 
     void Start()
     {
         cAthlete = GetComponent<AI_Athlete>();
-        if(!cAthlete){
-            Debug.Log("No athlete comp");
-        }
         cRouteFollow = GetComponent<AI_RouteFollow>();
-        if(!cRouteFollow){
-            Debug.Log("No route follow");
-        }
+        cAcc = GetComponent<AI_Acc>();
 
-        rBody = GetComponent<Rigidbody>();
-        if(!rBody){
-            Debug.Log("No rbody");
-        }
+        cRigid = GetComponent<Rigidbody>();
     }
 
     // just make us run to the endzone for now.
@@ -44,9 +37,8 @@ public class AI_Runner : MonoBehaviour
         // wow this was actually fairly easy.
         // when we get tackled, set activated to false.
         if(mActivated){
-            Vector3 vel = new Vector3();
-            vel.z = cAthlete.mSpd;
-            rBody.velocity = vel;
+            Vector3 runDir = new Vector3(0f,0f,1f);
+            cAcc.FCalcAcc(runDir);
 
             if(rFootball != null){
                 Vector3 pos = transform.position;

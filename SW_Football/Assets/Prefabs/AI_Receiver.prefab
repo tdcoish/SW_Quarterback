@@ -172,6 +172,7 @@ GameObject:
   - component: {fileID: 446076488524952048}
   - component: {fileID: 883901585}
   - component: {fileID: 1568070792}
+  - component: {fileID: 7548993067601199992}
   m_Layer: 0
   m_Name: AI_Receiver
   m_TagString: Untagged
@@ -284,10 +285,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ed54a3018148ca4a85e4e8a3950af38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mSpd: 4
   mRoute: {fileID: 0}
   mPathMarker: {fileID: 1537644790932588708, guid: 74fac868df438d742a422e83d09399af,
     type: 3}
+  mActive: 0
 --- !u!114 &1791455132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,6 +327,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e1fbc0385a2f9446b0e749aa89df183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mSpd: 10
+  mThrPwr: 0
+  mBull: 0
+  mWgt: 0
+  mAnc: 0
+  mBks: 0
+  mAcc: 0
   mTag: NON
   mWaitForSnap: 1
 --- !u!114 &883901585
@@ -355,6 +363,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2594927262255425537}
+        m_MethodName: OnSnap
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: Response, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &1568070792
 MonoBehaviour:
@@ -372,6 +391,18 @@ MonoBehaviour:
   mActivated: 0
   rFootball: {fileID: 0}
   GE_Touchdown: {fileID: 11400000, guid: 0157e84e29744c74ab1680d403b8cbdd, type: 2}
+--- !u!114 &7548993067601199992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7233204231284589399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50c535c44e177464aa3dc90b45b96142, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7343177965764156118
 GameObject:
   m_ObjectHideFlags: 0

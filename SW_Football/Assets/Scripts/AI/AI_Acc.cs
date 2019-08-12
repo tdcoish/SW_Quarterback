@@ -41,11 +41,6 @@ public class AI_Acc : MonoBehaviour
         cAthlete.mAcc = 5f;  
     }
 
-    void Update()
-    {
-        
-    }
-
     // Some script calls us and tells us which direction we would like to go. 
     public void FCalcAcc(Vector3 dir)
     {
@@ -86,7 +81,9 @@ public class AI_Acc : MonoBehaviour
         }
 
         // Might have already done this.
-        transform.forward = cRigid.velocity.normalized;
+        if(transform.forward != cRigid.velocity.normalized){
+            transform.forward = cRigid.velocity.normalized;
+        }
 
     }
 }

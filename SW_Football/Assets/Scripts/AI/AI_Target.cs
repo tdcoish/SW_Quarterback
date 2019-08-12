@@ -14,6 +14,7 @@ public class AI_Target : MonoBehaviour
 
     private AI_Receiver             mOwner;
     private AI_Runner               cRunner;
+    private AI_RouteFollow          cRouteFollow;
 
     public bool                     mInEndzone = false;
 
@@ -23,6 +24,8 @@ public class AI_Target : MonoBehaviour
     {
         cRunner = GetComponentInParent<AI_Runner>();
         mOwner = GetComponentInParent<AI_Receiver>();
+
+        cRouteFollow = GetComponentInParent<AI_RouteFollow>();
     }
 
     void Update()
@@ -50,6 +53,12 @@ public class AI_Target : MonoBehaviour
                 rigid.useGravity = false;
                 rigid.detectCollisions = false;
                 fBallRef.transform.parent = transform.parent;
+            }
+
+            // when we've caught the ball, we de-activate our "follow your route" script.
+            if(cRouteFollow != null)
+            {
+                cRouteFollow.mActive = false;
             }
 
         }

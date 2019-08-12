@@ -20,9 +20,10 @@ using System.Collections.Generic;
 [RequireComponent(typeof(AI_Route))]
 public class AI_RouteFollow : MonoBehaviour
 {
-    private Rigidbody           mRigid;
+    private Rigidbody           cRigid;
 
     private AI_Athlete          cAthlete;
+    private AI_Acc              cAcc;
 
     public AI_Route             mRoute;
     private Vector3             mCurGoal;
@@ -30,13 +31,15 @@ public class AI_RouteFollow : MonoBehaviour
     [SerializeField]
     private GameObject          mPathMarker;
 
+    // kind of a proto-state machine here.
+    public bool                 mActive = false;
+
     void Start()
     {
         cAthlete = GetComponent<AI_Athlete>();
-        if(!cAthlete){
-            Debug.Log("No athlete comp");
-        }
-        mRigid = GetComponent<Rigidbody>();  
+        cAcc = GetComponent<AI_Acc>();
+
+        cRigid = GetComponent<Rigidbody>();  
         mRoute = GetComponentInChildren<AI_Route>();  
 
         if(mRoute.mPath.Count != 0){
@@ -53,16 +56,14 @@ public class AI_RouteFollow : MonoBehaviour
 
     void Update()
     {
+        if(!mActive) return;
 
         if(mRoute.mPath.Count == 0){
-            mRigid.velocity = Vector3.zero;
+            cRigid.velocity = Vector3.zero;
             return;
         }
 
-        // set it's rotation to the next node.
-        transform.rotation = Quaternion.LookRotation((mCurGoal - transform.position), Vector3.up);
-
-        mRigid.velocity = transform.forward * cAthlete.mSpd;
+        cAcc.FCalcAcc(mCurGoal - transform.position);
 
         // if we're somewhat close to our node, then now move to the next one.
         if(Vector3.Distance(transform.position, mCurGoal) < 1.5f){
@@ -73,6 +74,11 @@ public class AI_RouteFollow : MonoBehaviour
             mCurGoal = mRoute.mPath[0] + transform.position;
             Instantiate(mPathMarker, mCurGoal, transform.rotation);
         }
+    }
+
+    public void OnSnap()
+    {
+        mActive = true;
     }
 
     public void ResetPath(){
