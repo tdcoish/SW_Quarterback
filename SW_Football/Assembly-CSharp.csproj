@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\AI\AI_Acc.cs" />
      <Compile Include="Assets\Scripts\AI\AI_Athlete.cs" />
      <Compile Include="Assets\Scripts\AI\AI_Blocker.cs" />
+     <Compile Include="Assets\Scripts\AI\AI_GivesShove.cs" />
      <Compile Include="Assets\Scripts\AI\AI_ImpactManager.cs" />
      <Compile Include="Assets\Scripts\AI\AI_MovingTarget.cs" />
      <Compile Include="Assets\Scripts\AI\AI_Receiver.cs" />

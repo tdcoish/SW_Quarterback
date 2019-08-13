@@ -23,7 +23,8 @@ public class AI_Blocker : MonoBehaviour
 
     private AI_Athlete          cAthlete;
     private AI_TakesShove       cTakeShove;
-    private AI_Acc            cBurst;
+    private AI_Acc              cAcc;
+    private AI_GivesShove       cGivShv;
 
     // for now I'll just give him the defender to block
     private AI_Rusher           refRusher;
@@ -37,7 +38,8 @@ public class AI_Blocker : MonoBehaviour
 
         cAthlete = GetComponent<AI_Athlete>();
         cTakeShove = GetComponent<AI_TakesShove>();
-        cBurst = GetComponent<AI_Acc>();
+        cGivShv = GetComponent<AI_GivesShove>();
+        cAcc = GetComponent<AI_Acc>();
     }
 
     void Update()
@@ -51,27 +53,12 @@ public class AI_Blocker : MonoBehaviour
             midSpot += dis;
 
             // get our burst to accelerate us in that direction.
-            //cBurst.FCalcBurst(midSpot - transform.position);
+            cAcc.FCalcAcc(midSpot - transform.position);
  
             // for now, just calculate if our rusher is within our sphere of influence.
             if(Vector3.Distance(transform.position, refRusher.transform.position) < 2f){
 
-                Vector3 shoveDir = transform.position - refRusher.transform.position;
-                shoveDir.y = 0f;
-                shoveDir = Vector3.Normalize(shoveDir);
-                shoveDir *= refRusher.GetComponent<AI_Athlete>().mBull;
-                AI_Shove shove = new AI_Shove(shoveDir, refRusher.GetComponent<AI_Athlete>().mTag);
-                cTakeShove.FTakeShove(shove);
-            }
-
-            // now we apply the affect of force to our velocity.
-            cTakeShove.FRecalculateShoves();
-            if(cTakeShove.mAllForces.magnitude > 0f){
-                
-                Debug.Log("Shove force to vel: " + cTakeShove.mAllForces);
-                cRigid.velocity += cTakeShove.mAllForces;
-            }else{
-                Debug.Log("No shoving forces");
+                cGivShv.FGiveShove(refRusher.GetComponent<AI_Athlete>());
             }
 
         }
@@ -82,11 +69,11 @@ public class AI_Blocker : MonoBehaviour
     public void OnSnap()
     {
         cAthlete.mSpd = 0.5f;
-        cAthlete.mBull = 900f;
+        cAthlete.mBull = 50f;
         cAthlete.mWgt = 300f;
-        cAthlete.mAnc = 100f; 
+        cAthlete.mAnc = 0f; 
         cAthlete.mBks = 80f;  
-        cAthlete.mAcc = 100f;  
+        cAthlete.mAcc = 0.5f;  
 
         mActive = true;
 

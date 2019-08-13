@@ -42,9 +42,9 @@ public class AI_TakesShove : MonoBehaviour
         mShoves = new List<AI_Shove>();
     }
     
-    private void Update()
+    private void FixedUpdate()
     {
-        DampenShovesOverTime();
+        //DampenShovesOverTime();
     }
 
     public void FTakeShove(AI_Shove shove, bool alwaysOverrideOld = false)
@@ -56,7 +56,7 @@ public class AI_TakesShove : MonoBehaviour
                 // if the player pushed them harder in the past, don't remove the shove.
                 if(!alwaysOverrideOld){
                     if(mShoves[i].mForce.magnitude > shove.mForce.magnitude){
-                        Debug.Log("Existing shove harder");
+                        Debug.Log("Existing shove harder, no removal");
                         return;
                     }
                 }
@@ -85,48 +85,39 @@ public class AI_TakesShove : MonoBehaviour
     ************************************************************************************************************** */
     public void FRecalculateShoves()
     {
-
-        Vector3 vSelfForces = Vector3.zero;
-
-        Vector3 vEnemyForces = Vector3.zero;
         // Debug.Log("Enemy forces: " + vEnemyForces);
         mAllForces = Vector3.zero;
 
         // add up all the shoves.
         for(int i=0; i<mShoves.Count; i++)
         {
-            if(mShoves[i].mShover == "SELF"){
-                vSelfForces += mShoves[i].mForce;
-            }else{
-                vEnemyForces += mShoves[i].mForce;
-            }
+            mAllForces += mShoves[i].mForce;
         }
 
         // now we reduce the cumulative effects of enemy shoving.
-        float mag = vEnemyForces.magnitude;
+        float mag = mAllForces.magnitude;
         if(mag != 0f){
-            mag *= (100f-cAthlete.mBks)/100f;           // so 20 block shedding reduces blocks by 20%
-            mag -= cAthlete.mAnc;
+            //mag *= (100f-cAthlete.mBks)/100f;           // so 20 block shedding reduces blocks by 20%, eventually I have to do this in the takesShove part.
+            mag -= cAthlete.mAnc;                       // set anch to 0f for now for testing.
             mag /= cAthlete.mWgt;
             if(mag < 0f) mag = 0f;
 
-            vEnemyForces *= (mag / vEnemyForces.magnitude);
+            mAllForces *= (mag / mAllForces.magnitude);
         }
-
-        // now we divide our self shoves by our weight.
-        vSelfForces /= cAthlete.mWgt;
-
-        // finally, we just add up the forces of both here.
-        mAllForces = vEnemyForces + vSelfForces;
     }
 
     // This is going to get a lot more complicated eventually, but for now we just quickly dampen any shoves.
-    private void DampenShovesOverTime()
+    public void FDampenShovesOverTime()
     {
         for(int i=0; i<mShoves.Count; i++){
             float mag = mShoves[i].mForce.magnitude;
-            mag -= Time.deltaTime * 100f;           // - x lbsm/s every second
-            if(mag < 0f) mag = 0f;
+            mag -= Time.fixedDeltaTime * 1000f;           // - x lbsm/s every second
+            if(mag < 0f){
+                mag = 0f;
+                mShoves.RemoveAt(i);
+                i--;
+                continue;
+            } 
             mShoves[i].mForce *= (mag/mShoves[i].mForce.magnitude);
         }
 

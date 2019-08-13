@@ -31,6 +31,8 @@ public class AI_Acc : MonoBehaviour
     private AI_Athlete              cAthlete;
     private AI_TakesShove           cTakesShove;
 
+    // public bool                     mPretendEngaged = false;
+
     void Start()
     {
         cRigid = GetComponent<Rigidbody>();
@@ -39,6 +41,13 @@ public class AI_Acc : MonoBehaviour
 
         // for now everyone can accelerate at 5 meters/s^2
         cAthlete.mAcc = 5f;  
+    }
+
+    private void Update()
+    {
+        // if(Input.GetKeyDown(KeyCode.Y)){
+        //     mPretendEngaged = !mPretendEngaged;
+        // }
     }
 
     // Some script calls us and tells us which direction we would like to go. 
@@ -69,15 +78,32 @@ public class AI_Acc : MonoBehaviour
         float fVelDot = Vector3.Dot(vAccDir, transform.forward*cRigid.velocity.magnitude);
         fVelDot /= cAthlete.mSpd;
         fVelDot *= -0.5f;           // We want a noticeable but not overpowering effect.
-        fVelDot += 1f;
+        fVelDot += 1f;              // should technically be 0.5f for best accuracy.
         Vector3 vAcc = vAccDir * fAcc * fVelDot;
         // Vector3 vAcc = vAccDir * fAcc;
+
+        // testing as if they've been engaged with a block.
+        // if(mPretendEngaged){
+        //     vAcc -= vAccDir * fAcc * 0.8f;
+        //     Debug.DrawLine(transform.position, transform.position + vAcc*10f, Color.magenta);
+        // }
 
         cRigid.velocity = cRigid.velocity + vAcc;
 
         if(cRigid.velocity.magnitude > cAthlete.mSpd)
         {
-            cRigid.velocity *= cAthlete.mSpd/cRigid.velocity.magnitude;
+            //cRigid.velocity *= cAthlete.mSpd/cRigid.velocity.magnitude;
+        }
+
+        // now we also factor in the effects of the hits we have taken.
+        cTakesShove.FDampenShovesOverTime();
+
+        // if there aren't any hits against us, then we just will totally ignore them.
+        if(cTakesShove.mShoves.Count != 0)
+        {
+            cTakesShove.FRecalculateShoves();
+            cRigid.velocity += cTakesShove.mAllForces;
+            Debug.DrawLine(transform.position, transform.position+cTakesShove.mAllForces, Color.white);
         }
 
         // Might have already done this.

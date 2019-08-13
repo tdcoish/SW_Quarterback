@@ -1233,7 +1233,7 @@ PrefabInstance:
     - target: {fileID: 8715241792742129380, guid: 3fcb15e83f59e7544a78d44040e4602c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.53
+      value: 39.28
       objectReference: {fileID: 0}
     - target: {fileID: 8715241792742129380, guid: 3fcb15e83f59e7544a78d44040e4602c,
         type: 3}
@@ -1534,6 +1534,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50c535c44e177464aa3dc90b45b96142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mPretendEngaged: 1
+--- !u!114 &1899483599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899483597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fffb9546468b8824f9a9585f4aa2a438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1997089724 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6523208524226141601, guid: c4062cc8ecda5e440b79e255429b8613,
@@ -1549,7 +1562,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1997089724}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f709b137550cb064482bf8cc80a2490a, type: 3}
+  m_Script: {fileID: 11500000, guid: 50c535c44e177464aa3dc90b45b96142, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mPretendEngaged: 0
+--- !u!114 &1997089726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997089724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fffb9546468b8824f9a9585f4aa2a438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2018433977
@@ -1909,7 +1935,7 @@ PrefabInstance:
     - target: {fileID: 6523208524226141601, guid: c4062cc8ecda5e440b79e255429b8613,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2577162802314480833, guid: c4062cc8ecda5e440b79e255429b8613,
         type: 3}
@@ -1924,7 +1950,7 @@ PrefabInstance:
     - target: {fileID: 2577162802314480833, guid: c4062cc8ecda5e440b79e255429b8613,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15.01
+      value: 54.09
       objectReference: {fileID: 0}
     - target: {fileID: 2577162802314480833, guid: c4062cc8ecda5e440b79e255429b8613,
         type: 3}
