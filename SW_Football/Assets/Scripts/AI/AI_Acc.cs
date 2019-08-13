@@ -67,9 +67,9 @@ public class AI_Acc : MonoBehaviour
         Vector3 vAccDir = Quaternion.AngleAxis(-fAccAngle, Vector3.up) * transform.forward;
         vAccDir = Vector3.Normalize(vAccDir);
 
-        Debug.DrawLine(transform.position, transform.position+dir*10f, Color.green);
-        Debug.DrawLine(transform.position, transform.position+vAccDir*10f, Color.cyan);
-        Debug.DrawLine(transform.position, transform.position + cRigid.velocity, Color.black);
+        // Debug.DrawLine(transform.position, transform.position+dir*10f, Color.green);
+        // Debug.DrawLine(transform.position, transform.position+vAccDir*10f, Color.cyan);
+        // Debug.DrawLine(transform.position, transform.position + cRigid.velocity, Color.black);
 
         // Find the acceleration WRT our current velocity.
         // We add a bit of a fudge factor using fVelDot to make decelerating from full speed faster,
@@ -92,9 +92,10 @@ public class AI_Acc : MonoBehaviour
 
         // need some other way of limiting acc if our speed is too high, because you can get pushed past top speed.
         // Then again, maybe you just fall then?
-        if(cRigid.velocity.magnitude > cAthlete.mSpd)
+        // workaround, if we're getting pushed, then no speed limit, but if we're not, then speed limit
+        if(cRigid.velocity.magnitude > cAthlete.mSpd && cTakesShove.mShoves.Count == 0)
         {
-            //cRigid.velocity *= cAthlete.mSpd/cRigid.velocity.magnitude;
+            cRigid.velocity *= cAthlete.mSpd/cRigid.velocity.magnitude;
         }
 
         // now we also factor in the effects of the hits we have taken.

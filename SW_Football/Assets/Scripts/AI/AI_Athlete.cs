@@ -30,8 +30,6 @@ public class AI_Athlete : MonoBehaviour
     void Start()
     {
         rBody = GetComponent<Rigidbody>();
-
-        mSpd = 5f;
         mThrPwr = 25f;
 
         if(mWaitForSnap){

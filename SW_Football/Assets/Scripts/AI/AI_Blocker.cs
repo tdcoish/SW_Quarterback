@@ -68,12 +68,6 @@ public class AI_Blocker : MonoBehaviour
 
     public void OnSnap()
     {
-        cAthlete.mSpd = 0.5f;
-        cAthlete.mBull = 50f;
-        cAthlete.mWgt = 300f;
-        cAthlete.mAnc = 0f; 
-        cAthlete.mBks = 80f;  
-        cAthlete.mAcc = 0.5f;  
 
         mActive = true;
 
