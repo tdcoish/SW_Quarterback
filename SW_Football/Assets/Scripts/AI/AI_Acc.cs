@@ -81,7 +81,8 @@ public class AI_Acc : MonoBehaviour
         }
 
         // Might have already done this.
-        if(transform.forward != cRigid.velocity.normalized){
+        if(cRigid.velocity.magnitude != 0f)
+        {
             transform.forward = cRigid.velocity.normalized;
         }
 
