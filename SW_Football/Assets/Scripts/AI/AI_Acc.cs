@@ -83,13 +83,15 @@ public class AI_Acc : MonoBehaviour
         // Vector3 vAcc = vAccDir * fAcc;
 
         // testing as if they've been engaged with a block.
-        // if(mPretendEngaged){
-        //     vAcc -= vAccDir * fAcc * 0.8f;
-        //     Debug.DrawLine(transform.position, transform.position + vAcc*10f, Color.magenta);
-        // }
+        if(cTakesShove.mAllForces.magnitude != 0f){
+            vAcc -= vAccDir * fAcc * 0.8f;
+            Debug.DrawLine(transform.position, transform.position + vAcc*10f, Color.magenta);
+        }
 
         cRigid.velocity = cRigid.velocity + vAcc;
 
+        // need some other way of limiting acc if our speed is too high, because you can get pushed past top speed.
+        // Then again, maybe you just fall then?
         if(cRigid.velocity.magnitude > cAthlete.mSpd)
         {
             //cRigid.velocity *= cAthlete.mSpd/cRigid.velocity.magnitude;
@@ -97,11 +99,11 @@ public class AI_Acc : MonoBehaviour
 
         // now we also factor in the effects of the hits we have taken.
         cTakesShove.FDampenShovesOverTime();
+        cTakesShove.FRecalculateShoves();
 
         // if there aren't any hits against us, then we just will totally ignore them.
         if(cTakesShove.mShoves.Count != 0)
         {
-            cTakesShove.FRecalculateShoves();
             cRigid.velocity += cTakesShove.mAllForces;
             Debug.DrawLine(transform.position, transform.position+cTakesShove.mAllForces, Color.white);
         }

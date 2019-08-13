@@ -14,6 +14,12 @@ public class AI_GivesShove : MonoBehaviour
         cTakesShove = GetComponent<AI_TakesShove>();
     }
 
+    /***************************************************************************
+    Alrighty. Now we're about to add momentum here to the collisions/shoves. What that 
+    means is if there's a large velocity mismatch between players, the hit power increases 
+    quite a bit, proportionally.
+    ************************************************************************* */
+
     // We need to get the person we're shoving passed in to us.
     public void FGiveShove(AI_Athlete other)
     {

@@ -56,11 +56,9 @@ public class AI_TakesShove : MonoBehaviour
                 // if the player pushed them harder in the past, don't remove the shove.
                 if(!alwaysOverrideOld){
                     if(mShoves[i].mForce.magnitude > shove.mForce.magnitude){
-                        Debug.Log("Existing shove harder, no removal");
                         return;
                     }
                 }
-                Debug.Log("Removed shove: " + mShoves[i].mShover);
                 mShoves.RemoveAt(i);
                 break;
             }
@@ -87,6 +85,10 @@ public class AI_TakesShove : MonoBehaviour
     {
         // Debug.Log("Enemy forces: " + vEnemyForces);
         mAllForces = Vector3.zero;
+        
+        if(mShoves.Count == 0){
+            return;
+        }
 
         // add up all the shoves.
         for(int i=0; i<mShoves.Count; i++)

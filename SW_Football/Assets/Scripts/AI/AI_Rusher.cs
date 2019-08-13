@@ -54,8 +54,8 @@ public class AI_Rusher : MonoBehaviour
     public void OnSnap()
     {
         cAthlete.mSpd = 2f;
-        cAthlete.mBull = 50f;      // x lbsm/s. Quit a big boy
-        cAthlete.mWgt = 300f;       // big boy
+        cAthlete.mBull = 50f;      
+        cAthlete.mWgt = 300f;       
         cAthlete.mAnc = 0f;        // internal power
         cAthlete.mAcc = 1f;
 
