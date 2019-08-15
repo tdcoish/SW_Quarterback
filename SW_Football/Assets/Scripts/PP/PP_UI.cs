@@ -11,6 +11,7 @@ public class PP_UI : MonoBehaviour
     public Image            mBar;
     public Image            mMaxLine;
     public Text             mScoreTxt;
+    public Text             mPocketWarningTxt;
 
     [SerializeField]
     private DT_Player           PlayerData;         // used for max throw power at a minimum
@@ -53,6 +54,16 @@ public class PP_UI : MonoBehaviour
         mIsWindingUp = false;
         mBar.fillAmount = 0f;
         mMaxLine.fillAmount = 1f;
+    }
+
+    public void OnPlayerLeftPocket()
+    {
+        mPocketWarningTxt.gameObject.SetActive(true);
+    }
+
+    public void OnPlayerBackInPocket()
+    {
+        mPocketWarningTxt.gameObject.SetActive(false);
     }
 
 }
