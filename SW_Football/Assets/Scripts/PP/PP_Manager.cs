@@ -25,6 +25,7 @@ public class PP_Manager : MonoBehaviour
     private float               mLastReceiverSwitch;  
     public float                mReceiverSwitchInterval = 5f;  
     private float               mReceiverCatchableCountdown;
+    public int                  mActiveTarget;
 
     public GameObject           PF_Arrow;
 
@@ -48,9 +49,21 @@ public class PP_Manager : MonoBehaviour
         {
             // now we switch which receiver is active.
             // later, make it so it can't be the smae receiver.
-            int ind = Random.Range(0, mTargets.Length);
-            Vector3 vPos = mTargets[ind].transform.position;
+            int ind = mActiveTarget;
+            while(ind == mActiveTarget)
+            {
+                ind = (int)Random.Range(0, mTargets.Length);
+            }
+            mActiveTarget = ind;
+            Vector3 vPos = mTargets[mActiveTarget].transform.position;
             vPos.y += 2f;
+
+            PP_Arrow[] arrows = FindObjectsOfType<PP_Arrow>();
+            for(int i=0; i<arrows.Length; i++)
+            {
+                Destroy(arrows[i].gameObject);
+            }
+
             Instantiate(PF_Arrow, vPos, mTargets[ind].transform.rotation);
 
             mLastReceiverSwitch = Time.time;
@@ -61,6 +74,11 @@ public class PP_Manager : MonoBehaviour
     {
         refUI.TXT_Instr.text = "Congrats";
         mScore += 100;
+
+        if(Time.time - mTargets[mActiveTarget].mLastTimeHit < 0.1f)
+        {
+            Debug.Log("Hit the right target");
+        }
     }
 
     public void OnStepOutOfPocket()

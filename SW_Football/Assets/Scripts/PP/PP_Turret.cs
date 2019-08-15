@@ -31,7 +31,7 @@ public class PP_Turret : MonoBehaviour
             float fRandAng = Random.Range(-10f, 10f);
             dif = Quaternion.AngleAxis(fRandAng, Vector3.up) * dif;
             dif = Vector3.Normalize(dif);
-            Vector3 vel = dif * 3f;          // figure out the speed later.
+            Vector3 vel = dif * 4f;          // figure out the speed later.
 
             clone.GetComponent<Rigidbody>().velocity = vel;
 
