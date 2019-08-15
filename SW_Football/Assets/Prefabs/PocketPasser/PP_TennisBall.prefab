@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4575710549982243467}
   - component: {fileID: 4719823736231375521}
   - component: {fileID: 4719823736231375520}
+  - component: {fileID: 6080466871064406926}
   m_Layer: 0
   m_Name: PP_TennisBall
   m_TagString: Untagged
@@ -121,3 +122,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 061663ebe6a161944b706860eb4e8090, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6080466871064406926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 366334164756674112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff88b8c54242c7e4388a0fa6b52b3f24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 10
