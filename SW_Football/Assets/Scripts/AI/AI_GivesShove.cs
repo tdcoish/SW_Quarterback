@@ -67,12 +67,7 @@ public class AI_GivesShove : MonoBehaviour
         fMomPwr = 1-fMomPwr;
         // fMomPwr*=fMomPwr;
         vMomPow *= fMomPwr;
-        Debug.Log("Momentum transfer percentage allowed: " + fMomPwr);
-
-        // visualizing strength of each shove component.
-        Debug.DrawLine(transform.position, transform.position + Vector3.Cross(vShovePow, Vector3.forward), Color.green, 1f);
-        Debug.DrawLine(transform.position, transform.position + Vector3.Cross(vMomPow, Vector3.forward), Color.red, 0.2f);
-
+        
         vShovePow += vMomPow;
 
         AI_Shove shv = new AI_Shove(vShovePow, cAth.mTag);

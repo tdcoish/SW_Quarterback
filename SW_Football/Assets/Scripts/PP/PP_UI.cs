@@ -1,23 +1,16 @@
-﻿using UnityEngine;
+﻿/*************************************************************************************
+
+*************************************************************************************/
+using UnityEngine;
 using UnityEngine.UI;
 
-// Want to draw little bar representing the maximum "point" of the current throw.
-public class PC_UI : MonoBehaviour
+public class PP_UI : MonoBehaviour
 {
+    public Text             TXT_Instr;
 
     public Image            mBar;
     public Image            mMaxLine;
     public Text             mScoreTxt;
-
-    private bool            mIsWindingUp = false;
-
-    [SerializeField]
-    private GameObject          RefFootballPathNode;
-
-    [SerializeField]
-    private SO_Transform        RefPlayerPos;
-    [SerializeField]
-    private SO_Transform        RefPlayerCamera;
 
     [SerializeField]
     private DT_Player           PlayerData;         // used for max throw power at a minimum
@@ -26,11 +19,12 @@ public class PC_UI : MonoBehaviour
     [SerializeField]
     private SO_Float            CurThrowPwr;
 
-    private float               score = 0f;
+    private bool            mIsWindingUp = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        mBar.fillAmount = 0f;
     }
 
     // Update is called once per frame
@@ -61,9 +55,4 @@ public class PC_UI : MonoBehaviour
         mMaxLine.fillAmount = 1f;
     }
 
-    public void REC_TargetHit(){
-        score += 100f;
-        mScoreTxt.text = "Score: " + score;
-    }
-    
 }

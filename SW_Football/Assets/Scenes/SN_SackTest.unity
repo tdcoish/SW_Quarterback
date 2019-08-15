@@ -2082,12 +2082,12 @@ PrefabInstance:
     - target: {fileID: 1067441791975435324, guid: c83e77fb69c4608429cff05ff6e4bde2,
         type: 3}
       propertyPath: mSpd
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1067441791975435324, guid: c83e77fb69c4608429cff05ff6e4bde2,
         type: 3}
       propertyPath: mAcc
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1067441791975435324, guid: c83e77fb69c4608429cff05ff6e4bde2,
         type: 3}
