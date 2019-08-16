@@ -93,6 +93,7 @@
      <Compile Include="Assets\Scripts\Plays\PLY_SnapSpot.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Arrow.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Manager.cs" />
+     <Compile Include="Assets\Scripts\PP\PP_MN_Manager.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Pocket.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Projectile.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Target.cs" />

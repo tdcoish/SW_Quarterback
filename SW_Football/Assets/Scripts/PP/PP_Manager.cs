@@ -5,20 +5,39 @@ Just rip from madden for now. So the receivers come open randomly, stay open for
 
 If you throw to a receiver who isn't open, subtract points. If you miss, subtract points.
 If you step out of the pocket, subtract points.
+
+Alright, when sacked, you lose points, and the receivers essentially reset. In order to build up
+anticipation, and give the player a chance, we need a second in between receivers. Also, the 
+second the player throws the ball, we should be switching receivers. 
+--- Maybe for now only when they actually hit the target.
+So, wait a second, then make a receiver "hot". Repeat this every x seconds if not interrupted.
+Interruptions are 
+1) Getting sacked
+2) Hitting the target.
 *************************************************************************************/
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+
+public enum PP_State
+{
+    CHILLING,
+    REC_ACTIVE
+}
 
 public class PP_Manager : MonoBehaviour
 {
     
+    public SO_Int               mScoreGlobal;
     public int                  mScore;
 
     public PP_UI                refUI;
 
     private bool                mIsOutOfPocket = false;
     private float               mLastTimeInPocket;
+
+    public float                mTimeLeft = 60f;
 
     // Need a list of the "receivers"
     public PP_Target[]          mTargets;
@@ -27,7 +46,15 @@ public class PP_Manager : MonoBehaviour
     private float               mReceiverCatchableCountdown;
     public int                  mActiveTarget;
 
+    public float                mWaitToMakeRecHot = 2f;
+    public PP_State             mState = PP_State.CHILLING;
+
     public GameObject           PF_Arrow;
+
+    private void Start()
+    {
+        DeactivateReceiver();
+    }
 
     private void Update()
     {
@@ -43,42 +70,87 @@ public class PP_Manager : MonoBehaviour
 
         refUI.mScoreTxt.text = "Score: " + mScore;
 
-
         // now we focus on switching the receiver or not.
-        if(Time.time - mLastReceiverSwitch > mReceiverSwitchInterval)
+        if(Time.time - mLastReceiverSwitch > mReceiverSwitchInterval && mState == PP_State.REC_ACTIVE)
         {
-            // now we switch which receiver is active.
-            // later, make it so it can't be the smae receiver.
-            int ind = mActiveTarget;
-            while(ind == mActiveTarget)
-            {
-                ind = (int)Random.Range(0, mTargets.Length);
-            }
-            mActiveTarget = ind;
-            Vector3 vPos = mTargets[mActiveTarget].transform.position;
-            vPos.y += 2f;
+            // There's no active target for a sec.
+            DeactivateReceiver();
 
-            PP_Arrow[] arrows = FindObjectsOfType<PP_Arrow>();
-            for(int i=0; i<arrows.Length; i++)
-            {
-                Destroy(arrows[i].gameObject);
-            }
-
-            Instantiate(PF_Arrow, vPos, mTargets[ind].transform.rotation);
-
-            mLastReceiverSwitch = Time.time;
         }
+
+        mTimeLeft -= Time.deltaTime;
+        refUI.FSetTimeText(mTimeLeft);
+
+        if(mTimeLeft <= 0f)
+        {
+            mScoreGlobal.Val = mScore;
+            SceneManager.LoadScene("SN_PP_Score");
+        }
+
+        // refUI.mScoreTxt.text = "STATE: " + mState;
+    }
+
+    private void DeactivateReceiver()
+    {
+        mActiveTarget = -1;
+
+        PP_Arrow[] arrows = FindObjectsOfType<PP_Arrow>();
+        for(int i=0; i<arrows.Length; i++)
+        {
+            Destroy(arrows[i].gameObject);
+        }
+
+        Debug.Log("De-activating");
+        Invoke("SetNewActiveTarget", mWaitToMakeRecHot);
+
+        mState = PP_State.CHILLING;
+    }
+
+    private void SetNewActiveTarget()
+    {
+        Debug.Log("Activateing");
+        if(mActiveTarget != -1)
+        {
+            Debug.Log("Already active receiver.");
+            return;
+        }
+        // now we switch which receiver is active.
+        // later, make it so it can't be the smae receiver.
+        int ind = mActiveTarget;
+        while(ind == mActiveTarget)
+        {
+            ind = (int)Random.Range(0, mTargets.Length);
+        }
+        mActiveTarget = ind;
+        Vector3 vPos = mTargets[mActiveTarget].transform.position;
+        vPos.y += 2f;
+
+        Instantiate(PF_Arrow, vPos, mTargets[ind].transform.rotation);
+
+        mLastReceiverSwitch = Time.time;
+
+        mState = PP_State.REC_ACTIVE;
     }
 
     public void OnTargetHit()
     {
-        refUI.TXT_Instr.text = "Congrats";
-        mScore += 100;
+        if(mActiveTarget == -1)
+        {
+            refUI.TXT_Instr.text = "No active receivers";
+            mScore -= 50;
+            return;
+        }
 
         if(Time.time - mTargets[mActiveTarget].mLastTimeHit < 0.1f)
         {
-            Debug.Log("Hit the right target");
+            refUI.TXT_Instr.text = "NICE!";
+            mScore += 100;
+            DeactivateReceiver();
+            return;
         }
+
+        mScore -= 50;
+        refUI.TXT_Instr.text = "Hit Wrong Receiver";
     }
 
     public void OnStepOutOfPocket()
@@ -90,5 +162,16 @@ public class PP_Manager : MonoBehaviour
     public void OnStepIntoPocket()
     {
         mIsOutOfPocket = false;
+    }
+
+    public void OnBallHitPlayer()
+    {
+        Color col = refUI.mSackedTxt.color;
+        col.a = 1f;
+        refUI.mSackedTxt.color = col;
+
+        mScore -= 100;
+
+        DeactivateReceiver();
     }
 }

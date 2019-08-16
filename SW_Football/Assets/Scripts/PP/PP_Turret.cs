@@ -14,6 +14,8 @@ public class PP_Turret : MonoBehaviour
 
     public GameObject           mProjSpawnPoint;
 
+    public float                mSpreadRange = 5f;
+
     void Start()
     {
     }
@@ -28,7 +30,7 @@ public class PP_Turret : MonoBehaviour
             // now we add a very slight randomness to the projectile path.
             dif.y = 0f;
 
-            float fRandAng = Random.Range(-10f, 10f);
+            float fRandAng = Random.Range(-mSpreadRange, mSpreadRange);
             dif = Quaternion.AngleAxis(fRandAng, Vector3.up) * dif;
             dif = Vector3.Normalize(dif);
             Vector3 vel = dif * 4f;          // figure out the speed later.

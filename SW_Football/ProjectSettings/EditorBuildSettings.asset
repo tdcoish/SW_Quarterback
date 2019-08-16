@@ -6,12 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/SN_PocketPasser.unity
+    guid: 7a2242416735e9247a94cf9a56eb77f3
+  - enabled: 1
     path: Assets/Scenes/ThrowTesting.unity
     guid: ae9d1f9514d982f4ebc076cb8bc90a29
   - enabled: 1
     path: Assets/Scenes/ED_Plays.unity
     guid: 17f639548afb0db4eb4d06dc65966603
   - enabled: 1
-    path: Assets/Scenes/TestPlay.unity
-    guid: 0e4aec29def972344a5ded73fb58e2f6
+    path: Assets/Scenes/SN_PP_Score.unity
+    guid: b53ebd5510036be4daf9b5e1e40952c0
   m_configObjects: {}

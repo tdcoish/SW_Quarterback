@@ -122,6 +122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 061663ebe6a161944b706860eb4e8090, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GE_TennisBallHitPlayer: {fileID: 11400000, guid: 6ea79f91735717a4db970e3a21846ec2,
+    type: 2}
 --- !u!114 &6080466871064406926
 MonoBehaviour:
   m_ObjectHideFlags: 0

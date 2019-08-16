@@ -11,7 +11,9 @@ public class PP_UI : MonoBehaviour
     public Image            mBar;
     public Image            mMaxLine;
     public Text             mScoreTxt;
+    public Text             mSackedTxt;
     public Text             mPocketWarningTxt;
+    public Text             mTimeLeftTxt;
 
     [SerializeField]
     private DT_Player           PlayerData;         // used for max throw power at a minimum
@@ -37,6 +39,10 @@ public class PP_UI : MonoBehaviour
             ShowThrowBar();
 
         }
+
+        Color col = mSackedTxt.color;
+        col.a -= Time.deltaTime;           // Sure, why not?
+        mSackedTxt.color = col;
 
     }
 
@@ -64,6 +70,12 @@ public class PP_UI : MonoBehaviour
     public void OnPlayerBackInPocket()
     {
         mPocketWarningTxt.gameObject.SetActive(false);
+    }
+
+    public void FSetTimeText(float tm)
+    {
+        tm = (float)System.Math.Round((double)tm, 0);
+        mTimeLeftTxt.text = "Time: " + tm;
     }
 
 }
