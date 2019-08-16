@@ -885,7 +885,7 @@ MonoBehaviour:
   mScoreGlobal: {fileID: 11400000, guid: 67ffe655396dcaa4ea85a660c2235568, type: 2}
   mScore: 0
   refUI: {fileID: 4834740863929537577}
-  mTimeLeft: 20
+  mTimeLeft: 60
   mTargets:
   - {fileID: 4530324131338033660}
   - {fileID: 1426817736}
@@ -2118,6 +2118,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5820332441704396260, guid: 215a062dfecdd454db2adc8069a79eb5,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 8.990829
+      objectReference: {fileID: 0}
+    - target: {fileID: 5820332441704396260, guid: 215a062dfecdd454db2adc8069a79eb5,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.282148
+      objectReference: {fileID: 0}
+    - target: {fileID: 5820332441704396260, guid: 215a062dfecdd454db2adc8069a79eb5,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 8.990829
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 215a062dfecdd454db2adc8069a79eb5, type: 3}

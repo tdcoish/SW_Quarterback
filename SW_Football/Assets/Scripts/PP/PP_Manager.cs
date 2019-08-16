@@ -58,6 +58,20 @@ public class PP_Manager : MonoBehaviour
 
     private void Update()
     {
+
+        HandlePocketPosition();
+
+        refUI.mScoreTxt.text = "Score: " + mScore;
+
+        HandleSwitchingReceiverIfTimeRunsOut();
+
+        HandleTimeLeft();
+
+        // refUI.mScoreTxt.text = "STATE: " + mState;
+    }
+
+    private void HandlePocketPosition()
+    {
         if(mIsOutOfPocket)
         {
             if(Time.time - mLastTimeInPocket >= 1f)
@@ -67,27 +81,28 @@ public class PP_Manager : MonoBehaviour
                 mScore -= 25;
             }
         }
+    }
 
-        refUI.mScoreTxt.text = "Score: " + mScore;
-
+    private void HandleSwitchingReceiverIfTimeRunsOut()
+    {
         // now we focus on switching the receiver or not.
         if(Time.time - mLastReceiverSwitch > mReceiverSwitchInterval && mState == PP_State.REC_ACTIVE)
         {
             // There's no active target for a sec.
             DeactivateReceiver();
-
         }
+    }
 
+    private void HandleTimeLeft()
+    {
         mTimeLeft -= Time.deltaTime;
         refUI.FSetTimeText(mTimeLeft);
 
         if(mTimeLeft <= 0f)
         {
             mScoreGlobal.Val = mScore;
-            SceneManager.LoadScene("SN_PP_Score");
+            //SceneManager.LoadScene("SN_PP_Score");
         }
-
-        // refUI.mScoreTxt.text = "STATE: " + mState;
     }
 
     private void DeactivateReceiver()
