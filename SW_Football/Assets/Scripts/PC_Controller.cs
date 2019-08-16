@@ -24,9 +24,10 @@ public class PC_Controller : MonoBehaviour
     private DT_Player               PlayerData;
 
     public float                    mSpd = 10f;
+    public float                    mAccPerSec = 10f;
 
-    private Rigidbody               mRigid;
-    private PC_Camera               mCam;
+    private Rigidbody               cRigid;
+    private PC_Camera               cCam;
     [SerializeField]
     private PC_UI                   mUI;
 
@@ -41,28 +42,37 @@ public class PC_Controller : MonoBehaviour
     private SO_Transform            RefPlayerPos;
 
     private bool                    mCanThrow = true;
+    public SO_Float                 GB_Innaccuracy;
+    public SO_Float                 GB_ThrowInnacuracy;
 
     // Start is called before the first frame update
     void Start()
     {
-        mRigid = GetComponent<Rigidbody>();
-        mCam = GetComponentInChildren<PC_Camera>();
+        cRigid = GetComponent<Rigidbody>();
+        cCam = GetComponentInChildren<PC_Camera>();
 
         mThrowChrg = 0f;
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+        GB_Innaccuracy.Val = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
         SetRotation();
-        HandleMovement();
+        HandleThrowModifiers();
         HandleThrowing();
 
         // so everyone knows our position.
         RefPlayerPos.Val = transform;
+    }
+
+    void FixedUpdate()
+    {
+        HandleMovement();
     }
 
     private void SetRotation()
@@ -74,7 +84,7 @@ public class PC_Controller : MonoBehaviour
         // rotate camera view around y axis.
         transform.RotateAround(transform.position, Vector3.up, mouseX);
         Vector3 xAx = Vector3.Cross(transform.forward, Vector3.up);
-        mCam.transform.RotateAround(transform.position, xAx, mouseY);
+        cCam.transform.RotateAround(transform.position, xAx, mouseY);
     }
 
     private void HandleThrowing()
@@ -100,7 +110,7 @@ public class PC_Controller : MonoBehaviour
                 }
 
                 // now we update the vector3 representing the angle we're throwing at.
-                mThrowAngle.Val = mCam.transform.forward;
+                mThrowAngle.Val = cCam.transform.forward;
                 mCurThrowPwr.Val = mThrowChrg * mCurThrowMaxChrg.Val;
             }
 
@@ -111,41 +121,103 @@ public class PC_Controller : MonoBehaviour
                     if(mThrowChrg < 0f) mThrowChrg = 0f;
                 }
 
+                // add more innacuracy to our throw for every little frame.
+                GB_ThrowInnacuracy.Val += Time.deltaTime * GB_Innaccuracy.Val;
+
                 if(Input.GetMouseButtonUp(0)){
                     PROJ_Football clone = Instantiate(PF_Football, mThrowPoint.transform.position, transform.rotation);
-                    clone.GetComponent<Rigidbody>().velocity = mCam.transform.forward * mCurThrowMaxChrg.Val * (mThrowChrg/PlayerData._ThrowChargeTime);
+
+                    // now we add in the innacuracy.
+                    // in degrees for now. Technically this makes a box, maybe work on that.
+                    float fXAcc = Random.Range(-GB_ThrowInnacuracy.Val, GB_ThrowInnacuracy.Val);
+                    float fYAcc = Random.Range(-GB_ThrowInnacuracy.Val, GB_ThrowInnacuracy.Val);
+                    fXAcc /= 90f;
+                    fYAcc /= 90f;
+                    Vector3 vThrowDir = cCam.transform.forward;
+                    vThrowDir.x += fXAcc;
+                    vThrowDir.y += fYAcc;
+                    vThrowDir = Vector3.Normalize(vThrowDir);
+
+                    clone.GetComponent<Rigidbody>().velocity = vThrowDir * mCurThrowMaxChrg.Val * (mThrowChrg/PlayerData._ThrowChargeTime);
                     mThrowChrg = 0f;
                     mChargingThrow = false;
 
                     GE_QB_ReleaseBall.Raise(null);
+
+                    GB_ThrowInnacuracy.Val = 0f;
                 }
             }
 
         }
     }
 
+    /****************************************************************************************************
+    For the sake of the throw accuracy stuff, we need a momentum system. So it takes a little time to get 
+    moving, and it takes a little time to stop moving. While moving, the accuracy of the throw is proportional
+    to the percentage of max speed, multiplied by the natural innacuracy, of perhaps 10 degrees or so.
+    ************************************************************************************************** */
     private void HandleMovement()
     { 
-        float sideVel = 0f;
-        float fwdVel = 0f;
+        float fSideAcc = 0f;
+        float fForAcc = 0f;
 
         if(Input.GetKey(KeyCode.A)){
-            sideVel -= mSpd;
+            fSideAcc -= mAccPerSec * Time.fixedDeltaTime;
         }
         if(Input.GetKey(KeyCode.D)){
-            sideVel += mSpd;
+            fSideAcc += mAccPerSec * Time.fixedDeltaTime;
         }
         if(Input.GetKey(KeyCode.W)){
-            fwdVel += mSpd;
+            fForAcc += mAccPerSec * Time.fixedDeltaTime;
         }
         if(Input.GetKey(KeyCode.S)){
-            fwdVel -= mSpd;
+            fForAcc -= mAccPerSec * Time.fixedDeltaTime;
         }
 
-        Vector3 fwd = transform.forward * fwdVel;
-        Vector3 right = transform.right * sideVel;
+        if(Mathf.Abs(fForAcc) + Mathf.Abs(fSideAcc) > mAccPerSec)
+        {
+            fForAcc *= 0.707f;
+            fSideAcc *= 0.707f;
+        }
 
-        mRigid.velocity = Vector3.Normalize(fwd+right) * mSpd;
+
+        Vector3 vVel = cRigid.velocity;
+        // basically, if we're not accelerating, then make our velocity lowered.
+        // other wise do so normally.
+        if(Mathf.Abs(fForAcc) + Mathf.Abs(fSideAcc) < 0.1f)
+        {
+            // say we'll stop over 1 second, or so.
+            vVel -= vVel * Time.fixedDeltaTime * mSpd;
+            // and if we go too far, then just set vel to zero.
+            if(Vector3.Dot(vVel, cRigid.velocity) <= 0f)
+            {
+                cRigid.velocity = Vector3.zero;
+            }
+        }
+        else
+        {
+            vVel += fForAcc * transform.forward;
+            vVel += fSideAcc * transform.right;
+        }
+        if(Vector3.Magnitude(vVel) > mSpd)
+        {
+            vVel *= mSpd / Vector3.Magnitude(vVel);
+        }
+
+        cRigid.velocity = vVel;
+
+    }
+
+    // If we move, decrease accuracy, if we aim around, decrease accuracy.
+    private void HandleThrowModifiers()
+    {
+        float fInnac = cRigid.velocity.magnitude/mSpd;
+        fInnac -= 0.1f;
+        fInnac *= 10f;
+        GB_Innaccuracy.Val = fInnac;
+        if(GB_Innaccuracy.Val < 0f){
+            GB_Innaccuracy.Val = 0f;
+        }
     }
 
     // They clutch the ball and decide not to throw.

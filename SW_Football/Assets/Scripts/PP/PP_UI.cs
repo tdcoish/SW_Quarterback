@@ -14,6 +14,8 @@ public class PP_UI : MonoBehaviour
     public Text             mSackedTxt;
     public Text             mPocketWarningTxt;
     public Text             mTimeLeftTxt;
+    public Text             mInnacuracyTxt;
+    public Text             mThrowInaccuracyTxt;
 
     [SerializeField]
     private DT_Player           PlayerData;         // used for max throw power at a minimum
@@ -23,6 +25,10 @@ public class PP_UI : MonoBehaviour
     private SO_Float            CurThrowPwr;
 
     private bool            mIsWindingUp = false;
+
+    // innaccuracy is dependent on our movement alone. Throw innaccuracy is the cumulative innaccuracy of the current throw.
+    public SO_Float             GB_Innacuracy;
+    public SO_Float             GB_ThrowInaccuracy;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +49,10 @@ public class PP_UI : MonoBehaviour
         Color col = mSackedTxt.color;
         col.a -= Time.deltaTime;           // Sure, why not?
         mSackedTxt.color = col;
+
+        // Set accuracy text.
+        mInnacuracyTxt.text = "Innacuracy: " + GB_Innacuracy.Val;
+        mThrowInaccuracyTxt.text = "Throw Inaccuracy: " + GB_ThrowInaccuracy.Val;
 
     }
 
