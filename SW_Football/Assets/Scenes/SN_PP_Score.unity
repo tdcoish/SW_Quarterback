@@ -557,7 +557,7 @@ GameObject:
   - component: {fileID: 1937511141}
   - component: {fileID: 1937511145}
   m_Layer: 5
-  m_Name: PP_MN_Manager
+  m_Name: MN_Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

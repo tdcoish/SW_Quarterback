@@ -45,6 +45,9 @@ public class PC_Controller : MonoBehaviour
     public SO_Float                 GB_Innaccuracy;
     public SO_Float                 GB_ThrowInnacuracy;
 
+    public Vector3                  mThrowStartAngle;
+    public SO_Float                 GB_ThrowLookInaccuracy;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -101,6 +104,7 @@ public class PC_Controller : MonoBehaviour
                 if(!mChargingThrow){
                     GE_QB_StartThrow.Raise(null);
                     mCurThrowMaxChrg.Val = PlayerData._ThrowSpd;
+                    mThrowStartAngle = cCam.transform.forward;
                 }
                 mChargingThrow = true;
 
@@ -112,6 +116,11 @@ public class PC_Controller : MonoBehaviour
                 // now we update the vector3 representing the angle we're throwing at.
                 mThrowAngle.Val = cCam.transform.forward;
                 mCurThrowPwr.Val = mThrowChrg * mCurThrowMaxChrg.Val;
+
+                // technically this is actually the accuracy right now.
+                float fAccDot = Vector3.Dot(mThrowAngle.Val, mThrowStartAngle);
+                // let's say that inaccuracy translates to 1 degree per degree moved.
+                GB_ThrowLookInaccuracy.Val = (1f-fAccDot) * 100f;
             }
 
             if(mChargingThrow){
@@ -129,8 +138,9 @@ public class PC_Controller : MonoBehaviour
 
                     // now we add in the innacuracy.
                     // in degrees for now. Technically this makes a box, maybe work on that.
-                    float fXAcc = Random.Range(-GB_ThrowInnacuracy.Val, GB_ThrowInnacuracy.Val);
-                    float fYAcc = Random.Range(-GB_ThrowInnacuracy.Val, GB_ThrowInnacuracy.Val);
+                    float fCombinedInaccuracy = GB_ThrowInnacuracy.Val + GB_ThrowLookInaccuracy.Val;
+                    float fXAcc = Random.Range(-fCombinedInaccuracy, fCombinedInaccuracy);
+                    float fYAcc = Random.Range(-fCombinedInaccuracy, fCombinedInaccuracy);
                     fXAcc /= 90f;
                     fYAcc /= 90f;
                     Vector3 vThrowDir = cCam.transform.forward;
@@ -145,6 +155,7 @@ public class PC_Controller : MonoBehaviour
                     GE_QB_ReleaseBall.Raise(null);
 
                     GB_ThrowInnacuracy.Val = 0f;
+                    GB_ThrowLookInaccuracy.Val = 0f;
                 }
             }
 

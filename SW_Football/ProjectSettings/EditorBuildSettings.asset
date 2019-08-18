@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SN_PP_Score.unity
     guid: b53ebd5510036be4daf9b5e1e40952c0
+  - enabled: 1
+    path: Assets/Scenes/SN_MN_Main.unity
+    guid: 8a54206a4eb46bb4d9209d40ec782fdd
   m_configObjects: {}

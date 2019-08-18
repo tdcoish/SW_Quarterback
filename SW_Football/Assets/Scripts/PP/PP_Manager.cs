@@ -51,9 +51,13 @@ public class PP_Manager : MonoBehaviour
 
     public GameObject           PF_Arrow;
 
+    public GameObject           MN_PauseScreen;
+
     private void Start()
     {
         DeactivateReceiver();
+
+        MN_PauseScreen.SetActive(false);
     }
 
     private void Update()
@@ -68,6 +72,23 @@ public class PP_Manager : MonoBehaviour
         HandleTimeLeft();
 
         // refUI.mScoreTxt.text = "STATE: " + mState;
+
+        // for the build
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            Application.Quit();
+        }
+
+        // if the user presses m, then they bring up the pause menu.
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            Time.timeScale = 0f;
+            MN_PauseScreen.SetActive(true);
+
+            // have to show the mouse, as well as disable the player camera.
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
     private void HandlePocketPosition()
@@ -101,7 +122,7 @@ public class PP_Manager : MonoBehaviour
         if(mTimeLeft <= 0f)
         {
             mScoreGlobal.Val = mScore;
-            //SceneManager.LoadScene("SN_PP_Score");
+            SceneManager.LoadScene("SN_PP_Score");
         }
     }
 
@@ -188,5 +209,21 @@ public class PP_Manager : MonoBehaviour
         mScore -= 100;
 
         DeactivateReceiver();
+    }
+
+    public void OnQuitPressed()
+    {
+        SceneManager.LoadScene("SN_MN_Main");
+    }
+    public void OnResumePressed()
+    {
+        MN_PauseScreen.SetActive(false);
+        Time.timeScale = 1f;
+
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+    public void OnRestartPressed()
+    {
+        Debug.Log("Gotta figure out how to restart");
     }
 }

@@ -83,6 +83,7 @@
      <Compile Include="Assets\Scripts\GameManagement\GM_Manager.cs" />
      <Compile Include="Assets\Scripts\GE_System\GE_Event.cs" />
      <Compile Include="Assets\Scripts\GE_System\GE_Listener.cs" />
+     <Compile Include="Assets\Scripts\Menus\MN_Manager.cs" />
      <Compile Include="Assets\Scripts\PC_Camera.cs" />
      <Compile Include="Assets\Scripts\PC_Controller.cs" />
      <Compile Include="Assets\Scripts\PC_ThrowTrajectory.cs" />

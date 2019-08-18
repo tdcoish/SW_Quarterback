@@ -16,6 +16,7 @@ public class PP_UI : MonoBehaviour
     public Text             mTimeLeftTxt;
     public Text             mInnacuracyTxt;
     public Text             mThrowInaccuracyTxt;
+    public Text             mLookInaccuracyTxt;
 
     [SerializeField]
     private DT_Player           PlayerData;         // used for max throw power at a minimum
@@ -29,6 +30,7 @@ public class PP_UI : MonoBehaviour
     // innaccuracy is dependent on our movement alone. Throw innaccuracy is the cumulative innaccuracy of the current throw.
     public SO_Float             GB_Innacuracy;
     public SO_Float             GB_ThrowInaccuracy;
+    public SO_Float             GB_ThrowLookInaccuracy;
 
     // Start is called before the first frame update
     void Start()
@@ -53,7 +55,7 @@ public class PP_UI : MonoBehaviour
         // Set accuracy text.
         mInnacuracyTxt.text = "Innacuracy: " + GB_Innacuracy.Val;
         mThrowInaccuracyTxt.text = "Throw Inaccuracy: " + GB_ThrowInaccuracy.Val;
-
+        mLookInaccuracyTxt.text = "Look Inaccuracy: " + GB_ThrowLookInaccuracy.Val;
     }
 
     public void ShowThrowBar()
