@@ -67,6 +67,8 @@ public class PP_Manager : MonoBehaviour
     public GameObject           MN_PauseScreen;
 
     public bool                 mSackImmunity = false;
+    public int                  mStreak = 0;
+    public int                  mStreakBonus;
 
     private void Start()
     {
@@ -155,6 +157,9 @@ public class PP_Manager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+
+        // set streak text
+        refUI.FSetStreakText(mStreakBonus);
     }
 
     private void HandlePocketPosition()
@@ -165,7 +170,8 @@ public class PP_Manager : MonoBehaviour
             {
                 // this could be confusing, mLastTimeInPocket isn't actually the last time in pocket after a while.
                 mLastTimeInPocket = Time.time;
-                mScore -= 25;
+                // this doesn't actually change the streak though.
+                ChangeScore(-25, false);
             }
         }
     }
@@ -241,19 +247,19 @@ public class PP_Manager : MonoBehaviour
         if(mActiveTarget == -1)
         {
             refUI.TXT_Instr.text = "No active receivers";
-            mScore -= 50;
+            ChangeScore(-50);
             return;
         }
 
         if(Time.time - mTargets[mActiveTarget].mLastTimeHit < 0.1f)
         {
             refUI.TXT_Instr.text = "NICE!";
-            mScore += 100;
+            ChangeScore(100);
             DeactivateReceiver();
             return;
         }
 
-        mScore -= 50;
+        ChangeScore(-50);
         refUI.TXT_Instr.text = "Hit Wrong Receiver";
     }
 
@@ -279,8 +285,9 @@ public class PP_Manager : MonoBehaviour
         Color col = refUI.mSackedTxt.color;
         col.a = 1f;
         refUI.mSackedTxt.color = col;
+                Debug.Log("Heree");
 
-        mScore -= 100;
+        ChangeScore(-100);
 
         DeactivateReceiver();
     }
@@ -327,6 +334,37 @@ public class PP_Manager : MonoBehaviour
         mSackImmunity = false;
         DestroyFootballs();
         DeactivateReceiver();
-        mScore -= 25;
+        ChangeScore(-25);
+    }
+
+    // we factor in streak right here.
+    // Has side effects, changes streak.
+    // change can be negative
+    private void ChangeScore(int chng, bool affectStreak = true)
+    {
+        if(chng < 0)
+        {
+            mStreak = 0;
+            if(affectStreak){
+                mScore += chng;
+            }
+        }
+        else{
+            if(affectStreak){
+                mStreak++;
+            }
+            mScore += mStreak * chng;
+        }
+
+        mStreakBonus = mStreak;
+        if(mStreakBonus < 0)
+        {
+            mStreakBonus = 0;
+        }
+
+        if(mStreakBonus > 4)
+        {
+            mStreakBonus = 4;
+        }
     }
 }

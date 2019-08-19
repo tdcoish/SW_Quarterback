@@ -18,6 +18,7 @@ public class PP_UI : MonoBehaviour
     public Text             mThrowInaccuracyTxt;
     public Text             mLookInaccuracyTxt;
     public Text             mSackImmunityTxt;
+    public Text             mStreakTxt;
 
     [SerializeField]
     private DT_Player           PlayerData;         // used for max throw power at a minimum
@@ -59,7 +60,7 @@ public class PP_UI : MonoBehaviour
         mThrowInaccuracyTxt.text = "Throw Inaccuracy: " + GB_ThrowInaccuracy.Val;
         mLookInaccuracyTxt.text = "Look Inaccuracy: " + GB_ThrowLookInaccuracy.Val;
 
-        
+
     }
 
     public void ShowThrowBar()
@@ -94,4 +95,13 @@ public class PP_UI : MonoBehaviour
         mTimeLeftTxt.text = "Time: " + tm;
     }
 
+    public void FSetStreakText(int streakBonus)
+    {
+        if(streakBonus >= 4)
+        {
+            mStreakTxt.text = "Streak Multiplier: MAX";
+        }else{
+            mStreakTxt.text = "Streak Multiplier: x" + streakBonus;
+        }
+    }
 }
