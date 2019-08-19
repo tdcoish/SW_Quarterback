@@ -89,6 +89,7 @@ public class PP_Manager : MonoBehaviour
     {
         MN_PauseScreen.SetActive(false);
         refUI.gameObject.SetActive(false);
+        refInstrUI.SetActive(true);
 
         mGameState = PP_GAME_STATE.CHILLING;
         mState = PP_State.DISPLAY_INSTRUCTIONS;
@@ -99,7 +100,19 @@ public class PP_Manager : MonoBehaviour
             refTurrets[i].FDeactivate();
         }
         PC_Controller refPC = FindObjectOfType<PC_Controller>();
+        // Note, this needs to be polished, the rotations can get wonky.
+        refPC.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        refPC.GetComponentInChildren<PC_Camera>().transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         refPC.mActive = false;
+        // Destroy any projectiles that may be up.
+        PP_Projectile[] refProjectiles = FindObjectsOfType<PP_Projectile>();
+        for(int i = 0; i<refProjectiles.Length; i++){
+            Destroy(refProjectiles[i].gameObject);
+        }
+        PP_Arrow[] refArrows = FindObjectsOfType<PP_Arrow>();
+        for(int i=0; i<refArrows.Length; i++){
+            Destroy(refArrows[i].gameObject);
+        }
     }
 
     private void SetStateGaming()
@@ -117,6 +130,10 @@ public class PP_Manager : MonoBehaviour
         }
         PC_Controller refPC = FindObjectOfType<PC_Controller>();
         refPC.mActive = true;
+
+        mScore = 0;
+        mStreak = 0;
+        mStreakBonus = 1;
 
         DeactivateReceiver();
     }
@@ -156,6 +173,8 @@ public class PP_Manager : MonoBehaviour
             // have to show the mouse, as well as disable the player camera.
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+            FindObjectOfType<PC_Controller>().mActive = false;
         }
 
         // set streak text
@@ -322,10 +341,15 @@ public class PP_Manager : MonoBehaviour
         Time.timeScale = 1f;
 
         Cursor.lockState = CursorLockMode.Locked;
+
+        FindObjectOfType<PC_Controller>().mActive = true;
     }
     public void OnRestartPressed()
     {
-        Debug.Log("Gotta figure out how to restart");
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        SetStateInstructions();
     }
     
     // called all the time, when we hit a target, when the ball hits the ground, etcetera.
