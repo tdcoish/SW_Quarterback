@@ -46,6 +46,7 @@ public class PP_Turret : MonoBehaviour
     public void FActivate()
     {
         mActive = true;
+        mLastShotTime += Time.time;
     }
 
     public void FDeactivate()

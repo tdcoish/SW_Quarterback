@@ -106,6 +106,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mPos: {fileID: 11400000, guid: 1897fc8717b9b2e498497c1e5d709db3, type: 2}
+  PF_Particles: {fileID: 6584021370440890856, guid: 895d86e901dbe514fa87c7340e9b2f23,
+    type: 3}
   GE_FB_HitGround: {fileID: 11400000, guid: 679ca6cc02b32fa4e91646629a6e03a9, type: 2}
 --- !u!54 &2990268506736182448
 Rigidbody:

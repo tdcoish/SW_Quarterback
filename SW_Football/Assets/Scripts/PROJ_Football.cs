@@ -11,6 +11,8 @@ public class PROJ_Football : MonoBehaviour
 
     private bool                    mGrounded = false;
 
+    public GameObject               PF_Particles;
+
     [SerializeField]
     private GE_Event                GE_FB_HitGround;
 
@@ -41,5 +43,10 @@ public class PROJ_Football : MonoBehaviour
             GE_FB_HitGround.Raise(null);
             mGrounded = true;
         }
+    }
+
+    void OnDestroy()
+    {
+        Instantiate(PF_Particles, transform.position, transform.rotation);
     }
 }

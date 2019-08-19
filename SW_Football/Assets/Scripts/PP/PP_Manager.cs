@@ -14,6 +14,10 @@ So, wait a second, then make a receiver "hot". Repeat this every x seconds if no
 Interruptions are 
 1) Getting sacked
 2) Hitting the target.
+
+Two things need to be added. First, if you make a throw, you can't be sacked while the ball is
+in the air. However, if the throw does not hit the target, then you lose points. Maybe throwaway?
+Nah, it's pocket passer.
 *************************************************************************************/
 using UnityEngine;
 using UnityEngine.UI;
@@ -61,6 +65,8 @@ public class PP_Manager : MonoBehaviour
     public GameObject           PF_Arrow;
 
     public GameObject           MN_PauseScreen;
+
+    public bool                 mSackImmunity = false;
 
     private void Start()
     {
@@ -230,6 +236,8 @@ public class PP_Manager : MonoBehaviour
 
     public void OnTargetHit()
     {
+        DestroyFootballs();
+
         if(mActiveTarget == -1)
         {
             refUI.TXT_Instr.text = "No active receivers";
@@ -262,6 +270,12 @@ public class PP_Manager : MonoBehaviour
 
     public void OnBallHitPlayer()
     {
+        if(mSackImmunity)
+        {
+            Debug.Log("Sacked while immune");
+            return;
+        }
+
         Color col = refUI.mSackedTxt.color;
         col.a = 1f;
         refUI.mSackedTxt.color = col;
@@ -285,5 +299,34 @@ public class PP_Manager : MonoBehaviour
     public void OnRestartPressed()
     {
         Debug.Log("Gotta figure out how to restart");
+    }
+    
+    // called all the time, when we hit a target, when the ball hits the ground, etcetera.
+    // you can also be sacked again.
+    private void DestroyFootballs()
+    {
+        PROJ_Football[] footballs = FindObjectsOfType<PROJ_Football>();
+        for(int i=0; i<footballs.Length; i++)
+        {
+            Destroy(footballs[i].gameObject);
+        }
+
+        mSackImmunity = false;
+        refUI.mSackImmunityTxt.text = "Sack Immunity: NO";
+    }
+
+    public void OnBallThrown()
+    {
+        mSackImmunity = true;
+        refUI.mSackImmunityTxt.text = "Sack Immunity: YES";
+    }
+
+    public void OnBallHitGround()
+    {
+        refUI.mSackImmunityTxt.text = "Sack Immunity: NO";
+        mSackImmunity = false;
+        DestroyFootballs();
+        DeactivateReceiver();
+        mScore -= 25;
     }
 }
