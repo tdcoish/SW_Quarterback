@@ -36,6 +36,7 @@ public class PP_UI : MonoBehaviour
     void Start()
     {
         mBar.fillAmount = 0f;
+        mPocketWarningTxt.gameObject.SetActive(false);
     }
 
     // Update is called once per frame

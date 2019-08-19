@@ -22,6 +22,13 @@ using System.Collections.Generic;
 
 public enum PP_State
 {
+    DISPLAY_INSTRUCTIONS,       // when we start, display instructions for the player to read.
+    GAME_ACTIVE
+}
+
+// basically this is only if we need to activate a receiver or not.
+public enum PP_GAME_STATE
+{
     CHILLING,
     REC_ACTIVE
 }
@@ -33,6 +40,7 @@ public class PP_Manager : MonoBehaviour
     public int                  mScore;
 
     public PP_UI                refUI;
+    public GameObject           refInstrUI;
 
     private bool                mIsOutOfPocket = false;
     private float               mLastTimeInPocket;
@@ -47,7 +55,8 @@ public class PP_Manager : MonoBehaviour
     public int                  mActiveTarget;
 
     public float                mWaitToMakeRecHot = 2f;
-    public PP_State             mState = PP_State.CHILLING;
+    public PP_State             mState;
+    public PP_GAME_STATE        mGameState;         // only care when actually running.
 
     public GameObject           PF_Arrow;
 
@@ -55,14 +64,65 @@ public class PP_Manager : MonoBehaviour
 
     private void Start()
     {
-        DeactivateReceiver();
-
-        MN_PauseScreen.SetActive(false);
+        SetStateInstructions();
     }
 
     private void Update()
     {
 
+        switch(mState){
+            case(PP_State.DISPLAY_INSTRUCTIONS): STATE_INSTRUCTIONS(); break;
+            case(PP_State.GAME_ACTIVE): STATE_GAMERUNNING(); break;
+        }
+
+    }
+
+    private void SetStateInstructions()
+    {
+        MN_PauseScreen.SetActive(false);
+        refUI.gameObject.SetActive(false);
+
+        mGameState = PP_GAME_STATE.CHILLING;
+        mState = PP_State.DISPLAY_INSTRUCTIONS;
+
+        // deactivate all the turrets and the pc in the scene.
+        PP_Turret[] refTurrets = FindObjectsOfType<PP_Turret>();
+        for(int i=0; i<refTurrets.Length; i++){
+            refTurrets[i].FDeactivate();
+        }
+        PC_Controller refPC = FindObjectOfType<PC_Controller>();
+        refPC.mActive = false;
+    }
+
+    private void SetStateGaming()
+    {
+        mState = PP_State.GAME_ACTIVE;
+        mGameState = PP_GAME_STATE.CHILLING;
+
+        refUI.gameObject.SetActive(true);
+        refInstrUI.gameObject.SetActive(false);
+
+        // Activate all the turrets and the pc in the scene.
+        PP_Turret[] refTurrets = FindObjectsOfType<PP_Turret>();
+        for(int i=0; i<refTurrets.Length; i++){
+            refTurrets[i].FActivate();
+        }
+        PC_Controller refPC = FindObjectOfType<PC_Controller>();
+        refPC.mActive = true;
+
+        DeactivateReceiver();
+    }
+
+    private void STATE_INSTRUCTIONS()
+    {
+        if(Input.anyKey)
+        {
+            SetStateGaming();
+        }
+    }
+
+    private void STATE_GAMERUNNING()
+    {
         HandlePocketPosition();
 
         refUI.mScoreTxt.text = "Score: " + mScore;
@@ -107,7 +167,7 @@ public class PP_Manager : MonoBehaviour
     private void HandleSwitchingReceiverIfTimeRunsOut()
     {
         // now we focus on switching the receiver or not.
-        if(Time.time - mLastReceiverSwitch > mReceiverSwitchInterval && mState == PP_State.REC_ACTIVE)
+        if(Time.time - mLastReceiverSwitch > mReceiverSwitchInterval && mGameState == PP_GAME_STATE.REC_ACTIVE)
         {
             // There's no active target for a sec.
             DeactivateReceiver();
@@ -139,7 +199,7 @@ public class PP_Manager : MonoBehaviour
         Debug.Log("De-activating");
         Invoke("SetNewActiveTarget", mWaitToMakeRecHot);
 
-        mState = PP_State.CHILLING;
+        mGameState = PP_GAME_STATE.CHILLING;
     }
 
     private void SetNewActiveTarget()
@@ -165,7 +225,7 @@ public class PP_Manager : MonoBehaviour
 
         mLastReceiverSwitch = Time.time;
 
-        mState = PP_State.REC_ACTIVE;
+        mGameState = PP_GAME_STATE.REC_ACTIVE;
     }
 
     public void OnTargetHit()

@@ -48,6 +48,8 @@ public class PC_Controller : MonoBehaviour
     public Vector3                  mThrowStartAngle;
     public SO_Float                 GB_ThrowLookInaccuracy;
 
+    public bool                     mActive = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +67,8 @@ public class PC_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!mActive) return;
+
         SetRotation();
         HandleThrowModifiers();
         HandleThrowing();
@@ -75,6 +79,8 @@ public class PC_Controller : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(!mActive) return;
+        
         HandleMovement();
     }
 

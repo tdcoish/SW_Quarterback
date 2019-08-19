@@ -16,12 +16,14 @@ public class PP_Turret : MonoBehaviour
 
     public float                mSpreadRange = 5f;
 
-    void Start()
-    {
-    }
+    public bool                 mActive = false;
 
     void Update()
     {
+        if(!mActive){
+            return;
+        }
+
         if(Time.time - mLastShotTime > mFireRate)
         {
             PP_Projectile clone = Instantiate(PF_TennisBall, mProjSpawnPoint.transform.position, transform.rotation);
@@ -39,5 +41,15 @@ public class PP_Turret : MonoBehaviour
 
             mLastShotTime = Time.time;
         }    
+    }
+
+    public void FActivate()
+    {
+        mActive = true;
+    }
+
+    public void FDeactivate()
+    {
+        mActive = false;
     }
 }
