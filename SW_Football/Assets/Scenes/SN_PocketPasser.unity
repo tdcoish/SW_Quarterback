@@ -1621,7 +1621,7 @@ MonoBehaviour:
   MN_PauseScreen: {fileID: 534757588}
   mSackImmunity: 0
   mStreak: 0
-  mStreakBonus: 0
+  mStreakBonus: 1
 --- !u!4 &810600709
 Transform:
   m_ObjectHideFlags: 0

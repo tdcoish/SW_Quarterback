@@ -97,11 +97,6 @@ public class PP_UI : MonoBehaviour
 
     public void FSetStreakText(int streakBonus)
     {
-        if(streakBonus >= 4)
-        {
-            mStreakTxt.text = "Streak Multiplier: MAX";
-        }else{
-            mStreakTxt.text = "Streak Multiplier: x" + streakBonus;
-        }
+        mStreakTxt.text = "Streak Multiplier: x" + streakBonus;
     }
 }

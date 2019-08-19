@@ -68,7 +68,7 @@ public class PP_Manager : MonoBehaviour
 
     public bool                 mSackImmunity = false;
     public int                  mStreak = 0;
-    public int                  mStreakBonus;
+    public int                  mStreakBonus = 1;
 
     private void Start()
     {
@@ -246,11 +246,11 @@ public class PP_Manager : MonoBehaviour
         Renderer[] renderers = arrow.GetComponentsInChildren<Renderer>();
 
         Color col = Color.red;
-        if(mStreakBonus == 1){
+        if(mStreakBonus == 2){
             col = Color.blue;
-        }else if(mStreakBonus == 2){
+        }else if(mStreakBonus == 3){
             col = Color.green;
-        }else if(mStreakBonus > 2){
+        }else if(mStreakBonus > 3){
             col = Color.yellow;
         }
     
@@ -280,6 +280,7 @@ public class PP_Manager : MonoBehaviour
 
         ChangeScore(-50);
         refUI.TXT_Instr.text = "Hit Wrong Receiver";
+        DeactivateReceiver();
     }
 
     public void OnStepOutOfPocket()
@@ -369,13 +370,13 @@ public class PP_Manager : MonoBehaviour
             }
         }
         else{
+            mScore += mStreakBonus * chng;
             if(affectStreak){
                 mStreak++;
             }
-            mScore += mStreak * chng;
         }
 
-        mStreakBonus = mStreak;
+        mStreakBonus = mStreak+1;
         if(mStreakBonus < 0)
         {
             mStreakBonus = 0;
