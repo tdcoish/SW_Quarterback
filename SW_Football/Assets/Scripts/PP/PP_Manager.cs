@@ -233,11 +233,30 @@ public class PP_Manager : MonoBehaviour
         Vector3 vPos = mTargets[mActiveTarget].transform.position;
         vPos.y += 2f;
 
-        Instantiate(PF_Arrow, vPos, mTargets[ind].transform.rotation);
+        var clone = Instantiate(PF_Arrow, vPos, mTargets[ind].transform.rotation);
+        SetArrowMaterialColour(clone);
 
         mLastReceiverSwitch = Time.time;
 
         mGameState = PP_GAME_STATE.REC_ACTIVE;
+    }
+
+    private void SetArrowMaterialColour(GameObject arrow)
+    {
+        Renderer[] renderers = arrow.GetComponentsInChildren<Renderer>();
+
+        Color col = Color.red;
+        if(mStreakBonus == 1){
+            col = Color.blue;
+        }else if(mStreakBonus == 2){
+            col = Color.green;
+        }else if(mStreakBonus > 2){
+            col = Color.yellow;
+        }
+    
+        for(int i=0; i<renderers.Length; i++){
+            renderers[i].material.SetColor("_Color", col);
+        }
     }
 
     public void OnTargetHit()
