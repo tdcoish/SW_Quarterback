@@ -98,6 +98,8 @@
      <Compile Include="Assets\Scripts\PP\PP_MN_Manager.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Pocket.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Projectile.cs" />
+     <Compile Include="Assets\Scripts\PP\PP_Scoreboard.cs" />
+     <Compile Include="Assets\Scripts\PP\PP_ScoreCam.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Target.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Turret.cs" />
      <Compile Include="Assets\Scripts\PP\PP_UI.cs" />
@@ -116,6 +118,7 @@
      <Compile Include="Assets\Scripts\TEMP_FileStoring.cs" />
      <Compile Include="Assets\Scripts\Utilities\LifeSpan.cs" />
      <Compile Include="Assets\Scripts\Utilities\SingletonBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Utilities\UT_Extensions.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_Grounded.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_Strings.cs" />
      <None Include="Assets\Plays\HulkSmash.txt" />

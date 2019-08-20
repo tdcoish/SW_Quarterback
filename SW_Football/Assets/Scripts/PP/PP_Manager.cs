@@ -27,7 +27,8 @@ using System.Collections.Generic;
 public enum PP_State
 {
     DISPLAY_INSTRUCTIONS,       // when we start, display instructions for the player to read.
-    GAME_ACTIVE
+    GAME_ACTIVE,
+    SCORE_SCREEN
 }
 
 // basically this is only if we need to activate a receiver or not.
@@ -45,11 +46,13 @@ public class PP_Manager : MonoBehaviour
 
     public PP_UI                refUI;
     public GameObject           refInstrUI;
+    public GameObject           refScoreboardUI;
 
     private bool                mIsOutOfPocket = false;
     private float               mLastTimeInPocket;
 
-    public float                mTimeLeft = 60f;
+    public float                mGameTime = 60f;
+    public float                mTimeLeft;
 
     // Need a list of the "receivers"
     public PP_Target[]          mTargets;
@@ -81,47 +84,50 @@ public class PP_Manager : MonoBehaviour
         switch(mState){
             case(PP_State.DISPLAY_INSTRUCTIONS): STATE_INSTRUCTIONS(); break;
             case(PP_State.GAME_ACTIVE): STATE_GAMERUNNING(); break;
+            case(PP_State.SCORE_SCREEN): STATE_SCORESCREEN(); break;
         }
 
     }
 
     private void SetStateInstructions()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+
         MN_PauseScreen.SetActive(false);
         refUI.gameObject.SetActive(false);
         refInstrUI.SetActive(true);
+        refScoreboardUI.SetActive(false);
 
         mGameState = PP_GAME_STATE.CHILLING;
         mState = PP_State.DISPLAY_INSTRUCTIONS;
 
-        // deactivate all the turrets and the pc in the scene.
-        PP_Turret[] refTurrets = FindObjectsOfType<PP_Turret>();
-        for(int i=0; i<refTurrets.Length; i++){
-            refTurrets[i].FDeactivate();
-        }
         PC_Controller refPC = FindObjectOfType<PC_Controller>();
         // Note, this needs to be polished, the rotations can get wonky.
         refPC.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         refPC.GetComponentInChildren<PC_Camera>().transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         refPC.mActive = false;
-        // Destroy any projectiles that may be up.
-        PP_Projectile[] refProjectiles = FindObjectsOfType<PP_Projectile>();
-        for(int i = 0; i<refProjectiles.Length; i++){
-            Destroy(refProjectiles[i].gameObject);
-        }
-        PP_Arrow[] refArrows = FindObjectsOfType<PP_Arrow>();
-        for(int i=0; i<refArrows.Length; i++){
-            Destroy(refArrows[i].gameObject);
+
+        // this is kind of to solve a bug with respect to throwing.
+        refPC.GE_QB_StopThrow.Raise(null);
+    
+        DestroyExistingProjectilesArrowsAndDeactivateTurrets();
+        // Also destroy all footballs
+        PROJ_Football[] refFootballs = FindObjectsOfType<PROJ_Football>();
+        for(int i=0; i<refFootballs.Length; i++){
+            Destroy(refFootballs[i].gameObject);
         }
     }
 
     private void SetStateGaming()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+
         mState = PP_State.GAME_ACTIVE;
         mGameState = PP_GAME_STATE.CHILLING;
 
         refUI.gameObject.SetActive(true);
         refInstrUI.gameObject.SetActive(false);
+        refScoreboardUI.SetActive(false);
 
         // Activate all the turrets and the pc in the scene.
         PP_Turret[] refTurrets = FindObjectsOfType<PP_Turret>();
@@ -135,7 +141,28 @@ public class PP_Manager : MonoBehaviour
         mStreak = 0;
         mStreakBonus = 1;
 
+        mTimeLeft = mGameTime;
+
         DeactivateReceiver();
+    }
+
+    private void SetStateScoreScreen()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        mState = PP_State.SCORE_SCREEN;
+
+        refUI.gameObject.SetActive(false);
+        refInstrUI.gameObject.SetActive(false);
+        refScoreboardUI.SetActive(true);
+
+        DestroyExistingProjectilesArrowsAndDeactivateTurrets();
+
+        PC_Controller refPC = FindObjectOfType<PC_Controller>();
+        refPC.mActive = false;
+        //refPC.gameObject.SetActive(false);      // seeing if this works.
+
     }
 
     private void STATE_INSTRUCTIONS()
@@ -155,8 +182,6 @@ public class PP_Manager : MonoBehaviour
         HandleSwitchingReceiverIfTimeRunsOut();
 
         HandleTimeLeft();
-
-        // refUI.mScoreTxt.text = "STATE: " + mState;
 
         // for the build
         if(Input.GetKeyDown(KeyCode.L))
@@ -179,6 +204,31 @@ public class PP_Manager : MonoBehaviour
 
         // set streak text
         refUI.FSetStreakText(mStreakBonus);
+    }
+
+    // come to think of it, the buttons are what do everything, we just zoom a camera around.
+    private void STATE_SCORESCREEN()
+    {
+
+    }
+
+    private void DestroyExistingProjectilesArrowsAndDeactivateTurrets()
+    {
+        // deactivate all the turrets
+        PP_Turret[] refTurrets = FindObjectsOfType<PP_Turret>();
+        for(int i=0; i<refTurrets.Length; i++){
+            refTurrets[i].FDeactivate();
+        }
+        // Destroy any projectiles that may be up.
+        PP_Projectile[] refProjectiles = FindObjectsOfType<PP_Projectile>();
+        for(int i = 0; i<refProjectiles.Length; i++){
+            Destroy(refProjectiles[i].gameObject);
+        }
+        PP_Arrow[] refArrows = FindObjectsOfType<PP_Arrow>();
+        for(int i=0; i<refArrows.Length; i++){
+            Destroy(refArrows[i].gameObject);
+        }
+        // Destroy footballs as well.
     }
 
     private void HandlePocketPosition()
@@ -213,7 +263,7 @@ public class PP_Manager : MonoBehaviour
         if(mTimeLeft <= 0f)
         {
             mScoreGlobal.Val = mScore;
-            SceneManager.LoadScene("SN_PP_Score");
+            SetStateScoreScreen();
         }
     }
 
@@ -227,7 +277,6 @@ public class PP_Manager : MonoBehaviour
             Destroy(arrows[i].gameObject);
         }
 
-        Debug.Log("De-activating");
         Invoke("SetNewActiveTarget", mWaitToMakeRecHot);
 
         mGameState = PP_GAME_STATE.CHILLING;
@@ -235,7 +284,11 @@ public class PP_Manager : MonoBehaviour
 
     private void SetNewActiveTarget()
     {
-        Debug.Log("Activateing");
+        if(mState != PP_State.GAME_ACTIVE){
+            Debug.Log("Wrong game state to spawn receiver");
+            return;
+        }
+
         if(mActiveTarget != -1)
         {
             Debug.Log("Already active receiver.");
@@ -331,6 +384,7 @@ public class PP_Manager : MonoBehaviour
         DeactivateReceiver();
     }
 
+    // Since we're displaying the scoreboard screen, this is still fine
     public void OnQuitPressed()
     {
         SceneManager.LoadScene("SN_MN_Main");
