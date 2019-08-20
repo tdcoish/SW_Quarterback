@@ -41,6 +41,7 @@ public enum PP_GAME_STATE
 public class PP_Manager : MonoBehaviour
 {
     private PP_Man_Tur          cTurMan;
+    private PP_Man_Targ         cTargMan;
 
     public SO_Int               mScoreGlobal;
     public int                  mScore;
@@ -55,14 +56,6 @@ public class PP_Manager : MonoBehaviour
     public float                mGameTime = 60f;
     public float                mTimeLeft;
 
-    // Need a list of the "receivers"
-    public PP_Target[]          mTargets;
-    private float               mLastReceiverSwitch;  
-    public float                mReceiverSwitchInterval = 5f;  
-    private float               mReceiverCatchableCountdown;
-    public int                  mActiveTarget;
-
-    public float                mWaitToMakeRecHot = 2f;
     public PP_State             mState;
     public PP_GAME_STATE        mGameState;         // only care when actually running.
 
@@ -77,6 +70,8 @@ public class PP_Manager : MonoBehaviour
     private void Start()
     {
         cTurMan = GetComponent<PP_Man_Tur>();
+        cTargMan = GetComponent<PP_Man_Targ>();
+
         SetStateInstructions();
     }
 
@@ -143,7 +138,7 @@ public class PP_Manager : MonoBehaviour
 
         mTimeLeft = mGameTime;
 
-        DeactivateReceiver();
+        cTargMan.FDeactivateReceiver();
     }
 
     private void SetStateScoreScreen()
@@ -179,7 +174,7 @@ public class PP_Manager : MonoBehaviour
 
         refUI.mScoreTxt.text = "Score: " + mScore;
 
-        HandleSwitchingReceiverIfTimeRunsOut();
+        cTargMan.FHandleSwitchingReceiverIfTimeRunsOut();
 
         HandleTimeLeft();
 
@@ -244,16 +239,6 @@ public class PP_Manager : MonoBehaviour
         }
     }
 
-    private void HandleSwitchingReceiverIfTimeRunsOut()
-    {
-        // now we focus on switching the receiver or not.
-        if(Time.time - mLastReceiverSwitch > mReceiverSwitchInterval && mGameState == PP_GAME_STATE.REC_ACTIVE)
-        {
-            // There's no active target for a sec.
-            DeactivateReceiver();
-        }
-    }
-
     private void HandleTimeLeft()
     {
         mTimeLeft -= Time.deltaTime;
@@ -266,53 +251,7 @@ public class PP_Manager : MonoBehaviour
         }
     }
 
-    private void DeactivateReceiver()
-    {
-        mActiveTarget = -1;
-
-        PP_Arrow[] arrows = FindObjectsOfType<PP_Arrow>();
-        for(int i=0; i<arrows.Length; i++)
-        {
-            Destroy(arrows[i].gameObject);
-        }
-
-        Invoke("SetNewActiveTarget", mWaitToMakeRecHot);
-
-        mGameState = PP_GAME_STATE.CHILLING;
-    }
-
-    private void SetNewActiveTarget()
-    {
-        if(mState != PP_State.GAME_ACTIVE){
-            Debug.Log("Wrong game state to spawn receiver");
-            return;
-        }
-
-        if(mActiveTarget != -1)
-        {
-            Debug.Log("Already active receiver.");
-            return;
-        }
-        // now we switch which receiver is active.
-        // later, make it so it can't be the smae receiver.
-        int ind = mActiveTarget;
-        while(ind == mActiveTarget)
-        {
-            ind = (int)Random.Range(0, mTargets.Length);
-        }
-        mActiveTarget = ind;
-        Vector3 vPos = mTargets[mActiveTarget].transform.position;
-        vPos.y += 2f;
-
-        var clone = Instantiate(PF_Arrow, vPos, mTargets[ind].transform.rotation);
-        SetArrowMaterialColour(clone);
-
-        mLastReceiverSwitch = Time.time;
-
-        mGameState = PP_GAME_STATE.REC_ACTIVE;
-    }
-
-    private void SetArrowMaterialColour(GameObject arrow)
+    public void SetArrowMaterialColour(GameObject arrow)
     {
         Renderer[] renderers = arrow.GetComponentsInChildren<Renderer>();
 
@@ -330,28 +269,30 @@ public class PP_Manager : MonoBehaviour
         }
     }
 
+    // This needs a looksie
     public void OnTargetHit()
     {
         DestroyFootballs();
 
-        if(mActiveTarget == -1)
+        if(cTargMan.mActiveTarget == -1)
         {
             refUI.TXT_Instr.text = "No active receivers";
             ChangeScore(-50);
             return;
         }
 
-        if(Time.time - mTargets[mActiveTarget].mLastTimeHit < 0.1f)
+        // bad way of saying "this target was hit this frame, or a frame or two ago
+        if(Time.time - cTargMan.refTargets[cTargMan.mActiveTarget].mLastTimeHit < 0.1f)
         {
             refUI.TXT_Instr.text = "NICE!";
             ChangeScore(100);
-            DeactivateReceiver();
+            cTargMan.FDeactivateReceiver();
             return;
         }
 
         ChangeScore(-50);
         refUI.TXT_Instr.text = "Hit Wrong Receiver";
-        DeactivateReceiver();
+        cTargMan.FDeactivateReceiver();
     }
 
     public void OnStepOutOfPocket()
@@ -380,7 +321,7 @@ public class PP_Manager : MonoBehaviour
 
         ChangeScore(-100);
 
-        DeactivateReceiver();
+        cTargMan.FDeactivateReceiver();
     }
 
     // Since we're displaying the scoreboard screen, this is still fine
@@ -430,7 +371,7 @@ public class PP_Manager : MonoBehaviour
         refUI.mSackImmunityTxt.text = "Sack Immunity: NO";
         mSackImmunity = false;
         DestroyFootballs();
-        DeactivateReceiver();
+        cTargMan.FDeactivateReceiver();
         ChangeScore(-25);
     }
 

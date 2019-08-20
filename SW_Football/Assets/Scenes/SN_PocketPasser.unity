@@ -1765,6 +1765,7 @@ GameObject:
   - component: {fileID: 810600709}
   - component: {fileID: 810600708}
   - component: {fileID: 810600715}
+  - component: {fileID: 810600716}
   - component: {fileID: 810600707}
   - component: {fileID: 810600711}
   - component: {fileID: 810600710}
@@ -1825,15 +1826,6 @@ MonoBehaviour:
   refScoreboardUI: {fileID: 366206490}
   mGameTime: 30
   mTimeLeft: 0
-  mTargets:
-  - {fileID: 4530324131338033660}
-  - {fileID: 1426817736}
-  - {fileID: 2069744612}
-  - {fileID: 980198001}
-  - {fileID: 671539837}
-  mReceiverSwitchInterval: 5
-  mActiveTarget: 0
-  mWaitToMakeRecHot: 2
   mState: 0
   mGameState: 0
   PF_Arrow: {fileID: 6284834019801268946, guid: 2df042685fd49214a8efa9c636ddf97e,
@@ -2011,6 +2003,22 @@ MonoBehaviour:
   refTurrets: []
   mLastShotFire: 0
   mFireRate: 1
+--- !u!114 &810600716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810600706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6636933e2c537914687456198ed634e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  refTargets: []
+  mReceiverSwitchInterval: 5
+  mActiveTarget: 0
+  mWaitToMakeRecHot: 2
 --- !u!1 &816760165
 GameObject:
   m_ObjectHideFlags: 0

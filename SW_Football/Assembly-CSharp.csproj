@@ -94,6 +94,7 @@
      <Compile Include="Assets\Scripts\Plays\PLY_FirstDownMark.cs" />
      <Compile Include="Assets\Scripts\Plays\PLY_SnapSpot.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Arrow.cs" />
+     <Compile Include="Assets\Scripts\PP\PP_Man_Targ.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Man_Tur.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Manager.cs" />
      <Compile Include="Assets\Scripts\PP\PP_MN_Manager.cs" />
