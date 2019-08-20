@@ -40,7 +40,8 @@ public enum PP_GAME_STATE
 
 public class PP_Manager : MonoBehaviour
 {
-    
+    private PP_Man_Tur          cTurMan;
+
     public SO_Int               mScoreGlobal;
     public int                  mScore;
 
@@ -61,10 +62,6 @@ public class PP_Manager : MonoBehaviour
     private float               mReceiverCatchableCountdown;
     public int                  mActiveTarget;
 
-    public PP_Turret[]          refTurrets;
-    public float                mLastShotFire;
-    public float                mFireRate = 1f;
-
     public float                mWaitToMakeRecHot = 2f;
     public PP_State             mState;
     public PP_GAME_STATE        mGameState;         // only care when actually running.
@@ -79,9 +76,8 @@ public class PP_Manager : MonoBehaviour
 
     private void Start()
     {
+        cTurMan = GetComponent<PP_Man_Tur>();
         SetStateInstructions();
-
-        refTurrets = FindObjectsOfType<PP_Turret>();
     }
 
     private void Update()
@@ -136,9 +132,8 @@ public class PP_Manager : MonoBehaviour
         refScoreboardUI.SetActive(false);
 
         // Activate all the turrets and the pc in the scene.
-        for(int i=0; i<refTurrets.Length; i++){
-            refTurrets[i].FActivate();
-        }
+        cTurMan.FActivateTurrets();
+
         PC_Controller refPC = FindObjectOfType<PC_Controller>();
         refPC.mActive = true;
 
@@ -188,7 +183,7 @@ public class PP_Manager : MonoBehaviour
 
         HandleTimeLeft();
 
-        HandleTurrets();
+        cTurMan.FHandleTurrets();
 
         // for the build
         if(Input.GetKeyDown(KeyCode.L))
@@ -222,9 +217,7 @@ public class PP_Manager : MonoBehaviour
     private void DestroyExistingProjectilesArrowsAndDeactivateTurrets()
     {
         // deactivate all the turrets
-        for(int i=0; i<refTurrets.Length; i++){
-            refTurrets[i].FDeactivate();
-        }
+        cTurMan.FDeactivateTurrets();
         // Destroy any projectiles that may be up.
         PP_Projectile[] refProjectiles = FindObjectsOfType<PP_Projectile>();
         for(int i = 0; i<refProjectiles.Length; i++){
@@ -235,17 +228,6 @@ public class PP_Manager : MonoBehaviour
             Destroy(refArrows[i].gameObject);
         }
         // Destroy footballs as well.
-    }
-
-    // it's just assumed we're in the right state already.
-    private void HandleTurrets()
-    {
-        if(Time.time - mLastShotFire > mFireRate)
-        {
-            int ind = Random.Range(0, refTurrets.Length);
-            refTurrets[ind].FFireTurret();
-            mLastShotFire = Time.time;
-        }
     }
 
     private void HandlePocketPosition()

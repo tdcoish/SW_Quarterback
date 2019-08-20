@@ -1764,6 +1764,7 @@ GameObject:
   m_Component:
   - component: {fileID: 810600709}
   - component: {fileID: 810600708}
+  - component: {fileID: 810600715}
   - component: {fileID: 810600707}
   - component: {fileID: 810600711}
   - component: {fileID: 810600710}
@@ -1995,6 +1996,21 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: Response, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &810600715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810600706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5572bc10485284740a5833f8daecb53c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  refTurrets: []
+  mLastShotFire: 0
+  mFireRate: 1
 --- !u!1 &816760165
 GameObject:
   m_ObjectHideFlags: 0
