@@ -20,7 +20,7 @@ public class PP_Man_Arr : MonoBehaviour
         SetArrowMaterialColour(clone);
     }
 
-    public void DestroyArrows()
+    public void FDestroyArrows()
     {
         PP_Arrow[] arrows = FindObjectsOfType<PP_Arrow>();
         for(int i=0; i<arrows.Length; i++){

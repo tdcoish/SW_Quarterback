@@ -42,6 +42,7 @@ public class PP_Manager : MonoBehaviour
 {
     private PP_Man_Tur          cTurMan;
     private PP_Man_Targ         cTargMan;
+    private PP_Man_Arr          cArrMan;
 
     public SO_Int               mScoreGlobal;
     public int                  mScore;
@@ -69,6 +70,7 @@ public class PP_Manager : MonoBehaviour
     {
         cTurMan = GetComponent<PP_Man_Tur>();
         cTargMan = GetComponent<PP_Man_Targ>();
+        cArrMan = GetComponent<PP_Man_Arr>();
 
         SetStateInstructions();
     }
@@ -216,10 +218,8 @@ public class PP_Manager : MonoBehaviour
         for(int i = 0; i<refProjectiles.Length; i++){
             Destroy(refProjectiles[i].gameObject);
         }
-        PP_Arrow[] refArrows = FindObjectsOfType<PP_Arrow>();
-        for(int i=0; i<refArrows.Length; i++){
-            Destroy(refArrows[i].gameObject);
-        }
+        
+        cArrMan.FDestroyArrows();
         // Destroy footballs as well.
     }
 
