@@ -114,7 +114,9 @@ public class PC_Controller : MonoBehaviour
                 }
                 mChargingThrow = true;
 
-                mThrowChrg += Time.deltaTime;
+                // Alright, this is what needs to be changed. Throw power should not charge linearly, it should charge logarithmically.
+                float fChargeAmt = (Time.deltaTime * (1-mThrowChrg/PlayerData._ThrowChargeTime)) * 2f;
+                mThrowChrg += fChargeAmt;
                 if(mThrowChrg > PlayerData._ThrowChargeTime){
                     mThrowChrg = PlayerData._ThrowChargeTime;
                 }
