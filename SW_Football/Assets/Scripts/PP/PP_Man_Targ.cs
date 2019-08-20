@@ -6,6 +6,7 @@ using UnityEngine;
 public class PP_Man_Targ : MonoBehaviour
 {
     private PP_Manager          cPPMan;
+    private PP_Man_Arr          cArrMan;
 
     public PP_Target[]          refTargets;
     private float               mLastReceiverSwitch;  
@@ -16,6 +17,7 @@ public class PP_Man_Targ : MonoBehaviour
     void Start()
     {
         cPPMan = GetComponent<PP_Manager>();
+        cArrMan = GetComponent<PP_Man_Arr>();
 
         refTargets = FindObjectsOfType<PP_Target>();
     }
@@ -68,9 +70,9 @@ public class PP_Man_Targ : MonoBehaviour
         Vector3 vPos = refTargets[mActiveTarget].transform.position;
         vPos.y += 2f;
 
-        var clone = Instantiate(cPPMan.PF_Arrow, vPos, refTargets[ind].transform.rotation);
-        cPPMan.SetArrowMaterialColour(clone);
+        cArrMan.FSpawnArrow(vPos, refTargets[ind].transform.rotation);
 
         mLastReceiverSwitch = Time.time;
     }
+
 }

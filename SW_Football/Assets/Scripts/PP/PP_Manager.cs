@@ -59,8 +59,6 @@ public class PP_Manager : MonoBehaviour
     public PP_State             mState;
     public PP_GAME_STATE        mGameState;         // only care when actually running.
 
-    public GameObject           PF_Arrow;
-
     public GameObject           MN_PauseScreen;
 
     public bool                 mSackImmunity = false;
@@ -248,24 +246,6 @@ public class PP_Manager : MonoBehaviour
         {
             mScoreGlobal.Val = mScore;
             SetStateScoreScreen();
-        }
-    }
-
-    public void SetArrowMaterialColour(GameObject arrow)
-    {
-        Renderer[] renderers = arrow.GetComponentsInChildren<Renderer>();
-
-        Color col = Color.red;
-        if(mStreakBonus == 2){
-            col = Color.blue;
-        }else if(mStreakBonus == 3){
-            col = Color.green;
-        }else if(mStreakBonus > 3){
-            col = Color.yellow;
-        }
-    
-        for(int i=0; i<renderers.Length; i++){
-            renderers[i].material.SetColor("_Color", col);
         }
     }
 

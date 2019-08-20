@@ -11,11 +11,6 @@ public class PP_Target : MonoBehaviour
 
     public float                    mLastTimeHit = -10f;
 
-    private void Start()
-    {
-
-    }
-
 
     private void OnTriggerEnter(Collider other)
     {
