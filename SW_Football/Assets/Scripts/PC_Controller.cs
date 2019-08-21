@@ -14,10 +14,8 @@ public class PC_Controller : MonoBehaviour
 
     [SerializeField]
     private GameObject              mThrowPoint;
-    public float                    mThrowChrg;
-    public SO_Float                 mCurThrowPwr;
+    public SO_Float                 mThrowChrg;         // from 0-1. Factor in power later.
     public SO_Vec3                  mThrowAngle;
-    public SO_Float                 mCurThrowMaxChrg;
     private bool                    mChargingThrow = false;
 
     [SerializeField]
@@ -56,7 +54,7 @@ public class PC_Controller : MonoBehaviour
         cRigid = GetComponent<Rigidbody>();
         cCam = GetComponentInChildren<PC_Camera>();
 
-        mThrowChrg = 0f;
+        mThrowChrg.Val = 0f;
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -109,21 +107,22 @@ public class PC_Controller : MonoBehaviour
             if(Input.GetMouseButton(0)){
                 if(!mChargingThrow){
                     GE_QB_StartThrow.Raise(null);
-                    mCurThrowMaxChrg.Val = PlayerData._ThrowSpd;
                     mThrowStartAngle = cCam.transform.forward;
                 }
                 mChargingThrow = true;
 
                 // Alright, this is what needs to be changed. Throw power should not charge linearly, it should charge logarithmically.
-                float fChargeAmt = (Time.deltaTime * (1-mThrowChrg/PlayerData._ThrowChargeTime)) * 2f;
-                mThrowChrg += fChargeAmt;
-                if(mThrowChrg > PlayerData._ThrowChargeTime){
-                    mThrowChrg = PlayerData._ThrowChargeTime;
+                float fChrgPct = mThrowChrg.Val;
+                float fChargeAmt = Time.deltaTime * (1/PlayerData._ThrowChargeTime);
+                // but now we also have to factor in that we charge faster when closer to 0.
+                fChargeAmt *= (1-mThrowChrg.Val) * 2f;              // so when at 0, twice as fast. When at 1, 0 charge speed.
+                mThrowChrg.Val += fChargeAmt;
+                if(mThrowChrg.Val > 1f){
+                    mThrowChrg.Val = 1f;
                 }
 
                 // now we update the vector3 representing the angle we're throwing at.
                 mThrowAngle.Val = cCam.transform.forward;
-                mCurThrowPwr.Val = mThrowChrg * mCurThrowMaxChrg.Val;
 
                 // technically this is actually the accuracy right now.
                 float fAccDot = Vector3.Dot(mThrowAngle.Val, mThrowStartAngle);
@@ -132,11 +131,6 @@ public class PC_Controller : MonoBehaviour
             }
 
             if(mChargingThrow){
-                // if they hold down the shift key, then we make the charge go down.
-                if(Input.GetKey(KeyCode.LeftShift)){
-                    mCurThrowMaxChrg.Val -= Time.deltaTime * 10f;        // you take off 5 force per second
-                    if(mThrowChrg < 0f) mThrowChrg = 0f;
-                }
 
                 // add more innacuracy to our throw for every little frame.
                 GB_ThrowInnacuracy.Val += Time.deltaTime * GB_Innaccuracy.Val;
@@ -156,8 +150,8 @@ public class PC_Controller : MonoBehaviour
                     vThrowDir.y += fYAcc;
                     vThrowDir = Vector3.Normalize(vThrowDir);
 
-                    clone.GetComponent<Rigidbody>().velocity = vThrowDir * mCurThrowMaxChrg.Val * (mThrowChrg/PlayerData._ThrowChargeTime);
-                    mThrowChrg = 0f;
+                    clone.GetComponent<Rigidbody>().velocity = vThrowDir * mThrowChrg.Val * PlayerData._ThrowSpd;
+                    mThrowChrg.Val = 0f;
                     mChargingThrow = false;
 
                     GE_QB_ReleaseBall.Raise(null);
@@ -244,7 +238,7 @@ public class PC_Controller : MonoBehaviour
     {
         mCanThrow = false;
         mChargingThrow = false;
-        mThrowChrg = 0f;
+        mThrowChrg.Val = 0f;
         Invoke("CanThrowAgain", 1.0f);
     }
 

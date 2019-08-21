@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: PL_Data
   m_EditorClassIdentifier: 
   _ThrowChargeTime: 1
-  _ThrowSpd: {fileID: 11400000, guid: 6620ca954fe356142a0e6a09c3d6ddb9, type: 2}
+  _ThrowSpd: 25
   _ShiftChargeSlow: 2

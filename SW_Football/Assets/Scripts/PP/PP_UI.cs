@@ -9,7 +9,7 @@ public class PP_UI : MonoBehaviour
     public Text             TXT_Instr;
 
     public Image            mBar;
-    public Image            mMaxLine;
+
     public Text             mScoreTxt;
     public Text             mSackedTxt;
     public Text             mPocketWarningTxt;
@@ -23,9 +23,7 @@ public class PP_UI : MonoBehaviour
     [SerializeField]
     private DT_Player           PlayerData;         // used for max throw power at a minimum
     [SerializeField]
-    private SO_Float            CurrentThrowMaxCharge;      // they could hit ctrl to take something off of it.
-    [SerializeField]
-    private SO_Float            CurThrowPwr;
+    private SO_Float            GB_ThrowCharge;
 
     private bool            mIsWindingUp = false;
 
@@ -59,14 +57,11 @@ public class PP_UI : MonoBehaviour
         mInnacuracyTxt.text = "Innacuracy: " + GB_Innacuracy.Val;
         mThrowInaccuracyTxt.text = "Throw Inaccuracy: " + GB_ThrowInaccuracy.Val;
         mLookInaccuracyTxt.text = "Look Inaccuracy: " + GB_ThrowLookInaccuracy.Val;
-
-
     }
 
     public void ShowThrowBar()
     {
-        mBar.fillAmount = CurThrowPwr.Val / PlayerData._ThrowSpd;
-        mMaxLine.fillAmount = CurrentThrowMaxCharge.Val / PlayerData._ThrowSpd;
+        mBar.fillAmount = GB_ThrowCharge.Val;
     }
 
     public void QB_Charging(){
@@ -76,7 +71,6 @@ public class PP_UI : MonoBehaviour
     public void QB_ThrewBall(){
         mIsWindingUp = false;
         mBar.fillAmount = 0f;
-        mMaxLine.fillAmount = 1f;
     }
 
     public void OnPlayerLeftPocket()

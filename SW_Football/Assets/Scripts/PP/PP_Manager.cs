@@ -51,6 +51,8 @@ public class PP_Manager : MonoBehaviour
     public GameObject           refInstrUI;
     public GameObject           refScoreboardUI;
 
+    private PC_Controller       refPC;
+
     private bool                mIsOutOfPocket = false;
     private float               mLastTimeInPocket;
 
@@ -71,6 +73,8 @@ public class PP_Manager : MonoBehaviour
         cTurMan = GetComponent<PP_Man_Tur>();
         cTargMan = GetComponent<PP_Man_Targ>();
         cArrMan = GetComponent<PP_Man_Arr>();
+
+        refPC = FindObjectOfType<PC_Controller>();
 
         SetStateInstructions();
     }
@@ -98,11 +102,11 @@ public class PP_Manager : MonoBehaviour
         mGameState = PP_GAME_STATE.CHILLING;
         mState = PP_State.DISPLAY_INSTRUCTIONS;
 
-        PC_Controller refPC = FindObjectOfType<PC_Controller>();
         // Note, this needs to be polished, the rotations can get wonky.
         refPC.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         refPC.GetComponentInChildren<PC_Camera>().transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         refPC.mActive = false;
+        refPC.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
         // this is kind of to solve a bug with respect to throwing.
         refPC.GE_QB_StopThrow.Raise(null);
@@ -131,6 +135,9 @@ public class PP_Manager : MonoBehaviour
 
         PC_Controller refPC = FindObjectOfType<PC_Controller>();
         refPC.mActive = true;
+        Vector3 vPCPos = FindObjectOfType<PP_Pocket>().transform.position;
+        vPCPos.y = 1f;
+        refPC.transform.position = vPCPos;
 
         mScore = 0;
         mStreak = 0;
@@ -156,8 +163,7 @@ public class PP_Manager : MonoBehaviour
 
         PC_Controller refPC = FindObjectOfType<PC_Controller>();
         refPC.mActive = false;
-        //refPC.gameObject.SetActive(false);      // seeing if this works.
-
+        refPC.GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
 
     private void STATE_INSTRUCTIONS()
@@ -297,7 +303,6 @@ public class PP_Manager : MonoBehaviour
         Color col = refUI.mSackedTxt.color;
         col.a = 1f;
         refUI.mSackedTxt.color = col;
-                Debug.Log("Heree");
 
         ChangeScore(-100);
 

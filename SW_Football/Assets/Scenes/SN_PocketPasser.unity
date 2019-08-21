@@ -3064,7 +3064,7 @@ PrefabInstance:
     - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
         type: 3}
       propertyPath: mAccPerSec
-      value: 15
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
         type: 3}
@@ -3084,10 +3084,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: cb64403833b403748b02b76f8d8aa10a,
         type: 2}
+    - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
+        type: 3}
+      propertyPath: mThrowChrg
+      value: 
+      objectReference: {fileID: 11400000, guid: cc532729a38ccb844bc2bfc7941d5f4e,
+        type: 2}
     - target: {fileID: 8715241792742129380, guid: 3fcb15e83f59e7544a78d44040e4602c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 24.67
+      value: 27.5
       objectReference: {fileID: 0}
     - target: {fileID: 8715241792742129380, guid: 3fcb15e83f59e7544a78d44040e4602c,
         type: 3}
@@ -3097,7 +3103,7 @@ PrefabInstance:
     - target: {fileID: 8715241792742129380, guid: 3fcb15e83f59e7544a78d44040e4602c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 39.28
+      value: 37.5
       objectReference: {fileID: 0}
     - target: {fileID: 8715241792742129380, guid: 3fcb15e83f59e7544a78d44040e4602c,
         type: 3}
@@ -4848,17 +4854,17 @@ PrefabInstance:
     - target: {fileID: 5820332441704396260, guid: 215a062dfecdd454db2adc8069a79eb5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 27.558533
+      value: 27.5
       objectReference: {fileID: 0}
     - target: {fileID: 5820332441704396260, guid: 215a062dfecdd454db2adc8069a79eb5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.43
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 5820332441704396260, guid: 215a062dfecdd454db2adc8069a79eb5,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 37.684452
+      value: 37.5
       objectReference: {fileID: 0}
     - target: {fileID: 5820332441704396260, guid: 215a062dfecdd454db2adc8069a79eb5,
         type: 3}
@@ -5093,6 +5099,12 @@ PrefabInstance:
       propertyPath: mStreakTxt
       value: 
       objectReference: {fileID: 1523491395}
+    - target: {fileID: 5640368874193059495, guid: 3e298972b92886d42806283b93901945,
+        type: 3}
+      propertyPath: GB_ThrowCharge
+      value: 
+      objectReference: {fileID: 11400000, guid: cc532729a38ccb844bc2bfc7941d5f4e,
+        type: 2}
     - target: {fileID: 426232901, guid: 3e298972b92886d42806283b93901945, type: 3}
       propertyPath: m_Color.a
       value: 1
