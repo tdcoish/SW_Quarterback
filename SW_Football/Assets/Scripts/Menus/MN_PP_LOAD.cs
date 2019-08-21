@@ -14,6 +14,8 @@ public class MN_PP_LOAD : MonoBehaviour
     public Button               mPlayBTN;
     public Text                 mLoadTXT;
 
+    public bool                 mLoaded = false;
+
     private AsyncOperation      mAsyncOp;
 
     void Start()
@@ -40,7 +42,9 @@ public class MN_PP_LOAD : MonoBehaviour
 
             if(mAsyncOp.progress >= 0.9f)
             {
-                PP_Loaded();
+                if(!mLoaded){
+                    PP_Loaded();
+                }
             }
 
             yield return null;
@@ -57,7 +61,7 @@ public class MN_PP_LOAD : MonoBehaviour
 
     private void PP_Loaded()
     {
-        Debug.Log("Scene Loaded");
+        mLoaded = true;
         mPlayBTN.gameObject.SetActive(true);
         mLoadTXT.gameObject.SetActive(false);
     }

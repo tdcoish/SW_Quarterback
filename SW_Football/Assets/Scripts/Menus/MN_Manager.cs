@@ -14,8 +14,6 @@ public class MN_Manager : MonoBehaviour
     public GameObject               mPocketPasserScreen;
     public GameObject               mPP_LOAD_SCN;
 
-    public AudioSource              mMusBackground;
-
     public void OnPressedPocketPasser()
     {
         //SceneManager.LoadScene("SN_PocketPasser");

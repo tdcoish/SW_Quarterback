@@ -9,7 +9,7 @@ public class PP_Scoreboard : MonoBehaviour
     public Text             mScoreTxt;
     public SO_Int           lScore;
 
-    private void Awake()
+    private void Update()
     {
         mScoreTxt.text = "SCORE: " + lScore.Val;
     }

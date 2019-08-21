@@ -220,7 +220,6 @@ public class PP_Manager : MonoBehaviour
         }
         
         cArrMan.FDestroyArrows();
-        // Destroy footballs as well.
     }
 
     private void HandlePocketPosition()
@@ -244,6 +243,7 @@ public class PP_Manager : MonoBehaviour
 
         if(mTimeLeft <= 0f)
         {
+            // There's some unity weirdness here I think, where this wasn't updated until later.
             mScoreGlobal.Val = mScore;
             SetStateScoreScreen();
         }
@@ -315,6 +315,7 @@ public class PP_Manager : MonoBehaviour
         Time.timeScale = 1f;
 
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
         FindObjectOfType<PC_Controller>().mActive = true;
     }
@@ -322,6 +323,7 @@ public class PP_Manager : MonoBehaviour
     {
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
         SetStateInstructions();
     }
