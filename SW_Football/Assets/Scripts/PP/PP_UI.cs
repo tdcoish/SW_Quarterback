@@ -9,14 +9,12 @@ public class PP_UI : MonoBehaviour
     public Text             TXT_Instr;
 
     public Image            mBar;
+    public Image            mCrosshairs;
 
     public Text             mScoreTxt;
     public Text             mSackedTxt;
     public Text             mPocketWarningTxt;
     public Text             mTimeLeftTxt;
-    public Text             mMoveInnacuracyTxt;
-    public Text             mThrowInaccuracyTxt;
-    public Text             mLookInaccuracyTxt;
     public Text             mSackImmunityTxt;
     public Text             mStreakTxt;
 
@@ -53,10 +51,12 @@ public class PP_UI : MonoBehaviour
         col.a -= Time.deltaTime;           // Sure, why not?
         mSackedTxt.color = col;
 
-        // Set accuracy text.
-        mMoveInnacuracyTxt.text = "Move Innacuracy: " + GB_MoveInaccuracy.Val;
-        mThrowInaccuracyTxt.text = "Throw Inaccuracy: " + GB_ThrowInaccuracy.Val;
-        mLookInaccuracyTxt.text = "Look Inaccuracy: " + GB_ThrowLookInaccuracy.Val;
+        // How much should inaccuracy scale the image? Let's say that an inaccuracy of 1 degree is the norm, so we scale proportionally after that.
+        float fCrossScale = GB_ThrowInaccuracy.Val;
+        if(fCrossScale < 1f){
+            fCrossScale = 1f;
+        }
+        mCrosshairs.transform.localScale = new Vector3(fCrossScale,fCrossScale,fCrossScale);
     }
 
     public void ShowThrowBar()
