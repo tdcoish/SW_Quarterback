@@ -14,7 +14,7 @@ public class PP_UI : MonoBehaviour
     public Text             mSackedTxt;
     public Text             mPocketWarningTxt;
     public Text             mTimeLeftTxt;
-    public Text             mInnacuracyTxt;
+    public Text             mMoveInnacuracyTxt;
     public Text             mThrowInaccuracyTxt;
     public Text             mLookInaccuracyTxt;
     public Text             mSackImmunityTxt;
@@ -28,7 +28,7 @@ public class PP_UI : MonoBehaviour
     private bool            mIsWindingUp = false;
 
     // innaccuracy is dependent on our movement alone. Throw innaccuracy is the cumulative innaccuracy of the current throw.
-    public SO_Float             GB_Innacuracy;
+    public SO_Float             GB_MoveInaccuracy;
     public SO_Float             GB_ThrowInaccuracy;
     public SO_Float             GB_ThrowLookInaccuracy;
 
@@ -54,7 +54,7 @@ public class PP_UI : MonoBehaviour
         mSackedTxt.color = col;
 
         // Set accuracy text.
-        mInnacuracyTxt.text = "Innacuracy: " + GB_Innacuracy.Val;
+        mMoveInnacuracyTxt.text = "Move Innacuracy: " + GB_MoveInaccuracy.Val;
         mThrowInaccuracyTxt.text = "Throw Inaccuracy: " + GB_ThrowInaccuracy.Val;
         mLookInaccuracyTxt.text = "Look Inaccuracy: " + GB_ThrowLookInaccuracy.Val;
     }

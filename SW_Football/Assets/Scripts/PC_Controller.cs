@@ -5,6 +5,10 @@ using UnityEngine;
 /******************************************************************************************
 Two camera modes, one handles like FPS, other handles like Half Life 2 vehicle controls, where 
 movement is independent of where the camera is looking.
+
+New update for inaccuracy. We have instantaneous bump, say of +5, then we have over time effects,
+on top of that. As an example, if moving gives you +5, and you're already at +3 inaccuracy, you jump
+to +5, then you start stacking the over time effects.
 **************************************************************************************** */
 
 public class PC_Controller : MonoBehaviour
@@ -40,11 +44,15 @@ public class PC_Controller : MonoBehaviour
     private SO_Transform            RefPlayerPos;
 
     private bool                    mCanThrow = true;
-    public SO_Float                 GB_Innaccuracy;
-    public SO_Float                 GB_ThrowInnacuracy;
-
     public Vector3                  mThrowStartAngle;
-    public SO_Float                 GB_ThrowLookInaccuracy;
+
+    public float                    mMoveInaccuracyRate = 5f;
+    public float                    mLookInaccuracyRate = 5f;
+
+    // these are built up over the time of the throw.
+    public SO_Float                 GB_MoveInaccuracy;
+    public SO_Float                 GB_LookInaccuracy;
+    public SO_Float                 GB_TotalInaccuracy;
 
     public bool                     mActive = true;
 
@@ -59,7 +67,7 @@ public class PC_Controller : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        GB_Innaccuracy.Val = 0f;
+        SetInaccuraciesToZero();
     }
 
     // Update is called once per frame
@@ -68,7 +76,6 @@ public class PC_Controller : MonoBehaviour
         if(!mActive) return;
 
         SetRotation();
-        HandleThrowModifiers();
         HandleThrowing();
 
         // so everyone knows our position.
@@ -120,34 +127,25 @@ public class PC_Controller : MonoBehaviour
                 if(mThrowChrg.Val > 1f){
                     mThrowChrg.Val = 1f;
                 }
-
-                // now we update the vector3 representing the angle we're throwing at.
-                mThrowAngle.Val = cCam.transform.forward;
-
-                // technically this is actually the accuracy right now.
-                float fAccDot = Vector3.Dot(mThrowAngle.Val, mThrowStartAngle);
-                // let's say that inaccuracy translates to 1 degree per degree moved.
-                GB_ThrowLookInaccuracy.Val = (1f-fAccDot) * 100f;
             }
 
             if(mChargingThrow){
 
-                // add more innacuracy to our throw for every little frame.
-                GB_ThrowInnacuracy.Val += Time.deltaTime * GB_Innaccuracy.Val;
+                // Now handle the look inaccuracy
+                mThrowAngle.Val = cCam.transform.forward;
+
+                HandleThrowModifiers();
 
                 if(Input.GetMouseButtonUp(0)){
                     PROJ_Football clone = Instantiate(PF_Football, mThrowPoint.transform.position, transform.rotation);
 
                     // now we add in the innacuracy.
-                    // in degrees for now. Technically this makes a box, maybe work on that.
-                    float fCombinedInaccuracy = GB_ThrowInnacuracy.Val + GB_ThrowLookInaccuracy.Val;
-                    float fXAcc = Random.Range(-fCombinedInaccuracy, fCombinedInaccuracy);
-                    float fYAcc = Random.Range(-fCombinedInaccuracy, fCombinedInaccuracy);
-                    fXAcc /= 90f;
-                    fYAcc /= 90f;
+                    // x inaccuracy feels better than y inaccuracy, which can look really stupid.
+                    float fXAcc = Random.Range(-GB_TotalInaccuracy.Val, GB_TotalInaccuracy.Val) / 100f;
+                    float fYAcc = Random.Range(-GB_TotalInaccuracy.Val, GB_TotalInaccuracy.Val) / 100f;
+                    fYAcc /= 2f;
                     Vector3 vThrowDir = cCam.transform.forward;
-                    vThrowDir.x += fXAcc;
-                    vThrowDir.y += fYAcc;
+                    vThrowDir.x += fXAcc; vThrowDir.y += fYAcc;
                     vThrowDir = Vector3.Normalize(vThrowDir);
 
                     clone.GetComponent<Rigidbody>().velocity = vThrowDir * mThrowChrg.Val * PlayerData._ThrowSpd;
@@ -156,8 +154,7 @@ public class PC_Controller : MonoBehaviour
 
                     GE_QB_ReleaseBall.Raise(null);
 
-                    GB_ThrowInnacuracy.Val = 0f;
-                    GB_ThrowLookInaccuracy.Val = 0f;
+                    SetInaccuraciesToZero();
                 }
             }
 
@@ -221,21 +218,47 @@ public class PC_Controller : MonoBehaviour
 
     }
 
-    // If we move, decrease accuracy, if we aim around, decrease accuracy.
+    // This is assuming that we are in the process of throwing already.
     private void HandleThrowModifiers()
     {
-        float fInnac = cRigid.velocity.magnitude/mSpd;
-        fInnac -= 0.1f;
-        fInnac *= 10f;
-        GB_Innaccuracy.Val = fInnac;
-        if(GB_Innaccuracy.Val < 0f){
-            GB_Innaccuracy.Val = 0f;
+        if(cRigid.velocity.magnitude > 0.1f){
+            // Handle movement inaccuracy here.
+            float fSpdPct = cRigid.velocity.magnitude/mSpd;
+            float fInstInac = fSpdPct * mMoveInaccuracyRate;
+
+            if(GB_MoveInaccuracy.Val < fInstInac)
+            {
+                GB_MoveInaccuracy.Val = fInstInac;
+            }
+
+            // we get instantaneous penalties, along with penalties over time.
+            GB_MoveInaccuracy.Val += fInstInac * Time.deltaTime;            
         }
+
+        // Now handle the looking inaccuracy
+        // When the dot == 0, then we get full inaccuracy, even worse if greater than 90*
+        float fLookDot = Vector3.Dot(mThrowAngle.Val, mThrowStartAngle);
+        float fLookInstInac = (1-fLookDot) *  mLookInaccuracyRate;
+        if(GB_LookInaccuracy.Val < fLookInstInac)
+        {
+            GB_LookInaccuracy.Val = fLookInstInac;
+        }
+        GB_LookInaccuracy.Val += fLookInstInac * Time.deltaTime;
+
+        GB_TotalInaccuracy.Val = GB_LookInaccuracy.Val + GB_MoveInaccuracy.Val;
+    }
+
+    private void SetInaccuraciesToZero()
+    {
+        GB_LookInaccuracy.Val = 0f;
+        GB_MoveInaccuracy.Val = 0f;
+        GB_TotalInaccuracy.Val = 0f;
     }
 
     // They clutch the ball and decide not to throw.
     public void ThrowStopped()
     {
+        SetInaccuraciesToZero();
         mCanThrow = false;
         mChargingThrow = false;
         mThrowChrg.Val = 0f;

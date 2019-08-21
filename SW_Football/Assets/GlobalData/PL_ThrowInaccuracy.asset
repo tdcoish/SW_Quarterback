@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0dbdd7fd96ea04048a418c313d71e989, type: 3}
-  m_Name: PL_ThrowInnaccuracy
+  m_Name: PL_ThrowInaccuracy
   m_EditorClassIdentifier: 
   Val: 0
