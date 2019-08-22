@@ -130,6 +130,9 @@ public class PP_Manager : MonoBehaviour
         refInstrUI.gameObject.SetActive(false);
         refScoreboardUI.SetActive(false);
 
+        // testing this bug.
+        Time.timeScale = 1f;
+
         // Activate all the turrets and the pc in the scene.
         cTurMan.FActivateTurrets();
 

@@ -53,8 +53,8 @@ public class PP_UI : MonoBehaviour
 
         // How much should inaccuracy scale the image? Let's say that an inaccuracy of 1 degree is the norm, so we scale proportionally after that.
         float fCrossScale = GB_ThrowInaccuracy.Val;
-        if(fCrossScale < 1f){
-            fCrossScale = 1f;
+        if(fCrossScale < 2f){
+            fCrossScale = 2f;
         }
         mCrosshairs.transform.localScale = new Vector3(fCrossScale,fCrossScale,fCrossScale);
     }

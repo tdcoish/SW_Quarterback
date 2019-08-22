@@ -13,6 +13,7 @@ public class MN_Manager : MonoBehaviour
     public GameObject               mMainScreen;
     public GameObject               mPocketPasserScreen;
     public GameObject               mPP_LOAD_SCN;
+    public GameObject               mSettingsScreen;
 
     public void OnPressedPocketPasser()
     {
@@ -31,11 +32,18 @@ public class MN_Manager : MonoBehaviour
     {
         mMainScreen.SetActive(true);
         mPocketPasserScreen.SetActive(false);
+        mSettingsScreen.SetActive(false);
     }
 
     public void OnPressedQuit()
     {
         Debug.Log("Tried to quit");
         Application.Quit();
+    }
+
+    public void OnPressedSettings()
+    {
+        mMainScreen.SetActive(false);
+        mSettingsScreen.SetActive(true);
     }
 }

@@ -24,9 +24,10 @@ public class PC_Controller : MonoBehaviour
 
     [SerializeField]
     private DT_Player               PlayerData;
-
-    public float                    mSpd = 10f;
-    public float                    mAccPerSec = 10f;
+    public SO_Float                 GB_LookSensitivity;
+    public SO_Float                 GB_SET_MoveInaccRate;
+    public SO_Float                 GB_SET_LookInaccRate;
+    public SO_Float                 GB_SET_InaccuracyBias;      // bias towards x over y
 
     private Rigidbody               cRigid;
     private PC_Camera               cCam;
@@ -45,9 +46,6 @@ public class PC_Controller : MonoBehaviour
 
     private bool                    mCanThrow = true;
     public Vector3                  mThrowStartAngle;
-
-    public float                    mMoveInaccuracyRate = 5f;
-    public float                    mLookInaccuracyRate = 5f;
 
     // these are built up over the time of the throw.
     public SO_Float                 GB_MoveInaccuracy;
@@ -92,8 +90,9 @@ public class PC_Controller : MonoBehaviour
     private void SetRotation()
     {
         // want to get rid of y component of the cameras rotation.
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
+        float mouseX = Input.GetAxis("Mouse X") * GB_LookSensitivity.Val;
+        float mouseY = Input.GetAxis("Mouse Y") * GB_LookSensitivity.Val;
+        // look sensitivity between 0.5 - 1.5
 
         // rotate camera view around y axis.
         transform.RotateAround(transform.position, Vector3.up, mouseX);
@@ -143,7 +142,7 @@ public class PC_Controller : MonoBehaviour
                     // x inaccuracy feels better than y inaccuracy, which can look really stupid.
                     float fXAcc = Random.Range(-GB_TotalInaccuracy.Val, GB_TotalInaccuracy.Val) / 100f;
                     float fYAcc = Random.Range(-GB_TotalInaccuracy.Val, GB_TotalInaccuracy.Val) / 100f;
-                    fYAcc /= 2f;
+                    fYAcc /= GB_SET_InaccuracyBias.Val;
                     Vector3 vThrowDir = cCam.transform.forward;
                     vThrowDir.x += fXAcc; vThrowDir.y += fYAcc;
                     vThrowDir = Vector3.Normalize(vThrowDir);
@@ -172,19 +171,19 @@ public class PC_Controller : MonoBehaviour
         float fForAcc = 0f;
 
         if(Input.GetKey(KeyCode.A)){
-            fSideAcc -= mAccPerSec * Time.fixedDeltaTime;
+            fSideAcc -= PlayerData._AccRate * Time.fixedDeltaTime;
         }
         if(Input.GetKey(KeyCode.D)){
-            fSideAcc += mAccPerSec * Time.fixedDeltaTime;
+            fSideAcc += PlayerData._AccRate * Time.fixedDeltaTime;
         }
         if(Input.GetKey(KeyCode.W)){
-            fForAcc += mAccPerSec * Time.fixedDeltaTime;
+            fForAcc += PlayerData._AccRate * Time.fixedDeltaTime;
         }
         if(Input.GetKey(KeyCode.S)){
-            fForAcc -= mAccPerSec * Time.fixedDeltaTime;
+            fForAcc -= PlayerData._AccRate * Time.fixedDeltaTime;
         }
 
-        if(Mathf.Abs(fForAcc) + Mathf.Abs(fSideAcc) > mAccPerSec)
+        if(Mathf.Abs(fForAcc) + Mathf.Abs(fSideAcc) > PlayerData._AccRate)
         {
             fForAcc *= 0.707f;
             fSideAcc *= 0.707f;
@@ -197,7 +196,7 @@ public class PC_Controller : MonoBehaviour
         if(Mathf.Abs(fForAcc) + Mathf.Abs(fSideAcc) < 0.1f)
         {
             // say we'll stop over 1 second, or so.
-            vVel -= vVel * Time.fixedDeltaTime * mSpd;
+            vVel -= vVel * Time.fixedDeltaTime * PlayerData._MoveSpd;
             // and if we go too far, then just set vel to zero.
             if(Vector3.Dot(vVel, cRigid.velocity) <= 0f)
             {
@@ -209,9 +208,9 @@ public class PC_Controller : MonoBehaviour
             vVel += fForAcc * transform.forward;
             vVel += fSideAcc * transform.right;
         }
-        if(Vector3.Magnitude(vVel) > mSpd)
+        if(Vector3.Magnitude(vVel) > PlayerData._MoveSpd)
         {
-            vVel *= mSpd / Vector3.Magnitude(vVel);
+            vVel *= PlayerData._MoveSpd / Vector3.Magnitude(vVel);
         }
 
         cRigid.velocity = vVel;
@@ -219,29 +218,31 @@ public class PC_Controller : MonoBehaviour
     }
 
     // This is assuming that we are in the process of throwing already.
+    // If they're below the minimal threshold for the base penalty, then we rapidly accelerate them there.
     private void HandleThrowModifiers()
     {
         if(cRigid.velocity.magnitude > 0.1f){
             // Handle movement inaccuracy here.
-            float fSpdPct = cRigid.velocity.magnitude/mSpd;
-            float fInstInac = fSpdPct * mMoveInaccuracyRate;
+            float fSpdPct = cRigid.velocity.magnitude/PlayerData._MoveSpd;
+            float fInstInac = fSpdPct * GB_SET_MoveInaccRate.Val;
 
             if(GB_MoveInaccuracy.Val < fInstInac)
             {
-                GB_MoveInaccuracy.Val = fInstInac;
+                GB_MoveInaccuracy.Val += fInstInac * Time.deltaTime * 5f;
             }
 
             // we get instantaneous penalties, along with penalties over time.
             GB_MoveInaccuracy.Val += fInstInac * Time.deltaTime;            
+
         }
 
         // Now handle the looking inaccuracy
         // When the dot == 0, then we get full inaccuracy, even worse if greater than 90*
         float fLookDot = Vector3.Dot(mThrowAngle.Val, mThrowStartAngle);
-        float fLookInstInac = (1-fLookDot) *  mLookInaccuracyRate;
+        float fLookInstInac = (1-fLookDot) *  GB_SET_LookInaccRate.Val;
         if(GB_LookInaccuracy.Val < fLookInstInac)
         {
-            GB_LookInaccuracy.Val = fLookInstInac;
+            GB_LookInaccuracy.Val += fLookInstInac * Time.deltaTime * 5f;
         }
         GB_LookInaccuracy.Val += fLookInstInac * Time.deltaTime;
 
