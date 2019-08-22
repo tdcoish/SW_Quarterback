@@ -28,7 +28,6 @@ public class PP_Man_Targ : MonoBehaviour
         if(Time.time - mLastReceiverSwitch > mReceiverSwitchInterval && cPPMan.mState == PP_State.GAME_ACTIVE)
         {
             // There's no active target for a sec.
-            Debug.Log("here");
             mLastReceiverSwitch = Time.time;        // this will get overwritten, but it solves a bug
             FDeactivateReceiver();
         }

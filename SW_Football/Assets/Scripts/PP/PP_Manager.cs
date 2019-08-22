@@ -50,6 +50,7 @@ public class PP_Manager : MonoBehaviour
     public PP_UI                refUI;
     public GameObject           refInstrUI;
     public GameObject           refScoreboardUI;
+    public GameObject           refQuitUI;
 
     private PC_Controller       refPC;
 
@@ -67,6 +68,9 @@ public class PP_Manager : MonoBehaviour
     public bool                 mSackImmunity = false;
     public int                  mStreak = 0;
     public int                  mStreakBonus = 1;
+
+    public GE_Event             GE_PauseMenuOpened;
+    public GE_Event             GE_PauseMenuClosed;
 
     private void Start()
     {
@@ -206,6 +210,8 @@ public class PP_Manager : MonoBehaviour
             Cursor.visible = true;
 
             FindObjectOfType<PC_Controller>().mActive = false;
+
+            GE_PauseMenuOpened.Raise(null);
         }
 
         // set streak text
@@ -315,7 +321,10 @@ public class PP_Manager : MonoBehaviour
     // Since we're displaying the scoreboard screen, this is still fine
     public void OnQuitPressed()
     {
-        SceneManager.LoadScene("SN_MN_Main");
+        refUI.gameObject.SetActive(false);
+        MN_PauseScreen.SetActive(false);
+        refScoreboardUI.SetActive(false);
+        refQuitUI.SetActive(true);
     }
     public void OnResumePressed()
     {
@@ -326,6 +335,8 @@ public class PP_Manager : MonoBehaviour
         Cursor.visible = false;
 
         FindObjectOfType<PC_Controller>().mActive = true;
+
+        GE_PauseMenuClosed.Raise(null);
     }
     public void OnRestartPressed()
     {
@@ -334,6 +345,7 @@ public class PP_Manager : MonoBehaviour
         Cursor.visible = false;
 
         SetStateInstructions();
+        GE_PauseMenuClosed.Raise(null);
     }
     
     // called all the time, when we hit a target, when the ball hits the ground, etcetera.

@@ -73,6 +73,7 @@
      <Compile Include="Assets\Scripts\AI\AI_ZoneDefence.cs" />
      <Compile Include="Assets\Scripts\Audio\AD_Manager.cs" />
      <Compile Include="Assets\Scripts\Audio\AUD_Snd.cs" />
+     <Compile Include="Assets\Scripts\Audio\AUD_TEST_MIXER.cs" />
      <Compile Include="Assets\Scripts\DT_Types\SO_Bool.cs" />
      <Compile Include="Assets\Scripts\DT_Types\SO_Float.cs" />
      <Compile Include="Assets\Scripts\DT_Types\SO_Int.cs" />
@@ -102,6 +103,7 @@
      <Compile Include="Assets\Scripts\PP\PP_MN_Manager.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Pocket.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Projectile.cs" />
+     <Compile Include="Assets\Scripts\PP\PP_QUIT_Man.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Scoreboard.cs" />
      <Compile Include="Assets\Scripts\PP\PP_ScoreCam.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Target.cs" />

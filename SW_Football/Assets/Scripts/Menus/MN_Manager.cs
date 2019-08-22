@@ -15,6 +15,13 @@ public class MN_Manager : MonoBehaviour
     public GameObject               mPP_LOAD_SCN;
     public GameObject               mSettingsScreen;
 
+    public AD_Manager               refAudioManager;
+
+    void Start()
+    {
+        refAudioManager.OnBackToNormal();
+    }
+
     public void OnPressedPocketPasser()
     {
         //SceneManager.LoadScene("SN_PocketPasser");

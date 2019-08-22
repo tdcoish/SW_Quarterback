@@ -3368,6 +3368,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8efb5aca09ff1a418dd81670d44c3eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  refAudioMixer: {fileID: 24100000, guid: 9d4a21a7f829c2d4e84634851044120e, type: 2}
+  SNP_Normal: {fileID: 24500006, guid: 9d4a21a7f829c2d4e84634851044120e, type: 2}
+  SNP_Paused: {fileID: -2854555898081963435, guid: 9d4a21a7f829c2d4e84634851044120e,
+    type: 2}
   SFX_Button: {fileID: 6934758250987132717, guid: 6f90b7da6e400484ab9292424a1a9163,
     type: 3}
 --- !u!4 &931633497
@@ -4898,6 +4902,7 @@ MonoBehaviour:
   mPocketPasserScreen: {fileID: 2027914573}
   mPP_LOAD_SCN: {fileID: 42697725}
   mSettingsScreen: {fileID: 1690911005}
+  refAudioManager: {fileID: 931633496}
 --- !u!114 &1447000629
 MonoBehaviour:
   m_ObjectHideFlags: 0
