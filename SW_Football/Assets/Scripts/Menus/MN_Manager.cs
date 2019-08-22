@@ -14,6 +14,7 @@ public class MN_Manager : MonoBehaviour
     public GameObject               mPocketPasserScreen;
     public GameObject               mPP_LOAD_SCN;
     public GameObject               mSettingsScreen;
+    public GameObject               mQuitScreen;
 
     public AD_Manager               refAudioManager;
 
@@ -45,7 +46,8 @@ public class MN_Manager : MonoBehaviour
     public void OnPressedQuit()
     {
         Debug.Log("Tried to quit");
-        Application.Quit();
+        mMainScreen.SetActive(false);
+        mQuitScreen.SetActive(true);
     }
 
     public void OnPressedSettings()
