@@ -305,6 +305,7 @@ GameObject:
   m_Component:
   - component: {fileID: 42697726}
   - component: {fileID: 42697727}
+  - component: {fileID: 42697728}
   m_Layer: 5
   m_Name: SCN_PocketPasserLOAD
   m_TagString: Untagged
@@ -349,6 +350,19 @@ MonoBehaviour:
   mPlayBTN: {fileID: 1983179123}
   mLoadTXT: {fileID: 448604093}
   mLoaded: 0
+--- !u!114 &42697728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42697725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24c76f1380ba6c44ab532df339d6b4d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mName: PP_Load
 --- !u!1 &52635498
 GameObject:
   m_ObjectHideFlags: 0
@@ -4493,6 +4507,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1305065655}
+  - component: {fileID: 1305065656}
   m_Layer: 5
   m_Name: SCN_Main
   m_TagString: Untagged
@@ -4522,6 +4537,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1305065656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305065654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24c76f1380ba6c44ab532df339d6b4d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mName: Main
 --- !u!1 &1324395353
 GameObject:
   m_ObjectHideFlags: 0
@@ -4898,6 +4926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9382dd8dd32ec24795378055d90e171, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mScreens: []
   mMainScreen: {fileID: 1305065654}
   mPocketPasserScreen: {fileID: 2027914573}
   mPP_LOAD_SCN: {fileID: 42697725}
@@ -5837,6 +5866,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1690911006}
   - component: {fileID: 1690911007}
+  - component: {fileID: 1690911008}
   m_Layer: 5
   m_Name: SCN_Settings
   m_TagString: Untagged
@@ -5916,6 +5946,19 @@ MonoBehaviour:
   mTXTInaccuracyBias: {fileID: 275605455}
   mSLDMasterVolume: {fileID: 2053928040}
   mTXTMasterVolume: {fileID: 911958583}
+--- !u!114 &1690911008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690911005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24c76f1380ba6c44ab532df339d6b4d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mName: Settings
 --- !u!1 &1692815735
 GameObject:
   m_ObjectHideFlags: 0
@@ -6827,6 +6870,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2027914574}
+  - component: {fileID: 2027914575}
   m_Layer: 5
   m_Name: SCN_PocketPasser
   m_TagString: Untagged
@@ -6856,6 +6900,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2027914575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027914573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24c76f1380ba6c44ab532df339d6b4d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mName: PP
 --- !u!1 &2053928038
 GameObject:
   m_ObjectHideFlags: 0
@@ -6968,6 +7025,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2113535180}
   - component: {fileID: 2113535181}
+  - component: {fileID: 2113535182}
   m_Layer: 5
   m_Name: SCN_QUIT
   m_TagString: Untagged
@@ -7007,6 +7065,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5ec6a29583c3d34dacae2eb40849795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2113535182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113535179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24c76f1380ba6c44ab532df339d6b4d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mName: Quit
 --- !u!1 &2120629877
 GameObject:
   m_ObjectHideFlags: 0

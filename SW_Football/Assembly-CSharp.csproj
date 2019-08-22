@@ -87,6 +87,7 @@
      <Compile Include="Assets\Scripts\Menus\MN_Manager.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_PP_LOAD.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_QuitScreen.cs" />
+     <Compile Include="Assets\Scripts\Menus\MN_Screen.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_Settings.cs" />
      <Compile Include="Assets\Scripts\PC_Camera.cs" />
      <Compile Include="Assets\Scripts\PC_Controller.cs" />

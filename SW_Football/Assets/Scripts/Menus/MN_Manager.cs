@@ -6,9 +6,12 @@ seeing what happens when we switch them.
 *************************************************************************************/
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class MN_Manager : MonoBehaviour
 {
+    // Unity cannot serialize dictionaries. Shame.
+    public MN_Screen[]              mScreens;
 
     public GameObject               mMainScreen;
     public GameObject               mPocketPasserScreen;
@@ -21,38 +24,47 @@ public class MN_Manager : MonoBehaviour
     void Start()
     {
         refAudioManager.OnBackToNormal();
+
+        // true == include inactive.
+        mScreens = GetComponentsInChildren<MN_Screen>(true);
+    }
+
+    private void ScreenTransition(string sScreen)
+    {
+        for(int i=0; i<mScreens.Length; i++)
+        {
+            if(mScreens[i].mName == sScreen){
+                Debug.Log("Right scren");
+                mScreens[i].gameObject.SetActive(true);
+            }else{
+                mScreens[i].gameObject.SetActive(false);
+            }
+        }
+
     }
 
     public void OnPressedPocketPasser()
     {
-        //SceneManager.LoadScene("SN_PocketPasser");
-        mMainScreen.SetActive(false);
-        mPocketPasserScreen.SetActive(true);
+        ScreenTransition("PP");
     }
 
     public void OnPressedPlayPP()
     {
-        mPocketPasserScreen.SetActive(false);
-        mPP_LOAD_SCN.SetActive(true);
+        ScreenTransition("PP_Load");
     }
 
     public void OnPressedMainMenu()
     {
-        mMainScreen.SetActive(true);
-        mPocketPasserScreen.SetActive(false);
-        mSettingsScreen.SetActive(false);
+        ScreenTransition("Main");
     }
 
     public void OnPressedQuit()
     {
-        Debug.Log("Tried to quit");
-        mMainScreen.SetActive(false);
-        mQuitScreen.SetActive(true);
+        ScreenTransition("Quit");
     }
 
     public void OnPressedSettings()
     {
-        mMainScreen.SetActive(false);
-        mSettingsScreen.SetActive(true);
+        ScreenTransition("Settings");
     }
 }
