@@ -89,6 +89,7 @@
      <Compile Include="Assets\Scripts\Menus\MN_QuitScreen.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_Screen.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_Settings.cs" />
+     <Compile Include="Assets\Scripts\Menus\MN_Transition.cs" />
      <Compile Include="Assets\Scripts\PC_Camera.cs" />
      <Compile Include="Assets\Scripts\PC_Controller.cs" />
      <Compile Include="Assets\Scripts\PC_ThrowTrajectory.cs" />

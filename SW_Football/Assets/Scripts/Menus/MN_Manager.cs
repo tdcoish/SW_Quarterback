@@ -13,11 +13,7 @@ public class MN_Manager : MonoBehaviour
     // Unity cannot serialize dictionaries. Shame.
     public MN_Screen[]              mScreens;
 
-    public GameObject               mMainScreen;
-    public GameObject               mPocketPasserScreen;
-    public GameObject               mPP_LOAD_SCN;
-    public GameObject               mSettingsScreen;
-    public GameObject               mQuitScreen;
+    public MN_Transition            PF_Transition;
 
     public AD_Manager               refAudioManager;
 
@@ -31,10 +27,12 @@ public class MN_Manager : MonoBehaviour
 
     private void ScreenTransition(string sScreen)
     {
+        MN_Transition transition = Instantiate(PF_Transition);
+        transition.transform.SetParent(transform);
+
         for(int i=0; i<mScreens.Length; i++)
         {
             if(mScreens[i].mName == sScreen){
-                Debug.Log("Right scren");
                 mScreens[i].gameObject.SetActive(true);
             }else{
                 mScreens[i].gameObject.SetActive(false);
