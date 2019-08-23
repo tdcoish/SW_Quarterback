@@ -43,6 +43,7 @@ public class PP_Manager : MonoBehaviour
     private PP_Man_Tur          cTurMan;
     private PP_Man_Targ         cTargMan;
     private PP_Man_Arr          cArrMan;
+    private PP_Man_Trophy       cTrophMan;
 
     public SO_Int               mScoreGlobal;
     public int                  mScore;
@@ -77,6 +78,7 @@ public class PP_Manager : MonoBehaviour
         cTurMan = GetComponent<PP_Man_Tur>();
         cTargMan = GetComponent<PP_Man_Targ>();
         cArrMan = GetComponent<PP_Man_Arr>();
+        cTrophMan = GetComponent<PP_Man_Trophy>();
 
         refPC = FindObjectOfType<PC_Controller>();
 
@@ -147,6 +149,7 @@ public class PP_Manager : MonoBehaviour
         refPC.transform.position = vPCPos;
 
         mScore = 0;
+        ChangeScore(0);     // ah side effects, lovely aren't they?
         mStreak = 0;
         mStreakBonus = 1;
 
@@ -382,6 +385,11 @@ public class PP_Manager : MonoBehaviour
     // change can be negative
     private void ChangeScore(int chng, bool affectStreak = true)
     {
+        if(mState != PP_State.GAME_ACTIVE){
+            Debug.Log("Can't score in this state");
+            return;
+        }
+
         if(chng < 0)
         {
             mStreak = 0;
@@ -406,5 +414,8 @@ public class PP_Manager : MonoBehaviour
         {
             mStreakBonus = 4;
         }
+
+        cTrophMan.FHandleTrophyAfterScore();
     }
+
 }

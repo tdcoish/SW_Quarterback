@@ -17,6 +17,7 @@ public class PP_UI : MonoBehaviour
     public Text             mTimeLeftTxt;
     public Text             mSackImmunityTxt;
     public Text             mStreakTxt;
+    public Text             mTrophyTxt;
 
     [SerializeField]
     private DT_Player           PlayerData;         // used for max throw power at a minimum
@@ -81,6 +82,11 @@ public class PP_UI : MonoBehaviour
     public void OnPlayerBackInPocket()
     {
         mPocketWarningTxt.gameObject.SetActive(false);
+    }
+
+    public void FSetTrophyText(string trophyWon)
+    {
+        mTrophyTxt.text = "TROPHY: " + trophyWon;
     }
 
     public void FSetTimeText(float tm)

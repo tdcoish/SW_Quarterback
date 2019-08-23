@@ -101,6 +101,7 @@
      <Compile Include="Assets\Scripts\PP\PP_Arrow.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Man_Arr.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Man_Targ.cs" />
+     <Compile Include="Assets\Scripts\PP\PP_Man_Trophy.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Man_Tur.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Manager.cs" />
      <Compile Include="Assets\Scripts\PP\PP_MN_Manager.cs" />
@@ -110,6 +111,7 @@
      <Compile Include="Assets\Scripts\PP\PP_Scoreboard.cs" />
      <Compile Include="Assets\Scripts\PP\PP_ScoreCam.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Target.cs" />
+     <Compile Include="Assets\Scripts\PP\PP_Trophy.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Turret.cs" />
      <Compile Include="Assets\Scripts\PP\PP_UI.cs" />
      <Compile Include="Assets\Scripts\PROJ_Football.cs" />
@@ -124,6 +126,7 @@
      <Compile Include="Assets\Scripts\RT_Editor\RT_RouteTool.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_SceneManager.cs" />
      <Compile Include="Assets\Scripts\SO_Data\DT_Player.cs" />
+     <Compile Include="Assets\Scripts\SO_Data\DT_TrophyValues.cs" />
      <Compile Include="Assets\Scripts\TEMP_FileStoring.cs" />
      <Compile Include="Assets\Scripts\TEMP_TestAudio.cs" />
      <Compile Include="Assets\Scripts\TEST_Audio1.cs" />
