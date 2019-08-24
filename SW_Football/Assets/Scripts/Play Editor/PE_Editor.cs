@@ -11,6 +11,8 @@ public class PE_Editor : MonoBehaviour
 
     public InputField                       rPlayNameField;
 
+    public PE_JobAssigner                   rJobAssigner;
+
     private PE_PlayLoader                   cLoader;
     private PE_PlaySaver                    cSaver;
 

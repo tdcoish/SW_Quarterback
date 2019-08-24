@@ -98,6 +98,8 @@
      <Compile Include="Assets\Scripts\Play Editor\PE_Choosable.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_Editor.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_Field.cs" />
+     <Compile Include="Assets\Scripts\Play Editor\PE_JobAssigner.cs" />
+     <Compile Include="Assets\Scripts\Play Editor\PE_PixToMeters.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_PlayLoader.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_PlaySaver.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_Role.cs" />

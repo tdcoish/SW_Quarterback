@@ -14,6 +14,7 @@ public class PE_PlayLoader : MonoBehaviour
 {
     private PE_Selector         cSelector;
 
+    //public GameObject           rSnapSpot;
     public PE_Field             rField;
 
     public PE_Role              PF_PlayerRole;
