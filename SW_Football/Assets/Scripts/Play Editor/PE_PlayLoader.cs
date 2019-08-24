@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 public class PE_PlayLoader : MonoBehaviour
 {
-    public DT_OffencePlay       FL_Play;
+    private PE_Selector         cSelector;
 
     public PE_Field             rField;
 
@@ -20,6 +20,17 @@ public class PE_PlayLoader : MonoBehaviour
 
     void Start()
     {
+        cSelector = GetComponent<PE_Selector>();
+    }
+
+    // We also have to destroy the roles currently in the scene.
+    public void FLoadPlay(DT_OffencePlay FL_Play)
+    {
+        PE_Role[] roles = FindObjectsOfType<PE_Role>();
+        for(int i=0; i<roles.Length; i++)
+        {
+            Destroy(roles[i].gameObject);
+        }
 
         for(int i=0; i<FL_Play.mPlayerRoles.Count; i++)
         {            
@@ -39,5 +50,8 @@ public class PE_PlayLoader : MonoBehaviour
             vPos.y -= 15f * fMetersToPixels;
             role.transform.position = vPos;
         }
+
+        // Since the old ones are garbage now.
+        cSelector.FGetNewReferences();
     }
 }

@@ -13,17 +13,15 @@ public class PE_PlaySaver : MonoBehaviour
 {
     public PE_Field             rField;
 
-    public InputField               rInputField;
     // Fun fact, scriptable objects created at runtime will not be kept.
-    public DT_OffencePlay           SO_PlayToWriteTo;
 
-    public void OnSavePlay()
+    public void FSavePlay(string sName, DT_OffencePlay FL_Play)
     {
-        SO_PlayToWriteTo.mName = rInputField.text;
+        FL_Play.mName = sName;
         
         // get array of all ED_Roles? Then save them.
         PE_Role[] roles = FindObjectsOfType<PE_Role>();
-        SO_PlayToWriteTo.mPlayerRoles = new List<DT_PlayerRole>();
+        FL_Play.mPlayerRoles = new List<DT_PlayerRole>();
         for(int i=0; i<roles.Length; i++){
             DT_PlayerRole temp = new DT_PlayerRole();
             temp.mRole = roles[i].mRole;
@@ -36,9 +34,7 @@ public class PE_PlaySaver : MonoBehaviour
             // adjust for starting on 10.
             temp.mStart.y = (roles[i].transform.position.y - rField.transform.position.y) / fMetersToPixels + 15f;
 
-            Debug.Log(temp.mStart);
-
-            SO_PlayToWriteTo.mPlayerRoles.Add(temp);
+            FL_Play.mPlayerRoles.Add(temp);
         }
     }
 }
