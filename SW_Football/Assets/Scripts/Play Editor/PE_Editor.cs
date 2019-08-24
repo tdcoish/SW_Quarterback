@@ -38,4 +38,14 @@ public class PE_Editor : MonoBehaviour
 
         cSaver.FSavePlay(rPlayNameField.text, FL_CreatedPlay);
     }
+
+    public void OnPlayerSelected()
+    {
+        rJobAssigner.gameObject.SetActive(true);
+        rJobAssigner.FSetDropdownValues();
+    }
+    public void OnPlayerDeselected()
+    {
+        rJobAssigner.gameObject.SetActive(false);
+    }
 }

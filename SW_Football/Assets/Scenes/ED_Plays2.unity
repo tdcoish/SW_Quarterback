@@ -585,7 +585,18 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 402579218}
+        m_MethodName: OnRoleChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Dropdown+DropdownEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_AlphaFadeSpeed: 0.15
@@ -640,12 +651,12 @@ GameObject:
   - component: {fileID: 402579215}
   - component: {fileID: 402579217}
   m_Layer: 5
-  m_Name: Existing Routes
+  m_Name: Player Details
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &402579214
 RectTransform:
   m_ObjectHideFlags: 0
@@ -722,7 +733,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!114 &402579218
@@ -737,6 +748,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 359c17fb742cc5344930d6f4ea3775dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DP_Tag: {fileID: 619158004}
+  DP_Role: {fileID: 393763709}
+  DP_Detail: {fileID: 1580079735}
 --- !u!1 &446830697
 GameObject:
   m_ObjectHideFlags: 0
@@ -1573,21 +1587,17 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
+    - m_Text: QB
+      m_Image: {fileID: 0}
+    - m_Text: HB1
+      m_Image: {fileID: 0}
     - m_Text: WR1
       m_Image: {fileID: 0}
     - m_Text: WR2
       m_Image: {fileID: 0}
-    - m_Text: WR3
-      m_Image: {fileID: 0}
-    - m_Text: WR4
-      m_Image: {fileID: 0}
-    - m_Text: WR5
-      m_Image: {fileID: 0}
     - m_Text: TE1
       m_Image: {fileID: 0}
     - m_Text: TE2
-      m_Image: {fileID: 0}
-    - m_Text: TE3
       m_Image: {fileID: 0}
     - m_Text: LT
       m_Image: {fileID: 0}
@@ -1599,17 +1609,32 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: RT
       m_Image: {fileID: 0}
-    - m_Text: QB
+    - m_Text: WR3
       m_Image: {fileID: 0}
-    - m_Text: HB1
+    - m_Text: WR4
+      m_Image: {fileID: 0}
+    - m_Text: WR5
       m_Image: {fileID: 0}
     - m_Text: HB2
       m_Image: {fileID: 0}
     - m_Text: HB3
       m_Image: {fileID: 0}
+    - m_Text: TE3
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 402579218}
+        m_MethodName: OnTagChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Dropdown+DropdownEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_AlphaFadeSpeed: 0.15
@@ -3938,7 +3963,18 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 402579218}
+        m_MethodName: OnDetailChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Dropdown+DropdownEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_AlphaFadeSpeed: 0.15
@@ -5091,6 +5127,7 @@ MonoBehaviour:
   FL_CreatedPlay: {fileID: 11400000, guid: 2f2a827900bd92440b7d78533c3840cf, type: 2}
   FL_DefaultPlay: {fileID: 11400000, guid: 15a03ed7fe275684c9ea535eba3ea9a8, type: 2}
   rPlayNameField: {fileID: 1141601413}
+  rJobAssigner: {fileID: 402579218}
 --- !u!114 &1919407129
 MonoBehaviour:
   m_ObjectHideFlags: 0

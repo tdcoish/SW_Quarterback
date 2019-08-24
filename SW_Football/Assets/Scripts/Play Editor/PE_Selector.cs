@@ -12,6 +12,13 @@ public class PE_Selector : MonoBehaviour
 
     public PE_Choosable[]            rGuys;             // terrible name for the spawned athlete objects.
 
+    private PE_Editor               cEditor;
+
+    void Start()
+    {
+        cEditor = GetComponentInParent<PE_Editor>();
+    }
+
 
     void Update()
     {
@@ -23,7 +30,21 @@ public class PE_Selector : MonoBehaviour
             {
                 if(hit.collider.GetComponent<PE_Choosable>() != null){
                     hit.collider.GetComponent<PE_Choosable>().mChosen = true;
-                    if(mActivePlayer != -1) rGuys[mActivePlayer].mChosen = false;
+                    if(mActivePlayer != -1)
+                    {
+                        rGuys[mActivePlayer].mChosen = false;
+                    }
+                    mActivePlayer = GetActivePlayerIndex();
+                    cEditor.OnPlayerSelected();
+                }
+                else 
+                {
+                    if(mActivePlayer != -1)
+                    {
+                        rGuys[mActivePlayer].mChosen = false;
+                        cEditor.OnPlayerDeselected();
+                    }
+                    mActivePlayer = -1;
                 }
             }
 
