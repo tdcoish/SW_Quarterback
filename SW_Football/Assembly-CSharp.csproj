@@ -94,6 +94,12 @@
      <Compile Include="Assets\Scripts\PC_Controller.cs" />
      <Compile Include="Assets\Scripts\PC_ThrowTrajectory.cs" />
      <Compile Include="Assets\Scripts\PC_UI.cs" />
+     <Compile Include="Assets\Scripts\Play Editor\DT_OffencePlay.cs" />
+     <Compile Include="Assets\Scripts\Play Editor\PE_Field.cs" />
+     <Compile Include="Assets\Scripts\Play Editor\PE_PlayLoader.cs" />
+     <Compile Include="Assets\Scripts\Play Editor\PE_PlaySaver.cs" />
+     <Compile Include="Assets\Scripts\Play Editor\PE_Role.cs" />
+     <Compile Include="Assets\Scripts\Play Editor\PE_SN_Manager.cs" />
      <Compile Include="Assets\Scripts\Plays\HACK_PlyControl.cs" />
      <Compile Include="Assets\Scripts\Plays\PLY_Controller.cs" />
      <Compile Include="Assets\Scripts\Plays\PLY_FirstDownMark.cs" />

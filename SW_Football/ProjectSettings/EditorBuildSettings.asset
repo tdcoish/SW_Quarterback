@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SN_PP_Score.unity
     guid: b53ebd5510036be4daf9b5e1e40952c0
+  - enabled: 1
+    path: Assets/Scenes/ED_Plays2.unity
+    guid: 659bdaedb03bcf747a0939d06a714536
   m_configObjects: {}

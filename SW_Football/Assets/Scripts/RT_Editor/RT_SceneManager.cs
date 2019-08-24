@@ -95,4 +95,9 @@ public class RT_SceneManager : MonoBehaviour
         return -1;
     }
 
+    public void FMainMenu()
+    {
+        SceneManager.LoadScene("SN_MN_Main");
+    }
+
 }
