@@ -34,7 +34,7 @@ public class PE_Selector : MonoBehaviour
                     {
                         rGuys[mActivePlayer].mChosen = false;
                     }
-                    mActivePlayer = GetActivePlayerIndex();
+                    mActivePlayer = FGetActivePlayerIndex();
                     cEditor.OnPlayerSelected();
                 }
                 else 
@@ -48,7 +48,7 @@ public class PE_Selector : MonoBehaviour
                 }
             }
 
-            mActivePlayer = GetActivePlayerIndex();
+            mActivePlayer = FGetActivePlayerIndex();
         }
 
         SetChoosablesBars();
@@ -67,7 +67,7 @@ public class PE_Selector : MonoBehaviour
 
     }
 
-    private int GetActivePlayerIndex()
+    public int FGetActivePlayerIndex()
     {
         for(int i=0; i<rGuys.Length; i++){
             if(rGuys[i].mChosen){

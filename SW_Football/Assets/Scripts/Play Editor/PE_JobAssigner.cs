@@ -3,11 +3,13 @@ Need a reference to the active player.
 *************************************************************************************/
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class PE_JobAssigner : MonoBehaviour
 {
     private PE_Editor           cEditor;
     private PE_Selector         cSelector;
+    private PE_RouteTool        cRouteTool;
 
     public Dropdown             DP_Tag;
     public Dropdown             DP_Role;
@@ -17,6 +19,7 @@ public class PE_JobAssigner : MonoBehaviour
     {
         cEditor = GetComponentInParent<PE_Editor>();
         cSelector = GetComponentInParent<PE_Selector>();
+        cRouteTool = GetComponentInParent<PE_RouteTool>();
 
         Debug.Log("Assigner starting");
     }
@@ -54,6 +57,8 @@ public class PE_JobAssigner : MonoBehaviour
         }
 
         cSelector.rGuys[cSelector.mActivePlayer].GetComponent<PE_Role>().mRole = DP_Role.options[DP_Role.value].text;
+        // Gotta also change the detail menu.
+        SetDetailOptions();
     }
 
     public void OnDetailChanged()
@@ -64,6 +69,34 @@ public class PE_JobAssigner : MonoBehaviour
         }
 
         cSelector.rGuys[cSelector.mActivePlayer].GetComponent<PE_Role>().mDetails = DP_Detail.options[DP_Detail.value].text;
+
+        // now if it's new, then make a new route?
+        if(DP_Detail.options[DP_Detail.value].text == "New...")
+        {
+            Debug.Log("Make a new route");
+            cRouteTool.BT_NewRoute();
+        }
+    }
+
+    // For routes, display the routes, for blocking, display options. Whatever.
+    private void SetDetailOptions()
+    {
+        // switch(DP_Role.options[DP_Role.value].text)
+        // {
+        //     case "Route" :
+        // }
+        DP_Detail.options.Clear();
+        if(DP_Role.options[DP_Role.value].text == "Route")
+        {
+            // here's where I would have a binary file with all the options for routes, and a for loop through them.
+            DP_Detail.options.Add(new Dropdown.OptionData("New..."));
+            DP_Detail.options.Add(new Dropdown.OptionData("Curl"));
+            DP_Detail.options.Add(new Dropdown.OptionData("Hook"));
+        }
+        else
+        {
+            DP_Detail.options.Add(new Dropdown.OptionData("Standard"));
+        }
     }
 
     private bool ErrorFree()

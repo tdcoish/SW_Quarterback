@@ -103,6 +103,8 @@
      <Compile Include="Assets\Scripts\Play Editor\PE_PlayLoader.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_PlaySaver.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_Role.cs" />
+     <Compile Include="Assets\Scripts\Play Editor\PE_Route.cs" />
+     <Compile Include="Assets\Scripts\Play Editor\PE_RouteTool.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_Selector.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_SN_Manager.cs" />
      <Compile Include="Assets\Scripts\Plays\HACK_PlyControl.cs" />
@@ -137,6 +139,7 @@
      <Compile Include="Assets\Scripts\RT_Editor\RT_RouteTool.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_SceneManager.cs" />
      <Compile Include="Assets\Scripts\SO_Data\DT_Player.cs" />
+     <Compile Include="Assets\Scripts\SO_Data\DT_Route.cs" />
      <Compile Include="Assets\Scripts\SO_Data\DT_TrophyValues.cs" />
      <Compile Include="Assets\Scripts\TEMP_FileStoring.cs" />
      <Compile Include="Assets\Scripts\TEMP_TestAudio.cs" />
