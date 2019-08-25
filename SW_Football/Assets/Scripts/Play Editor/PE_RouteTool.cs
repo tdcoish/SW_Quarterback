@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public class PE_RouteTool : MonoBehaviour
 {
     private PE_Selector             cSelector;
+    private PE_RouteSaver           cRouteSaver;
 
     [SerializeField]
     private GameObject              PF_RouteNode;           // this is just an image. We add the GO to mCurRoute after spawning.
@@ -25,6 +26,7 @@ public class PE_RouteTool : MonoBehaviour
     void Start()
     {
         cSelector = GetComponent<PE_Selector>();
+        cRouteSaver = GetComponent<PE_RouteSaver>();
     }
 
     void Update()
@@ -92,6 +94,8 @@ public class PE_RouteTool : MonoBehaviour
             vConvertedSpot *= 10f;          // hardcoding because 500 pixel field == 50 meters. - HACK
             FL_Route.mSpots.Add(vConvertedSpot);
         }
+
+        cRouteSaver.FWriteRouteToDisk(FL_Route);
 
         rRouteName.gameObject.SetActive(false);
     }
