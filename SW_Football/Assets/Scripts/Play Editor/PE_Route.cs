@@ -1,5 +1,5 @@
 ﻿/*************************************************************************************
-
+This is an editor route. Just a representation of a route, not the route itself.
 *************************************************************************************/
 using UnityEngine;
 using System.Collections.Generic;

@@ -81,17 +81,20 @@ public class PE_JobAssigner : MonoBehaviour
     // For routes, display the routes, for blocking, display options. Whatever.
     private void SetDetailOptions()
     {
-        // switch(DP_Role.options[DP_Role.value].text)
-        // {
-        //     case "Route" :
-        // }
+
         DP_Detail.options.Clear();
         if(DP_Role.options[DP_Role.value].text == "Route")
         {
-            // here's where I would have a binary file with all the options for routes, and a for loop through them.
             DP_Detail.options.Add(new Dropdown.OptionData("New..."));
-            DP_Detail.options.Add(new Dropdown.OptionData("Curl"));
-            DP_Detail.options.Add(new Dropdown.OptionData("Hook"));
+            for(int i=0; i<IO_RouteList.mRoutes.Length; i++)
+            {
+                DP_Detail.options.Add(new Dropdown.OptionData(IO_RouteList.mRoutes[i].mName));
+            }
+
+            // here's where I would have a binary file with all the options for routes, and a for loop through them.
+            // DP_Detail.options.Add(new Dropdown.OptionData("New..."));
+            // DP_Detail.options.Add(new Dropdown.OptionData("Curl"));
+            // DP_Detail.options.Add(new Dropdown.OptionData("Hook"));
         }
         else
         {

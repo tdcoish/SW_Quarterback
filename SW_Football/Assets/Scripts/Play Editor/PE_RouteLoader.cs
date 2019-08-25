@@ -13,6 +13,11 @@ public class PE_RouteLoader : MonoBehaviour
         {
             FLoadRoute("Slant");
         }
+
+        if(Input.GetKeyDown(KeyCode.O))
+        {
+            IO_RouteList.FLOAD_ROUTES();
+        }
     }
 
     // Also displays

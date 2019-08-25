@@ -11,6 +11,7 @@ public class DT_PlayerRole
     public Vector2          mStart;
     public string           mTag;
     public string           mRole;
+    public string           mDetail;
 }
 
 [CreateAssetMenu(fileName="SO_OffencePlay", menuName="PLAYS/SO_OffencePlay")]

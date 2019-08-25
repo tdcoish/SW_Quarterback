@@ -1,5 +1,0 @@
-WR1: (0,15)(35,0) 	LINEUP: [-20,0]	// play is cross, first WR runs deep in
-WR2: (4,8)(25,10) 	LINEUP: [-10,-1]	
-WR3: (-5,2)(-40,1)    LINEUP: [8,0]
-WR4: (0,10)(1,10)(0,30)    LINEUP: [12,0]
-WR5: (10,10)(-10,10)(0,-2)    LINEUP: [5,-10]	//HB

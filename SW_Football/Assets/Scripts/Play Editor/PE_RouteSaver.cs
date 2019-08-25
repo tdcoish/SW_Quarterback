@@ -11,10 +11,10 @@ using System.IO;
 
 public class PE_RouteSaver : MonoBehaviour
 {
-
+    
     public void FWriteRouteToDisk(DT_Route FL_Route)
     {
-        string path = Application.dataPath+"/Plays/Offence/" + FL_Route.mName +".bin";
+        string path = Application.dataPath+"/Plays/Routes/" + FL_Route.mName +".bin";
         BinaryWriter bw = new BinaryWriter(new FileStream(path, FileMode.Create));
 
         // first, write the name of the route.

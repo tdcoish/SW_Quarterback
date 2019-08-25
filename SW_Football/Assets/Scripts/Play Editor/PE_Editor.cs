@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class PE_Editor : MonoBehaviour
 {
-    public DT_OffencePlay                   FL_CreatedPlay;
-    public DT_OffencePlay                   FL_DefaultPlay;
+    // This needs to be a string, but save a play first.
+    public string                           mDefaultPlay = "DEFAULT";
 
     public InputField                       rPlayNameField;
 
@@ -18,6 +18,8 @@ public class PE_Editor : MonoBehaviour
 
     void Start()
     {
+        IO_PlayList.FLOAD_PLAYS();
+
         cLoader = GetComponent<PE_PlayLoader>();
         cSaver = GetComponent<PE_PlaySaver>();
     }
@@ -25,7 +27,7 @@ public class PE_Editor : MonoBehaviour
     // Spawn in a default play, with nothing in it, so we can edit that play.
     public void OnNewPlay()
     {
-        cLoader.FLoadPlay(FL_DefaultPlay);
+        cLoader.FLoadPlay(IO_PlayList.FLOAD_PLAY_BY_NAME("DEFAULT"));
     }
 
     public void OnPlaySaved()
@@ -36,7 +38,10 @@ public class PE_Editor : MonoBehaviour
             return;
         }
 
-        cSaver.FSavePlay(rPlayNameField.text, FL_CreatedPlay);
+        // 2 stages
+        // convert to DATA_Play
+        // write that to disk
+        IO_PlayList.FWRITE_PLAY(cSaver.FConvertPlayToDATA(rPlayNameField.text));
     }
 
     public void OnPlayerSelected()

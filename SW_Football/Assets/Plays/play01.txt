@@ -1,3 +1,0 @@
-WR1: (0,25)(20,20) 	LINEUP: [-20,0]	// bit of an odd route, going forward 10, right 5, then forward 10 again.
-WR2: (0,10)(2,-2) 	LINEUP: [10,-1]	
-WR3: (0,20)(-20,0)    LINEUP: [20,0]

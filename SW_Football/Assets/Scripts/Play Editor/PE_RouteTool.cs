@@ -18,9 +18,6 @@ public class PE_RouteTool : MonoBehaviour
     public PE_Route                 PF_RouteObj;
     public PE_Route                 mCurRoute;          // our reference to the route. Confusing
 
-    // Temporarily do this.
-    public DT_Route                 FL_Route;
-
     public InputField               rRouteName;
 
     void Start()
@@ -78,24 +75,20 @@ public class PE_RouteTool : MonoBehaviour
     // save the current route to the disk.
     public void BT_RouteNamed()
     {
-        FL_Route.mName = rRouteName.text;
-
-        FL_Route.mSpots = new List<Vector2>();
-        FL_Route.mSpots.Clear();
-        
+        DATA_Route route = new DATA_Route();
+        route.mName = rRouteName.text;
+        route.mSpots = new Vector2[mCurRoute.mNodes.Count];
         for(int i=0; i<mCurRoute.mNodes.Count; i++)
         {
-            // shit, have we already converted these? I think not.
-            // First, convert them relative to the starting node.
-            // Second, convert them into yards/meters.
             Vector2 vConvertedSpot = new Vector2();
             vConvertedSpot = mCurRoute.mNodes[i].transform.position;
             vConvertedSpot -= (Vector2)mCurRoute.mNodes[0].transform.position;
             vConvertedSpot *= 10f;          // hardcoding because 500 pixel field == 50 meters. - HACK
-            FL_Route.mSpots.Add(vConvertedSpot);
+
+            route.mSpots[i] = vConvertedSpot;
         }
 
-        cRouteSaver.FWriteRouteToDisk(FL_Route);
+        IO_RouteList.FWRITE_ROUTE(route);
 
         rRouteName.gameObject.SetActive(false);
     }
