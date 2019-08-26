@@ -18,26 +18,42 @@ public class PE_Repositioner : MonoBehaviour
     
     public void BT_Up()
     {
-        Debug.Log("Up pressed");
         RepositionStart(new Vector2(0f, 1f));
     }
 
     public void BT_Down()
     {
-        Debug.Log("Down pressed");
         RepositionStart(new Vector2(0f, -1f));
     }
 
     public void BT_Right()
     {
-        Debug.Log("Right pressed");
         RepositionStart(new Vector2(1f, 0f));
     }
 
     public void BT_Left()
     {
-        Debug.Log("Left pressed");
         RepositionStart(new Vector2(-1f, 0f));
+    }
+
+    public void BT_Up_More()
+    {
+        RepositionStart(new Vector2(0f, 5f));
+    }
+
+    public void BT_Down_More()
+    {
+        RepositionStart(new Vector2(0f, -5f));
+    }
+
+    public void BT_Right_More()
+    {
+        RepositionStart(new Vector2(5f, 0f));
+    }
+
+    public void BT_Left_More()
+    {
+        RepositionStart(new Vector2(-5f, 0f));
     }
 
     private void RepositionStart(Vector2 vMovement)
@@ -49,11 +65,21 @@ public class PE_Repositioner : MonoBehaviour
         }
 
         Debug.Log("Shift active player by: " + vMovement);
-        cSelector.rGuys[cSelector.mActivePlayer].GetComponent<PE_Role>().mStartPos += vMovement;
+        PE_Role role = cSelector.rGuys[cSelector.mActivePlayer].GetComponent<PE_Role>();
+        role.mStartPos += vMovement;
+        role.mStartPos.x = (float)System.Math.Round((double)role.mStartPos.x, 0);
+        role.mStartPos.y = (float)System.Math.Round((double)role.mStartPos.y, 0);
+
         cSelector.rGuys[cSelector.mActivePlayer].transform.position += (Vector3)vMovement / 10f;        // hacked conversion.
         // Again, unfortunately we have to convert from internal position to field position.
 
         UpdatePositionText();
+    }
+
+    // Because you can't line up 5.3233490 yards to the left, only 5 or 6. Maybe I'll give them half yards. 
+    private void SnapPosToYard()
+    {
+
     }
 
     // Probably make this public.

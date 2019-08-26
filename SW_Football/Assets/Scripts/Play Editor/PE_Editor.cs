@@ -27,7 +27,7 @@ public class PE_Editor : MonoBehaviour
     // Spawn in a default play, with nothing in it, so we can edit that play.
     public void OnNewPlay()
     {
-        cLoader.FLoadPlay(IO_PlayList.FLOAD_PLAY_BY_NAME("DEFAULT"));
+        cLoader.FLoadPlay(IO_PlayList.FLOAD_PLAY_BY_NAME(mDefaultPlay));
         
         // AND NOW WE HAVE TO WRITE SOMETHING LIKE: DISPLAYPLAY();
         cRouteDisplayer.FDisplayRoutes();

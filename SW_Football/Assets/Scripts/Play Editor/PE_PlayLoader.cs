@@ -33,6 +33,7 @@ public class PE_PlayLoader : MonoBehaviour
             Destroy(roles[i].gameObject);
         }
 
+        Debug.Log("Play: " + play.mName);
         for(int i=0; i<play.mPlayerRoles.Length; i++)
         {            
             PE_Role role = Instantiate(PF_PlayerRole, transform.position, transform.rotation);
@@ -41,6 +42,10 @@ public class PE_PlayLoader : MonoBehaviour
             role.mDetails = play.mPlayerRoles[i].mDetail;
             role.mStartPos.x = play.mPlayerRoles[i].mStart.x;
             role.mStartPos.y = play.mPlayerRoles[i].mStart.y;
+
+            // Here I'm making sure that the players always start on whole numbers, even if the play is not saved that way.
+            role.mStartPos.x = (float)System.Math.Round((double)role.mStartPos.x, 0);
+            role.mStartPos.y = (float)System.Math.Round((double)role.mStartPos.y, 0);
 
             // okay, now actually make it spawn in the right spot.
             // update. I guess we need to work in pixels.

@@ -30,16 +30,13 @@ public static class IO_PlayList
         bw.Write(play.mPlayerRoles.Length);
         foreach(DT_PlayerRole pRole in play.mPlayerRoles)
         {
-            Debug.Log(pRole.mTag);
-            Debug.Log(pRole.mRole);
-            Debug.Log(pRole.mDetail);
             bw.Write(pRole.mTag);
             bw.Write(pRole.mRole);
             bw.Write(pRole.mDetail);            // this would be things like the specific route, or how to run block.
             bw.Write(pRole.mStart.x);
             bw.Write(pRole.mStart.y);
         }
-
+        Debug.Log("Play Saved: " + play.mName);
         bw.Close();
     }    
 
@@ -60,7 +57,7 @@ public static class IO_PlayList
             BinaryReader br = new BinaryReader(new FileStream(fPathNames[i], FileMode.Open));
             mPlays[i] = new DATA_Play();
             mPlays[i].mName = br.ReadString();
-            Debug.Log("Play Name: " + mPlays[i].mName);
+            // Debug.Log("Play Name: " + mPlays[i].mName);
             mPlays[i].mPlayerRoles = new DT_PlayerRole[br.ReadInt32()];         // read in the number of players
             for(int j=0; j<mPlays[i].mPlayerRoles.Length; j++)
             {
@@ -88,9 +85,11 @@ public static class IO_PlayList
                 Debug.Log("Play Name: " + play.mName);
                 return play;
             }
+
+            Debug.Log("Plays loaded: " + mPlays[i].mName);
         }
         
-        Debug.Log("Play not found");
+        Debug.Log("Play not found: " + sName);
         return null;
     }
 }
