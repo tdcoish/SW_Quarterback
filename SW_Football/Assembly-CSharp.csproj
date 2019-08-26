@@ -107,6 +107,7 @@
      <Compile Include="Assets\Scripts\Play Editor\PE_PixToMeters.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_PlayLoader.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_PlaySaver.cs" />
+     <Compile Include="Assets\Scripts\Play Editor\PE_Repositioner.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_Role.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_Route.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_RouteTool.cs" />
@@ -149,6 +150,7 @@
      <Compile Include="Assets\Scripts\TEMP_FileStoring.cs" />
      <Compile Include="Assets\Scripts\TEMP_TestAudio.cs" />
      <Compile Include="Assets\Scripts\TEST_Audio1.cs" />
+     <Compile Include="Assets\Scripts\TEST_Build.cs" />
      <Compile Include="Assets\Scripts\Utilities\LifeSpan.cs" />
      <Compile Include="Assets\Scripts\Utilities\SingletonBehaviour.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_Extensions.cs" />
