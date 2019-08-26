@@ -15,13 +15,13 @@ public class PE_Editor : MonoBehaviour
 
     private PE_PlayLoader                   cLoader;
     private PE_PlaySaver                    cSaver;
-    private PE_DisplayPlayRoutes            cRouteDisplayer;
+    private PE_DisplayPlayJobs              cJobDisplayer;
 
     void Start()
     {
         cLoader = GetComponent<PE_PlayLoader>();
         cSaver = GetComponent<PE_PlaySaver>();
-        cRouteDisplayer = GetComponent<PE_DisplayPlayRoutes>();
+        cJobDisplayer = GetComponent<PE_DisplayPlayJobs>();
     }
 
     // Spawn in a default play, with nothing in it, so we can edit that play.
@@ -30,7 +30,7 @@ public class PE_Editor : MonoBehaviour
         cLoader.FLoadPlay(IO_PlayList.FLOAD_PLAY_BY_NAME(mDefaultPlay));
         
         // AND NOW WE HAVE TO WRITE SOMETHING LIKE: DISPLAYPLAY();
-        cRouteDisplayer.FDisplayRoutes();
+        cJobDisplayer.FDisplayJobs();
     }
 
     public void OnPlaySaved()

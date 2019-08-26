@@ -99,8 +99,9 @@
      <Compile Include="Assets\Scripts\Play Editor\IO_BinaryTest.cs" />
      <Compile Include="Assets\Scripts\Play Editor\IO_PlayList.cs" />
      <Compile Include="Assets\Scripts\Play Editor\IO_RouteList.cs" />
+     <Compile Include="Assets\Scripts\Play Editor\PE_BlockImg.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_Choosable.cs" />
-     <Compile Include="Assets\Scripts\Play Editor\PE_DisplayPlayRoutes.cs" />
+     <Compile Include="Assets\Scripts\Play Editor\PE_DisplayPlayJobs.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_Editor.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_Field.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_JobAssigner.cs" />

@@ -46,10 +46,14 @@ public static class IO_RouteList
         }
 
         bw.Close();
+
+        // You know, we really might as well just always reload
+        FLOAD_ROUTES();
     }
 
     public static void FLOAD_ROUTES()
     {
+        Debug.Log("Loading/Reloading routes");
         string path = Application.dataPath+"/Plays/Routes/";
 
         string[] fPathNames = Directory.GetFiles(path, "*.bin");
@@ -85,7 +89,7 @@ public static class IO_RouteList
             }
         }
         
-        Debug.Log("Play not found");
+        Debug.Log("Route not found");
         return null;
     }
 

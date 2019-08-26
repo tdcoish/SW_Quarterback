@@ -1,21 +1,27 @@
 ﻿/*************************************************************************************
-For the loaded play, display the routes from the receivers.
+
 *************************************************************************************/
 using UnityEngine;
 
-public class PE_DisplayPlayRoutes : MonoBehaviour
+public class PE_DisplayPlayJobs : MonoBehaviour
 {
-
     public GameObject                   PF_RouteSpot;
     public PE_Route                     PF_Route;
+    public PE_BlockImg                  PF_BlockImage;
 
-    public void FDisplayRoutes()
+    public void FDisplayJobs()
     {
-        // FIRST, destroy all existing routes.
+        // Destroy existing jobs.
         PE_Route[] oldRoutes = FindObjectsOfType<PE_Route>();
         for(int i=0; i<oldRoutes.Length; i++)
         {
             oldRoutes[i].FDestroySelf();
+        }
+
+        PE_BlockImg[] blockImages = FindObjectsOfType<PE_BlockImg>();
+        for(int i=0; i<blockImages.Length; i++)
+        {
+            Destroy(blockImages[i].gameObject);
         }
 
         // For all the receivers in the scene, spawn a route object.
@@ -48,6 +54,12 @@ public class PE_DisplayPlayRoutes : MonoBehaviour
                         rt.mLineRenderer.SetPosition(rt.mNodes.Count-1, lineSpot);
                     }
                 }
+            }
+            else if (role.mRole == "Pass Block" || role.mRole == "Run Block")
+            {
+                Vector2 vBlockSpot = role.transform.position;
+                vBlockSpot.y -= 0.1f;           // manual fudge factor.
+                Instantiate(PF_BlockImage, vBlockSpot, transform.rotation);
             }
         } 
     }
