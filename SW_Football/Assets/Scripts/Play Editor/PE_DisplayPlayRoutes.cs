@@ -11,6 +11,13 @@ public class PE_DisplayPlayRoutes : MonoBehaviour
 
     public void FDisplayRoutes()
     {
+        // FIRST, destroy all existing routes.
+        PE_Route[] oldRoutes = FindObjectsOfType<PE_Route>();
+        for(int i=0; i<oldRoutes.Length; i++)
+        {
+            oldRoutes[i].FDestroySelf();
+        }
+
         // For all the receivers in the scene, spawn a route object.
         // actually, spawn THEIR route, on them.
         PE_Role[] roles = FindObjectsOfType<PE_Role>();
@@ -26,8 +33,8 @@ public class PE_DisplayPlayRoutes : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Yeah, found: " + role.mDetails);
                     PE_Route rt = Instantiate(PF_Route);
+                    rt.mTag = role.mTag;
                     foreach (Vector2 spot in route.mSpots)
                     {
                         Vector2 vSpot = spot;

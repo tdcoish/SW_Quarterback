@@ -49,10 +49,8 @@ public class PE_Editor : MonoBehaviour
 
     public void OnPlayerSelected()
     {
-        Debug.Log("Player selected");
         rJobAssigner.gameObject.SetActive(true);
         rJobAssigner.FSetDropdownValues();
-        Debug.Log("Player selected - test");
     }
     public void OnPlayerDeselected()
     {

@@ -53,10 +53,6 @@ public static class IO_RouteList
         string path = Application.dataPath+"/Plays/Routes/";
 
         string[] fPathNames = Directory.GetFiles(path, "*.bin");
-        foreach(string sName in fPathNames)
-        {
-            Debug.Log(sName);
-        }
 
         mRoutes = new DATA_Route[fPathNames.Length];
         for(int i=0; i<fPathNames.Length; i++)
@@ -84,7 +80,6 @@ public static class IO_RouteList
         {
             if(mRoutes[i].mName == sName)
             {
-                Debug.Log("Route found");
                 route = mRoutes[i];
                 return route;
             }

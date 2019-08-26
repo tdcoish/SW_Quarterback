@@ -69,11 +69,19 @@ public class PE_JobAssigner : MonoBehaviour
 
         cSelector.rGuys[cSelector.mActivePlayer].GetComponent<PE_Role>().mDetails = DP_Detail.options[DP_Detail.value].text;
 
-        // now if it's new, then make a new route?
-        if(DP_Detail.options[DP_Detail.value].text == "New...")
+        if(DP_Role.options[DP_Role.value].text == "Route")
         {
-            Debug.Log("Make a new route");
-            cRouteTool.BT_NewRoute();
+            // now if it's new, then make a new route?
+            if(DP_Detail.options[DP_Detail.value].text == "New...")
+            {
+                Debug.Log("Make a new route");
+                cRouteTool.BT_NewRoute();
+            }
+            else 
+            {
+                cEditor.GetComponent<PE_DisplayPlayRoutes>().FDisplayRoutes();
+            }
+
         }
     }
 
@@ -88,11 +96,6 @@ public class PE_JobAssigner : MonoBehaviour
             {
                 DP_Detail.options.Add(new Dropdown.OptionData(IO_RouteList.mRoutes[i].mName));
             }
-
-            // here's where I would have a binary file with all the options for routes, and a for loop through them.
-            // DP_Detail.options.Add(new Dropdown.OptionData("New..."));
-            // DP_Detail.options.Add(new Dropdown.OptionData("Curl"));
-            // DP_Detail.options.Add(new Dropdown.OptionData("Hook"));
         }
         else
         {

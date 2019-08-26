@@ -84,13 +84,8 @@ public static class IO_PlayList
         {
             if(mPlays[i].mName == sName)
             {
-                Debug.Log("Play found");
                 play = mPlays[i];
                 Debug.Log("Play Name: " + play.mName);
-                foreach (DT_PlayerRole role in mPlays[i].mPlayerRoles)
-                {
-                    Debug.Log(role.mDetail);
-                }
                 return play;
             }
         }

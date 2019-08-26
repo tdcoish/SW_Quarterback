@@ -19,6 +19,8 @@ public class PE_RouteTool : MonoBehaviour
 
     public InputField               rRouteName;
 
+    public GameObject               rRouteUI;
+
     void Start()
     {
         cSelector = GetComponent<PE_Selector>();
@@ -55,8 +57,17 @@ public class PE_RouteTool : MonoBehaviour
             return;
         }
 
-        Debug.Log("Starting route creation");
+        PE_Route[] oldRoutes = FindObjectsOfType<PE_Route>();
+        for(int i=0; i<oldRoutes.Length; i++)
+        {
+            if(oldRoutes[i].mTag == cSelector.rGuys[actInd].GetComponent<PE_Role>().mTag)
+            {
+                oldRoutes[i].FDestroySelf();
+                break;
+            }
+        }
 
+        rRouteUI.SetActive(true);
         mRouteToolOpened = true;
 
         mCurRoute = Instantiate(PF_RouteObj, cSelector.rGuys[actInd].transform.position, transform.rotation);
@@ -68,6 +79,17 @@ public class PE_RouteTool : MonoBehaviour
     public void BT_Cancel()
     {
         // get rid of the current route and clean up.
+
+        // how do we destroy the current route?
+        // for(int i=0; i<mCurRoute.mNodes.Count; i++)
+        // {
+        //     Destroy(mCurRoute.mNodes[i].gameObject);
+        // }
+        // Destroy(mCurRoute.gameObject);
+        mCurRoute.FDestroySelf();
+
+        mRouteToolOpened = false;
+        rRouteUI.SetActive(false);
     }
 
     // save the current route to the disk.
@@ -89,17 +111,13 @@ public class PE_RouteTool : MonoBehaviour
         IO_RouteList.FWRITE_ROUTE(route);
 
         rRouteName.gameObject.SetActive(false);
+        rRouteUI.SetActive(false);
     }
 
     // Just opens up the name route menu.
     public void BT_Save()
     {
         rRouteName.gameObject.SetActive(true);
-    }
-
-    public void BT_DoneRoute()
-    {
-        mRouteToolOpened = false;
     }
 
     private void SpawnPoint(Vector3 pos){
