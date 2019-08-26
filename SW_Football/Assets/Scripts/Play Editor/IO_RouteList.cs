@@ -73,7 +73,25 @@ public static class IO_RouteList
 
             br.Close();
         }
+    }
 
+    // assumes that the routes have all been loaded already
+    public static DATA_Route FLOAD_ROUTE_BY_NAME(string sName)
+    {
+        DATA_Route route = new DATA_Route();
+        
+        for(int i=0; i<mRoutes.Length; i++)
+        {
+            if(mRoutes[i].mName == sName)
+            {
+                Debug.Log("Route found");
+                route = mRoutes[i];
+                return route;
+            }
+        }
+        
+        Debug.Log("Play not found");
+        return null;
     }
 
 }

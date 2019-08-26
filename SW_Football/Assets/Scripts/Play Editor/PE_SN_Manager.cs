@@ -14,8 +14,7 @@ public class PE_SN_Manager : MonoBehaviour
     void Start()
     {
         IO_RouteList.FLOAD_ROUTES();
-        // Not yet, since I haven't saved any
-        // IO_PlayList.FLOAD_PLAYS();
+        IO_PlayList.FLOAD_PLAYS();
     }
 
     public void OnViewScreenSelected()

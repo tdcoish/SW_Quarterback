@@ -6,6 +6,15 @@ how many players there are. I've been just assuming 11.
 *************************************************************************************/
 using UnityEngine;
 
+[System.Serializable]
+public class DT_PlayerRole
+{
+    public string               mTag;
+    public string               mRole;
+    public string               mDetail;
+    public Vector2              mStart;
+}
+
 public class DATA_Play
 {
     public string                   mName;

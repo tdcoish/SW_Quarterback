@@ -38,40 +38,9 @@ public class PE_PlayLoader : MonoBehaviour
             PE_Role role = Instantiate(PF_PlayerRole, transform.position, transform.rotation);
             role.mTag = play.mPlayerRoles[i].mTag;
             role.mRole = play.mPlayerRoles[i].mRole;     // just a string now.
+            role.mDetails = play.mPlayerRoles[i].mDetail;
             role.mStartPos.x = play.mPlayerRoles[i].mStart.x;
             role.mStartPos.y = play.mPlayerRoles[i].mStart.y;
-
-            // okay, now actually make it spawn in the right spot.
-            // update. I guess we need to work in pixels.
-            float fMetersToPixels = 50f / rField.GetComponent<RectTransform>().rect.width;
-            Vector3 vPos = new Vector3();
-            vPos.x = rField.transform.position.x + role.mStartPos.x * fMetersToPixels;
-            vPos.y = rField.transform.position.y + role.mStartPos.y * fMetersToPixels;
-            // set the y to the 10 yard line, normalized. That is where I decided the play starts from.
-            vPos.y -= 15f * fMetersToPixels;
-            role.transform.position = vPos;
-        }
-
-        // Since the old ones are garbage now.
-        cSelector.FGetNewReferences();
-    }
-
-    // We also have to destroy the roles currently in the scene.
-    public void FLoadPlay(DT_OffencePlay FL_Play)
-    {
-        PE_Role[] roles = FindObjectsOfType<PE_Role>();
-        for(int i=0; i<roles.Length; i++)
-        {
-            Destroy(roles[i].gameObject);
-        }
-
-        for(int i=0; i<FL_Play.mPlayerRoles.Count; i++)
-        {            
-            PE_Role role = Instantiate(PF_PlayerRole, transform.position, transform.rotation);
-            role.mTag = FL_Play.mPlayerRoles[i].mTag;
-            role.mRole = FL_Play.mPlayerRoles[i].mRole;     // just a string now.
-            role.mStartPos.x = FL_Play.mPlayerRoles[i].mStart.x;
-            role.mStartPos.y = FL_Play.mPlayerRoles[i].mStart.y;
 
             // okay, now actually make it spawn in the right spot.
             // update. I guess we need to work in pixels.

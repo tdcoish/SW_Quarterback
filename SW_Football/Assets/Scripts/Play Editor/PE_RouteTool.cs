@@ -8,7 +8,6 @@ using System.Collections.Generic;
 public class PE_RouteTool : MonoBehaviour
 {
     private PE_Selector             cSelector;
-    private PE_RouteSaver           cRouteSaver;
 
     [SerializeField]
     private GameObject              PF_RouteNode;           // this is just an image. We add the GO to mCurRoute after spawning.
@@ -23,7 +22,6 @@ public class PE_RouteTool : MonoBehaviour
     void Start()
     {
         cSelector = GetComponent<PE_Selector>();
-        cRouteSaver = GetComponent<PE_RouteSaver>();
     }
 
     void Update()

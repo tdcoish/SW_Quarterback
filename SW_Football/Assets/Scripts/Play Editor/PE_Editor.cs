@@ -15,19 +15,22 @@ public class PE_Editor : MonoBehaviour
 
     private PE_PlayLoader                   cLoader;
     private PE_PlaySaver                    cSaver;
+    private PE_DisplayPlayRoutes            cRouteDisplayer;
 
     void Start()
     {
-        IO_PlayList.FLOAD_PLAYS();
-
         cLoader = GetComponent<PE_PlayLoader>();
         cSaver = GetComponent<PE_PlaySaver>();
+        cRouteDisplayer = GetComponent<PE_DisplayPlayRoutes>();
     }
 
     // Spawn in a default play, with nothing in it, so we can edit that play.
     public void OnNewPlay()
     {
         cLoader.FLoadPlay(IO_PlayList.FLOAD_PLAY_BY_NAME("DEFAULT"));
+        
+        // AND NOW WE HAVE TO WRITE SOMETHING LIKE: DISPLAYPLAY();
+        cRouteDisplayer.FDisplayRoutes();
     }
 
     public void OnPlaySaved()
@@ -46,8 +49,10 @@ public class PE_Editor : MonoBehaviour
 
     public void OnPlayerSelected()
     {
+        Debug.Log("Player selected");
         rJobAssigner.gameObject.SetActive(true);
         rJobAssigner.FSetDropdownValues();
+        Debug.Log("Player selected - test");
     }
     public void OnPlayerDeselected()
     {

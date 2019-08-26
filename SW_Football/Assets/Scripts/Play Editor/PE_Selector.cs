@@ -8,15 +8,16 @@ using UnityEngine;
 
 public class PE_Selector : MonoBehaviour
 {
-    public int                  mActivePlayer;
+    public int                      mActivePlayer;
 
-    public PE_Choosable[]            rGuys;             // terrible name for the spawned athlete objects.
+    public PE_Choosable[]           rGuys;             // terrible name for the spawned athlete objects.
 
     private PE_Editor               cEditor;
 
     void Start()
     {
         cEditor = GetComponentInParent<PE_Editor>();
+        mActivePlayer = -1;
     }
 
 

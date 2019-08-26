@@ -21,7 +21,6 @@ public class PE_JobAssigner : MonoBehaviour
         cSelector = GetComponentInParent<PE_Selector>();
         cRouteTool = GetComponentInParent<PE_RouteTool>();
 
-        Debug.Log("Assigner starting");
     }
 
     // When we select a player, set the values to be his values, tag, role, etcetera
@@ -81,7 +80,6 @@ public class PE_JobAssigner : MonoBehaviour
     // For routes, display the routes, for blocking, display options. Whatever.
     private void SetDetailOptions()
     {
-
         DP_Detail.options.Clear();
         if(DP_Role.options[DP_Role.value].text == "Route")
         {

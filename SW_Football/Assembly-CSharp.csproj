@@ -96,11 +96,11 @@
      <Compile Include="Assets\Scripts\PC_UI.cs" />
      <Compile Include="Assets\Scripts\Play Editor\DATA_Play.cs" />
      <Compile Include="Assets\Scripts\Play Editor\DATA_Route.cs" />
-     <Compile Include="Assets\Scripts\Play Editor\DT_OffencePlay.cs" />
      <Compile Include="Assets\Scripts\Play Editor\IO_BinaryTest.cs" />
      <Compile Include="Assets\Scripts\Play Editor\IO_PlayList.cs" />
      <Compile Include="Assets\Scripts\Play Editor\IO_RouteList.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_Choosable.cs" />
+     <Compile Include="Assets\Scripts\Play Editor\PE_DisplayPlayRoutes.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_Editor.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_Field.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_JobAssigner.cs" />
@@ -109,8 +109,6 @@
      <Compile Include="Assets\Scripts\Play Editor\PE_PlaySaver.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_Role.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_Route.cs" />
-     <Compile Include="Assets\Scripts\Play Editor\PE_RouteLoader.cs" />
-     <Compile Include="Assets\Scripts\Play Editor\PE_RouteSaver.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_RouteTool.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_Selector.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_SN_Manager.cs" />
