@@ -66,6 +66,11 @@ public class MN_Manager : MonoBehaviour
         ScreenTransition("Settings");
     }
 
+    public void BT_Practice()
+    {
+        SceneManager.LoadScene("SN_Practice");
+    }
+
     public void OnPlayEditorPressed()
     {
         SceneManager.LoadScene("ED_Plays2");

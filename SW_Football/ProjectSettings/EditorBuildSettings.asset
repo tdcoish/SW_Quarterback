@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ED_Plays2.unity
     guid: 659bdaedb03bcf747a0939d06a714536
+  - enabled: 1
+    path: Assets/Scenes/SN_Practice.unity
+    guid: 94c9bc1433574e148ad08b7749460f65
   m_configObjects: {}
