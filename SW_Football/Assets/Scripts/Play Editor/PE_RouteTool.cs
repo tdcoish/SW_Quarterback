@@ -9,12 +9,18 @@ using System.Collections.Generic;
 
 public class PE_RouteTool : MonoBehaviour
 {
+    public enum ROUTE_TOOL_STATE
+    {
+        SCLOSED,
+        SOPENED
+        // gonna need a SSAVING state.
+    }
+    public ROUTE_TOOL_STATE         mState;
+
     private PE_Selector             cSelector;
 
     [SerializeField]
     private GameObject              PF_RouteNode;           // this is just an image. We add the GO to mCurRoute after spawning.
-
-    public bool                     mRouteToolOpened = false;
 
     public PE_Route                 PF_RouteObj;
     public PE_Route                 mCurRoute;          // our reference to the route. Confusing
@@ -27,27 +33,44 @@ public class PE_RouteTool : MonoBehaviour
     void Start()
     {
         cSelector = GetComponent<PE_Selector>();
+
+        mState = ROUTE_TOOL_STATE.SCLOSED;
     }
 
     void Update()
     {
+        switch(mState)
+        {
+            case ROUTE_TOOL_STATE.SOPENED: RUN_Opened(); break;
+            case ROUTE_TOOL_STATE.SCLOSED: RUN_Closed(); break;
+        }
+
+    }
+
+    private void RUN_Opened()
+    {
+        rRouteUI.SetActive(true);
 
         if(Input.GetMouseButtonDown(0)){
-            if(mRouteToolOpened){
-
-                // first, we raycast to make sure we're over the field. Because we can't spawn a player randomly off the field.
-                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-                
-                if(hit.collider != null)
-                {
-                    if(hit.collider.GetComponent<PE_Field>() != null){
-                        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                        pos.z = 90;
-                        SpawnPoint(pos);
-                    }
+            // first, we raycast to make sure we're over the field. Because we can't spawn a player randomly off the field.
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            
+            if(hit.collider != null)
+            {
+                if(hit.collider.GetComponent<PE_Field>() != null){
+                    Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    pos.z = 90;
+                    SpawnPoint(pos);
                 }
             }
         }
+    }
+
+    // There's not much to do.
+    private void RUN_Closed()
+    {
+        rRouteUI.SetActive(false);
+        rRouteName.gameObject.SetActive(false);         // but not the other way around. This isn't always active when Opened
     }
 
     // when they press the New Route button, we start into the adding route nodes.
@@ -70,8 +93,7 @@ public class PE_RouteTool : MonoBehaviour
             }
         }
 
-        rRouteUI.SetActive(true);
-        mRouteToolOpened = true;
+        mState = ROUTE_TOOL_STATE.SOPENED;
 
         mCurRoute = Instantiate(PF_RouteObj, cSelector.rGuys[actInd].transform.position, transform.rotation);
         mCurRoute.mNodes = new List<GameObject>();
@@ -84,14 +106,8 @@ public class PE_RouteTool : MonoBehaviour
         // get rid of the current route and clean up.
         mCurRoute.FDestroySelf();
 
-        CloseRoute();
-    }
-
-    private void CloseRoute()
-    {
-        mRouteToolOpened = false;
-        rRouteUI.SetActive(false);
-    }
+        mState = ROUTE_TOOL_STATE.SCLOSED;
+    }    
 
     // save the current route to the disk.
     public void BT_RouteNamed()
@@ -137,10 +153,7 @@ public class PE_RouteTool : MonoBehaviour
 
         IO_RouteList.FWRITE_ROUTE(route);
 
-        rRouteName.gameObject.SetActive(false);
-        rRouteUI.SetActive(false);
-
-        CloseRoute();
+        mState = ROUTE_TOOL_STATE.SCLOSED;
     }
 
     // Just opens up the name route menu.
