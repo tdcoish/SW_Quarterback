@@ -22,19 +22,19 @@ public static class IO_RouteList
 
     public static void FWRITE_ROUTE(DATA_Route route)
     {
-        string path = Application.dataPath+"/Plays/Routes/";
+        string path = Application.dataPath+"/Plays/Routes/"+route.mName+".bin";
 
-        // first check if that route already exists.
-        string[] fPathNames = Directory.GetFiles(path, "*.bin");
-        path += route.mName+".bin";
-        foreach(string sName in fPathNames)
-        {
-            if(sName == path)
-            {
-                Debug.Log("Error. Route name conflict.");
-                return;
-            }
-        }
+        // // first check if that route already exists.
+        // string[] fPathNames = Directory.GetFiles(path, "*.bin");
+        // path += route.mName+".bin";
+        // foreach(string sName in fPathNames)
+        // {
+        //     if(sName == path)
+        //     {
+        //         Debug.Log("Error. Route name conflict.");
+        //         return;
+        //     }
+        // }
 
         BinaryWriter bw = new BinaryWriter(new FileStream(path, FileMode.Create));
         bw.Write(route.mName);
@@ -49,6 +49,19 @@ public static class IO_RouteList
 
         // You know, we really might as well just always reload
         FLOAD_ROUTES();
+    }
+
+    public static bool FCHECK_ROUTE_EXISTS(string sName)
+    {
+        foreach (DATA_Route rt in mRoutes)
+        {
+            if(rt.mName == sName)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public static void FLOAD_ROUTES()

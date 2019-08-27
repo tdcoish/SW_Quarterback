@@ -1,5 +1,7 @@
 ﻿/*************************************************************************************
 So the user can make new routes.
+
+God I need to make some state machines.
 *************************************************************************************/
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,6 +22,7 @@ public class PE_RouteTool : MonoBehaviour
     public InputField               rRouteName;
 
     public GameObject               rRouteUI;
+    public GameObject               rOverwriteRouteUI;
 
     void Start()
     {
@@ -79,21 +82,42 @@ public class PE_RouteTool : MonoBehaviour
     public void BT_Cancel()
     {
         // get rid of the current route and clean up.
-
-        // how do we destroy the current route?
-        // for(int i=0; i<mCurRoute.mNodes.Count; i++)
-        // {
-        //     Destroy(mCurRoute.mNodes[i].gameObject);
-        // }
-        // Destroy(mCurRoute.gameObject);
         mCurRoute.FDestroySelf();
 
+        CloseRoute();
+    }
+
+    private void CloseRoute()
+    {
         mRouteToolOpened = false;
         rRouteUI.SetActive(false);
     }
 
     // save the current route to the disk.
     public void BT_RouteNamed()
+    {
+        // If the route already exists, then we ask them if they want to overwrite.
+        if(IO_RouteList.FCHECK_ROUTE_EXISTS(rRouteName.text))
+        {
+            rOverwriteRouteUI.SetActive(true);
+        }
+        else
+        {
+            SaveRoute();
+        }
+    }
+
+    public void BT_OverwriteRoute()
+    {
+        rOverwriteRouteUI.SetActive(false);
+        SaveRoute();
+    }
+    public void BT_CancelOverwrite()
+    {
+        rOverwriteRouteUI.SetActive(false);
+    }
+
+    private void SaveRoute()
     {
         DATA_Route route = new DATA_Route();
         route.mName = rRouteName.text;
@@ -105,6 +129,9 @@ public class PE_RouteTool : MonoBehaviour
             vConvertedSpot -= (Vector2)mCurRoute.mNodes[0].transform.position;
             vConvertedSpot *= 10f;          // hardcoding because 500 pixel field == 50 meters. - HACK
 
+            vConvertedSpot.x = (float)System.Math.Round(vConvertedSpot.x, 0);
+            vConvertedSpot.y = (float)System.Math.Round(vConvertedSpot.y, 0);
+
             route.mSpots[i] = vConvertedSpot;
         }
 
@@ -112,6 +139,8 @@ public class PE_RouteTool : MonoBehaviour
 
         rRouteName.gameObject.SetActive(false);
         rRouteUI.SetActive(false);
+
+        CloseRoute();
     }
 
     // Just opens up the name route menu.
@@ -120,6 +149,7 @@ public class PE_RouteTool : MonoBehaviour
         rRouteName.gameObject.SetActive(true);
     }
 
+    // Gotta make the point "snap" to yards, so instead of (0, 10.33493) -> (0, 10).
     private void SpawnPoint(Vector3 pos){
         var clone = Instantiate(PF_RouteNode, pos, transform.rotation);
         mCurRoute.mNodes.Add(clone);
