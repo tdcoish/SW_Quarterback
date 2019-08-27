@@ -30,6 +30,9 @@ public class PE_JobAssigner : MonoBehaviour
     public Dropdown             DP_Role;
     public Dropdown             DP_Detail;
 
+    // The jank I'm having to work around here.
+    private bool                mCanUseChangedDetail = true;
+
     void Awake()
     {
         cEditor = GetComponentInParent<PE_Editor>();
@@ -77,12 +80,22 @@ public class PE_JobAssigner : MonoBehaviour
         cSelector.rGuys[cSelector.mActivePlayer].GetComponent<PE_Role>().mRole = DP_Role.options[DP_Role.value].text;
         // Gotta also change the detail menu.
         SetDetailOptions();
+        mCanUseChangedDetail = false;
+        DP_Detail.value = DP_Detail.options.Count;
+        Debug.Log(DP_Detail.options[DP_Detail.value]);
     }
 
     public void OnDetailChanged()
     {
        if(!ErrorFree())
         {
+            return;
+        }
+
+        if(!mCanUseChangedDetail)
+        {
+            Debug.Log("Not changing player detail, eating");
+            mCanUseChangedDetail = true;
             return;
         }
 
