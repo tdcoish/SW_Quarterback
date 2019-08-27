@@ -8,8 +8,14 @@ public static class IO_PlayList
 {
     public static DATA_Play[]               mPlays;
 
-    public static void FWRITE_PLAY(DATA_Play play)
+    public static bool FWRITE_PLAY(DATA_Play play)
     {
+        if(play.mName == string.Empty)
+        {
+            Debug.Log("Can't save empty play name");
+            return false;
+        }
+
         string sPath = Application.dataPath+"/Plays/";
         
         // first check if that play already exists.
@@ -20,7 +26,7 @@ public static class IO_PlayList
             if(sName == sPath)
             {
                 Debug.Log("Error. Play name conflict.");
-                return;
+                return false;
             }
         }
 
@@ -38,6 +44,8 @@ public static class IO_PlayList
         }
         Debug.Log("Play Saved: " + play.mName);
         bw.Close();
+
+        return true;
     }    
 
     // Loads in all plays.
@@ -92,4 +100,5 @@ public static class IO_PlayList
         Debug.Log("Play not found: " + sName);
         return null;
     }
+
 }

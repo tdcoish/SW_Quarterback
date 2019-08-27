@@ -94,8 +94,6 @@ public class PE_JobAssigner : MonoBehaviour
         SetDetailOptions();
         mState = ASSIGNER_STATE.SDETAIL_VALUE_DUMMY;
         DP_Detail.value = DP_Detail.options.Count;
-
-        mState = ASSIGNER_STATE.SDETAIL_VALUE_DUMMY;
     }
 
     public void OnDetailChanged()

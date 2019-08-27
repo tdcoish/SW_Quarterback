@@ -26,6 +26,7 @@ public class PRAC_Man : MonoBehaviour
     public PLY_SnapSpot         rSnapSpot;
     public PRAC_Ath             PF_PlayerObj;
 
+    // Gonna have to delete these guys as well.
     public GameObject           PF_RouteNode;
 
     void Start()

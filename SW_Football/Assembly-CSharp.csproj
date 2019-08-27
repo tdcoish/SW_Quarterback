@@ -110,6 +110,7 @@
      <Compile Include="Assets\Scripts\Play Editor\PE_Repositioner.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_Role.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_Route.cs" />
+     <Compile Include="Assets\Scripts\Play Editor\PE_RouteNameUI.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_RouteTool.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_Selector.cs" />
      <Compile Include="Assets\Scripts\Play Editor\PE_SN_Manager.cs" />

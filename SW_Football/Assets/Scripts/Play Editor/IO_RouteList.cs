@@ -20,8 +20,15 @@ public static class IO_RouteList
 {
     public static DATA_Route[]          mRoutes;
 
-    public static void FWRITE_ROUTE(DATA_Route route)
+    // Will return false if the write was a failure.
+    public static bool FWRITE_ROUTE(DATA_Route route)
     {
+        if(route.mName == string.Empty)
+        {
+            Debug.Log("Can't save un-named route");
+            return false;
+        }
+
         string path = Application.dataPath+"/Plays/Routes/"+route.mName+".bin";
 
         // // first check if that route already exists.
@@ -49,6 +56,8 @@ public static class IO_RouteList
 
         // You know, we really might as well just always reload
         FLOAD_ROUTES();
+
+        return true;
     }
 
     public static bool FCHECK_ROUTE_EXISTS(string sName)

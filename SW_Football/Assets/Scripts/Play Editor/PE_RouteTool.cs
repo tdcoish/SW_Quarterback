@@ -2,6 +2,11 @@
 So the user can make new routes.
 
 God I need to make some state machines.
+
+When we are working on a route, we can't be changing the player details.
+
+You know, if we pre-made the routes and coverages, we could combine defence and offence.
+Just sayin.
 *************************************************************************************/
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,8 +17,8 @@ public class PE_RouteTool : MonoBehaviour
     public enum ROUTE_TOOL_STATE
     {
         SCLOSED,
-        SOPENED
-        // gonna need a SSAVING state.
+        SOPENED,
+        SSAVING
     }
     public ROUTE_TOOL_STATE         mState;
 
@@ -25,8 +30,7 @@ public class PE_RouteTool : MonoBehaviour
     public PE_Route                 PF_RouteObj;
     public PE_Route                 mCurRoute;          // our reference to the route. Confusing
 
-    public InputField               rRouteName;
-
+    public PE_RouteNameUI           rRouteNamingUI;
     public GameObject               rRouteUI;
     public GameObject               rOverwriteRouteUI;
 
@@ -39,9 +43,11 @@ public class PE_RouteTool : MonoBehaviour
 
     void Update()
     {
+
         switch(mState)
         {
             case ROUTE_TOOL_STATE.SOPENED: RUN_Opened(); break;
+            case ROUTE_TOOL_STATE.SSAVING: RUN_Saving(); break;
             case ROUTE_TOOL_STATE.SCLOSED: RUN_Closed(); break;
         }
 
@@ -50,6 +56,7 @@ public class PE_RouteTool : MonoBehaviour
     private void RUN_Opened()
     {
         rRouteUI.SetActive(true);
+        rRouteNamingUI.gameObject.SetActive(false);
 
         if(Input.GetMouseButtonDown(0)){
             // first, we raycast to make sure we're over the field. Because we can't spawn a player randomly off the field.
@@ -66,11 +73,17 @@ public class PE_RouteTool : MonoBehaviour
         }
     }
 
+    // Can't spawn points, can only save/cancel.
+    private void RUN_Saving()
+    {
+        rRouteNamingUI.gameObject.SetActive(true);
+    }
+
     // There's not much to do.
     private void RUN_Closed()
     {
         rRouteUI.SetActive(false);
-        rRouteName.gameObject.SetActive(false);         // but not the other way around. This isn't always active when Opened
+        rRouteNamingUI.gameObject.SetActive(false);
     }
 
     // when they press the New Route button, we start into the adding route nodes.
@@ -103,6 +116,7 @@ public class PE_RouteTool : MonoBehaviour
 
     public void BT_Cancel()
     {
+        Debug.Log("Canceling Route");
         // get rid of the current route and clean up.
         mCurRoute.FDestroySelf();
 
@@ -112,14 +126,25 @@ public class PE_RouteTool : MonoBehaviour
     // save the current route to the disk.
     public void BT_RouteNamed()
     {
+        Debug.Log("BT_ROuteNamed");
+        if(mState != ROUTE_TOOL_STATE.SSAVING)
+        {
+            Debug.Log("Woah, not in saving state");
+            return;
+        }
         // If the route already exists, then we ask them if they want to overwrite.
-        if(IO_RouteList.FCHECK_ROUTE_EXISTS(rRouteName.text))
+        if(IO_RouteList.FCHECK_ROUTE_EXISTS(rRouteNamingUI.rRouteName.text))
         {
             rOverwriteRouteUI.SetActive(true);
         }
         else
         {
-            SaveRoute();
+            if(SaveRoute() == false)
+            {
+                Debug.Log("Error saving route");
+            }else{
+                mState = ROUTE_TOOL_STATE.SCLOSED;
+            }
         }
     }
 
@@ -133,10 +158,10 @@ public class PE_RouteTool : MonoBehaviour
         rOverwriteRouteUI.SetActive(false);
     }
 
-    private void SaveRoute()
+    private bool SaveRoute()
     {
         DATA_Route route = new DATA_Route();
-        route.mName = rRouteName.text;
+        route.mName = rRouteNamingUI.rRouteName.text;
         route.mSpots = new Vector2[mCurRoute.mNodes.Count];
         for(int i=0; i<mCurRoute.mNodes.Count; i++)
         {
@@ -151,15 +176,20 @@ public class PE_RouteTool : MonoBehaviour
             route.mSpots[i] = vConvertedSpot;
         }
 
-        IO_RouteList.FWRITE_ROUTE(route);
+        if(IO_RouteList.FWRITE_ROUTE(route) == false)
+        {
+            Debug.Log("Route not saved properly");
+            return false;
+        }
 
-        mState = ROUTE_TOOL_STATE.SCLOSED;
+        // Don't change the state here.
+        return true;
     }
 
     // Just opens up the name route menu.
     public void BT_Save()
     {
-        rRouteName.gameObject.SetActive(true);
+        mState = ROUTE_TOOL_STATE.SSAVING;
     }
 
     // Gotta make the point "snap" to yards, so instead of (0, 10.33493) -> (0, 10).
