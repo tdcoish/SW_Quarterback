@@ -3,6 +3,12 @@ This should be the basics of our player UI, across many game modes. We are going
 state of course.
 
 Some cleanup to do.
+
+BTW, we can enable and disable things UI elements simply using .enabled = false.
+eg.        mBar.enabled = false;
+
+Could probably have multi-layered state. Visible/Invisible, then different state for the specifics
+of what's going on.
 ******************************************************************************************* */
 
 using UnityEngine;
@@ -14,6 +20,7 @@ public class QB_UI : MonoBehaviour
 
     public enum QB_UI_STATE
     {
+        SINVISIBLE,
         SCHARGING,
         SNOTCHARGING
     }
@@ -42,6 +49,13 @@ public class QB_UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(mState == QB_UI_STATE.SINVISIBLE)
+        {
+            TransitionToInvisible();
+            return;
+        }
+        TransitionToVisible();
+
         // render balls along trajectory
         if(mState == QB_UI_STATE.SCHARGING){
             ShowThrowBar();
@@ -67,6 +81,17 @@ public class QB_UI : MonoBehaviour
     public void QB_ThrewBall(){
         mState = QB_UI_STATE.SNOTCHARGING;
         mBar.fillAmount = 0f;
+    }
+
+    private void TransitionToVisible()
+    {
+        mBar.enabled = true;
+        mCrosshairs.enabled = true;
+    }
+    private void TransitionToInvisible()
+    {
+        mBar.enabled = false;
+        mCrosshairs.enabled = false;
     }
     
 }

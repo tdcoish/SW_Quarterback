@@ -13,6 +13,14 @@ to +5, then you start stacking the over time effects.
 
 public class PC_Controller : MonoBehaviour
 {
+
+    public enum PC_STATE
+    {
+        SINACTIVE,
+        SACTIVE
+    }
+    public PC_STATE                 mState;
+
     [SerializeField]
     private PROJ_Football           PF_Football;
 
@@ -50,14 +58,13 @@ public class PC_Controller : MonoBehaviour
     public SO_Float                 GB_LookInaccuracy;
     public SO_Float                 GB_TotalInaccuracy;
 
-    public bool                     mActive = true;
-
     // Start is called before the first frame update
     void Start()
     {
         cRigid = GetComponent<Rigidbody>();
         cCam = GetComponentInChildren<PC_Camera>();
 
+        mState = PC_STATE.SINACTIVE;
         mThrowChrg.Val = 0f;
 
         Cursor.visible = false;
@@ -69,7 +76,7 @@ public class PC_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!mActive) return;
+        if(mState == PC_STATE.SINACTIVE) return;
 
         SetRotation();
         HandleThrowing();
@@ -80,7 +87,7 @@ public class PC_Controller : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(!mActive) return;
+        if(mState == PC_STATE.SINACTIVE) return;
 
         HandleMovement();
     }

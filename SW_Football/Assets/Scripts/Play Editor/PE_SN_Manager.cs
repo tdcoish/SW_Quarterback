@@ -11,6 +11,13 @@ public class PE_SN_Manager : MonoBehaviour
     public GameObject           mEditorScreen;
     public GameObject           mViewerScreen;
 
+    // This is roughly what the scene state is.
+    public enum PLAYMENU_STATE
+    {
+        SDISPLAYPLAY,
+        SCREATINGPLAY
+    }
+
     void Start()
     {
         IO_RouteList.FLOAD_ROUTES();

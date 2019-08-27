@@ -30,8 +30,14 @@ public class PE_JobAssigner : MonoBehaviour
     public Dropdown             DP_Role;
     public Dropdown             DP_Detail;
 
-    // The jank I'm having to work around here.
-    private bool                mCanUseChangedDetail = true;
+    public enum ASSIGNER_STATE
+    {
+        SNONE_SELECTED,
+        SNEW_PLAYER_SELECTED,
+        SDETAIL_VALUE_DUMMY,
+        SDETAIL_VALUE_USEFUL
+    }
+    public ASSIGNER_STATE       mState;
 
     void Awake()
     {
@@ -39,6 +45,12 @@ public class PE_JobAssigner : MonoBehaviour
         cSelector = GetComponentInParent<PE_Selector>();
         cRouteTool = GetComponentInParent<PE_RouteTool>();
 
+        mState = ASSIGNER_STATE.SNONE_SELECTED;
+    }
+
+    void Update()
+    {
+        // switch the states.
     }
 
     // When we select a player, set the values to be his values, tag, role, etcetera
@@ -80,9 +92,10 @@ public class PE_JobAssigner : MonoBehaviour
         cSelector.rGuys[cSelector.mActivePlayer].GetComponent<PE_Role>().mRole = DP_Role.options[DP_Role.value].text;
         // Gotta also change the detail menu.
         SetDetailOptions();
-        mCanUseChangedDetail = false;
+        mState = ASSIGNER_STATE.SDETAIL_VALUE_DUMMY;
         DP_Detail.value = DP_Detail.options.Count;
-        Debug.Log(DP_Detail.options[DP_Detail.value].text);
+
+        mState = ASSIGNER_STATE.SDETAIL_VALUE_DUMMY;
     }
 
     public void OnDetailChanged()
@@ -92,10 +105,10 @@ public class PE_JobAssigner : MonoBehaviour
             return;
         }
 
-        if(!mCanUseChangedDetail)
+        if(mState == ASSIGNER_STATE.SDETAIL_VALUE_DUMMY)
         {
-            Debug.Log("Not changing player detail, eating");
-            mCanUseChangedDetail = true;
+            mState = ASSIGNER_STATE.SDETAIL_VALUE_USEFUL;
+            Debug.Log("Eating changed detail");
             return;
         }
 

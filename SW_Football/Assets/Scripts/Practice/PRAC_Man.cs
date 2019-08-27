@@ -21,6 +21,8 @@ public class PRAC_Man : MonoBehaviour
     private PRAC_STATE          mState;
     public string               mPlayName = "Default";
 
+    public PRAC_UI              rPracUI;
+
     public PLY_SnapSpot         rSnapSpot;
     public PRAC_Ath             PF_PlayerObj;
 
@@ -28,12 +30,21 @@ public class PRAC_Man : MonoBehaviour
 
     void Start()
     {
-        mState = PRAC_STATE.SPICK_PLAY;
+        mState = PRAC_STATE.SPOST_PLAY;
         IO_PlayList.FLOAD_PLAYS();    
     }
 
     void Update()
     {
+        // Setting the mouse stuff 
+        if(mState == PRAC_STATE.SPICK_PLAY || mState == PRAC_STATE.SPOST_PLAY)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }else {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
         switch(mState)
         {
             case PRAC_STATE.SPICK_PLAY: RUN_PickPlay(); break;
@@ -46,13 +57,18 @@ public class PRAC_Man : MonoBehaviour
     // Okay, here we're going to actually load in all the plays, then display them in a dropdown menu.
     private void RUN_PickPlay()
     {
-        // basically just skip over this, and pretend they selected "default".
-        DATA_Play playToRun = IO_PlayList.FLOAD_PLAY_BY_NAME(mPlayName);
+
+        // basically don't do anything until they click a play.
+
+    }
+    public void FPlayPicked()
+    {
+        // We wait until they click a play in the UI.
+        string sPlayName = rPracUI.mPlaybookSCN.DP_Plays.options[rPracUI.mPlaybookSCN.DP_Plays.value].text;
+        DATA_Play playToRun = IO_PlayList.FLOAD_PLAY_BY_NAME(sPlayName);
 
         if(playToRun == null){
             Debug.Log("No play of that name");
-        }else{
-            Debug.Log("Yes, we can run that play");
         }
 
         // Now we just pretend there were no issues, so we put our players in their spots.
@@ -88,7 +104,21 @@ public class PRAC_Man : MonoBehaviour
             }
         }
 
+        // now we also have to shove the PC_Controller into the spot the QB is, and remove the QB athlete.
+        for(int i=0; i<athletes.Length; i++)
+        {
+            if(athletes[i].mJob.mTag == "QB")
+            {
+                Vector3 vSpot = athletes[i].transform.position;
+                vSpot.y = 1f;
+                FindObjectOfType<PC_Controller>().transform.position = vSpot;
+            }
+        }
+
         mState = PRAC_STATE.SPRE_SNAP;
+
+        rPracUI.FRUN_Presnap();
+        FindObjectOfType<PC_Controller>().mState = PC_Controller.PC_STATE.SACTIVE;
     }
     private void RUN_PreSnap()
     {
@@ -105,6 +135,12 @@ public class PRAC_Man : MonoBehaviour
     }
     private void RUN_PlayRunning()
     {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            // Now we just repeat the whole shebang.
+            mState = PRAC_STATE.SPOST_PLAY;
+        }
+
         if(Input.GetKeyDown(KeyCode.I))
         {
             Cursor.lockState = CursorLockMode.None;
@@ -112,8 +148,16 @@ public class PRAC_Man : MonoBehaviour
             SceneManager.LoadScene("SN_MN_Main");
         }
     }
+    // For now, delete everything from the scene, and that's it.
     private void RUN_PostPlay()
     {
-
+        PRAC_Ath[] athletes = FindObjectsOfType<PRAC_Ath>();
+        for(int i=0; i<athletes.Length; i++)
+        {
+            Destroy(athletes[i].gameObject);
+        }
+        FindObjectOfType<PC_Controller>().mState = PC_Controller.PC_STATE.SINACTIVE;
+        rPracUI.FRUN_Playbook();
+        mState = PRAC_STATE.SPICK_PLAY;
     }
 }

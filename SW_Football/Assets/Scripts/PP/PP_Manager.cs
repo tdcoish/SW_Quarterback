@@ -111,7 +111,7 @@ public class PP_Manager : MonoBehaviour
         // Note, this needs to be polished, the rotations can get wonky.
         refPC.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         refPC.GetComponentInChildren<PC_Camera>().transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-        refPC.mActive = false;
+        refPC.mState = PC_Controller.PC_STATE.SINACTIVE;
         refPC.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
         // this is kind of to solve a bug with respect to throwing.
@@ -143,7 +143,7 @@ public class PP_Manager : MonoBehaviour
         cTurMan.FActivateTurrets();
 
         PC_Controller refPC = FindObjectOfType<PC_Controller>();
-        refPC.mActive = true;
+        refPC.mState = PC_Controller.PC_STATE.SACTIVE;
         Vector3 vPCPos = FindObjectOfType<PP_Pocket>().transform.position;
         vPCPos.y = 1f;
         refPC.transform.position = vPCPos;
@@ -172,7 +172,7 @@ public class PP_Manager : MonoBehaviour
         DestroyExistingProjectilesArrowsAndDeactivateTurrets();
 
         PC_Controller refPC = FindObjectOfType<PC_Controller>();
-        refPC.mActive = false;
+        refPC.mState = PC_Controller.PC_STATE.SINACTIVE;
         refPC.GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
 
@@ -212,7 +212,7 @@ public class PP_Manager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-            FindObjectOfType<PC_Controller>().mActive = false;
+            FindObjectOfType<PC_Controller>().mState = PC_Controller.PC_STATE.SINACTIVE;
 
             GE_PauseMenuOpened.Raise(null);
         }
@@ -337,7 +337,7 @@ public class PP_Manager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        FindObjectOfType<PC_Controller>().mActive = true;
+        FindObjectOfType<PC_Controller>().mState = PC_Controller.PC_STATE.SACTIVE;
 
         GE_PauseMenuClosed.Raise(null);
     }
