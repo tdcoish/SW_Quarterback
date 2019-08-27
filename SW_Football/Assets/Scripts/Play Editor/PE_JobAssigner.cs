@@ -82,7 +82,7 @@ public class PE_JobAssigner : MonoBehaviour
         SetDetailOptions();
         mCanUseChangedDetail = false;
         DP_Detail.value = DP_Detail.options.Count;
-        Debug.Log(DP_Detail.options[DP_Detail.value]);
+        Debug.Log(DP_Detail.options[DP_Detail.value].text);
     }
 
     public void OnDetailChanged()

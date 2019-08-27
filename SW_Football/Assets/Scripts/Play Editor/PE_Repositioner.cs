@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class PE_Repositioner : MonoBehaviour
 {
     private PE_Selector         cSelector;
+    private PE_DisplayPlayJobs  cJobsDisplayer;
 
     [SerializeField]
     private Text                rPositionTXT;
@@ -14,6 +15,7 @@ public class PE_Repositioner : MonoBehaviour
     private void Start()
     {
         cSelector = GetComponent<PE_Selector>();
+        cJobsDisplayer = GetComponent<PE_DisplayPlayJobs>();
     }
     
     public void BT_Up()
@@ -74,6 +76,7 @@ public class PE_Repositioner : MonoBehaviour
         // Again, unfortunately we have to convert from internal position to field position.
 
         UpdatePositionText();
+        cJobsDisplayer.FDisplayJobs();
     }
 
     // Because you can't line up 5.3233490 yards to the left, only 5 or 6. Maybe I'll give them half yards. 
