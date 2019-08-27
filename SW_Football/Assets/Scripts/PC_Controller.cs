@@ -31,8 +31,6 @@ public class PC_Controller : MonoBehaviour
 
     private Rigidbody               cRigid;
     private PC_Camera               cCam;
-    [SerializeField]
-    private PC_UI                   mUI;
 
     public GE_Event                 GE_QB_StartThrow;
     public GE_Event                 GE_QB_ReleaseBall;

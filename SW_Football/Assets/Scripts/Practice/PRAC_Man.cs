@@ -43,6 +43,7 @@ public class PRAC_Man : MonoBehaviour
         }
     }
 
+    // Okay, here we're going to actually load in all the plays, then display them in a dropdown menu.
     private void RUN_PickPlay()
     {
         // basically just skip over this, and pretend they selected "default".
@@ -72,6 +73,7 @@ public class PRAC_Man : MonoBehaviour
         PRAC_Ath[] athletes = FindObjectsOfType<PRAC_Ath>();
         for(int i=0; i<athletes.Length; i++)
         {
+            athletes[i].mState = PRAC_Ath.PRAC_ATH_STATE.SPRE_SNAP;
             if(athletes[i].mJob.mRole == "Route")
             {
                 DATA_Route rt = IO_RouteList.FLOAD_ROUTE_BY_NAME(athletes[i].mJob.mDetail);
@@ -95,7 +97,7 @@ public class PRAC_Man : MonoBehaviour
             PRAC_Ath[] athletes = FindObjectsOfType<PRAC_Ath>();
             for(int i=0; i<athletes.Length; i++)
             {
-                athletes[i].mActive = true;
+                athletes[i].mState = PRAC_Ath.PRAC_ATH_STATE.SDOING_JOB;
             }
 
             mState = PRAC_STATE.SPLAY_RUNNING;
@@ -105,6 +107,8 @@ public class PRAC_Man : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.I))
         {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             SceneManager.LoadScene("SN_MN_Main");
         }
     }
