@@ -74,9 +74,16 @@
      <Compile Include="Assets\Scripts\Audio\AD_Manager.cs" />
      <Compile Include="Assets\Scripts\Audio\AUD_Snd.cs" />
      <Compile Include="Assets\Scripts\Audio\AUD_TEST_MIXER.cs" />
+     <Compile Include="Assets\Scripts\DefPlayCreator\DPC_JobAssignment.cs" />
      <Compile Include="Assets\Scripts\DefPlayCreator\DPC_Man.cs" />
+     <Compile Include="Assets\Scripts\DefPlayCreator\DPC_NewPlay.cs" />
+     <Compile Include="Assets\Scripts\DefPlayCreator\DPC_PlayDisplayer.cs" />
+     <Compile Include="Assets\Scripts\DefPlayCreator\DPC_Repositioner.cs" />
+     <Compile Include="Assets\Scripts\DefPlayCreator\DPC_Selector.cs" />
      <Compile Include="Assets\Scripts\DefPlayCreator\DPC_ZoneCreator.cs" />
+     <Compile Include="Assets\Scripts\DefPlayCreator\DPC_ZoneGFX.cs" />
      <Compile Include="Assets\Scripts\DefPlayCreator\DPC_ZoneSpot.cs" />
+     <Compile Include="Assets\Scripts\DefPlayCreator\IO_DefPlays.cs" />
      <Compile Include="Assets\Scripts\DefPlayCreator\IO_ZoneList.cs" />
      <Compile Include="Assets\Scripts\DT_Types\SO_Bool.cs" />
      <Compile Include="Assets\Scripts\DT_Types\SO_Float.cs" />
@@ -177,9 +184,7 @@
      <None Include="Assets\Scripts\DT_Types\SO_Vec3.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Testd.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Sail_01.txt" />
-     <None Include="Assets\Plays\Defense\Cover3.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Stick_02.txt" />
-     <None Include="Assets\Plays\Defense\Cover2.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Smash.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Rando_01.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\TestCov3Beat.txt" />

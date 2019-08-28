@@ -12,6 +12,8 @@ public class DPC_Man : MonoBehaviour
     public GameObject           mViewerScreen;
 
     public DPC_ZoneCreator         cZoneCreator;
+    private DPC_Selector                cSelector;
+    private DPC_PlayDisplayer       cPlayDisplayer;
 
     // This is roughly what the scene state is.
     public enum PLAYMENU_STATE
@@ -23,6 +25,9 @@ public class DPC_Man : MonoBehaviour
 
     void Start()
     {
+        cSelector = GetComponentInChildren<DPC_Selector>();
+        cPlayDisplayer = GetComponentInChildren<DPC_PlayDisplayer>();
+
         IO_ZoneList.FLOAD_ZONES();
         mState = PLAYMENU_STATE.SDISPLAYPLAY;
     }
@@ -41,7 +46,10 @@ public class DPC_Man : MonoBehaviour
         // mEditorScreen.SetActive(true);
         // mViewerScreen.SetActive(false);
 
-        cZoneCreator.FRun_Update();
+        // cZoneCreator.FRun_Update();
+        cSelector.FRun_Update();
+        cPlayDisplayer.FDisplayPlay();
+        cPlayDisplayer.FDisplayPlayerDetails();
     }
 
     private void RUN_PlayViewer()
@@ -51,7 +59,7 @@ public class DPC_Man : MonoBehaviour
 
     }
 
-    public void BT_NewZone()
+    public void BT_NewPlay()
     {
         // for now, skip the different levels.
         mState = PLAYMENU_STATE.SCREATINGPLAY;

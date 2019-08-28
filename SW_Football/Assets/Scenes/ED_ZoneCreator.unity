@@ -5756,6 +5756,7 @@ MonoBehaviour:
   rZonePos: {fileID: 21125223}
   PF_ZoneSpot: {fileID: 8738158544949979267, guid: f0181678eb91aff479d8aba82705b4a1,
     type: 3}
+  mZoneToSpawn: Curl Right
 --- !u!1001 &1799051854
 PrefabInstance:
   m_ObjectHideFlags: 0

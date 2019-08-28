@@ -1,7 +1,0 @@
-CB1: ZONE: (0,5) 	LINEUP: [-25,1]	// play is cross, first WR runs deep in
-CB2: ZONE: (0,5) 	LINEUP: [20,1]	
-FS: ZONE: (-10,20)   LINEUP: [-10,15]
-SS: ZONE: (10,20)   LINEUP: [10,15]
-WLB: ZONE: (5,5)    LINEUP: [5,5]	
-MLB: ZONE: (0,15)    LINEUP: [0,5]	
-SLB: ZONE: (-5,5)    LINEUP: [-5,5]	
