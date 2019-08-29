@@ -16,22 +16,22 @@ public enum PRAC_STATE
     SPOST_PLAY
 }
 
+[RequireComponent(typeof(PRAC_SetUpPlay))]
 public class PRAC_Man : MonoBehaviour
 {
+    private PRAC_SetUpPlay      cPlaySetter;
+
     private PRAC_STATE          mState;
     public string               mPlayName = "Default";
 
     public PRAC_UI              rPracUI;
 
     public PLY_SnapSpot         rSnapSpot;
-    public PRAC_Ath             PF_PlayerObj;
-    public PRAC_Def             PF_Defender;
-
-    // Gonna have to delete these guys as well.
-    public GameObject           PF_RouteNode;
 
     void Start()
     {
+        cPlaySetter = GetComponent<PRAC_SetUpPlay>();
+
         mState = PRAC_STATE.SPOST_PLAY;
         IO_PlayList.FLOAD_PLAYS(); 
         IO_DefPlays.FLOAD_PLAYS();   
@@ -68,85 +68,10 @@ public class PRAC_Man : MonoBehaviour
 
     public void FPlayPicked()
     {
+        
         // We wait until they click a play in the UI.
         string sPlayName = rPracUI.mPlaybookSCN.DP_Plays.options[rPracUI.mPlaybookSCN.DP_Plays.value].text;
-        DATA_Play playToRun = IO_PlayList.FLOAD_PLAY_BY_NAME(sPlayName);
-
-        if(playToRun == null){
-            Debug.Log("No play of that name");
-        }
-
-        // Now we just pretend there were no issues, so we put our players in their spots.
-        for(int i=0; i<playToRun.mPlayerRoles.Length; i++)
-        {
-            Vector3 vPlayerSpot = new Vector3();
-            vPlayerSpot.x = playToRun.mPlayerRoles[i].mStart.x;
-            vPlayerSpot.z = playToRun.mPlayerRoles[i].mStart.y;
-            vPlayerSpot += rSnapSpot.transform.position;
-            var clone = Instantiate(PF_PlayerObj, vPlayerSpot, transform.rotation);
-            clone.mJob.mTag = playToRun.mPlayerRoles[i].mTag;
-            clone.mJob.mRole = playToRun.mPlayerRoles[i].mRole;
-            clone.mJob.mDetail = playToRun.mPlayerRoles[i].mDetail;
-        }
-
-        // now, for all of the players, if their roles are route running, then load in their routes.
-        IO_RouteList.FLOAD_ROUTES();
-        PRAC_Ath[] athletes = FindObjectsOfType<PRAC_Ath>();
-        for(int i=0; i<athletes.Length; i++)
-        {
-            athletes[i].mState = PRAC_Ath.PRAC_ATH_STATE.SPRE_SNAP;
-            if(athletes[i].mJob.mRole == "Route")
-            {
-                DATA_Route rt = IO_RouteList.FLOAD_ROUTE_BY_NAME(athletes[i].mJob.mDetail);
-                foreach (Vector2 routeSpot in rt.mSpots)
-                {
-                    Vector3 vSpot = athletes[i].transform.position;
-                    vSpot.x += routeSpot.x; vSpot.z += routeSpot.y;
-                    // Also, shove the spot into the receiver, just for now.
-                    athletes[i].mRouteSpots.Add(vSpot);
-                    Instantiate(PF_RouteNode, vSpot, transform.rotation);
-                }
-            }
-        }
-
-        // now we also have to shove the PC_Controller into the spot the QB is, and remove the QB athlete.
-        for(int i=0; i<athletes.Length; i++)
-        {
-            if(athletes[i].mJob.mTag == "QB")
-            {
-                Vector3 vSpot = athletes[i].transform.position;
-                vSpot.y = 1f;
-                FindObjectOfType<PC_Controller>().transform.position = vSpot;
-            }
-        }
-
-        // ------------------------------------------ DEFENSIVE PLAYS
-        // For now, just load in a bunch of defenders with a randomly chosen play.
-        // Now pick a defensive play at random.
-        int randomDefPlay = Random.Range(0, IO_DefPlays.mPlays.Length);
-        DATA_Play defPlay = IO_DefPlays.mPlays[randomDefPlay];
-        rPracUI.mDefensivePlayName.text = defPlay.mName;
-        
-        // spawn a defensive player according to the play.
-        for(int i=0; i<defPlay.mPlayerRoles.Length; i++)
-        {
-            Vector3 vPlayerSpot = new Vector3();
-            vPlayerSpot.x = defPlay.mPlayerRoles[i].mStart.x;
-            vPlayerSpot.z = defPlay.mPlayerRoles[i].mStart.y;
-            Debug.Log("Saved Pos: " + defPlay.mPlayerRoles[i].mStart);
-            vPlayerSpot += rSnapSpot.transform.position;
-            Debug.Log(vPlayerSpot);
-            var clone = Instantiate(PF_Defender, vPlayerSpot, transform.rotation);
-            PRAC_Ath role = clone.GetComponent<PRAC_Ath>();
-            role.mJob.mTag = defPlay.mPlayerRoles[i].mTag;
-            role.mJob.mRole = defPlay.mPlayerRoles[i].mRole;
-            role.mJob.mDetail = defPlay.mPlayerRoles[i].mDetail;
-        }
-
-        // Might need to manually load in the zone spot, but not right now.
-
-        // ------------------------------------------
-
+        cPlaySetter.FSetUpPlay(sPlayName, "", rSnapSpot);
 
         mState = PRAC_STATE.SPRE_SNAP;
 

@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ED_ZoneCreator.unity
     guid: e4aed2b6a59ea2841b32bf6073b30d5f
+  - enabled: 1
+    path: Assets/Scenes/ED_DefPlayCreate.unity
+    guid: 557228db516ee004c8b8d98891864927
   m_configObjects: {}

@@ -71,6 +71,11 @@ public class MN_Manager : MonoBehaviour
         SceneManager.LoadScene("SN_Practice");
     }
 
+    public void BT_DefensivePlays()
+    {
+        SceneManager.LoadScene("ED_DefPlayCreate");
+    }
+
     public void OnPlayEditorPressed()
     {
         SceneManager.LoadScene("ED_Plays2");

@@ -20,17 +20,11 @@ public class PRAC_Ath : MonoBehaviour
 
     public DT_PlayerRole            mJob;
 
-    public List<Vector3>            mRouteSpots;
-
     void Awake()
     {
         cRigid = GetComponent<Rigidbody>();
-        mRouteSpots = new List<Vector3>();
-
         mState = PRAC_ATH_STATE.SPRE_SNAP;
     }
-
-    // I guess we'll give him a list of his route spots?
 
     void Update()
     {        
@@ -41,41 +35,21 @@ public class PRAC_Ath : MonoBehaviour
             case PRAC_ATH_STATE.SPOST_PLAY: RUN_PostPlay(); break;
         }
 
-
     }
 
-    private void RUN_PreSnap()
+    protected virtual void RUN_PreSnap()
     {
         // Actually we just don't really do anything here, for now.
         cRigid.velocity = Vector3.zero;
     }
 
-    private void RUN_Job()
+    protected virtual void RUN_Job()
     {
-        if(mJob.mRole == "Route")
-        {
-
-            // Make him move towards his next point.
-            if(mRouteSpots.Count <= 0)
-            {
-                return;
-            }
-
-            Vector3 dis = mRouteSpots[0] - transform.position;
-            dis.y = 0f;
-            dis = Vector3.Normalize(dis);
-            cRigid.velocity = dis * 5f;
-
-            // now if he gets real close, then we chop that node off.
-            if(Vector3.Distance(mRouteSpots[0], transform.position) < 2f)
-            {
-                mRouteSpots.RemoveAt(0);
-            }
-        }
+        
     }
 
     // Again, nothing. Eventually some animations or something.
-    private void RUN_PostPlay()
+    protected virtual void RUN_PostPlay()
     {
 
     }

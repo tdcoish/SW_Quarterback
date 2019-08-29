@@ -145,10 +145,17 @@
      <Compile Include="Assets\Scripts\PP\PP_Trophy.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Turret.cs" />
      <Compile Include="Assets\Scripts\PP\PP_UI.cs" />
+     <Compile Include="Assets\Scripts\Practice\DEF_ManLog.cs" />
+     <Compile Include="Assets\Scripts\Practice\DEF_RushLog.cs" />
+     <Compile Include="Assets\Scripts\Practice\DEF_ZoneLog.cs" />
+     <Compile Include="Assets\Scripts\Practice\OFF_BlockLog.cs" />
+     <Compile Include="Assets\Scripts\Practice\OFF_RouteLog.cs" />
      <Compile Include="Assets\Scripts\Practice\PB_UI.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_Ath.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_Def.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_Man.cs" />
+     <Compile Include="Assets\Scripts\Practice\PRAC_Off.cs" />
+     <Compile Include="Assets\Scripts\Practice\PRAC_SetUpPlay.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_UI.cs" />
      <Compile Include="Assets\Scripts\PROJ_Football.cs" />
      <Compile Include="Assets\Scripts\QB_UI.cs" />
