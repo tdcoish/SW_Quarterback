@@ -1,11 +1,18 @@
 ﻿/*************************************************************************************
 Logic behind playing man.
+
+For now I'm just having them try to stay 5 yards above the guy they're covering.
+
+If they don't have a guy running routes, then they do their backup zone responsibility.
+Maybe they also rush, idk.
+
 *************************************************************************************/
 using UnityEngine;
 
 public class DEF_ManLog : MonoBehaviour
 {
     private Rigidbody           cRigid;
+    private DEF_ZoneLog         cZoneLog;
 
     // Gets assigned to us somehow.
     public PRAC_Off             rMan;
@@ -13,6 +20,9 @@ public class DEF_ManLog : MonoBehaviour
     private void Start()
     {
         cRigid = GetComponent<Rigidbody>();
+        cZoneLog = GetComponent<DEF_ZoneLog>();
+
+        SetBackupZoneSpot();
     }
 
     // Call this when the play is actually running.
@@ -20,14 +30,24 @@ public class DEF_ManLog : MonoBehaviour
     {
         if(rMan == null)
         {
-            Debug.Log("No man to cover");
+            cZoneLog.FRunZone();
             return;
         }
         // just straight up run to the guy.
-        Vector3 dis = rMan.transform.position - transform.position;
+        Vector3 vSpotToGoTo = rMan.transform.position;
+        vSpotToGoTo.z += 5f;
+        Vector3 dis = vSpotToGoTo - transform.position;
         dis.y = 0f;
         dis = Vector3.Normalize(dis);
 
         cRigid.velocity = dis * 4f;
+    }
+
+    // Just a zone 10 yards back of where we start.
+    private void SetBackupZoneSpot()
+    {
+        Vector3 vZoneSpot = transform.position;
+        vZoneSpot.z += 10f;
+        cZoneLog.mZoneSpot = vZoneSpot;
     }
 }

@@ -42,7 +42,8 @@ public class PRAC_SetUpPlay : MonoBehaviour
         }
 
         int randomDefPlay = Random.Range(0, IO_DefPlays.mPlays.Length);
-        DATA_Play defPlay = IO_DefPlays.mPlays[randomDefPlay];
+        // DATA_Play defPlay = IO_DefPlays.mPlays[randomDefPlay];
+        DATA_Play defPlay = IO_DefPlays.FLOAD_PLAY_BY_NAME("Cover 2 Man");
         PRAC_UI ui = FindObjectOfType<PRAC_UI>();
         ui.mDefensivePlayName.text = defPlay.mName;
         

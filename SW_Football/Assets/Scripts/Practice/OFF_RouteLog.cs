@@ -22,7 +22,6 @@ public class OFF_RouteLog : MonoBehaviour
     {
         if(mRouteSpots.Count <= 0){
             cRigid.velocity = Vector3.zero;
-            Debug.Log("No routes");
             return;
         }
 
