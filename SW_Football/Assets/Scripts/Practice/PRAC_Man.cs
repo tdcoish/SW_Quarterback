@@ -25,6 +25,7 @@ public class PRAC_Man : MonoBehaviour
 
     public PLY_SnapSpot         rSnapSpot;
     public PRAC_Ath             PF_PlayerObj;
+    public PRAC_Def             PF_Defender;
 
     // Gonna have to delete these guys as well.
     public GameObject           PF_RouteNode;
@@ -32,7 +33,9 @@ public class PRAC_Man : MonoBehaviour
     void Start()
     {
         mState = PRAC_STATE.SPOST_PLAY;
-        IO_PlayList.FLOAD_PLAYS();    
+        IO_PlayList.FLOAD_PLAYS(); 
+        IO_DefPlays.FLOAD_PLAYS();   
+        IO_ZoneList.FLOAD_ZONES();
     }
 
     void Update()
@@ -62,6 +65,7 @@ public class PRAC_Man : MonoBehaviour
         // basically don't do anything until they click a play.
 
     }
+
     public void FPlayPicked()
     {
         // We wait until they click a play in the UI.
@@ -116,11 +120,45 @@ public class PRAC_Man : MonoBehaviour
             }
         }
 
+        // ------------------------------------------ DEFENSIVE PLAYS
+        // For now, just load in a bunch of defenders with a randomly chosen play.
+        // Now pick a defensive play at random.
+        int randomDefPlay = Random.Range(0, IO_DefPlays.mPlays.Length);
+        DATA_Play defPlay = IO_DefPlays.mPlays[randomDefPlay];
+        rPracUI.mDefensivePlayName.text = defPlay.mName;
+        
+        // spawn a defensive player according to the play.
+        for(int i=0; i<defPlay.mPlayerRoles.Length; i++)
+        {
+            Vector3 vPlayerSpot = new Vector3();
+            vPlayerSpot.x = defPlay.mPlayerRoles[i].mStart.x;
+            vPlayerSpot.z = defPlay.mPlayerRoles[i].mStart.y;
+            Debug.Log("Saved Pos: " + defPlay.mPlayerRoles[i].mStart);
+            vPlayerSpot += rSnapSpot.transform.position;
+            Debug.Log(vPlayerSpot);
+            var clone = Instantiate(PF_Defender, vPlayerSpot, transform.rotation);
+            PRAC_Ath role = clone.GetComponent<PRAC_Ath>();
+            role.mJob.mTag = defPlay.mPlayerRoles[i].mTag;
+            role.mJob.mRole = defPlay.mPlayerRoles[i].mRole;
+            role.mJob.mDetail = defPlay.mPlayerRoles[i].mDetail;
+        }
+
+        // Might need to manually load in the zone spot, but not right now.
+
+        // ------------------------------------------
+
+
         mState = PRAC_STATE.SPRE_SNAP;
 
         rPracUI.FRUN_Presnap();
         FindObjectOfType<PC_Controller>().mState = PC_Controller.PC_STATE.SACTIVE;
     }
+
+    public void FDefPlayPicked()
+    {
+
+    }
+
     private void RUN_PreSnap()
     {
         if(Input.GetKeyDown(KeyCode.Space))

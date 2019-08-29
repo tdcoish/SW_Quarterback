@@ -15,6 +15,8 @@ public class PRAC_UI : MonoBehaviour
         WHATEVER
     }
 
+    public Text                     mDefensivePlayName;
+
     public PB_UI                    mPlaybookSCN;
 
     // These are actually just called once, not every frame.

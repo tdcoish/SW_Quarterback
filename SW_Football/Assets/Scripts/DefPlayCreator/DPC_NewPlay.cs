@@ -50,6 +50,7 @@ public class DPC_NewPlay : MonoBehaviour
             dtRole.mTag = roles[i].mTag;
             dtRole.mRole = roles[i].mRole;
             dtRole.mDetail = roles[i].mDetails;
+            dtRole.mStart = roles[i].mStartPos;
             ply.mPlayerRoles[i] = dtRole;
         }
         IO_DefPlays.FWRITE_PLAY(ply);

@@ -47,7 +47,7 @@ public class PRAC_Ath : MonoBehaviour
     private void RUN_PreSnap()
     {
         // Actually we just don't really do anything here, for now.
-
+        cRigid.velocity = Vector3.zero;
     }
 
     private void RUN_Job()

@@ -147,6 +147,7 @@
      <Compile Include="Assets\Scripts\PP\PP_UI.cs" />
      <Compile Include="Assets\Scripts\Practice\PB_UI.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_Ath.cs" />
+     <Compile Include="Assets\Scripts\Practice\PRAC_Def.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_Man.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_UI.cs" />
      <Compile Include="Assets\Scripts\PROJ_Football.cs" />

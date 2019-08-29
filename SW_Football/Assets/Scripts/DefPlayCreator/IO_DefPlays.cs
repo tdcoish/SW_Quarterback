@@ -26,9 +26,11 @@ public class IO_DefPlays : MonoBehaviour
             if(sName == sPath)
             {
                 Debug.Log("Error. Play name conflict.");
-                return false;
+                Debug.Log("Overwriting anyways");
+                //return false;
             }
         }
+
 
         BinaryWriter bw = new BinaryWriter(new FileStream(sPath, FileMode.Create));
         bw.Write(play.mName);
@@ -51,12 +53,12 @@ public class IO_DefPlays : MonoBehaviour
     // Loads in all plays.
     public static void FLOAD_PLAYS()
     {
-        string path = Application.dataPath+"/Plays/";
+        string path = Application.dataPath+"/Plays/Defense/";
 
         string[] fPathNames = Directory.GetFiles(path, "*.bin");
         foreach(string sName in fPathNames)
         {
-            Debug.Log(sName);
+            //Debug.Log(sName);
         }
 
         mPlays = new DATA_Play[fPathNames.Length];
