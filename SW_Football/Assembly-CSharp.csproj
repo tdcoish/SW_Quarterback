@@ -149,6 +149,7 @@
      <Compile Include="Assets\Scripts\Practice\DEF_RushLog.cs" />
      <Compile Include="Assets\Scripts\Practice\DEF_ZoneLog.cs" />
      <Compile Include="Assets\Scripts\Practice\GFX_Player.cs" />
+     <Compile Include="Assets\Scripts\Practice\GFX_Zone.cs" />
      <Compile Include="Assets\Scripts\Practice\OFF_BlockLog.cs" />
      <Compile Include="Assets\Scripts\Practice\OFF_RouteLog.cs" />
      <Compile Include="Assets\Scripts\Practice\PB_DisplayPlay.cs" />
@@ -160,6 +161,7 @@
      <Compile Include="Assets\Scripts\Practice\PRAC_Off.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_PlayArt.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_SetUpPlay.cs" />
+     <Compile Include="Assets\Scripts\Practice\PRAC_ShowDefense.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_UI.cs" />
      <Compile Include="Assets\Scripts\PROJ_Football.cs" />
      <Compile Include="Assets\Scripts\QB_UI.cs" />

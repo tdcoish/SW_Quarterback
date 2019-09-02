@@ -20,6 +20,7 @@ public enum PRAC_STATE
 public class PRAC_Man : MonoBehaviour
 {
     private PRAC_SetUpPlay      cPlaySetter;
+    private PRAC_ShowDefense    cShowDefence;
 
     private PRAC_STATE          mState;
     public string               mPlayName = "Default";
@@ -31,6 +32,7 @@ public class PRAC_Man : MonoBehaviour
     void Start()
     {
         cPlaySetter = GetComponent<PRAC_SetUpPlay>();
+        cShowDefence = GetComponent<PRAC_ShowDefense>();
 
         mState = PRAC_STATE.SPOST_PLAY;
         IO_PlayList.FLOAD_PLAYS(); 
@@ -103,7 +105,15 @@ public class PRAC_Man : MonoBehaviour
                 athletes[i].mState = PRAC_Ath.PRAC_ATH_STATE.SDOING_JOB;
             }
 
+            // For now so it's not there when we run. Going to change this soon.
+            cShowDefence.FStopShowingDefensivePlay();
             mState = PRAC_STATE.SPLAY_RUNNING;
+        }
+
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            cShowDefence.FStopShowingDefensivePlay();
+            cShowDefence.FShowDefensivePlay(IO_DefPlays.FLOAD_PLAY_BY_NAME(rPracUI.mDefensivePlayName.text), rSnapSpot);
         }
     }
     private void RUN_PlayRunning()

@@ -1969,6 +1969,7 @@ GameObject:
   - component: {fileID: 2020805359}
   - component: {fileID: 2020805358}
   - component: {fileID: 2020805360}
+  - component: {fileID: 2020805361}
   m_Layer: 0
   m_Name: PRAC_Manager
   m_TagString: Untagged
@@ -2022,6 +2023,24 @@ MonoBehaviour:
   PF_DefensivePlayer: {fileID: 1087974219226304853, guid: 2bb5783834433804a87fc79aef64b79c,
     type: 3}
   PF_RouteNode: {fileID: 1815680370602931923, guid: e0dd8a469891ce242812762192f3614b,
+    type: 3}
+--- !u!114 &2020805361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020805357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd8235158937e2b4fbb89c03f6773573, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GFX_ShallowZone: {fileID: 4200133929826374561, guid: 6280956e94bc70e4c9b68146d4110cfd,
+    type: 3}
+  GFX_MidZone: {fileID: 8633799189799326874, guid: f57ac397d0aa3d74fb80cd3516a18238,
+    type: 3}
+  GFX_DeepZone: {fileID: 8897708609526093774, guid: 9bc2eda9da314694f8e8902627a6bf95,
     type: 3}
 --- !u!1 &2027189606
 GameObject:
