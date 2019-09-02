@@ -15,6 +15,7 @@ public class PRAC_UI : MonoBehaviour
         WHATEVER
     }
 
+    public Text                     mOffensivePlayName;
     public Text                     mDefensivePlayName;
 
     public PB_UI                    mPlaybookSCN;

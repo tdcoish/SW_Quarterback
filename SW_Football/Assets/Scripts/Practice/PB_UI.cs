@@ -36,6 +36,9 @@ public class PB_UI : MonoBehaviour
                     string sName = hit.collider.GetComponent<PRAC_PlayArt>().mName;
                     Debug.Log("Picked: " + sName);
 
+                    // Get rid of this line after a while
+                    GetComponentInParent<PRAC_UI>().mOffensivePlayName.text = sName;
+
                     PRAC_Man pMan = FindObjectOfType<PRAC_Man>();
                     pMan.FPlayPicked(sName);
                 }
@@ -65,6 +68,7 @@ public class PB_UI : MonoBehaviour
             Sprite spr = Resources.Load<Sprite>(path);
             mOffPlayImgs[i].sprite = spr;
             mOffPlayImgs[i].GetComponent<PRAC_PlayArt>().mName = IO_PlayList.mPlays[i].mName;
+            mOffPlayImgs[i].GetComponentInChildren<Text>().text = IO_PlayList.mPlays[i].mName;
         }
     }
 }
