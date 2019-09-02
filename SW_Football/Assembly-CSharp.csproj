@@ -158,6 +158,7 @@
      <Compile Include="Assets\Scripts\Practice\PRAC_Def.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_Man.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_Off.cs" />
+     <Compile Include="Assets\Scripts\Practice\PRAC_PlayArt.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_SetUpPlay.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_UI.cs" />
      <Compile Include="Assets\Scripts\PROJ_Football.cs" />

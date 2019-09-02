@@ -31,6 +31,9 @@ public class PRAC_UI : MonoBehaviour
             // add something to the playbook.
             mPlaybookSCN.DP_Plays.options.Add(new Dropdown.OptionData(ply.mName));
         }
+
+        // Set all the images.
+        mPlaybookSCN.FSetUpPlaybookImagery();
     }
 
     public void FRUN_Presnap()

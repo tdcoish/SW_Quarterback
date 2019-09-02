@@ -144,7 +144,6 @@ public class PRAC_SetUpPlay : MonoBehaviour
             {
                 if(athletes[j].transform.position.x < athletes[j-1].transform.position.x)
                 {
-                    Debug.Log("Swap");
                     PRAC_Off temp = athletes[j];
                     athletes[j] = athletes[j-1];
                     athletes[j-1] = temp;
@@ -161,7 +160,6 @@ public class PRAC_SetUpPlay : MonoBehaviour
             {
                 if(athletes[j].transform.position.x < athletes[j-1].transform.position.x)
                 {
-                    Debug.Log("Swap");
                     PRAC_Def temp = athletes[j];
                     athletes[j] = athletes[j-1];
                     athletes[j-1] = temp;

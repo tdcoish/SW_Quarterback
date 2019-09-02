@@ -69,15 +69,18 @@ public class PRAC_Man : MonoBehaviour
     {
 
         // basically don't do anything until they click a play.
+        // UI has to run it's updating though.
+        rPracUI.mPlaybookSCN.FRunUpdate();
 
     }
 
-    public void FPlayPicked()
+    public void FPlayPicked(string sOffPlayName)
     {
         
         // We wait until they click a play in the UI.
-        string sPlayName = rPracUI.mPlaybookSCN.DP_Plays.options[rPracUI.mPlaybookSCN.DP_Plays.value].text;
-        cPlaySetter.FSetUpPlay(sPlayName, "", rSnapSpot);
+        // string sPlayName = rPracUI.mPlaybookSCN.DP_Plays.options[rPracUI.mPlaybookSCN.DP_Plays.value].text;
+        // cPlaySetter.FSetUpPlay(sPlayName, "", rSnapSpot);
+        cPlaySetter.FSetUpPlay(sOffPlayName, "", rSnapSpot);
 
         mState = PRAC_STATE.SPRE_SNAP;
 
