@@ -148,8 +148,11 @@
      <Compile Include="Assets\Scripts\Practice\DEF_ManLog.cs" />
      <Compile Include="Assets\Scripts\Practice\DEF_RushLog.cs" />
      <Compile Include="Assets\Scripts\Practice\DEF_ZoneLog.cs" />
+     <Compile Include="Assets\Scripts\Practice\GFX_Player.cs" />
      <Compile Include="Assets\Scripts\Practice\OFF_BlockLog.cs" />
      <Compile Include="Assets\Scripts\Practice\OFF_RouteLog.cs" />
+     <Compile Include="Assets\Scripts\Practice\PB_DisplayPlay.cs" />
+     <Compile Include="Assets\Scripts\Practice\PB_Play.cs" />
      <Compile Include="Assets\Scripts\Practice\PB_UI.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_Ath.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_Def.cs" />
@@ -192,8 +195,12 @@
      <None Include="Assets\Scripts\DT_Types\SO_Vec3.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Testd.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Sail_01.txt" />
+     <None Include="Assets\PlaysText\plays.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Stick_02.txt" />
+     <None Include="Assets\PlaysText\defPlays.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Smash.txt" />
+     <None Include="Assets\RoutesText\routes.txt" />
+     <None Include="Assets\ZonesText\zones.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Rando_01.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\TestCov3Beat.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\RandoPlay.txt" />

@@ -86,4 +86,18 @@ public static class IO_ZoneList
         Debug.Log("Zone not found");
         return null;
     }
+
+    // Here we take our already loaded binary files, and convert them to text files.
+    public static void FCONVERT_TO_TEXT_FILES()
+    {
+        // need the num of routes? Sure.
+        StreamWriter sw = new StreamWriter(Application.dataPath+"/ZonesText/zones.txt");
+        sw.WriteLine(mZones.Length);
+        for(int i=0; i<mZones.Length; i++)
+        {
+            sw.WriteLine(mZones[i].mName);
+            sw.WriteLine("("+(int)mZones[i].mSpot.x+","+(int)mZones[i].mSpot.y+")");
+        }
+        sw.Close();
+    }
 }

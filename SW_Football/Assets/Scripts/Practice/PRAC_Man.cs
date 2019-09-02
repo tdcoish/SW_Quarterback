@@ -36,6 +36,12 @@ public class PRAC_Man : MonoBehaviour
         IO_PlayList.FLOAD_PLAYS(); 
         IO_DefPlays.FLOAD_PLAYS();   
         IO_ZoneList.FLOAD_ZONES();
+
+        IO_RouteList.FLOAD_ROUTES();
+        // IO_RouteList.FCONVERT_TO_TEXT_FILES();
+        // IO_PlayList.FCONVERT_TO_TEXT_FILES();
+        // IO_DefPlays.FCONVERT_TO_TEXT_FILES();
+        // IO_ZoneList.FCONVERT_TO_TEXT_FILES();
     }
 
     void Update()

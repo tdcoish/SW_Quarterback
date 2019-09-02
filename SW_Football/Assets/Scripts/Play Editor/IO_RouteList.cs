@@ -115,4 +115,24 @@ public static class IO_RouteList
         return null;
     }
 
+    // Here we take our already loaded binary files, and convert them to text files.
+    public static void FCONVERT_TO_TEXT_FILES()
+    {
+        // need the num of routes? Sure.
+        StreamWriter sw = new StreamWriter(Application.dataPath+"/RoutesText/routes.txt");
+        sw.WriteLine("This is a test");
+        sw.WriteLine(mRoutes.Length);
+        for(int i=0; i<mRoutes.Length; i++)
+        {
+            sw.WriteLine(mRoutes[i].mName);
+            sw.WriteLine(mRoutes[i].mSpots.Length);
+            for(int j=0; j<mRoutes[i].mSpots.Length; j++)
+            {
+                sw.Write("("+mRoutes[i].mSpots[j].x+","+mRoutes[i].mSpots[j].y+")");
+            }
+            sw.Write("\n");
+        }
+        sw.Close();
+    }
+
 }

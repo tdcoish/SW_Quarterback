@@ -102,4 +102,27 @@ public class IO_DefPlays : MonoBehaviour
         Debug.Log("Play not found: " + sName);
         return null;
     }
+
+    // Here we take our already loaded binary files, and convert them to text files.
+    public static void FCONVERT_TO_TEXT_FILES()
+    {
+        // need the num of routes? Sure.
+        StreamWriter sw = new StreamWriter(Application.dataPath+"/PlaysText/defPlays.txt");
+        sw.WriteLine("This is a test");
+        sw.WriteLine(mPlays.Length);
+        for(int i=0; i<mPlays.Length; i++)
+        {
+            sw.WriteLine(mPlays[i].mName);
+            sw.WriteLine(mPlays[i].mPlayerRoles.Length);
+            for(int j=0; j<mPlays[i].mPlayerRoles.Length; j++)
+            {
+                sw.WriteLine(mPlays[i].mPlayerRoles[j].mTag);
+                sw.WriteLine(mPlays[i].mPlayerRoles[j].mRole);
+                sw.WriteLine(mPlays[i].mPlayerRoles[j].mDetail);
+                sw.WriteLine("("+(int)mPlays[i].mPlayerRoles[j].mStart.x+","+(int)mPlays[i].mPlayerRoles[j].mStart.y+")");
+            }
+        }
+        sw.Close();
+    }
+
 }
