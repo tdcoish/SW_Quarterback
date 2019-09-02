@@ -392,9 +392,9 @@ public class PP_Manager : MonoBehaviour
 
         if(chng < 0)
         {
-            mStreak = 0;
+            mScore += chng;
             if(affectStreak){
-                mScore += chng;
+                mStreak = 0;
             }
         }
         else{

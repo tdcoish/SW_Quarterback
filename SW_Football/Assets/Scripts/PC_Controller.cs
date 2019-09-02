@@ -247,9 +247,9 @@ public class PC_Controller : MonoBehaviour
         float fLookInstInac = (1-fLookDot) *  GB_SET_LookInaccRate.Val;
         if(GB_LookInaccuracy.Val < fLookInstInac)
         {
-            GB_LookInaccuracy.Val += fLookInstInac * Time.deltaTime * 5f;
+            GB_LookInaccuracy.Val += fLookInstInac * Time.deltaTime * 10f;
         }
-        GB_LookInaccuracy.Val += fLookInstInac * Time.deltaTime;
+        // GB_LookInaccuracy.Val += fLookInstInac * Time.deltaTime;
 
         GB_TotalInaccuracy.Val = GB_LookInaccuracy.Val + GB_MoveInaccuracy.Val;
     }
