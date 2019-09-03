@@ -110,30 +110,47 @@ public class PRAC_SetUpPlay : MonoBehaviour
         // ------------------------------------------ Now we're assigning the man for man coverage. 
         // An offense has 5 eligible receivers on every play, so we actually SHOULD go by that, not their routes.
         // Update, we've added PRS_AssignMan which globally stores the order that tags should be covered, and the same for defense.
-        int numRoutes = 0;
-        int numMan = 0;
-        List<PRAC_Off> receivers = new List<PRAC_Off>();
+
+        List<PRAC_Off> elibibleRecs = new List<PRAC_Off>();
         foreach(PRAC_Off off in offenders)
         {
-            if(off.mJob.mRole == "Route"){
-                receivers.Add(off);
-                numRoutes++;
+            if(PRS_AssignMan.FELIGIBLE_RECEIVER(off.mJob.mTag)){
+                elibibleRecs.Add(off);
             }
         }
-        for(int i=0; i<defenders.Length; i++)
+
+        elibibleRecs = PRS_AssignMan.FSORT_RECEIVER_IMPORTANCE(elibibleRecs);
+
+        List<PRAC_Def> defsInMan = new List<PRAC_Def>();
+        foreach(PRAC_Def def in defenders)
         {
-            if(defenders[i].mJob.mRole == "Man"){
-                if(receivers.Count >= 1){
-                    defenders[i].GetComponent<DEF_ManLog>().rMan = receivers[0];
-                    receivers.RemoveAt(0);
-                }else{
-                    Debug.Log("More man coverage than routes");
-                }
-                numMan++;
+            if(def.mJob.mRole == "Man")
+            {
+                Debug.Log("Added");
+                defsInMan.Add(def);
             }
         }
-        Debug.Log("Pass catchers: " + numRoutes);
-        Debug.Log("Man Cover: " + numMan);
+        
+        defsInMan = PRS_AssignMan.FSORT_DEFENDER_IMPORTANCE(defsInMan);
+
+        // Now we finally start assigning man coverage responsibility.
+        for(int i=0; i<defsInMan.Count; i++)
+        {   
+            if(elibibleRecs.Count <= 0){
+                break;
+            }
+
+            defsInMan[i].GetComponent<DEF_ManLog>().rMan = elibibleRecs[0];
+            elibibleRecs.RemoveAt(0);
+        }
+
+        // ---------- ALIGN MAN DEFENDERS TO THE GUY THEY'RE COVERING
+        for(int i=0; i<defsInMan.Count; i++)
+        {
+            Vector3 vManPos = defsInMan[i].GetComponent<DEF_ManLog>().rMan.transform.position;
+            vManPos.z += 7f;
+            defsInMan[i].transform.position = vManPos;
+        }
 
     }
 

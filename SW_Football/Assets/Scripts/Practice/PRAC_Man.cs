@@ -91,8 +91,6 @@ public class PRAC_Man : MonoBehaviour
     {
         
         // We wait until they click a play in the UI.
-        // string sPlayName = rPracUI.mPlaybookSCN.DP_Plays.options[rPracUI.mPlaybookSCN.DP_Plays.value].text;
-        // cPlaySetter.FSetUpPlay(sPlayName, "", rSnapSpot);
         cPlaySetter.FSetUpPlay(sOffPlayName, "", rSnapSpot);
 
         mState = PRAC_STATE.SPRE_SNAP;

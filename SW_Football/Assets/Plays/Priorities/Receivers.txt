@@ -1,4 +1,4 @@
-NUM:11
+NUM:12
 WR1
 WR2
 WR3
@@ -6,6 +6,7 @@ WR4
 WR5
 TE1
 TE2
+HB
 HB1
 TE3
 HB2

@@ -153,15 +153,46 @@ public class PRAC_ShowDefense : MonoBehaviour
         }
     }
 
-    // Just spawn a man coverage "line" in front of the player for now.
-    // Eventually we spawn one in between the player and the player they are covering.
+    // We're now doing something similar to the zone trail, just spawning little dots to
+    // a spot in front of the guy we're covering.
+    // Problem is we're no longer where the play says we should be, since we may have man aligned.
     private void RenderManCover(DT_PlayerRole role, PLY_SnapSpot snapSpot)
     {
-        Vector3 vPos = role.mStart;
-        vPos.z = vPos.y - 1f;
-        vPos.y = 1f;
-        vPos += snapSpot.transform.position;
-        Instantiate(GFX_ManCover, vPos, transform.rotation);
+        Vector3 vPos = new Vector3();
+        
+        Vector3 vManSpot = new Vector3(); 
+
+        // Need to get references for all the offensive players in the scene, as well as all the defenders.
+        PRAC_Off[] offs = FindObjectsOfType<PRAC_Off>();
+        PRAC_Def[] defs = FindObjectsOfType<PRAC_Def>();
+        
+        for(int i=0; i<defs.Length; i++)
+        {
+            if(defs[i].mJob.mTag == role.mTag)
+            {
+                vPos = defs[i].transform.position;
+                Instantiate(GFX_ZoneTrail, vPos, transform.rotation);
+                for(int j=0; j<offs.Length; j++)
+                {
+                    if(offs[j].mJob.mTag == defs[i].GetComponent<DEF_ManLog>().rMan.mJob.mTag)
+                    {
+                        vManSpot = offs[j].transform.position;
+                    }
+                }
+            }
+        }
+
+        vManSpot.z += 2f;
+
+        // So we have our starting and ending position, now make a trail between them.
+        Vector3 vDir = Vector3.Normalize(vManSpot - vPos);
+        Vector3 vIterPos = vPos;
+        while(Vector3.Dot(vDir, vManSpot - vIterPos) > 0f)
+        {
+            Instantiate(GFX_ZoneTrail, vIterPos, transform.rotation);
+            vIterPos += vDir * 1f;
+        }
+
     }
 
 }
