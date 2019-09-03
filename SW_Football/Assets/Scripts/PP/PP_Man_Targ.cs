@@ -69,7 +69,7 @@ public class PP_Man_Targ : MonoBehaviour
         }
         mActiveTarget = ind;
         Vector3 vPos = refTargets[mActiveTarget].transform.position;
-        vPos.y += 2f;
+        vPos.y += 7f;
 
         cArrMan.FSpawnArrow(vPos, refTargets[ind].transform.rotation);
 

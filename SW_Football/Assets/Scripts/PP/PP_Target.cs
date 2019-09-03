@@ -11,9 +11,23 @@ public class PP_Target : MonoBehaviour
 
     public float                    mLastTimeHit = -10f;
 
+    public float                mYSpd = 1f;
+
+    // Gonna see how a slow rotation works.
+    void Update()
+    {
+        Vector3 vLookDir = new Vector3();
+        vLookDir.y = Time.time * mYSpd;
+        // vLookDir.x = Time.time * mXSpd;
+        // vLookDir.z = Time.time * mZSpd;
+
+        transform.rotation = Quaternion.Euler(vLookDir*180f);
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Hit");
         if(other.GetComponent<PROJ_Football>())
         {
             mLastTimeHit = Time.time;

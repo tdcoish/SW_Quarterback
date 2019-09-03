@@ -63,6 +63,7 @@ public class PRAC_Man : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }else {
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
         switch(mState)
