@@ -25,14 +25,6 @@ public class PRAC_UI : MonoBehaviour
     {
         mPlaybookSCN.gameObject.SetActive(true);
 
-        mPlaybookSCN.DP_Plays.options.Clear();
-        // Plays already loaded in.
-        foreach(DATA_Play ply in IO_PlayList.mPlays)
-        {
-            // add something to the playbook.
-            mPlaybookSCN.DP_Plays.options.Add(new Dropdown.OptionData(ply.mName));
-        }
-
         // Set all the images.
         mPlaybookSCN.FSetUpPlaybookImagery();
     }
