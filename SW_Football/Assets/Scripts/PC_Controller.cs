@@ -17,6 +17,7 @@ public class PC_Controller : MonoBehaviour
     public enum PC_STATE
     {
         SINACTIVE,
+        SPRE_SNAP,
         SACTIVE
     }
     public PC_STATE                 mState;
@@ -76,8 +77,26 @@ public class PC_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(mState == PC_STATE.SINACTIVE) return;
+        switch(mState)
+        {
+            case PC_STATE.SINACTIVE: RUN_Inactive(); break;
+            case PC_STATE.SPRE_SNAP: RUN_PreSnap(); break;
+            case PC_STATE.SACTIVE: RUN_Active(); break;
+        }
+    }
 
+    private void RUN_Inactive()
+    {
+
+    }
+
+    private void RUN_PreSnap()
+    {
+        SetRotation();
+    }
+
+    private void RUN_Active()
+    {
         SetRotation();
         HandleThrowing();
 
@@ -87,7 +106,10 @@ public class PC_Controller : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(mState == PC_STATE.SINACTIVE) return;
+        if(mState != PC_STATE.SACTIVE) {
+            cRigid.velocity = Vector3.zero;
+            return;
+        }
 
         HandleMovement();
     }
@@ -104,6 +126,7 @@ public class PC_Controller : MonoBehaviour
         Vector3 xAx = Vector3.Cross(transform.forward, Vector3.up);
         cCam.transform.RotateAround(transform.position, xAx, mouseY);
     }
+
 
     private void HandleThrowing()
     {

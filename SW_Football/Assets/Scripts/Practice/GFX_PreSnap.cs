@@ -1,17 +1,8 @@
 ﻿/*************************************************************************************
-
+All pre-snap graphics should have this script attached as a tag.
 *************************************************************************************/
 using UnityEngine;
 
-public class GFX_Zone : GFX_PreSnap
+public class GFX_PreSnap : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 }

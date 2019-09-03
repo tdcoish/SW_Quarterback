@@ -16,6 +16,12 @@ public enum PRAC_STATE
     SPOST_PLAY
 }
 
+public enum PRESNAP_STATE
+{
+    SREADYTOSNAP,
+    SHIGHCAM
+}
+
 [RequireComponent(typeof(PRAC_SetUpPlay))]
 public class PRAC_Man : MonoBehaviour
 {
@@ -23,6 +29,7 @@ public class PRAC_Man : MonoBehaviour
     private PRAC_ShowDefense    cShowDefence;
 
     private PRAC_STATE          mState;
+    private PRESNAP_STATE       mPreSnapState;
     public string               mPlayName = "Default";
 
     public PRAC_UI              rPracUI;
@@ -35,6 +42,7 @@ public class PRAC_Man : MonoBehaviour
         cShowDefence = GetComponent<PRAC_ShowDefense>();
 
         mState = PRAC_STATE.SPOST_PLAY;
+        mPreSnapState = PRESNAP_STATE.SREADYTOSNAP;
         IO_PlayList.FLOAD_PLAYS(); 
         IO_DefPlays.FLOAD_PLAYS();   
         IO_ZoneList.FLOAD_ZONES();
@@ -85,9 +93,10 @@ public class PRAC_Man : MonoBehaviour
         cPlaySetter.FSetUpPlay(sOffPlayName, "", rSnapSpot);
 
         mState = PRAC_STATE.SPRE_SNAP;
+        mPreSnapState = PRESNAP_STATE.SREADYTOSNAP;
 
         rPracUI.FRUN_Presnap();
-        FindObjectOfType<PC_Controller>().mState = PC_Controller.PC_STATE.SACTIVE;
+        FindObjectOfType<PC_Controller>().mState = PC_Controller.PC_STATE.SPRE_SNAP;
     }
 
     public void FDefPlayPicked()
@@ -97,8 +106,21 @@ public class PRAC_Man : MonoBehaviour
 
     private void RUN_PreSnap()
     {
+        switch(mPreSnapState)
+        {
+            case PRESNAP_STATE.SREADYTOSNAP: RUN_SnapReady(); break;
+            case PRESNAP_STATE.SHIGHCAM: RUN_HighCam(); break;
+        }
+
+    }
+
+    // ----------------------------- PRESNAP STATES
+    private void RUN_SnapReady()
+    {
         if(Input.GetKeyDown(KeyCode.Space))
         {
+            FindObjectOfType<PC_Controller>().mState = PC_Controller.PC_STATE.SACTIVE;
+
             PRAC_Ath[] athletes = FindObjectsOfType<PRAC_Ath>();
             for(int i=0; i<athletes.Length; i++)
             {
@@ -106,16 +128,31 @@ public class PRAC_Man : MonoBehaviour
             }
 
             // For now so it's not there when we run. Going to change this soon.
-            cShowDefence.FStopShowingDefensivePlay();
+            cShowDefence.FStopShowingPlayArt();
             mState = PRAC_STATE.SPLAY_RUNNING;
         }
 
-        if(Input.GetKeyDown(KeyCode.S))
+        // We also need the camera to go to the higher perspective.
+        if(Input.GetKeyDown(KeyCode.T))
         {
-            cShowDefence.FStopShowingDefensivePlay();
-            cShowDefence.FShowDefensivePlay(IO_DefPlays.FLOAD_PLAY_BY_NAME(rPracUI.mDefensivePlayName.text), rSnapSpot);
+            cShowDefence.FStopShowingPlayArt();
+            cShowDefence.FShowAllPlayRoles(null, IO_DefPlays.FLOAD_PLAY_BY_NAME(rPracUI.mDefensivePlayName.text), rSnapSpot);
+            FindObjectOfType<CAM_PlayShowing>().FActivate();
+            mPreSnapState = PRESNAP_STATE.SHIGHCAM;
         }
     }
+    private void RUN_HighCam()
+    {
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            cShowDefence.FStopShowingPlayArt();
+            FindObjectOfType<CAM_PlayShowing>().FDeactivate();
+            mPreSnapState = PRESNAP_STATE.SREADYTOSNAP;
+        }
+    }
+
+    // -----------------------------
+
     private void RUN_PlayRunning()
     {
         if(Input.GetKeyDown(KeyCode.Space))

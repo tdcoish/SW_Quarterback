@@ -7,9 +7,6 @@ public class PC_Camera : MonoBehaviour
     private Camera                  mCam;
     private PC_Controller           mCont;
 
-    [SerializeField]
-    private SO_Transform            RefPlayerCamera;
-
     private void Start()
     {
         mCam = GetComponent<Camera>();

@@ -145,10 +145,12 @@
      <Compile Include="Assets\Scripts\PP\PP_Trophy.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Turret.cs" />
      <Compile Include="Assets\Scripts\PP\PP_UI.cs" />
+     <Compile Include="Assets\Scripts\Practice\CAM_PlayShowing.cs" />
      <Compile Include="Assets\Scripts\Practice\DEF_ManLog.cs" />
      <Compile Include="Assets\Scripts\Practice\DEF_RushLog.cs" />
      <Compile Include="Assets\Scripts\Practice\DEF_ZoneLog.cs" />
      <Compile Include="Assets\Scripts\Practice\GFX_Player.cs" />
+     <Compile Include="Assets\Scripts\Practice\GFX_PreSnap.cs" />
      <Compile Include="Assets\Scripts\Practice\GFX_Zone.cs" />
      <Compile Include="Assets\Scripts\Practice\OFF_BlockLog.cs" />
      <Compile Include="Assets\Scripts\Practice\OFF_RouteLog.cs" />
@@ -187,6 +189,7 @@
      <Compile Include="Assets\Scripts\Utilities\UT_Extensions.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_Grounded.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_Strings.cs" />
+     <Compile Include="Assets\Scripts\Utilities\UT_VecConversion.cs" />
      <None Include="Assets\Plays\EditorCreatedPlays\Cover3Beater.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\DoubleSmash.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Smash_01.txt" />
