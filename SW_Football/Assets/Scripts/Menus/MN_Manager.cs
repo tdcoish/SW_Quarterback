@@ -19,6 +19,8 @@ public class MN_Manager : MonoBehaviour
 
     void Start()
     {
+        IO_Settings.FLOAD_SETTINGS();
+        
         refAudioManager.OnBackToNormal();
 
         // true == include inactive.

@@ -30,8 +30,6 @@ public class QB_UI : MonoBehaviour
     public Image                mCrosshairs;
 
     [SerializeField]
-    private DT_Player           PlayerData;         // used for max throw power at a minimum
-    [SerializeField]
     private SO_Float            GB_ThrowCharge;
 
     // innaccuracy is dependent on our movement alone. Throw innaccuracy is the cumulative innaccuracy of the current throw.

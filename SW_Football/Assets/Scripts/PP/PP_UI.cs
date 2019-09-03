@@ -20,8 +20,6 @@ public class PP_UI : MonoBehaviour
     public Text             mTrophyTxt;
 
     [SerializeField]
-    private DT_Player           PlayerData;         // used for max throw power at a minimum
-    [SerializeField]
     private SO_Float            GB_ThrowCharge;
 
     private bool            mIsWindingUp = false;

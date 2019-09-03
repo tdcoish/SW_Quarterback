@@ -50,6 +50,9 @@ public class PRAC_Man : MonoBehaviour
         IO_RouteList.FLOAD_ROUTES();
 
         PRS_AssignMan.FLOAD_PRIORITIES();
+
+        // Won't affect the build, but will affect the editor.
+        IO_Settings.FLOAD_SETTINGS();
         // IO_RouteList.FCONVERT_TO_TEXT_FILES();
         // IO_PlayList.FCONVERT_TO_TEXT_FILES();
         // IO_DefPlays.FCONVERT_TO_TEXT_FILES();

@@ -1,0 +1,12 @@
+Player
+Acc:100
+Spd:5.210065
+Charge Slow:3
+Charge Time:1
+Throw Power:25
+------------------------------------
+Look Inaccuracy Y Axis Bias:5
+Look Penalty:60
+Look Sensitivity:1
+Master Volume:0
+Movement Penalty:30

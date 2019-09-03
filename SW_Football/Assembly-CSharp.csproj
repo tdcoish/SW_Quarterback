@@ -178,7 +178,7 @@
      <Compile Include="Assets\Scripts\RT_Editor\RT_Route.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_RouteTool.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_SceneManager.cs" />
-     <Compile Include="Assets\Scripts\SO_Data\DT_Player.cs" />
+     <Compile Include="Assets\Scripts\Settings\IO_Settings.cs" />
      <Compile Include="Assets\Scripts\SO_Data\DT_Route.cs" />
      <Compile Include="Assets\Scripts\SO_Data\DT_TrophyValues.cs" />
      <Compile Include="Assets\Scripts\TEMP_FileStoring.cs" />
@@ -193,6 +193,7 @@
      <Compile Include="Assets\Scripts\Utilities\UT_VecConversion.cs" />
      <None Include="Assets\Plays\EditorCreatedPlays\Cover3Beater.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\DoubleSmash.txt" />
+     <None Include="Assets\Settings\Settings.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Smash_01.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\sdf.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\whatevs.txt" />

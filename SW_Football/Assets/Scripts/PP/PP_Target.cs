@@ -27,7 +27,6 @@ public class PP_Target : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Hit");
         if(other.GetComponent<PROJ_Football>())
         {
             mLastTimeHit = Time.time;
