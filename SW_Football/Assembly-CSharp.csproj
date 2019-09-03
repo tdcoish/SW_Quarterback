@@ -165,6 +165,7 @@
      <Compile Include="Assets\Scripts\Practice\PRAC_SetUpPlay.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_ShowDefense.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_UI.cs" />
+     <Compile Include="Assets\Scripts\Practice\PRS_AssignMan.cs" />
      <Compile Include="Assets\Scripts\PROJ_Football.cs" />
      <Compile Include="Assets\Scripts\QB_UI.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_Field.cs" />
@@ -200,6 +201,8 @@
      <None Include="Assets\Plays\EditorCreatedPlays\TESTINGBABY.txt" />
      <None Include="Assets\Scripts\DT_Types\SO_Vec3.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Testd.txt" />
+     <None Include="Assets\Plays\Priorities\Defenders.txt" />
+     <None Include="Assets\Plays\Priorities\Receivers.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Sail_01.txt" />
      <None Include="Assets\PlaysText\plays.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Stick_02.txt" />

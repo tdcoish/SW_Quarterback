@@ -109,6 +109,7 @@ public class PRAC_SetUpPlay : MonoBehaviour
 
         // ------------------------------------------ Now we're assigning the man for man coverage. 
         // An offense has 5 eligible receivers on every play, so we actually SHOULD go by that, not their routes.
+        // Update, we've added PRS_AssignMan which globally stores the order that tags should be covered, and the same for defense.
         int numRoutes = 0;
         int numMan = 0;
         List<PRAC_Off> receivers = new List<PRAC_Off>();
