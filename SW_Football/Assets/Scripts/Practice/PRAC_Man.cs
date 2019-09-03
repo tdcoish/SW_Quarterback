@@ -136,7 +136,7 @@ public class PRAC_Man : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.T))
         {
             cShowDefence.FStopShowingPlayArt();
-            cShowDefence.FShowAllPlayRoles(null, IO_DefPlays.FLOAD_PLAY_BY_NAME(rPracUI.mDefensivePlayName.text), rSnapSpot);
+            cShowDefence.FShowAllPlayRoles(IO_PlayList.FLOAD_PLAY_BY_NAME(rPracUI.mOffensivePlayName.text), IO_DefPlays.FLOAD_PLAY_BY_NAME(rPracUI.mDefensivePlayName.text), rSnapSpot);
             FindObjectOfType<CAM_PlayShowing>().FActivate();
             mPreSnapState = PRESNAP_STATE.SHIGHCAM;
         }
