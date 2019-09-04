@@ -8,6 +8,9 @@ is actually wrong. Instead we want
 Physics2D.Raycast(Input.mousePosition, Vector2.zero);
 
 Because we're already in pixels.
+
+Ugh, really irritating bug. The PB_UI and PB_Def are fighting over who handles clicks onto 
+each other. Need a system to figure this one out.
 *************************************************************************************/
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,7 +40,7 @@ public class PB_UI : MonoBehaviour
                     GetComponentInParent<PRAC_UI>().mOffensivePlayName.text = sName;
 
                     PRAC_Man pMan = FindObjectOfType<PRAC_Man>();
-                    pMan.FPlayPicked(sName);
+                    pMan.FOffPlayPicked(sName);
                 }
             }else{
                 Debug.Log("Hit nothing");

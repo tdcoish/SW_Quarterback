@@ -4,6 +4,8 @@ Practice manager. This is the thing that does all the logic to run practice.
 1) Load in a whole bunch of offensive players, and give them the roles here.
 2) Snap ball
 3) Have them do the thing.
+
+Sigh. Starting to need to actually make some state machines now.
 *************************************************************************************/
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,6 +16,13 @@ public enum PRAC_STATE
     SPRE_SNAP,
     SPLAY_RUNNING,
     SPOST_PLAY
+}
+
+public enum PICKPLAY_STATE
+{
+    SOFFENSE,
+    SDEFENSE,
+    SBOTH_PICKED
 }
 
 public enum PRESNAP_STATE
@@ -30,6 +39,7 @@ public class PRAC_Man : MonoBehaviour
 
     private PRAC_STATE          mState;
     private PRESNAP_STATE       mPreSnapState;
+    private PICKPLAY_STATE      mPickPlayState;
     public string               mPlayName = "Default";
 
     public PRAC_UI              rPracUI;
@@ -43,6 +53,7 @@ public class PRAC_Man : MonoBehaviour
 
         mState = PRAC_STATE.SPOST_PLAY;
         mPreSnapState = PRESNAP_STATE.SREADYTOSNAP;
+        mPickPlayState = PICKPLAY_STATE.SOFFENSE;
         IO_PlayList.FLOAD_PLAYS(); 
         IO_DefPlays.FLOAD_PLAYS();   
         IO_ZoneList.FLOAD_ZONES();
@@ -84,23 +95,44 @@ public class PRAC_Man : MonoBehaviour
     private void RUN_PickPlay()
     {
 
-        // basically don't do anything until they click a play.
-        // UI has to run it's updating though.
-        rPracUI.mPlaybookSCN.FRunUpdate();
-
+        switch(mPickPlayState)
+        {
+            case PICKPLAY_STATE.SOFFENSE: RUN_PickOffensivePlay(); break;
+            case PICKPLAY_STATE.SDEFENSE: RUN_PickDefensivePlay(); break;
+            case PICKPLAY_STATE.SBOTH_PICKED: RUN_FinishedPicking(); break;
+        }
     }
 
-    public void FPlayPicked(string sOffPlayName)
+    private void RUN_PickOffensivePlay()
     {
-        
-        // We wait until they click a play in the UI.
-        cPlaySetter.FSetUpPlay(sOffPlayName, "", rSnapSpot);
-
+        rPracUI.mPlaybookSCN.FRunUpdate();
+    }
+    private void RUN_PickDefensivePlay()
+    {
+        rPracUI.mDefPBSCN.FRunUpdate();
+    }
+    private void RUN_FinishedPicking()
+    {
+        // I guess this is where I transfer state?
         mState = PRAC_STATE.SPRE_SNAP;
         mPreSnapState = PRESNAP_STATE.SREADYTOSNAP;
 
         rPracUI.FRUN_Presnap();
         FindObjectOfType<PC_Controller>().mState = PC_Controller.PC_STATE.SPRE_SNAP;
+            
+        // We wait until they click a play in the UI.
+        cPlaySetter.FSetUpPlay(rPracUI.mOffensivePlayName.text, rPracUI.mDefensivePlayName.text, rSnapSpot);
+    }
+
+    public void FOffPlayPicked(string sOffPlayName)
+    {
+        mPickPlayState = PICKPLAY_STATE.SDEFENSE;
+        rPracUI.FRUN_DefPlaybook();
+    }
+
+    public void FDefPlayPicked(string sOffPlayName)
+    {
+        mPickPlayState = PICKPLAY_STATE.SBOTH_PICKED;
     }
 
     public void FDefPlayPicked()
@@ -181,7 +213,8 @@ public class PRAC_Man : MonoBehaviour
             Destroy(athletes[i].gameObject);
         }
         FindObjectOfType<PC_Controller>().mState = PC_Controller.PC_STATE.SINACTIVE;
-        rPracUI.FRUN_Playbook();
+        rPracUI.FRUN_OffPlaybook();
         mState = PRAC_STATE.SPICK_PLAY;
+        mPickPlayState = PICKPLAY_STATE.SOFFENSE;
     }
 }

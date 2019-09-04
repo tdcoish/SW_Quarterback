@@ -22,18 +22,28 @@ public class PRAC_UI : MonoBehaviour
     public PB_Def                   mDefPBSCN;
 
     // These are actually just called once, not every frame.
-    public void FRUN_Playbook()
+    public void FRUN_OffPlaybook()
     {
         mPlaybookSCN.gameObject.SetActive(true);
 
         // Set all the images.
         mPlaybookSCN.FSetUpPlaybookImagery();
+        // mDefPBSCN.FSetUpPlaybookImagery();
+    }
+
+    public void FRUN_DefPlaybook()
+    {
+        mPlaybookSCN.gameObject.SetActive(false);
+        mDefPBSCN.gameObject.SetActive(true);
+
+        // Set all the images.
         mDefPBSCN.FSetUpPlaybookImagery();
     }
 
     public void FRUN_Presnap()
     {
         mPlaybookSCN.gameObject.SetActive(false);
+        mDefPBSCN.gameObject.SetActive(false);
     }
 
     public void FRUN_Playing()

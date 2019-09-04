@@ -34,12 +34,13 @@ public class PB_Def : MonoBehaviour
                 if(hit.collider.GetComponent<PRAC_PlayArt>() != null){
                     string sName = hit.collider.GetComponent<PRAC_PlayArt>().mName;
                     Debug.Log("Picked: " + sName);
+                    Debug.Log("Defense");
 
                     // Get rid of this line after a while
                     GetComponentInParent<PRAC_UI>().mDefensivePlayName.text = sName;
 
                     PRAC_Man pMan = FindObjectOfType<PRAC_Man>();
-                    pMan.FPlayPicked(sName);
+                    pMan.FDefPlayPicked(sName);
                 }
             }else{
                 Debug.Log("Hit nothing");
