@@ -889,6 +889,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40e0fa397d6cc4b44b9a82765f0fa6c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DP_Plays: {fileID: 0}
-  mOffPlayImgs: []
-  mDefPlayImgs: []
+  mPlayArts: []

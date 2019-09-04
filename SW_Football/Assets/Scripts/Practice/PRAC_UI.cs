@@ -19,6 +19,7 @@ public class PRAC_UI : MonoBehaviour
     public Text                     mDefensivePlayName;
 
     public PB_UI                    mPlaybookSCN;
+    public PB_Def                   mDefPBSCN;
 
     // These are actually just called once, not every frame.
     public void FRUN_Playbook()
@@ -27,6 +28,7 @@ public class PRAC_UI : MonoBehaviour
 
         // Set all the images.
         mPlaybookSCN.FSetUpPlaybookImagery();
+        mDefPBSCN.FSetUpPlaybookImagery();
     }
 
     public void FRUN_Presnap()

@@ -154,7 +154,10 @@
      <Compile Include="Assets\Scripts\Practice\GFX_Zone.cs" />
      <Compile Include="Assets\Scripts\Practice\OFF_BlockLog.cs" />
      <Compile Include="Assets\Scripts\Practice\OFF_RouteLog.cs" />
+     <Compile Include="Assets\Scripts\Practice\PB_Def.cs" />
      <Compile Include="Assets\Scripts\Practice\PB_DisplayPlay.cs" />
+     <Compile Include="Assets\Scripts\Practice\PB_Next.cs" />
+     <Compile Include="Assets\Scripts\Practice\PB_Off.cs" />
      <Compile Include="Assets\Scripts\Practice\PB_Play.cs" />
      <Compile Include="Assets\Scripts\Practice\PB_UI.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_Ath.cs" />
