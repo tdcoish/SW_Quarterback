@@ -75,6 +75,8 @@ public class PP_Manager : MonoBehaviour
 
     private void Start()
     {
+        IO_Settings.FLOAD_SETTINGS();
+
         cTurMan = GetComponent<PP_Man_Tur>();
         cTargMan = GetComponent<PP_Man_Targ>();
         cArrMan = GetComponent<PP_Man_Arr>();

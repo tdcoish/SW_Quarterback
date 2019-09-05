@@ -16,6 +16,7 @@ public class PRAC_Ath : MonoBehaviour
     public PRAC_ATH_STATE           mState;
 
     private Rigidbody               cRigid;
+    private PRAC_AI_Acc             cAcc;
 
 
     public DT_PlayerRole            mJob;
@@ -23,6 +24,7 @@ public class PRAC_Ath : MonoBehaviour
     void Awake()
     {
         cRigid = GetComponent<Rigidbody>();
+        cAcc = GetComponent<PRAC_AI_Acc>();
         mState = PRAC_ATH_STATE.SPRE_SNAP;
     }
 

@@ -6,14 +6,12 @@ using UnityEngine;
 public class DEF_ZoneLog : MonoBehaviour
 {
     private PRAC_Ath            cAth;
-    private Rigidbody           cRigid;
 
     public Vector3              mZoneSpot;
 
     // Maybe have this as a function that we call.
     void Start()
     {   
-        cRigid = GetComponent<Rigidbody>();
         cAth = GetComponent<PRAC_Ath>();
 
         if(cAth.mJob.mRole == "Zone")
@@ -33,6 +31,6 @@ public class DEF_ZoneLog : MonoBehaviour
         dis.y = 0f;
         dis = Vector3.Normalize(dis);
 
-        cRigid.velocity = dis * 5f;
+        GetComponent<PRAC_AI_Acc>().FCalcAcc(dis);
     }
 }

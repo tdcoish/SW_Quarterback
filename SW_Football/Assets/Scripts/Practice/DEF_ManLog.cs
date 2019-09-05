@@ -11,7 +11,6 @@ using UnityEngine;
 
 public class DEF_ManLog : MonoBehaviour
 {
-    private Rigidbody           cRigid;
     private DEF_ZoneLog         cZoneLog;
 
     // Gets assigned to us somehow.
@@ -19,7 +18,6 @@ public class DEF_ManLog : MonoBehaviour
 
     private void Start()
     {
-        cRigid = GetComponent<Rigidbody>();
         cZoneLog = GetComponent<DEF_ZoneLog>();
 
         SetBackupZoneSpot();
@@ -40,7 +38,7 @@ public class DEF_ManLog : MonoBehaviour
         dis.y = 0f;
         dis = Vector3.Normalize(dis);
 
-        cRigid.velocity = dis * 4f;
+        GetComponent<PRAC_AI_Acc>().FCalcAcc(dis);
     }
 
     // Just a zone 10 yards back of where we start.

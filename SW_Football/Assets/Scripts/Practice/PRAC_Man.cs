@@ -42,6 +42,7 @@ public class PRAC_Man : MonoBehaviour
     private PICKPLAY_STATE      mPickPlayState;
     public string               mPlayName = "Default";
 
+    public GameObject           MN_PauseScreen;
     public PRAC_UI              rPracUI;
 
     public PLY_SnapSpot         rSnapSpot;
@@ -68,6 +69,7 @@ public class PRAC_Man : MonoBehaviour
         // IO_PlayList.FCONVERT_TO_TEXT_FILES();
         // IO_DefPlays.FCONVERT_TO_TEXT_FILES();
         // IO_ZoneList.FCONVERT_TO_TEXT_FILES();
+        MN_PauseScreen.SetActive(false);
     }
 
     void Update()

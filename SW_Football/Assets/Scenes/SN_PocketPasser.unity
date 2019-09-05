@@ -2265,7 +2265,7 @@ MonoBehaviour:
   refInstrUI: {fileID: 420800316}
   refScoreboardUI: {fileID: 366206490}
   refQuitUI: {fileID: 533421910}
-  mGameTime: 30
+  mGameTime: 60
   mTimeLeft: 0
   mState: 0
   mGameState: 0
@@ -3706,109 +3706,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8715241792742129376, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: mUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: mCurThrowMaxChrg
-      value: 
-      objectReference: {fileID: 11400000, guid: d7c33746f1c521a4cb3e598b02196ee9,
-        type: 2}
-    - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: mSpd
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: mInnacuracy
-      value: 
-      objectReference: {fileID: 11400000, guid: b19be56ee7524af4380f13c03de2c72b,
-        type: 2}
-    - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: mAccPerSec
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: GB_ThrowInnacuracy
-      value: 
-      objectReference: {fileID: 11400000, guid: df4318cb6802b5049a9358c3cfaea6dc,
-        type: 2}
-    - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: GB_Innaccuracy
-      value: 
-      objectReference: {fileID: 11400000, guid: b19be56ee7524af4380f13c03de2c72b,
-        type: 2}
-    - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: GB_ThrowLookInaccuracy
-      value: 
-      objectReference: {fileID: 11400000, guid: cb64403833b403748b02b76f8d8aa10a,
-        type: 2}
-    - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: mThrowChrg
-      value: 
-      objectReference: {fileID: 11400000, guid: cc532729a38ccb844bc2bfc7941d5f4e,
-        type: 2}
-    - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: GB_MoveInaccuracy
-      value: 
-      objectReference: {fileID: 11400000, guid: 5310b3e311191884ca812971b33e0eea,
-        type: 2}
-    - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: GB_LookInaccuracy
-      value: 
-      objectReference: {fileID: 11400000, guid: cb64403833b403748b02b76f8d8aa10a,
-        type: 2}
-    - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: GB_TotalInaccuracy
-      value: 
-      objectReference: {fileID: 11400000, guid: df4318cb6802b5049a9358c3cfaea6dc,
-        type: 2}
-    - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: mMoveInaccuracyRate
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: GB_LookSensitivity
-      value: 
-      objectReference: {fileID: 11400000, guid: 461a8783e03e5164e8ddfab45fb664f2,
-        type: 2}
-    - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: GB_SET_LookInaccRate
-      value: 
-      objectReference: {fileID: 11400000, guid: f96881bbcbb6fd444aa601284077b128,
-        type: 2}
-    - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: GB_SET_MoveInaccRate
-      value: 
-      objectReference: {fileID: 11400000, guid: 6640f5ccd1d6f2248a6241f29f48c1aa,
-        type: 2}
-    - target: {fileID: 8715241792742129383, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: GB_SET_InaccuracyBias
-      value: 
-      objectReference: {fileID: 11400000, guid: 8523ce5191207174cb994417d9d76bb4,
-        type: 2}
     - target: {fileID: 8715241792742129380, guid: 3fcb15e83f59e7544a78d44040e4602c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3863,41 +3760,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 375416082, guid: 3fcb15e83f59e7544a78d44040e4602c, type: 3}
-      propertyPath: m_AngularDrag
-      value: 159.12
-      objectReference: {fileID: 0}
-    - target: {fileID: 375416082, guid: 3fcb15e83f59e7544a78d44040e4602c, type: 3}
-      propertyPath: m_Drag
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 375416082, guid: 3fcb15e83f59e7544a78d44040e4602c, type: 3}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 375416082, guid: 3fcb15e83f59e7544a78d44040e4602c, type: 3}
-      propertyPath: m_Constraints
-      value: 84
-      objectReference: {fileID: 0}
-    - target: {fileID: 8715241793636834110, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 8715241793834291068, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 1279264523, guid: 3fcb15e83f59e7544a78d44040e4602c, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 8715241793834291040, guid: 3fcb15e83f59e7544a78d44040e4602c,
-        type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 311
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fcb15e83f59e7544a78d44040e4602c, type: 3}

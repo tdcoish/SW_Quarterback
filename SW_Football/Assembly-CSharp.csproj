@@ -160,6 +160,7 @@
      <Compile Include="Assets\Scripts\Practice\PB_Off.cs" />
      <Compile Include="Assets\Scripts\Practice\PB_Play.cs" />
      <Compile Include="Assets\Scripts\Practice\PB_UI.cs" />
+     <Compile Include="Assets\Scripts\Practice\PRAC_AI_Acc.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_Ath.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_Def.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_Man.cs" />
@@ -188,6 +189,7 @@
      <Compile Include="Assets\Scripts\TEMP_TestAudio.cs" />
      <Compile Include="Assets\Scripts\TEST_Audio1.cs" />
      <Compile Include="Assets\Scripts\TEST_Build.cs" />
+     <Compile Include="Assets\Scripts\TEST_LoadSet.cs" />
      <Compile Include="Assets\Scripts\Utilities\LifeSpan.cs" />
      <Compile Include="Assets\Scripts\Utilities\SingletonBehaviour.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_Extensions.cs" />
