@@ -9,6 +9,8 @@ eg.        mBar.enabled = false;
 
 Could probably have multi-layered state. Visible/Invisible, then different state for the specifics
 of what's going on.
+
+Yep, we're bringing back the maximum throw power. This is because 
 ******************************************************************************************* */
 
 using UnityEngine;
@@ -27,10 +29,13 @@ public class QB_UI : MonoBehaviour
     public QB_UI_STATE          mState;
 
     public Image                mBar;
+    public Image                mThrowMaxBar;
     public Image                mCrosshairs;
 
     [SerializeField]
     private SO_Float            GB_ThrowCharge;
+    [SerializeField]
+    private SO_Float            GB_ThrowMaxCharge;
 
     // innaccuracy is dependent on our movement alone. Throw innaccuracy is the cumulative innaccuracy of the current throw.
     public SO_Float             GB_MoveInaccuracy;
@@ -58,6 +63,9 @@ public class QB_UI : MonoBehaviour
         if(mState == QB_UI_STATE.SCHARGING){
             ShowThrowBar();
         }
+        // Always show the maximum throw power bar.
+        mThrowMaxBar.fillAmount = GB_ThrowMaxCharge.Val / IO_Settings.mSet.lPlayerData.mThrowSpd;
+        mThrowMaxBar.fillAmount = 1f;
 
         // How much should inaccuracy scale the image? Let's say that an inaccuracy of 1 degree is the norm, so we scale proportionally after that.
         float fCrossScale = GB_ThrowInaccuracy.Val;
@@ -72,6 +80,7 @@ public class QB_UI : MonoBehaviour
         mBar.fillAmount = GB_ThrowCharge.Val;
     }
 
+    // QB_Start_Charging
     public void QB_Charging(){
         mState = QB_UI_STATE.SCHARGING;
     }

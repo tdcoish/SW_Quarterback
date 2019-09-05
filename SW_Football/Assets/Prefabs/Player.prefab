@@ -144,6 +144,7 @@ MonoBehaviour:
     type: 3}
   mThrowPoint: {fileID: 8715241793636834110}
   mThrowChrg: {fileID: 11400000, guid: cc532729a38ccb844bc2bfc7941d5f4e, type: 2}
+  mThrowMax: {fileID: 11400000, guid: b46deec74840dc042af957add803cb8c, type: 2}
   mThrowAngle: {fileID: 11400000, guid: 84c7a5618441c1a40b7f1931d95b33e5, type: 2}
   GE_QB_StartThrow: {fileID: 11400000, guid: 40d201a536cb4dc46b060eaa4b32bff1, type: 2}
   GE_QB_ReleaseBall: {fileID: 11400000, guid: cc068b33e2480924485591ee46966c8a, type: 2}

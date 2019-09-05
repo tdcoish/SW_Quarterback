@@ -9,6 +9,9 @@ movement is independent of where the camera is looking.
 New update for inaccuracy. We have instantaneous bump, say of +5, then we have over time effects,
 on top of that. As an example, if moving gives you +5, and you're already at +3 inaccuracy, you jump
 to +5, then you start stacking the over time effects.
+
+Throwing now needs some state added. We can not be throwing, be charging up, or be overcharged.
+If overcharged, then we lose accuracy and power and then have our throw terminated. 
 **************************************************************************************** */
 
 public class PC_Controller : MonoBehaviour
@@ -21,6 +24,15 @@ public class PC_Controller : MonoBehaviour
         SACTIVE
     }
     public PC_STATE                 mState;
+    
+    public enum PC_THROW_STATE
+    {
+        SNOT_THROWING,
+        S_CHARGING,
+        S_FULLYCHARGED,
+        S_RECOVERING
+    }
+    public PC_THROW_STATE           mThrowState;
 
     [SerializeField]
     private PROJ_Football           PF_Football;
@@ -28,8 +40,8 @@ public class PC_Controller : MonoBehaviour
     [SerializeField]
     private GameObject              mThrowPoint;
     public SO_Float                 mThrowChrg;         // from 0-1. Factor in power later.
+    public SO_Float                 mThrowMax;          // maximum for any given throw. From 0 - IO_Settings... maxSpd
     public SO_Vec3                  mThrowAngle;
-    private bool                    mChargingThrow = false;
 
     private Rigidbody               cRigid;
     private PC_Camera               cCam;
@@ -44,7 +56,6 @@ public class PC_Controller : MonoBehaviour
     [SerializeField]
     private SO_Transform            RefPlayerPos;
 
-    private bool                    mCanThrow = true;
     public Vector3                  mThrowStartAngle;
 
     public SO_Float                 GB_LookInaccuracy;
@@ -58,6 +69,7 @@ public class PC_Controller : MonoBehaviour
         cCam = GetComponentInChildren<PC_Camera>();
 
         mState = PC_STATE.SINACTIVE;
+        mThrowState = PC_THROW_STATE.SNOT_THROWING;
         mThrowChrg.Val = 0f;
 
         Cursor.visible = false;
@@ -122,63 +134,107 @@ public class PC_Controller : MonoBehaviour
 
     private void HandleThrowing()
     {
-        if(mCanThrow){
 
-            // RMB stops throw
-            if(Input.GetMouseButton(1)){
-                GE_QB_StopThrow.Raise(null);
-                return;
-            }
-
-            if(Input.GetMouseButton(0)){
-                if(!mChargingThrow){
-                    GE_QB_StartThrow.Raise(null);
-                    mThrowStartAngle = cCam.transform.forward;
-                }
-                mChargingThrow = true;
-
-                // Alright, this is what needs to be changed. Throw power should not charge linearly, it should charge logarithmically.
-                float fChrgPct = mThrowChrg.Val;
-                float fChargeAmt = Time.deltaTime * (1/IO_Settings.mSet.lPlayerData.mThrowChargeTime);
-                fChargeAmt -= fChargeAmt*(fChrgPct);           // gives us right side of bell curve.
-                // but now we also have to factor in that we charge faster when closer to 0.
-                // fChargeAmt *= (1-mThrowChrg.Val) * 2f;              // so when at 0, x as fast. When at 1, 0 charge speed.
-                mThrowChrg.Val += fChargeAmt;
-                if(mThrowChrg.Val > 1f){
-                    mThrowChrg.Val = 1f;
-                }
-            }
-
-            if(mChargingThrow){
-
-                // Now handle the look inaccuracy
-                mThrowAngle.Val = cCam.transform.forward;
-
-                HandleThrowModifiers();
-
-                if(Input.GetMouseButtonUp(0)){
-                    PROJ_Football clone = Instantiate(PF_Football, mThrowPoint.transform.position, transform.rotation);
-
-                    // now we add in the innacuracy.
-                    // x inaccuracy feels better than y inaccuracy, which can look really stupid.
-                    float fXAcc = Random.Range(-GB_TotalInaccuracy.Val, GB_TotalInaccuracy.Val) / 100f;
-                    float fYAcc = Random.Range(-GB_TotalInaccuracy.Val, GB_TotalInaccuracy.Val) / 100f;
-                    fYAcc /= IO_Settings.mSet.lInaccuracyBias;
-                    Vector3 vThrowDir = cCam.transform.forward;
-                    vThrowDir.x += fXAcc; vThrowDir.y += fYAcc;
-                    vThrowDir = Vector3.Normalize(vThrowDir);
-
-                    clone.GetComponent<Rigidbody>().velocity = vThrowDir * mThrowChrg.Val * IO_Settings.mSet.lPlayerData.mThrowSpd;
-                    mThrowChrg.Val = 0f;
-                    mChargingThrow = false;
-
-                    GE_QB_ReleaseBall.Raise(null);
-
-                    SetInaccuraciesToZero();
-                }
-            }
-
+        switch(mThrowState)
+        {
+            case PC_THROW_STATE.SNOT_THROWING: RUN_NotThrowing(); break;
+            case PC_THROW_STATE.S_CHARGING: RUN_ChargingThrow(); break;
+            case PC_THROW_STATE.S_FULLYCHARGED: RUN_FullyChargedThrow(); break;
+            case PC_THROW_STATE.S_RECOVERING: RUN_RecoveringThrow(); break;
         }
+
+        Debug.Log("State: " + mThrowState);
+    }
+
+    private void ThrowBall()
+    {
+        PROJ_Football clone = Instantiate(PF_Football, mThrowPoint.transform.position, transform.rotation);
+
+        // now we add in the innacuracy.
+        // x inaccuracy feels better than y inaccuracy, which can look really stupid.
+        float fXAcc = Random.Range(-GB_TotalInaccuracy.Val, GB_TotalInaccuracy.Val) / 100f;
+        float fYAcc = Random.Range(-GB_TotalInaccuracy.Val, GB_TotalInaccuracy.Val) / 100f;
+        fYAcc /= IO_Settings.mSet.lInaccuracyBias;
+        Vector3 vThrowDir = cCam.transform.forward;
+        vThrowDir.x += fXAcc; vThrowDir.y += fYAcc;
+        vThrowDir = Vector3.Normalize(vThrowDir);
+
+        clone.GetComponent<Rigidbody>().velocity = vThrowDir * mThrowChrg.Val * IO_Settings.mSet.lPlayerData.mThrowSpd;
+        mThrowChrg.Val = 0f;
+
+        mThrowMax.Val = 1f;
+        mThrowState = PC_THROW_STATE.S_RECOVERING;
+        GE_QB_ReleaseBall.Raise(null);
+
+        SetInaccuraciesToZero();
+        Invoke("CanThrowAgain", 1.0f);
+    }
+
+    private void RUN_NotThrowing()
+    {
+        if(Input.GetMouseButton(0)){
+            mThrowMax.Val = IO_Settings.mSet.lPlayerData.mThrowSpd;
+            GE_QB_StartThrow.Raise(null);
+            mThrowStartAngle = cCam.transform.forward;
+
+            mThrowState = PC_THROW_STATE.S_CHARGING;
+        }
+    }
+
+    private void RUN_ChargingThrow()
+    {
+        // RMB stops throw
+        if(Input.GetMouseButton(1)){
+            GE_QB_StopThrow.Raise(null);
+            return;
+        }
+
+        // Alright, this is what needs to be changed. Throw power should not charge linearly, it should charge logarithmically.
+        float fChrgPct = mThrowChrg.Val;
+        float fChargeAmt = Time.deltaTime * (1/IO_Settings.mSet.lPlayerData.mThrowChargeTime);
+        fChargeAmt -= fChargeAmt*(fChrgPct);           // gives us right side of bell curve.
+        // but now we also have to factor in that we charge faster when closer to 0.
+        // fChargeAmt *= (1-mThrowChrg.Val) * 2f;              // so when at 0, x as fast. When at 1, 0 charge speed.
+        mThrowChrg.Val += fChargeAmt;
+        if(mThrowChrg.Val > 1f){
+            mThrowState = PC_THROW_STATE.S_FULLYCHARGED;
+            mThrowChrg.Val = 1f;
+        }
+
+        // Now handle the look inaccuracy
+        mThrowAngle.Val = cCam.transform.forward;
+
+        HandleThrowModifiers();
+
+        if(Input.GetMouseButtonUp(0)){
+            ThrowBall();
+        }
+
+    }
+
+    private void RUN_FullyChargedThrow()
+    {
+        // RMB stops throw
+        if(Input.GetMouseButton(1)){
+            GE_QB_StopThrow.Raise(null);
+            return;
+        }
+
+        // now here's where the throw "decays"
+
+        // ---------- And now the same
+        mThrowAngle.Val = cCam.transform.forward;
+
+        HandleThrowModifiers();
+
+        if(Input.GetMouseButtonUp(0)){
+            ThrowBall();
+        }
+    }
+
+    private void RUN_RecoveringThrow()
+    {
+
     }
 
     /****************************************************************************************************
@@ -279,15 +335,16 @@ public class PC_Controller : MonoBehaviour
     // They clutch the ball and decide not to throw.
     public void ThrowStopped()
     {
+        mThrowMax.Val = IO_Settings.mSet.lPlayerData.mThrowSpd;
+
+        mThrowState = PC_THROW_STATE.S_RECOVERING;
         SetInaccuraciesToZero();
-        mCanThrow = false;
-        mChargingThrow = false;
         mThrowChrg.Val = 0f;
         Invoke("CanThrowAgain", 1.0f);
     }
 
     private void CanThrowAgain()
     {
-        mCanThrow = true;
+        mThrowState = PC_THROW_STATE.SNOT_THROWING;
     }
 }
