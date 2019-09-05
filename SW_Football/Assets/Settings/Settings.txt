@@ -2,8 +2,8 @@ Player
 Acc:100
 Spd:5.210065
 Charge Slow:3
-Charge Time:0.5
-Throw Power:25
+Charge Time:0.3
+Throw Power:10
 ------------------------------------
 Look Inaccuracy Y Axis Bias:5
 Look Penalty:60

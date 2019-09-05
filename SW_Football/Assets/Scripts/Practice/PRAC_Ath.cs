@@ -1,9 +1,20 @@
 ﻿/*************************************************************************************
 Just stores the damn info for the play.
+
+Actual way collisions need to be done, is the next frame. Oh but wait, we need to store their
+velocity and weight (and probably like 10 other things before we're done)
 *************************************************************************************/
 using UnityEngine;
 using System.Collections.Generic;
 
+// Hitter is the thing that hit us last frame. We need to store it's weight and velocity.
+[System.Serializable]
+public struct DATA_Hitter
+{
+    public float               mWgt;
+    public Vector3             mVel;
+    public Vector3             mPos;
+}
 
 public class PRAC_Ath : MonoBehaviour
 {
@@ -18,6 +29,8 @@ public class PRAC_Ath : MonoBehaviour
     private Rigidbody               cRigid;
     private PRAC_AI_Acc             cAcc;
 
+    public bool                     mHitLastFrame = false;
+    public DATA_Hitter              dThingThatHitUs;
 
     public DT_PlayerRole            mJob;
 
@@ -35,6 +48,12 @@ public class PRAC_Ath : MonoBehaviour
             case PRAC_ATH_STATE.SPRE_SNAP: RUN_PreSnap(); break;
             case PRAC_ATH_STATE.SDOING_JOB: RUN_Job(); break;
             case PRAC_ATH_STATE.SPOST_PLAY: RUN_PostPlay(); break;
+        }
+
+        if(mHitLastFrame)
+        {
+            HandleGettingBumped();
+            mHitLastFrame = false;
         }
 
     }
@@ -71,38 +90,40 @@ public class PRAC_Ath : MonoBehaviour
     {
         if(collision.transform.GetComponent<PRAC_Ath>() != null)
         {
-            // The direction from them to us.
-            Vector3 vDirThemToUs = transform.position - collision.transform.position;
-            vDirThemToUs = Vector3.Normalize(vDirThemToUs);
-
-            // Now get the momentum they have.
-            float mWgt = 100f;          // just giving everyone 100 lbs for now.
-
-            Vector3 vTheirVelIntoUs = vDirThemToUs * Vector3.Dot(collision.rigidbody.velocity, vDirThemToUs);
-            Vector3 vOurVelAwayFromThem = vDirThemToUs * Vector3.Dot(cRigid.velocity, vDirThemToUs);
-
-            Vector3 vTheirRelativeVelIntoUs = vTheirVelIntoUs - vOurVelAwayFromThem;
-
-            if(Vector3.Dot(vTheirRelativeVelIntoUs, vDirThemToUs) < 0f)
-            {
-                Debug.Log("Probably due to ordering, they are not moving into us");
-                return;
-            }
-
-            // although we do have to give a little more or we might have elastic collisions.
-            Vector3 vTheirForceIntoUs = vTheirRelativeVelIntoUs * mWgt;
-            
-            vTheirForceIntoUs /= mWgt;                  // simulating our weight dampening a blow.
-
-            vTheirForceIntoUs *= 100f;           // debugging.
-
-            cRigid.velocity += vTheirForceIntoUs;
+            dThingThatHitUs.mPos = collision.transform.position;
+            dThingThatHitUs.mVel = collision.rigidbody.velocity;
+            dThingThatHitUs.mWgt = 100f;            // cause fuck it.
+            mHitLastFrame = true;
         }
     }
 
-    // We call this on the opposing athlete, as well.
-    public void FChangeVelAfterCol(PRAC_Ath other)
+    private void HandleGettingBumped()
     {
+        // The direction from them to us.
+        Vector3 vDirThemToUs = transform.position - dThingThatHitUs.mPos;
+        vDirThemToUs = Vector3.Normalize(vDirThemToUs);
+
+        // Now get the momentum they have.
+        float mWgt = 100f;          // just giving everyone 100 lbs for now.
+
+        Vector3 vTheirVelIntoUs = vDirThemToUs * Vector3.Dot(dThingThatHitUs.mVel, vDirThemToUs);
+        Vector3 vOurVelAwayFromThem = vDirThemToUs * Vector3.Dot(cRigid.velocity, vDirThemToUs);
+
+        Vector3 vTheirRelativeVelIntoUs = vTheirVelIntoUs - vOurVelAwayFromThem;
+
+        if(Vector3.Dot(vTheirRelativeVelIntoUs, vDirThemToUs) < 0f)
+        {
+            return;
+        }
+
+        // although we do have to give a little more or we might have elastic collisions.
+        Vector3 vTheirForceIntoUs = vTheirRelativeVelIntoUs * mWgt;
         
+        vTheirForceIntoUs /= mWgt;                  // simulating our weight dampening a blow.
+
+        // vTheirForceIntoUs *= 100f;           // debugging.
+
+        cRigid.velocity += vTheirForceIntoUs;
     }
+
 }
