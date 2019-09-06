@@ -227,10 +227,16 @@ public class PC_Controller : MonoBehaviour
 
     }
 
+    // If they took something off the throw, then the throw decay rate is dampened.
     private void RUN_FullyChargedThrow()
     {
+        float fDampenEffects = mThrowMax.Val / IO_Settings.mSet.lPlayerData.mThrowSpd; 
+        fDampenEffects *= fDampenEffects;
+        float fInaccuracyRate = 50f * fDampenEffects;
+        float fPowerLossRate = 0.5f * fDampenEffects;
+
         // once the throw has decayed to half power, then it's just canceled.
-        if(mThrowChrg.Val < 0.5f)
+        if(mThrowChrg.Val < 0.5f * mThrowMax.Val / IO_Settings.mSet.lPlayerData.mThrowSpd)
         {
             GE_QB_StopThrow.Raise(null);
             return;
@@ -242,11 +248,10 @@ public class PC_Controller : MonoBehaviour
             return;
         }
 
-        GB_LookInaccuracy.Val += Time.deltaTime * 100f;
+        GB_LookInaccuracy.Val += Time.deltaTime * fInaccuracyRate;
 
         // now here's where the throw "decays"
-        float fChargeAmt = Time.deltaTime * (1/IO_Settings.mSet.lPlayerData.mThrowChargeTime);
-        mThrowChrg.Val -= fChargeAmt;
+        mThrowChrg.Val -= Time.deltaTime * fPowerLossRate;
 
         // ---------- And now the same
         mThrowAngle.Val = cCam.transform.forward;
