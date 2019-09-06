@@ -363,10 +363,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mPoints: []
-  mThrowPower: {fileID: 0}
+  mThrowPower: {fileID: 11400000, guid: cc532729a38ccb844bc2bfc7941d5f4e, type: 2}
   mThrowAngle: {fileID: 11400000, guid: 84c7a5618441c1a40b7f1931d95b33e5, type: 2}
-  QBRef: {fileID: 11400000, guid: aa0cdd5c33f3fed4db456a4cda6b4b00, type: 2}
-  PF_PointSphere: {fileID: 0}
+  PF_PointSphere: {fileID: 1751256783590958009, guid: d1c303a81fab8a040964aa80d65cb149,
+    type: 3}
 --- !u!114 &6010126757302104916
 MonoBehaviour:
   m_ObjectHideFlags: 0

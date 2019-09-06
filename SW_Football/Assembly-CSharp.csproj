@@ -129,6 +129,7 @@
      <Compile Include="Assets\Scripts\Plays\PLY_Controller.cs" />
      <Compile Include="Assets\Scripts\Plays\PLY_FirstDownMark.cs" />
      <Compile Include="Assets\Scripts\Plays\PLY_SnapSpot.cs" />
+     <Compile Include="Assets\Scripts\PP\AD_PP.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Arrow.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Man_Arr.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Man_Targ.cs" />
@@ -190,6 +191,7 @@
      <Compile Include="Assets\Scripts\TEST_Audio1.cs" />
      <Compile Include="Assets\Scripts\TEST_Build.cs" />
      <Compile Include="Assets\Scripts\TEST_LoadSet.cs" />
+     <Compile Include="Assets\Scripts\UI\GFX_UI_Traj.cs" />
      <Compile Include="Assets\Scripts\Utilities\LifeSpan.cs" />
      <Compile Include="Assets\Scripts\Utilities\SingletonBehaviour.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_Extensions.cs" />

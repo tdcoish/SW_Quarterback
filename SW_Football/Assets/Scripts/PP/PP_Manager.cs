@@ -44,6 +44,7 @@ public class PP_Manager : MonoBehaviour
     private PP_Man_Targ         cTargMan;
     private PP_Man_Arr          cArrMan;
     private PP_Man_Trophy       cTrophMan;
+    private AD_PP               cAud;
 
     public SO_Int               mScoreGlobal;
     public int                  mScore;
@@ -81,6 +82,7 @@ public class PP_Manager : MonoBehaviour
         cTargMan = GetComponent<PP_Man_Targ>();
         cArrMan = GetComponent<PP_Man_Arr>();
         cTrophMan = GetComponent<PP_Man_Trophy>();
+        cAud = GetComponent<AD_PP>();
 
         refPC = FindObjectOfType<PC_Controller>();
 
@@ -248,6 +250,7 @@ public class PP_Manager : MonoBehaviour
         {
             if(Time.time - mLastTimeInPocket >= 1f)
             {
+                cAud.FPlayClip(cAud.mOutOfPocket);
                 // this could be confusing, mLastTimeInPocket isn't actually the last time in pocket after a while.
                 mLastTimeInPocket = Time.time;
                 // this doesn't actually change the streak though.
@@ -277,6 +280,7 @@ public class PP_Manager : MonoBehaviour
         if(cTargMan.mActiveTarget == -1)
         {
             refUI.TXT_Instr.text = "No active receivers";
+            cAud.FPlayClip(cAud.mTargetFailure);
             ChangeScore(-50);
             return;
         }
@@ -285,11 +289,13 @@ public class PP_Manager : MonoBehaviour
         if(Time.time - cTargMan.refTargets[cTargMan.mActiveTarget].mLastTimeHit < 0.1f)
         {
             refUI.TXT_Instr.text = "NICE!";
+            cAud.FPlayClip(cAud.mTargetSuccess);
             ChangeScore(100);
             cTargMan.FDeactivateReceiver();
             return;
         }
 
+        cAud.FPlayClip(cAud.mTargetFailure);
         ChangeScore(-50);
         refUI.TXT_Instr.text = "Hit Wrong Receiver";
         cTargMan.FDeactivateReceiver();
@@ -314,6 +320,7 @@ public class PP_Manager : MonoBehaviour
             return;
         }
 
+        cAud.FPlayClip(cAud.mSacked);
         Color col = refUI.mSackedTxt.color;
         col.a = 1f;
         refUI.mSackedTxt.color = col;
@@ -375,6 +382,7 @@ public class PP_Manager : MonoBehaviour
 
     public void OnBallHitGround()
     {
+        cAud.FPlayClip(cAud.mBallHitGround);
         refUI.mSackImmunityTxt.text = "Sack Immunity: NO";
         mSackImmunity = false;
         DestroyFootballs();

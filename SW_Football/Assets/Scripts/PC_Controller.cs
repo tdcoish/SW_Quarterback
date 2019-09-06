@@ -205,6 +205,7 @@ public class PC_Controller : MonoBehaviour
         // Alright, this is what needs to be changed. Throw power should not charge linearly, it should charge logarithmically.
         float fChrgPct = mThrowChrg.Val;
         float fChargeAmt = Time.deltaTime / IO_Settings.mSet.lPlayerData.mReleaseTime;
+        fChargeAmt *= (mThrowMax.Val) / IO_Settings.mSet.lPlayerData.mThrowSpd;           // the slower they want to throw, the slower it charges.
         // float fChargeAmt = Time.deltaTime / 5f;
         fChargeAmt -= fChargeAmt*(fChrgPct*fChrgPct);           // gives us right side of bell curve.
         // but now we also have to factor in that we charge faster when closer to 0.
