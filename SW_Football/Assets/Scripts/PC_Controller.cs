@@ -203,7 +203,7 @@ public class PC_Controller : MonoBehaviour
         }
 
         // Alright, this is what needs to be changed. Throw power should not charge linearly, it should charge logarithmically.
-        float fChrgPct = mThrowChrg.Val;
+        float fChrgPct = IO_Settings.mSet.lPlayerData.mThrowSpd * mThrowChrg.Val / mThrowMax.Val;
         float fChargeAmt = Time.deltaTime / IO_Settings.mSet.lPlayerData.mReleaseTime;
         fChargeAmt *= (mThrowMax.Val) / IO_Settings.mSet.lPlayerData.mThrowSpd;           // the slower they want to throw, the slower it charges.
         // float fChargeAmt = Time.deltaTime / 5f;
@@ -227,11 +227,16 @@ public class PC_Controller : MonoBehaviour
 
     }
 
-    // If they took something off the throw, then the throw decay rate is dampened.
+    /******************************************************************************
+    Alright, I'm sort of cheekily running two states in here. The first is after we get to the top, there's 
+    a brief moment where nothing decays, then things decay really fast.
+
+    If you've charged fully, then you just immediatley decay. However, if not, then you decay only after a while.
+    ******************************************************************************/
     private void RUN_FullyChargedThrow()
     {
         float fDampenEffects = mThrowMax.Val / IO_Settings.mSet.lPlayerData.mThrowSpd; 
-        fDampenEffects *= fDampenEffects;
+        fDampenEffects *= fDampenEffects * fDampenEffects * fDampenEffects;
         float fInaccuracyRate = 50f * fDampenEffects;
         float fPowerLossRate = 0.5f * fDampenEffects;
 
