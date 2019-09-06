@@ -4,6 +4,7 @@ Spd:5.210065
 Charge Slow:3
 Charge Time:0.3
 Throw Power:25.43449
+Release Time:1.20574
 ------------------------------------
 Look Inaccuracy Y Axis Bias:5
 Look Penalty:60

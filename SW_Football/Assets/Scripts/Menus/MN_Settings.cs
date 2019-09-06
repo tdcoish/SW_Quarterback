@@ -30,6 +30,9 @@ public class MN_Settings : MonoBehaviour
     public Slider           mSLDMaxThrowPow;
     public Text             mTXTMaxThrowPow;
 
+    public Slider           mSLDReleaseTime;
+    public Text             mTXTReleaseTime;
+
     public Slider           mSLDLookSensitivity;
     public Text             mTXTLookSensitivity;
 
@@ -52,12 +55,12 @@ public class MN_Settings : MonoBehaviour
         mSLDMoveSpd.value = IO_Settings.mSet.lPlayerData.mMoveSpd;
         mSLDAccRate.value = IO_Settings.mSet.lPlayerData.mAccRate;
         mSLDMaxThrowPow.value = IO_Settings.mSet.lPlayerData.mThrowSpd;
+        mSLDReleaseTime.value = IO_Settings.mSet.lPlayerData.mReleaseTime;
         mSLDLookSensitivity.value = IO_Settings.mSet.lLookSensitity;
         mSLDMovementPenalty.value = IO_Settings.mSet.lMovementPenalty;
         mSLDLookPenalty.value = IO_Settings.mSet.lLookPenalty;
         mSLDInaccuracyBias.value = IO_Settings.mSet.lInaccuracyBias;
         mSLDMasterVolume.value = IO_Settings.mSet.lMasterVolume;
-
     }  
     
     public void OnMovementSpeedChanged()
@@ -76,6 +79,12 @@ public class MN_Settings : MonoBehaviour
     {
         IO_Settings.mSet.lPlayerData.mThrowSpd = mSLDMaxThrowPow.value;
         mTXTMaxThrowPow.text = "Throw Power: " + (int)IO_Settings.mSet.lPlayerData.mThrowSpd;
+    }
+
+    public void OnReleaseTimeChanged()
+    {
+        IO_Settings.mSet.lPlayerData.mReleaseTime = mSLDReleaseTime.value;
+        mTXTReleaseTime.text = "Release Time: " + System.Math.Round(IO_Settings.mSet.lPlayerData.mReleaseTime, 1);
     }
 
     public void OnLookSensitivityChanged()

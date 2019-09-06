@@ -177,6 +177,9 @@ public class PC_Controller : MonoBehaviour
             mThrowStartAngle = cCam.transform.forward;
 
             mThrowState = PC_THROW_STATE.S_CHARGING;
+
+            // Start the throw at not zero.
+            mThrowChrg.Val = 0.2f;
         }
     }
 
@@ -199,8 +202,6 @@ public class PC_Controller : MonoBehaviour
             mThrowState = PC_THROW_STATE.S_FULLYCHARGED;
             mTimeThrowCharged = Time.time;
             mThrowChrg.Val = 1f;
-        }else{
-            Debug.Log(mThrowChrg.Val);
         }
 
         // Now handle the look inaccuracy

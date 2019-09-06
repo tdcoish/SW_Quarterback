@@ -13,6 +13,7 @@ public class DATA_Player
     public float                mShiftChargeSlow = 3f;      // how much slower they charge the throw power with shift
     public float                mThrowChargeTime = 2f;
     public float                mThrowSpd = 25f;
+    public float                mReleaseTime = 0.5f;
 }
 
 [System.Serializable]
@@ -56,6 +57,9 @@ public static class IO_Settings
         sLine = sr.ReadLine();
         k = sLine.IndexOf(':') + 1;
         mSet.lPlayerData.mThrowSpd = float.Parse(sLine.Substring(k));
+        sLine = sr.ReadLine();
+        k = sLine.IndexOf(':') + 1;
+        mSet.lPlayerData.mReleaseTime = float.Parse(sLine.Substring(k));
 
         // ------------------------------ Everything else
         sr.ReadLine();
@@ -88,6 +92,7 @@ public static class IO_Settings
         sw.WriteLine("Charge Slow:" + mSet.lPlayerData.mShiftChargeSlow.ToString());
         sw.WriteLine("Charge Time:" + mSet.lPlayerData.mThrowChargeTime.ToString());
         sw.WriteLine("Throw Power:" + mSet.lPlayerData.mThrowSpd.ToString());
+        sw.WriteLine("Release Time:" + mSet.lPlayerData.mReleaseTime.ToString());
         sw.WriteLine("------------------------------------");
         sw.WriteLine("Look Inaccuracy Y Axis Bias:" + mSet.lInaccuracyBias.ToString());
         sw.WriteLine("Look Penalty:" + mSet.lLookPenalty.ToString());
