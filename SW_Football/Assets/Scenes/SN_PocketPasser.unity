@@ -3860,6 +3860,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: QB_UI (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6010126757302104925, guid: d863a127168eefa498ce989bf9582789,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6010126757302104915, guid: d863a127168eefa498ce989bf9582789,
         type: 3}
       propertyPath: m_LocalPosition.x

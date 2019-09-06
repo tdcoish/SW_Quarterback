@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /******************************************************************************************
-Two camera modes, one handles like FPS, other handles like Half Life 2 vehicle controls, where 
+Two camera modes, one handles like FPS, other handles like Half Life 2 vehicle controls, where
 movement is independent of where the camera is looking.
 
 New update for inaccuracy. We have instantaneous bump, say of +5, then we have over time effects,
@@ -11,7 +11,7 @@ on top of that. As an example, if moving gives you +5, and you're already at +3 
 to +5, then you start stacking the over time effects.
 
 Throwing now needs some state added. We can not be throwing, be charging up, or be overcharged.
-If overcharged, then we lose accuracy and power and then have our throw terminated. 
+If overcharged, then we lose accuracy and power and then have our throw terminated.
 **************************************************************************************** */
 
 public class PC_Controller : MonoBehaviour
@@ -24,7 +24,7 @@ public class PC_Controller : MonoBehaviour
         SACTIVE
     }
     public PC_STATE                 mState;
-    
+
     public enum PC_THROW_STATE
     {
         SNOT_THROWING,
@@ -161,7 +161,6 @@ public class PC_Controller : MonoBehaviour
         clone.GetComponent<Rigidbody>().velocity = vThrowDir * mThrowChrg.Val * IO_Settings.mSet.lPlayerData.mThrowSpd;
         mThrowChrg.Val = 0f;
 
-        mThrowMax.Val = 1f;
         mThrowState = PC_THROW_STATE.S_RECOVERING;
         GE_QB_ReleaseBall.Raise(null);
 
@@ -169,17 +168,29 @@ public class PC_Controller : MonoBehaviour
         Invoke("CanThrowAgain", 1.0f);
     }
 
+    // Let's say that when you're not throwing, you can limit the strength of a throw, by pressing shift.
     private void RUN_NotThrowing()
     {
         if(Input.GetMouseButton(0)){
-            mThrowMax.Val = IO_Settings.mSet.lPlayerData.mThrowSpd;
+            // mThrowMax.Val = IO_Settings.mSet.lPlayerData.mThrowSpd;
             GE_QB_StartThrow.Raise(null);
             mThrowStartAngle = cCam.transform.forward;
 
             mThrowState = PC_THROW_STATE.S_CHARGING;
 
             // Start the throw at not zero.
-            mThrowChrg.Val = 0.2f;
+            mThrowChrg.Val = 8f/IO_Settings.mSet.lPlayerData.mThrowSpd;
+        }
+
+        // Limit the power of a throw, or set it back.
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            mThrowMax.Val -= Time.deltaTime * 10f;
+        }
+
+        if(Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            mThrowMax.Val =  IO_Settings.mSet.lPlayerData.mThrowSpd;
         }
     }
 
@@ -199,10 +210,9 @@ public class PC_Controller : MonoBehaviour
         // but now we also have to factor in that we charge faster when closer to 0.
         // fChargeAmt *= (1-mThrowChrg.Val) * 2f;              // so when at 0, x as fast. When at 1, 0 charge speed.
         mThrowChrg.Val += fChargeAmt;
-        if(mThrowChrg.Val > 0.99f){
+        if((mThrowChrg.Val * IO_Settings.mSet.lPlayerData.mThrowSpd) > (mThrowMax.Val * 0.98f)){
             mThrowState = PC_THROW_STATE.S_FULLYCHARGED;
             mTimeThrowCharged = Time.time;
-            mThrowChrg.Val = 1f;
         }
 
         // Now handle the look inaccuracy
@@ -253,12 +263,12 @@ public class PC_Controller : MonoBehaviour
     }
 
     /****************************************************************************************************
-    For the sake of the throw accuracy stuff, we need a momentum system. So it takes a little time to get 
+    For the sake of the throw accuracy stuff, we need a momentum system. So it takes a little time to get
     moving, and it takes a little time to stop moving. While moving, the accuracy of the throw is proportional
     to the percentage of max speed, multiplied by the natural innacuracy, of perhaps 10 degrees or so.
     ************************************************************************************************** */
     private void HandleMovement()
-    { 
+    {
         float fSideAcc = 0f;
         float fForAcc = 0f;
 
@@ -324,7 +334,7 @@ public class PC_Controller : MonoBehaviour
             }
 
             // we get instantaneous penalties, along with penalties over time.
-            GB_MoveInaccuracy.Val += fInstInac * Time.deltaTime;            
+            GB_MoveInaccuracy.Val += fInstInac * Time.deltaTime;
 
         }
 
@@ -360,6 +370,7 @@ public class PC_Controller : MonoBehaviour
 
     private void CanThrowAgain()
     {
+        mThrowMax.Val = IO_Settings.mSet.lPlayerData.mThrowSpd;
         mThrowState = PC_THROW_STATE.SNOT_THROWING;
     }
 }

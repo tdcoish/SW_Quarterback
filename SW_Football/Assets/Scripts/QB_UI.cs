@@ -65,7 +65,6 @@ public class QB_UI : MonoBehaviour
         }
         // Always show the maximum throw power bar.
         mThrowMaxBar.fillAmount = GB_ThrowMaxCharge.Val / IO_Settings.mSet.lPlayerData.mThrowSpd;
-        mThrowMaxBar.fillAmount = 1f;
 
         // How much should inaccuracy scale the image? Let's say that an inaccuracy of 1 degree is the norm, so we scale proportionally after that.
         float fCrossScale = GB_ThrowInaccuracy.Val;

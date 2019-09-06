@@ -140,6 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mState: 0
+  mThrowState: 0
   PF_Football: {fileID: 6657258591485634630, guid: 0baa2312c185fb84382d77e0f57288d9,
     type: 3}
   mThrowPoint: {fileID: 8715241793636834110}
