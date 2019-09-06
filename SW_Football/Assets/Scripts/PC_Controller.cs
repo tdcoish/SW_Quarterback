@@ -33,6 +33,7 @@ public class PC_Controller : MonoBehaviour
         S_RECOVERING
     }
     public PC_THROW_STATE           mThrowState;
+    private float                   mTimeThrowCharged;              // the time that the throw gets fully charged.
 
     [SerializeField]
     private PROJ_Football           PF_Football;
@@ -142,8 +143,6 @@ public class PC_Controller : MonoBehaviour
             case PC_THROW_STATE.S_FULLYCHARGED: RUN_FullyChargedThrow(); break;
             case PC_THROW_STATE.S_RECOVERING: RUN_RecoveringThrow(); break;
         }
-
-        Debug.Log("State: " + mThrowState);
     }
 
     private void ThrowBall()
@@ -196,9 +195,12 @@ public class PC_Controller : MonoBehaviour
         // but now we also have to factor in that we charge faster when closer to 0.
         // fChargeAmt *= (1-mThrowChrg.Val) * 2f;              // so when at 0, x as fast. When at 1, 0 charge speed.
         mThrowChrg.Val += fChargeAmt;
-        if(mThrowChrg.Val > 1f){
+        if(mThrowChrg.Val > 0.99f){
             mThrowState = PC_THROW_STATE.S_FULLYCHARGED;
+            mTimeThrowCharged = Time.time;
             mThrowChrg.Val = 1f;
+        }else{
+            Debug.Log(mThrowChrg.Val);
         }
 
         // Now handle the look inaccuracy
@@ -214,13 +216,24 @@ public class PC_Controller : MonoBehaviour
 
     private void RUN_FullyChargedThrow()
     {
+        // once the throw has decayed to half power, then it's just canceled.
+        if(mThrowChrg.Val < 0.5f)
+        {
+            GE_QB_StopThrow.Raise(null);
+            return;
+        }
+
         // RMB stops throw
         if(Input.GetMouseButton(1)){
             GE_QB_StopThrow.Raise(null);
             return;
         }
 
+        GB_LookInaccuracy.Val += Time.deltaTime * 100f;
+
         // now here's where the throw "decays"
+        float fChargeAmt = Time.deltaTime * (1/IO_Settings.mSet.lPlayerData.mThrowChargeTime);
+        mThrowChrg.Val -= fChargeAmt;
 
         // ---------- And now the same
         mThrowAngle.Val = cCam.transform.forward;
