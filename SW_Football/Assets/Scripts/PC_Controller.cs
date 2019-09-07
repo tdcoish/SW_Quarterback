@@ -341,14 +341,19 @@ public class PC_Controller : MonoBehaviour
 
     }
 
-    // This is assuming that we are in the process of throwing already.
-    // If they're below the minimal threshold for the base penalty, then we rapidly accelerate them there.
+    /*******************************************************************************************
+    The further along you are in the process of throwing, the worse accuracy penalties you'll get.
+    Think about it. If you're sprinting then have to do a little dump off, that's not that bad,
+    but if you're trying to hurl it down the field, that's really bad.
+    For now, modeling that to the power of 2.
+    ***************************************************************************************** */
     private void HandleThrowModifiers()
     {
         if(cRigid.velocity.magnitude > 0.1f){
             // Handle movement inaccuracy here.
             float fSpdPct = cRigid.velocity.magnitude/IO_Settings.mSet.lPlayerData.mMoveSpd;
             float fInstInac = fSpdPct * IO_Settings.mSet.lMovementPenalty;
+            fInstInac *= mThrowChrg.Val * mThrowChrg.Val;        // 0-1f
 
             if(GB_MoveInaccuracy.Val < fInstInac)
             {
@@ -364,6 +369,7 @@ public class PC_Controller : MonoBehaviour
         // When the dot == 0, then we get full inaccuracy, even worse if greater than 90*
         float fLookDot = Vector3.Dot(mThrowAngle.Val, mThrowStartAngle);
         float fLookInstInac = (1-fLookDot) *  IO_Settings.mSet.lLookPenalty;
+        fLookInstInac *= mThrowChrg.Val * mThrowChrg.Val;
         if(GB_LookInaccuracy.Val < fLookInstInac)
         {
             GB_LookInaccuracy.Val = fLookInstInac;
