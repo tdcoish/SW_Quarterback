@@ -11,10 +11,54 @@ Could probably have multi-layered state. Visible/Invisible, then different state
 of what's going on.
 
 Yep, we're bringing back the maximum throw power. This is because 
+
+Could just store like the last 10 frames of looking around, and then use that to sort of show looking around 
+inaccuracy?
 ******************************************************************************************* */
 
 using UnityEngine;
 using UnityEngine.UI;
+
+public class ForwardVecStorer
+{
+    private int                 mNumVecs;
+    public int                  mSize;
+    private int                 mInd;
+    public Vector3[]            mForwardVecsOverTime;           // basically this is where the camera is facing over time.
+
+    public ForwardVecStorer(int size)
+    {
+        mSize = size;
+        mNumVecs = 0;
+        mInd = 0;
+        mForwardVecsOverTime = new Vector3[size];
+    }
+
+    public void FStoreDirection(Vector3 vForward)
+    {
+        mForwardVecsOverTime[mInd++] = vForward;
+        if(mInd >= mSize){
+            mInd = 0;
+        }
+        mNumVecs++;
+    }
+
+    public float FGetDotOldFrames()
+    {
+        if(mNumVecs < mSize){
+            return 1.0f;
+        }else{
+            // mInd is always on the most out of date vector.
+            int curInd = mInd - 1;
+            if(curInd < 0){
+                curInd = mSize-1;
+            }
+            Vector3 vCur = mForwardVecsOverTime[curInd];
+            Vector3 vOld = mForwardVecsOverTime[mInd];
+            return Vector3.Dot(vCur, vOld);
+        }
+    }
+}
 
 // Want to draw little bar representing the maximum "point" of the current throw.
 public class QB_UI : MonoBehaviour
@@ -32,6 +76,9 @@ public class QB_UI : MonoBehaviour
     public Image                mThrowMaxBar;
     public Image                mCrosshairs;
     public Image                mAccuracy;
+    public Image                mStaticInaccuraccy;         // even when we're not throwing, show the player sort of how accuracy is affected.
+
+    private ForwardVecStorer    mLookStorer;
 
     [SerializeField]
     private SO_Float            GB_ThrowCharge;
@@ -48,6 +95,8 @@ public class QB_UI : MonoBehaviour
     {
         mState = QB_UI_STATE.SNOTCHARGING;
         mBar.fillAmount = 0f;
+
+        mLookStorer = new ForwardVecStorer(50);
     }
 
     // Update is called once per frame
@@ -70,6 +119,13 @@ public class QB_UI : MonoBehaviour
         // How much should inaccuracy scale the image? Let's say that an inaccuracy of 1 degree is the norm, so we scale proportionally after that.
         float fCrossScale = GB_ThrowInaccuracy.Val;
         mAccuracy.transform.localScale = new Vector3(fCrossScale, fCrossScale, fCrossScale);
+
+        // ----------------------------------------- Look accuracy stuffs.
+        mLookStorer.FStoreDirection(FindObjectOfType<PC_Controller>().GetComponentInChildren<PC_Camera>().transform.forward);
+        float fLookDot = 1f - mLookStorer.FGetDotOldFrames();
+        fLookDot *= IO_Settings.mSet.lLookPenalty / 5f;
+        // Here we have to calculate what the accuracy is.
+        mStaticInaccuraccy.transform.localScale = new Vector3(fLookDot, fLookDot, fLookDot);
     }
 
     public void ShowThrowBar()
