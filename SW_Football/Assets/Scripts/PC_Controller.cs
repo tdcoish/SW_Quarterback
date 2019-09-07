@@ -182,7 +182,7 @@ public class PC_Controller : MonoBehaviour
             mThrowChrg.Val = 8f/IO_Settings.mSet.lPlayerData.mThrowSpd;
         }
 
-        // Limit the power of a throw, or set it back.
+        // Limit the power of a throw, or set it back. Actually, you can do this when charging as well.
         if(Input.GetKey(KeyCode.LeftShift))
         {
             mThrowMax.Val -= Time.deltaTime * 10f;
@@ -223,6 +223,17 @@ public class PC_Controller : MonoBehaviour
 
         if(Input.GetMouseButtonUp(0)){
             ThrowBall();
+        }
+
+        // Limit the power of a throw, or set it back. Actually, you can do this when charging as well.
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            mThrowMax.Val -= Time.deltaTime * 10f;
+        }
+
+        if(Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            mThrowMax.Val =  IO_Settings.mSet.lPlayerData.mThrowSpd;
         }
 
     }
