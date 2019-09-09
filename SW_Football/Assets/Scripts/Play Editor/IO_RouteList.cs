@@ -23,39 +23,15 @@ public static class IO_RouteList
     // Will return false if the write was a failure.
     public static bool FWRITE_ROUTE(DATA_Route route)
     {
-        if(route.mName == string.Empty)
-        {
-            Debug.Log("Can't save un-named route");
-            return false;
+        string sName =route.mName;
+        StreamWriter sw = new StreamWriter(Application.dataPath+"/Plays/Routes/"+sName+".txt");
+        sw.WriteLine(route.mName);
+        sw.WriteLine(route.mSpots.Length);
+        for(int j=0; j<route.mSpots.Length; j++){
+            sw.Write("("+route.mSpots[j].x+","+route.mSpots[j].y+")");
         }
 
-        string path = Application.dataPath+"/Plays/Routes/"+route.mName+".bin";
-
-        // // first check if that route already exists.
-        // string[] fPathNames = Directory.GetFiles(path, "*.bin");
-        // path += route.mName+".bin";
-        // foreach(string sName in fPathNames)
-        // {
-        //     if(sName == path)
-        //     {
-        //         Debug.Log("Error. Route name conflict.");
-        //         return;
-        //     }
-        // }
-
-        BinaryWriter bw = new BinaryWriter(new FileStream(path, FileMode.Create));
-        bw.Write(route.mName);
-        bw.Write(route.mSpots.Length);
-        foreach (Vector2 vec2 in route.mSpots)
-        {
-            bw.Write(vec2.x);
-            bw.Write(vec2.y);
-        }
-
-        bw.Close();
-
-        // You know, we really might as well just always reload
-        FLOAD_ROUTES();
+        sw.Close();
 
         return true;
     }
@@ -76,24 +52,27 @@ public static class IO_RouteList
     public static void FLOAD_ROUTES()
     {
         Debug.Log("Loading/Reloading routes");
-        string path = Application.dataPath+"/Plays/Routes/";
 
-        string[] fPathNames = Directory.GetFiles(path, "*.bin");
-
+        string sPath = Application.dataPath+"/Plays/Routes/";
+        string[] fPathNames = Directory.GetFiles(sPath, "*.txt");
         mRoutes = new DATA_Route[fPathNames.Length];
-        for(int i=0; i<fPathNames.Length; i++)
+
+        for(int j=0; j<mRoutes.Length; j++)
         {
-            BinaryReader br = new BinaryReader(new FileStream(fPathNames[i], FileMode.Open));
-            mRoutes[i] = new DATA_Route();
-            mRoutes[i].mName = br.ReadString();
-            mRoutes[i].mSpots = new Vector2[br.ReadInt32()];
-            for(int j=0; j<mRoutes[i].mSpots.Length; j++)
+            StreamReader sr = new StreamReader(sPath);
+            string sLine = string.Empty;
+            DATA_Route rt = new DATA_Route();
+            rt.mName = sr.ReadLine();
+            rt.mSpots = new Vector2[int.Parse(sr.ReadLine())];
+            for(int i=0; i<rt.mSpots.Length; i++)
             {
-                mRoutes[i].mSpots[j].x = br.ReadSingle();
-                mRoutes[i].mSpots[j].y = br.ReadSingle();
+                sLine = sr.ReadLine();
+                rt.mSpots[i] = UT_Strings.FGetVecFromString(sLine);
             }
 
-            br.Close();
+            sr.Close();
+            
+            mRoutes[j] = rt;
         }
     }
 
@@ -115,12 +94,20 @@ public static class IO_RouteList
         return null;
     }
 
+    // Here we save the routes as individual files
+    public static void FWRITE_ALL_ROUTES_AS_TEXT()
+    {
+        for(int i=0; i<mRoutes.Length; i++)
+        {
+            FWRITE_ROUTE(mRoutes[i]);
+        }
+    }
+
     // Here we take our already loaded binary files, and convert them to text files.
-    public static void FCONVERT_TO_TEXT_FILES()
+    public static void FCONVERT_TO_SINGLE_TEXT_FILE()
     {
         // need the num of routes? Sure.
         StreamWriter sw = new StreamWriter(Application.dataPath+"/RoutesText/routes.txt");
-        sw.WriteLine("This is a test");
         sw.WriteLine(mRoutes.Length);
         for(int i=0; i<mRoutes.Length; i++)
         {

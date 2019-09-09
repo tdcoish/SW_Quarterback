@@ -42,6 +42,8 @@ public class MN_Splash : MonoBehaviour
         IO_Settings.FLOAD_SETTINGS();
         IO_ZoneList.FLOAD_ZONES();
 
+        IO_RouteList.FWRITE_ALL_ROUTES_AS_TEXT();
+
         mState = SplashState.SLOGO;
 
         ENTER_Logo();
