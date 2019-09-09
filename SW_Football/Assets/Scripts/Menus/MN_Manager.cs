@@ -43,6 +43,16 @@ public class MN_Manager : MonoBehaviour
 
     }
 
+    public void OnPressedEnterMainMenu()
+    {
+        ScreenTransition("Main");
+    }
+
+    public void BT_Play()
+    {
+        ScreenTransition("Play_LOAD");
+    }
+
     public void OnPressedPocketPasser()
     {
         ScreenTransition("PP");

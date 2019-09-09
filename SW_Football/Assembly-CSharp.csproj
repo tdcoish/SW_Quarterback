@@ -96,10 +96,12 @@
      <Compile Include="Assets\Scripts\GE_System\GE_Event.cs" />
      <Compile Include="Assets\Scripts\GE_System\GE_Listener.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_Manager.cs" />
+     <Compile Include="Assets\Scripts\Menus\MN_Play_LOAD.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_PP_LOAD.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_QuitScreen.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_Screen.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_Settings.cs" />
+     <Compile Include="Assets\Scripts\Menus\MN_Splash.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_Transition.cs" />
      <Compile Include="Assets\Scripts\PC_Camera.cs" />
      <Compile Include="Assets\Scripts\PC_Controller.cs" />
@@ -171,6 +173,7 @@
      <Compile Include="Assets\Scripts\Practice\PRAC_ShowDefense.cs" />
      <Compile Include="Assets\Scripts\Practice\PRAC_UI.cs" />
      <Compile Include="Assets\Scripts\Practice\PRS_AssignMan.cs" />
+     <Compile Include="Assets\Scripts\PreSport\MAN_ShowMatchup.cs" />
      <Compile Include="Assets\Scripts\PROJ_Football.cs" />
      <Compile Include="Assets\Scripts\QB_UI.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_Field.cs" />
@@ -186,6 +189,7 @@
      <Compile Include="Assets\Scripts\Settings\IO_Settings.cs" />
      <Compile Include="Assets\Scripts\SO_Data\DT_Route.cs" />
      <Compile Include="Assets\Scripts\SO_Data\DT_TrophyValues.cs" />
+     <Compile Include="Assets\Scripts\Sport\MAN_Sport.cs" />
      <Compile Include="Assets\Scripts\TEMP_FileStoring.cs" />
      <Compile Include="Assets\Scripts\TEMP_TestAudio.cs" />
      <Compile Include="Assets\Scripts\TEST_Audio1.cs" />
