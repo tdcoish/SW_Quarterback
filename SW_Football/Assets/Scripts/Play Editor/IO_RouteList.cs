@@ -28,7 +28,7 @@ public static class IO_RouteList
         sw.WriteLine(route.mName);
         sw.WriteLine(route.mSpots.Length);
         for(int j=0; j<route.mSpots.Length; j++){
-            sw.Write("("+route.mSpots[j].x+","+route.mSpots[j].y+")");
+            sw.WriteLine("("+route.mSpots[j].x+","+route.mSpots[j].y+")");
         }
 
         sw.Close();
@@ -59,7 +59,7 @@ public static class IO_RouteList
 
         for(int j=0; j<mRoutes.Length; j++)
         {
-            StreamReader sr = new StreamReader(sPath);
+            StreamReader sr = new StreamReader(fPathNames[j]);
             string sLine = string.Empty;
             DATA_Route rt = new DATA_Route();
             rt.mName = sr.ReadLine();
