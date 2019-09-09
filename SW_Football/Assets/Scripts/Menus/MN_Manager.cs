@@ -58,6 +58,11 @@ public class MN_Manager : MonoBehaviour
         ScreenTransition("PP");
     }
 
+    public void BT_RoutePasser()
+    {
+        ScreenTransition("RP_LOAD");
+    }
+
     public void OnPressedPlayPP()
     {
         ScreenTransition("PP_Load");

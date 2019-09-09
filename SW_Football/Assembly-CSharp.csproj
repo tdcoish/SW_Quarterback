@@ -99,6 +99,7 @@
      <Compile Include="Assets\Scripts\Menus\MN_Play_LOAD.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_PP_LOAD.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_QuitScreen.cs" />
+     <Compile Include="Assets\Scripts\Menus\MN_RP_LOAD.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_Screen.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_Settings.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_Splash.cs" />
@@ -175,7 +176,9 @@
      <Compile Include="Assets\Scripts\Practice\PRS_AssignMan.cs" />
      <Compile Include="Assets\Scripts\PreSport\MAN_ShowMatchup.cs" />
      <Compile Include="Assets\Scripts\PROJ_Football.cs" />
-     <Compile Include="Assets\Scripts\QB_UI.cs" />
+     <Compile Include="Assets\Scripts\RoutePasser\RP_Manager.cs" />
+     <Compile Include="Assets\Scripts\RoutePasser\RP_Receiver.cs" />
+     <Compile Include="Assets\Scripts\RoutePasser\RP_ThrowSpot.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_Field.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_Mouse.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_NewRoute.cs" />
@@ -190,12 +193,13 @@
      <Compile Include="Assets\Scripts\SO_Data\DT_Route.cs" />
      <Compile Include="Assets\Scripts\SO_Data\DT_TrophyValues.cs" />
      <Compile Include="Assets\Scripts\Sport\MAN_Sport.cs" />
-     <Compile Include="Assets\Scripts\TEMP_FileStoring.cs" />
-     <Compile Include="Assets\Scripts\TEMP_TestAudio.cs" />
-     <Compile Include="Assets\Scripts\TEST_Audio1.cs" />
-     <Compile Include="Assets\Scripts\TEST_Build.cs" />
-     <Compile Include="Assets\Scripts\TEST_LoadSet.cs" />
+     <Compile Include="Assets\Scripts\TEST\TEMP_FileStoring.cs" />
+     <Compile Include="Assets\Scripts\TEST\TEMP_TestAudio.cs" />
+     <Compile Include="Assets\Scripts\TEST\TEST_Audio1.cs" />
+     <Compile Include="Assets\Scripts\TEST\TEST_Build.cs" />
+     <Compile Include="Assets\Scripts\TEST\TEST_LoadSet.cs" />
      <Compile Include="Assets\Scripts\UI\GFX_UI_Traj.cs" />
+     <Compile Include="Assets\Scripts\UI\QB_UI.cs" />
      <Compile Include="Assets\Scripts\Utilities\IO_ExampleCode.cs" />
      <Compile Include="Assets\Scripts\Utilities\LifeSpan.cs" />
      <Compile Include="Assets\Scripts\Utilities\SingletonBehaviour.cs" />
