@@ -7,10 +7,12 @@ using System.Collections.Generic;
 public class RP_Receiver : MonoBehaviour
 {
     public string                   mRoute;
+    public string                   mTag;
     private RP_Manager              rManager;
 
     private Rigidbody               cRigid;
     private OFF_RouteLog            cRouteLog;
+    private RP_CatchLog             cCatchLog;
 
     public enum STATE{
         SPRE_SNAP,
@@ -18,10 +20,15 @@ public class RP_Receiver : MonoBehaviour
         SPOST_PLAY
     }
     public STATE                    mState;
+    // public enum JOB_STATE{
+    //     S_ASSIGNMENT,
+    //     S_BREAK_ON_BALL
+    // }
 
     void Start()
     {
         cRouteLog = GetComponent<OFF_RouteLog>();
+        cCatchLog = GetComponent<RP_CatchLog>();
         cRigid = GetComponent<Rigidbody>();
         rManager = FindObjectOfType<RP_Manager>();
         mState = STATE.SPRE_SNAP;
@@ -47,7 +54,16 @@ public class RP_Receiver : MonoBehaviour
     private void RUN_Job()
     {
         cRigid.constraints = RigidbodyConstraints.None;
-        cRouteLog.FRunRoute();
+
+        RP_Manager rpMan = FindObjectOfType<RP_Manager>();
+        if(rpMan.mBallThrown)
+        {
+            Vector3 vSpot = cCatchLog.FCalcInterceptSpot();
+            Vector3 vDir = Vector3.Normalize(vSpot - transform.position);
+            GetComponent<PRAC_AI_Acc>().FCalcAcc(vDir);
+        }else{
+            cRouteLog.FRunRoute();
+        }
     }
 
     // Again, nothing. Eventually some animations or something.
@@ -76,4 +92,5 @@ public class RP_Receiver : MonoBehaviour
             rManager.OnBallCaught();
         }
     }
+
 }

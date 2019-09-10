@@ -176,9 +176,11 @@
      <Compile Include="Assets\Scripts\Practice\PRS_AssignMan.cs" />
      <Compile Include="Assets\Scripts\PreSport\MAN_ShowMatchup.cs" />
      <Compile Include="Assets\Scripts\PROJ_Football.cs" />
+     <Compile Include="Assets\Scripts\RoutePasser\RP_CatchLog.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_Hoop.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_Manager.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_Receiver.cs" />
+     <Compile Include="Assets\Scripts\RoutePasser\RP_ReceiverList.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_ThrowSpot.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_UI.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_Field.cs" />

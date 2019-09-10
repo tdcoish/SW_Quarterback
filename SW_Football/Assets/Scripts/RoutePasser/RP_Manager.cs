@@ -43,10 +43,10 @@ public class RP_Manager : MonoBehaviour
     public bool                 mBallCaught;
     public int                  mScore = 0;
     private bool                mInPocket;
+    public bool                 mBallThrown;
 
     // ---------------------------------
-    public Vector3              mRecStartPos;
-    public Vector3              mPCStartPos;
+    public RP_ReceiverList      rSet;
 
     void Awake()
     {
@@ -62,6 +62,8 @@ public class RP_Manager : MonoBehaviour
         rRecs = FindObjectsOfType<RP_Receiver>();
         rPocket = FindObjectOfType<RP_ThrowSpot>();
         rHoops = FindObjectsOfType<RP_Hoop>();
+
+        rSet.FStoreSet();
     }
 
     void Update()
@@ -95,15 +97,16 @@ public class RP_Manager : MonoBehaviour
 
         mUI.rPreSnapCanvas.gameObject.SetActive(true);
         rPC.mState = PC_Controller.PC_STATE.SPRE_SNAP;
-        rPC.transform.position = mPCStartPos;
+        rPC.transform.position = rSet.mPCSpot;
         foreach(RP_Receiver rec in rRecs)
         {
             rec.mState = RP_Receiver.STATE.SPRE_SNAP;
-            rec.transform.position = mRecStartPos;
+            rec.transform.position = rSet.FGetRecSpot(rec.mTag);
         }
         foreach(RP_Hoop hoop in rHoops)
         {
-            hoop.transform.LookAt(rPocket.transform.position);
+            hoop.transform.position = rSet.FGetRingSpot(hoop.mWRTag);
+            // hoop.transform.LookAt(rPocket.transform.position);
         }
     }
 
@@ -152,6 +155,7 @@ public class RP_Manager : MonoBehaviour
         mInPocket = false;
 
         // Now here's where we reset the receiver.
+        mBallThrown = false;
     }
     private void EXIT_POST_SNAP()
     {
@@ -227,6 +231,7 @@ public class RP_Manager : MonoBehaviour
     
     public void OnBallThrown()
     {
+        mBallThrown = true;
         if(!mInPocket)
         {
             HandlePlayResult("Threw from outside pocket. FAILURE.", false);
