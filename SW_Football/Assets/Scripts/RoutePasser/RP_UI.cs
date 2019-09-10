@@ -40,4 +40,9 @@ public class RP_UI : MonoBehaviour
             rPlayLiveCanvas.GetComponentInChildren<Text>().text = "IN POCKET";
         }
     }
+
+    public void FSetPostPlayText(string msg)
+    {
+        rPostPlayCanvas.GetComponentInChildren<Text>().text = msg;
+    }
 }

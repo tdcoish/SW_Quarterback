@@ -4,6 +4,16 @@ This is the game mode where you just throw to receivers. Eventually through hoop
 The actual game itself gives you six tries. After all six tries, they load up a new field
 with six more tires, and do this again. You get bonus points for getting all the hoops done
 early.
+
+Need to figure out what happened after the play stops being live.
+
+1) Receiver catches it after it goes through the hoop. Success.
+2) Receiver catches it but it doesn't go through the hoop, Failure.
+3) Goes through the hoop, but the receiver doesn't catch it. Failure.
+4) Doesn't go through the hoop AND the receiver doesn't catch it. Failure.
+5) Throw from outside the pocket. Failure.
+
+Points need to be allocated, and the UI text needs to be updated.
 *************************************************************************************/
 using UnityEngine;
 
@@ -105,6 +115,7 @@ public class RP_Manager : MonoBehaviour
     private void ENTER_POST_SNAP()
     {
         mState = STATE.S_POST_PLAY;
+        mUI.rPostPlayCanvas.gameObject.SetActive(true);
 
         rPC.mState = PC_Controller.PC_STATE.SINACTIVE;
         foreach(RP_Receiver rec in rRecs)
@@ -123,6 +134,10 @@ public class RP_Manager : MonoBehaviour
     }
     private void EXIT_LIVE()
     {
+        PROJ_Football[] footballs = FindObjectsOfType<PROJ_Football>();
+        foreach(PROJ_Football fb in footballs){
+            Destroy(fb.gameObject);
+        }
         mUI.rPlayLiveCanvas.gameObject.SetActive(false);
         mInPocket = false;
     }
@@ -156,8 +171,11 @@ public class RP_Manager : MonoBehaviour
 
     private void RUN_POST_PLAY()
     {
-        EXIT_POST_SNAP();
-        ENTER_PRESNAP();
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            EXIT_POST_SNAP();
+            ENTER_PRESNAP();
+        }
     }
 
     // ------------------------------ Things that happen in the world can trigger these.
@@ -171,18 +189,17 @@ public class RP_Manager : MonoBehaviour
         mBallCaught = true;
         if(mHitRing)
         {
-            Debug.Log("Hit both the ring and the target.");
-            mScore += 50;
-            mUI.FSetScoreText(mScore);
+            HandlePlayResult("Hit both the ring and the target. SUCCESS!", true);
         }
-        EXIT_LIVE();
-        ENTER_POST_SNAP();
+        HandlePlayResult("Missed Ring. FAILURE.", false);
     }
     public void OnBallHitGround()
     {
-        Debug.Log("Guess the play is over");
-        EXIT_LIVE();
-        ENTER_POST_SNAP();
+        if(!mHitRing){
+            HandlePlayResult("Missed the ring. FAILURE.", false);
+            return;
+        }
+        HandlePlayResult("Missed the player. FAILURE", false);
     }
 
     public void OnEnteredPocket()
@@ -192,6 +209,26 @@ public class RP_Manager : MonoBehaviour
     public void OnExitPocket()
     {
         mInPocket = false;
+    }
+    
+    public void OnBallThrown()
+    {
+        if(!mInPocket)
+        {
+            HandlePlayResult("Threw from outside pocket. FAILURE.", false);
+        }
+    }
+
+    private void HandlePlayResult(string msg, bool success)
+    {
+        if(success)
+        {
+            mScore += 50;
+        }
+        mUI.FSetPostPlayText(msg);
+
+        EXIT_LIVE();
+        ENTER_POST_SNAP();
     }
 
 }
