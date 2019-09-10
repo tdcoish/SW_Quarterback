@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/SN_Splash.unity
+- path: Assets/Scenes/SN_RoutePasser.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

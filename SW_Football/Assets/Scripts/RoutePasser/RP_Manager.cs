@@ -6,10 +6,10 @@ with six more tires, and do this again. You get bonus points for getting all the
 early.
 *************************************************************************************/
 using UnityEngine;
-using UnityEngine.UI;
 
 public class RP_Manager : MonoBehaviour
 {
+    private RP_UI               mUI;
 
     private enum STATE{
         S_INTRO_TEXT,
@@ -18,13 +18,6 @@ public class RP_Manager : MonoBehaviour
         S_POST_PLAY
     }
     private STATE               mState;
-
-    public Canvas               rIntroCanvas;
-    public Canvas               rPreSnapCanvas;
-    public Canvas               rPostPlayCanvas;
-
-    public Canvas               rScoreCanvas;
-    public Canvas               rPauseMenu;
 
     private PC_Controller       rPC;
     private RP_Receiver[]       rRecs;
@@ -45,6 +38,7 @@ public class RP_Manager : MonoBehaviour
 
     void Start()
     {
+        mUI = GetComponent<RP_UI>();
         mState = STATE.S_INTRO_TEXT;
         rPC = FindObjectOfType<PC_Controller>();
         rRecs = FindObjectsOfType<RP_Receiver>();
@@ -69,7 +63,7 @@ public class RP_Manager : MonoBehaviour
     {
         mState = STATE.S_INTRO_TEXT;
 
-        rIntroCanvas.gameObject.SetActive(true);
+        mUI.rIntroCanvas.gameObject.SetActive(true);
         rPC.mState = PC_Controller.PC_STATE.SINACTIVE;
         foreach(RP_Receiver rec in rRecs)
         {
@@ -81,7 +75,7 @@ public class RP_Manager : MonoBehaviour
     {
         mState = STATE.S_PRESNAP;
 
-        rPreSnapCanvas.gameObject.SetActive(true);
+        mUI.rPreSnapCanvas.gameObject.SetActive(true);
         rPC.mState = PC_Controller.PC_STATE.SPRE_SNAP;
         foreach(RP_Receiver rec in rRecs)
         {
@@ -96,6 +90,7 @@ public class RP_Manager : MonoBehaviour
     private void ENTER_LIVE()
     {
         mState = STATE.S_LIVE;
+        mUI.rPlayLiveCanvas.gameObject.SetActive(true);
 
         rPC.mState = PC_Controller.PC_STATE.SACTIVE;
         foreach(RP_Receiver rec in rRecs)
@@ -120,19 +115,20 @@ public class RP_Manager : MonoBehaviour
 
     private void EXIT_INTRO()
     {
-        rIntroCanvas.gameObject.SetActive(false);
+        mUI.rIntroCanvas.gameObject.SetActive(false);
     }
     private void EXIT_PRESNAP()
     {
-        rPreSnapCanvas.gameObject.SetActive(false);
+        mUI.rPreSnapCanvas.gameObject.SetActive(false);
     }
     private void EXIT_LIVE()
     {
+        mUI.rPlayLiveCanvas.gameObject.SetActive(false);
         mInPocket = false;
     }
     private void EXIT_POST_SNAP()
     {
-        rPostPlayCanvas.gameObject.SetActive(false);
+        mUI.rPostPlayCanvas.gameObject.SetActive(false);
     }
 
     private void RUN_INTRO()
@@ -155,7 +151,7 @@ public class RP_Manager : MonoBehaviour
 
     private void RUN_LIVE()
     {
-
+        mUI.FSetPocketText(mInPocket);
     }
 
     private void RUN_POST_PLAY()
@@ -177,7 +173,7 @@ public class RP_Manager : MonoBehaviour
         {
             Debug.Log("Hit both the ring and the target.");
             mScore += 50;
-            rScoreCanvas.GetComponentInChildren<Text>().text = "SCORE: " + mScore;
+            mUI.FSetScoreText(mScore);
         }
         EXIT_LIVE();
         ENTER_POST_SNAP();
@@ -191,11 +187,11 @@ public class RP_Manager : MonoBehaviour
 
     public void OnEnteredPocket()
     {
-        Debug.Log("Entered Pocket");
+        mInPocket = true;
     }
     public void OnExitPocket()
     {
-        Debug.Log("Exited Pocket");
+        mInPocket = false;
     }
 
 }
