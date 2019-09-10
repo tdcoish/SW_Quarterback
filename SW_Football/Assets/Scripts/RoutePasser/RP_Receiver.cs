@@ -40,11 +40,13 @@ public class RP_Receiver : MonoBehaviour
 
     private void RUN_PreSnap()
     {
-
+        cRigid.constraints = RigidbodyConstraints.FreezeAll;
+        cRigid.velocity = Vector3.zero;
     }
 
     private void RUN_Job()
     {
+        cRigid.constraints = RigidbodyConstraints.None;
         cRouteLog.FRunRoute();
     }
 
@@ -52,6 +54,7 @@ public class RP_Receiver : MonoBehaviour
     private void RUN_PostPlay()
     {
         cRigid.velocity = Vector3.zero;
+        cRigid.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     private void SetUpRoute()

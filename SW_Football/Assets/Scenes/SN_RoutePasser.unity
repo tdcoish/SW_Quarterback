@@ -1233,6 +1233,8 @@ MonoBehaviour:
   mHitRing: 0
   mBallCaught: 0
   mScore: 0
+  mRecStartPos: {x: 38, y: 0.3, z: 38}
+  mPCStartPos: {x: 27.5, y: 1, z: 37.5}
 --- !u!4 &681169789
 Transform:
   m_ObjectHideFlags: 0
@@ -3049,7 +3051,7 @@ PrefabInstance:
     - target: {fileID: 3682410719362811600, guid: f7cc1230e984bd44d9f391f450e6c0e1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 31.65
+      value: 29.38
       objectReference: {fileID: 0}
     - target: {fileID: 3682410719362811600, guid: f7cc1230e984bd44d9f391f450e6c0e1,
         type: 3}
@@ -3059,7 +3061,7 @@ PrefabInstance:
     - target: {fileID: 3682410719362811600, guid: f7cc1230e984bd44d9f391f450e6c0e1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 45.63
+      value: 47.72
       objectReference: {fileID: 0}
     - target: {fileID: 3682410719362811600, guid: f7cc1230e984bd44d9f391f450e6c0e1,
         type: 3}

@@ -14,6 +14,10 @@ Need to figure out what happened after the play stops being live.
 5) Throw from outside the pocket. Failure.
 
 Points need to be allocated, and the UI text needs to be updated.
+
+Now for resetting the receivers. We need to store receivers starting positions and routes.
+We also need to store which rings correspond to which receivers. Let's start with the hacky version.
+
 *************************************************************************************/
 using UnityEngine;
 
@@ -39,6 +43,10 @@ public class RP_Manager : MonoBehaviour
     public bool                 mBallCaught;
     public int                  mScore = 0;
     private bool                mInPocket;
+
+    // ---------------------------------
+    public Vector3              mRecStartPos;
+    public Vector3              mPCStartPos;
 
     void Awake()
     {
@@ -87,9 +95,11 @@ public class RP_Manager : MonoBehaviour
 
         mUI.rPreSnapCanvas.gameObject.SetActive(true);
         rPC.mState = PC_Controller.PC_STATE.SPRE_SNAP;
+        rPC.transform.position = mPCStartPos;
         foreach(RP_Receiver rec in rRecs)
         {
             rec.mState = RP_Receiver.STATE.SPRE_SNAP;
+            rec.transform.position = mRecStartPos;
         }
         foreach(RP_Hoop hoop in rHoops)
         {
@@ -140,6 +150,8 @@ public class RP_Manager : MonoBehaviour
         }
         mUI.rPlayLiveCanvas.gameObject.SetActive(false);
         mInPocket = false;
+
+        // Now here's where we reset the receiver.
     }
     private void EXIT_POST_SNAP()
     {
@@ -181,6 +193,7 @@ public class RP_Manager : MonoBehaviour
     // ------------------------------ Things that happen in the world can trigger these.
     public void OnThroughRing()
     {
+        Debug.Log("Hit ring");
         mHitRing = true;
     }
     // This will always happen second if things went well.
@@ -190,6 +203,7 @@ public class RP_Manager : MonoBehaviour
         if(mHitRing)
         {
             HandlePlayResult("Hit both the ring and the target. SUCCESS!", true);
+            return;
         }
         HandlePlayResult("Missed Ring. FAILURE.", false);
     }
