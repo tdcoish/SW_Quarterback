@@ -58,8 +58,20 @@ public class RP_Receiver : MonoBehaviour
         RP_Manager rpMan = FindObjectOfType<RP_Manager>();
         if(rpMan.mBallThrown)
         {
+            // ---------------------------- Get the spot to move to
             Vector3 vSpot = cCatchLog.FCalcInterceptSpot();
             Vector3 vDir = vSpot - transform.position; vDir.y = 0f;
+            vDir = Vector3.Normalize(vDir);
+            // ---------------------------- Find out if we're going to overrun it. If so, accelerate in the opposite direction.
+            // But that gets complicated if we're at a weird angle, so only do this if we're basically going straight there.
+            if(Vector3.Dot(vDir, Vector3.Normalize(cRigid.velocity)) > 0.99f){
+                Vector3 vProjectedSpot = vDir * (cRigid.velocity.magnitude/(vSpot - transform.position).magnitude);
+                if(Vector3.Dot(vSpot - vProjectedSpot, vDir) < 0f){
+                    Debug.Log("Overrunning");
+                    GetComponent<PRAC_AI_Acc>().FCalcAcc(Vector3.Normalize(-vDir));
+                    return;
+                }
+            }
             GetComponent<PRAC_AI_Acc>().FCalcAcc(Vector3.Normalize(vDir));
         }else{
             cRouteLog.FRunRoute();

@@ -605,6 +605,11 @@ PrefabInstance:
       propertyPath: mRoute
       value: DCrossL
       objectReference: {fileID: 0}
+    - target: {fileID: 6188296413336188218, guid: 6685f864c6a9e1d4786856b2e538ae99,
+        type: 3}
+      propertyPath: mSpd
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8497306960134077365, guid: 6685f864c6a9e1d4786856b2e538ae99, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6685f864c6a9e1d4786856b2e538ae99, type: 3}
@@ -3124,6 +3129,11 @@ PrefabInstance:
       propertyPath: mRoute
       value: Go
       objectReference: {fileID: 0}
+    - target: {fileID: 6188296413336188218, guid: 6685f864c6a9e1d4786856b2e538ae99,
+        type: 3}
+      propertyPath: mSpd
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8497306960134077365, guid: 6685f864c6a9e1d4786856b2e538ae99, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6685f864c6a9e1d4786856b2e538ae99, type: 3}
@@ -3470,6 +3480,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188296413336188218, guid: 6685f864c6a9e1d4786856b2e538ae99,
+        type: 3}
+      propertyPath: mSpd
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6685f864c6a9e1d4786856b2e538ae99, type: 3}
