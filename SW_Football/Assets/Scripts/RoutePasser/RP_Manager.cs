@@ -24,6 +24,7 @@ using UnityEngine;
 public class RP_Manager : MonoBehaviour
 {
     private RP_UI               mUI;
+    private RP_DrawRoutes       cRouteDrawer;
 
     private enum STATE{
         S_INTRO_TEXT,
@@ -32,6 +33,13 @@ public class RP_Manager : MonoBehaviour
         S_POST_PLAY
     }
     private STATE               mState;
+
+    public enum PRESNAP_STATE
+    {
+        SREADYTOSNAP,
+        SHIGHCAM
+    }
+    private PRESNAP_STATE       mPreState;
 
     private PC_Controller       rPC;
     private RP_Receiver[]       rRecs;
@@ -57,6 +65,8 @@ public class RP_Manager : MonoBehaviour
     void Start()
     {
         mUI = GetComponent<RP_UI>();
+        cRouteDrawer = GetComponent<RP_DrawRoutes>();
+        
         mState = STATE.S_INTRO_TEXT;
         rPC = FindObjectOfType<PC_Controller>();
         rRecs = FindObjectsOfType<RP_Receiver>();
@@ -94,6 +104,7 @@ public class RP_Manager : MonoBehaviour
     private void ENTER_PRESNAP()
     {
         mState = STATE.S_PRESNAP;
+        mPreState = PRESNAP_STATE.SREADYTOSNAP;
 
         mUI.rPreSnapCanvas.gameObject.SetActive(true);
         rPC.mState = PC_Controller.PC_STATE.SPRE_SNAP;
@@ -173,10 +184,26 @@ public class RP_Manager : MonoBehaviour
 
     private void RUN_PRESNAP()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            EXIT_PRESNAP();
-            ENTER_LIVE();
+        if(mPreState == PRESNAP_STATE.SREADYTOSNAP){
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                EXIT_PRESNAP();
+                ENTER_LIVE();
+            }
+            // Now here's where we show the play art.
+            if(Input.GetKeyDown(KeyCode.T))
+            {
+                // Go to high snap state.
+                cRouteDrawer.FShowRouteGraphics();
+                FindObjectOfType<CAM_PlayShowing>().FActivate();
+                mPreState = PRESNAP_STATE.SHIGHCAM;
+            }
+        }else if(mPreState == PRESNAP_STATE.SHIGHCAM){
+            if(Input.GetKeyDown(KeyCode.T)){
+                cRouteDrawer.FStopShowingRoutes();
+                FindObjectOfType<CAM_PlayShowing>().FDeactivate();
+                mPreState = PRESNAP_STATE.SREADYTOSNAP;
+            }
         }
     }
 

@@ -43,7 +43,9 @@ public class CAM_PlayShowing : MonoBehaviour
 
         // Now we want to look roughly at the snap spot, for now.
         PLY_SnapSpot snap = FindObjectOfType<PLY_SnapSpot>();
-        transform.LookAt(snap.transform.position, Vector3.up);
+        if(snap != null){
+            transform.LookAt(snap.transform.position, Vector3.up);
+        }
     }
 
     // On deactivate, when we get close is when we actually change everything else.
@@ -52,7 +54,9 @@ public class CAM_PlayShowing : MonoBehaviour
         transform.position = transform.position.Hermite(mPosToSnapTo, 0.2f);
 
         PLY_SnapSpot snap = FindObjectOfType<PLY_SnapSpot>();
-        transform.LookAt(snap.transform.position, Vector3.up);
+        if(snap != null){
+            transform.LookAt(snap.transform.position, Vector3.up);
+        }
 
         if(Vector3.Distance(transform.position, mPosToSnapTo) < 0.1f)
         {
@@ -93,6 +97,5 @@ public class CAM_PlayShowing : MonoBehaviour
         PC_Controller pc = FindObjectOfType<PC_Controller>();
         pc.GetComponentInChildren<Camera>().enabled = true;
         pc.GetComponentInChildren<AudioListener>().enabled = true;
-
     }
 }

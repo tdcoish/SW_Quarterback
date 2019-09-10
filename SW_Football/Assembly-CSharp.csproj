@@ -177,6 +177,7 @@
      <Compile Include="Assets\Scripts\PreSport\MAN_ShowMatchup.cs" />
      <Compile Include="Assets\Scripts\PROJ_Football.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_CatchLog.cs" />
+     <Compile Include="Assets\Scripts\RoutePasser\RP_DrawRoutes.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_Hoop.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_Manager.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_Receiver.cs" />

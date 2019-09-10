@@ -2,6 +2,8 @@
 When you hold down the button, we show the defensive play art.
 
 Doing this one first because it's easier to just spawn zones.
+
+UPDATE: Yes, this is now offense as well.
 *************************************************************************************/
 using UnityEngine;
 

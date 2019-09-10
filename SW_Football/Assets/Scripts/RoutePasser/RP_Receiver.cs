@@ -73,7 +73,7 @@ public class RP_Receiver : MonoBehaviour
             // But that gets complicated if we're at a weird angle, so only do this if we're basically going straight there.
             bool isOverrunning = false;
             if(Vector3.Dot(vDir, Vector3.Normalize(cRigid.velocity)) > 0.99f){
-                Vector3 vProjectedSpot = vDir * (cRigid.velocity.magnitude/(vSpot - transform.position).magnitude);
+                Vector3 vProjectedSpot = transform.position + (cRigid.velocity.magnitude * vDir);
                 if(Vector3.Dot(vSpot - vProjectedSpot, vDir) < 0f){
                     Debug.Log("Overrunning");
                     isOverrunning = true;
