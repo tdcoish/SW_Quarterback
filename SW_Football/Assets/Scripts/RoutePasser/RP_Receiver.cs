@@ -51,6 +51,13 @@ public class RP_Receiver : MonoBehaviour
         cRigid.velocity = Vector3.zero;
     }
 
+    public void FENTER_PRE_SNAP()
+    {
+        mState = STATE.SPRE_SNAP;
+        cRouteLog.mState = OFF_RouteLog.STATE.S_FOLLOWING;
+        SetUpRoute();
+    }
+
     private void RUN_Job()
     {
         cRigid.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezePositionY;
@@ -64,15 +71,18 @@ public class RP_Receiver : MonoBehaviour
             vDir = Vector3.Normalize(vDir);
             // ---------------------------- Find out if we're going to overrun it. If so, accelerate in the opposite direction.
             // But that gets complicated if we're at a weird angle, so only do this if we're basically going straight there.
+            bool isOverrunning = false;
             if(Vector3.Dot(vDir, Vector3.Normalize(cRigid.velocity)) > 0.99f){
                 Vector3 vProjectedSpot = vDir * (cRigid.velocity.magnitude/(vSpot - transform.position).magnitude);
                 if(Vector3.Dot(vSpot - vProjectedSpot, vDir) < 0f){
                     Debug.Log("Overrunning");
+                    isOverrunning = true;
                     GetComponent<PRAC_AI_Acc>().FCalcAcc(Vector3.Normalize(-vDir));
-                    return;
                 }
             }
-            GetComponent<PRAC_AI_Acc>().FCalcAcc(Vector3.Normalize(vDir));
+            if(!isOverrunning){
+                GetComponent<PRAC_AI_Acc>().FCalcAcc(Vector3.Normalize(vDir));
+            }
         }else{
             cRouteLog.FRunRoute();
         }

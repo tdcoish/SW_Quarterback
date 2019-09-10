@@ -100,8 +100,8 @@ public class RP_Manager : MonoBehaviour
         rPC.transform.position = rSet.mPCSpot;
         foreach(RP_Receiver rec in rRecs)
         {
-            rec.mState = RP_Receiver.STATE.SPRE_SNAP;
             rec.transform.position = rSet.FGetRecSpot(rec.mTag);
+            rec.FENTER_PRE_SNAP();
         }
         foreach(RP_Hoop hoop in rHoops)
         {
