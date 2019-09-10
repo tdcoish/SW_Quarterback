@@ -7,7 +7,9 @@ using System.Collections.Generic;
 public class RP_Receiver : MonoBehaviour
 {
     public string                   mRoute;
+    private RP_Manager              rManager;
 
+    private Rigidbody               cRigid;
     private OFF_RouteLog            cRouteLog;
 
     public enum STATE{
@@ -20,8 +22,9 @@ public class RP_Receiver : MonoBehaviour
     void Start()
     {
         cRouteLog = GetComponent<OFF_RouteLog>();
+        cRigid = GetComponent<Rigidbody>();
+        rManager = FindObjectOfType<RP_Manager>();
         mState = STATE.SPRE_SNAP;
-
         SetUpRoute();
     }
 
@@ -48,7 +51,7 @@ public class RP_Receiver : MonoBehaviour
     // Again, nothing. Eventually some animations or something.
     private void RUN_PostPlay()
     {
-
+        cRigid.velocity = Vector3.zero;
     }
 
     private void SetUpRoute()
@@ -60,6 +63,14 @@ public class RP_Receiver : MonoBehaviour
             Vector3 rtSpot = UT_VecConversion.ConvertVec2(rt.mSpots[i]);
             rtSpot += transform.position;
             cRouteLog.mRouteSpots.Add(rtSpot);
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.GetComponent<PROJ_Football>())
+        {
+            rManager.OnBallCaught();
         }
     }
 }

@@ -5,21 +5,22 @@ using UnityEngine;
 
 public class RP_ThrowSpot : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+    public GE_Event                     GE_EnteredSpot;
+    public GE_Event                     GE_LeftSpot;
 
     void OnTriggerEnter(Collider other)
     {
         if(other.GetComponent<PC_Controller>())
         {
-            Debug.Log("Player hit me");
+            GE_EnteredSpot.Raise(null);
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if(other.GetComponent<PC_Controller>())
+        {
+            GE_LeftSpot.Raise(null);
         }
     }
 }

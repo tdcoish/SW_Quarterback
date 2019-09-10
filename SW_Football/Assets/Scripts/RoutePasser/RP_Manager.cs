@@ -1,7 +1,12 @@
 ﻿/*************************************************************************************
 This is the game mode where you just throw to receivers. Eventually through hoops.
+
+The actual game itself gives you six tries. After all six tries, they load up a new field
+with six more tires, and do this again. You get bonus points for getting all the hoops done
+early.
 *************************************************************************************/
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RP_Manager : MonoBehaviour
 {
@@ -15,8 +20,22 @@ public class RP_Manager : MonoBehaviour
     private STATE               mState;
 
     public Canvas               rIntroCanvas;
+    public Canvas               rPreSnapCanvas;
+    public Canvas               rPostPlayCanvas;
+
+    public Canvas               rScoreCanvas;
+    public Canvas               rPauseMenu;
+
     private PC_Controller       rPC;
     private RP_Receiver[]       rRecs;
+    private RP_ThrowSpot        rPocket;
+    private RP_Hoop[]           rHoops;
+
+    // -------------------------------- 
+    public bool                 mHitRing;
+    public bool                 mBallCaught;
+    public int                  mScore = 0;
+    private bool                mInPocket;
 
     void Awake()
     {
@@ -29,6 +48,8 @@ public class RP_Manager : MonoBehaviour
         mState = STATE.S_INTRO_TEXT;
         rPC = FindObjectOfType<PC_Controller>();
         rRecs = FindObjectsOfType<RP_Receiver>();
+        rPocket = FindObjectOfType<RP_ThrowSpot>();
+        rHoops = FindObjectsOfType<RP_Hoop>();
     }
 
     void Update()
@@ -40,6 +61,8 @@ public class RP_Manager : MonoBehaviour
             case STATE.S_LIVE: RUN_LIVE(); break;
             case STATE.S_POST_PLAY: RUN_POST_PLAY(); break;
         }
+
+        // We can always pause or not.
     }
 
     private void ENTER_INTRO()
@@ -57,11 +80,16 @@ public class RP_Manager : MonoBehaviour
     private void ENTER_PRESNAP()
     {
         mState = STATE.S_PRESNAP;
-        
+
+        rPreSnapCanvas.gameObject.SetActive(true);
         rPC.mState = PC_Controller.PC_STATE.SPRE_SNAP;
         foreach(RP_Receiver rec in rRecs)
         {
             rec.mState = RP_Receiver.STATE.SPRE_SNAP;
+        }
+        foreach(RP_Hoop hoop in rHoops)
+        {
+            hoop.transform.LookAt(rPocket.transform.position);
         }
     }
 
@@ -74,29 +102,37 @@ public class RP_Manager : MonoBehaviour
         {
             rec.mState = RP_Receiver.STATE.SDOING_JOB;
         }
+
+        mHitRing = false;
+        mBallCaught = false;
     }
 
     private void ENTER_POST_SNAP()
     {
+        mState = STATE.S_POST_PLAY;
 
+        rPC.mState = PC_Controller.PC_STATE.SINACTIVE;
+        foreach(RP_Receiver rec in rRecs)
+        {
+            rec.mState = RP_Receiver.STATE.SPOST_PLAY;
+        }
     }
 
     private void EXIT_INTRO()
     {
         rIntroCanvas.gameObject.SetActive(false);
-        rPC.mState = PC_Controller.PC_STATE.SACTIVE;
     }
     private void EXIT_PRESNAP()
     {
-
+        rPreSnapCanvas.gameObject.SetActive(false);
     }
     private void EXIT_LIVE()
     {
-
+        mInPocket = false;
     }
     private void EXIT_POST_SNAP()
     {
-
+        rPostPlayCanvas.gameObject.SetActive(false);
     }
 
     private void RUN_INTRO()
@@ -124,6 +160,42 @@ public class RP_Manager : MonoBehaviour
 
     private void RUN_POST_PLAY()
     {
-
+        EXIT_POST_SNAP();
+        ENTER_PRESNAP();
     }
+
+    // ------------------------------ Things that happen in the world can trigger these.
+    public void OnThroughRing()
+    {
+        mHitRing = true;
+    }
+    // This will always happen second if things went well.
+    public void OnBallCaught()
+    {
+        mBallCaught = true;
+        if(mHitRing)
+        {
+            Debug.Log("Hit both the ring and the target.");
+            mScore += 50;
+            rScoreCanvas.GetComponentInChildren<Text>().text = "SCORE: " + mScore;
+        }
+        EXIT_LIVE();
+        ENTER_POST_SNAP();
+    }
+    public void OnBallHitGround()
+    {
+        Debug.Log("Guess the play is over");
+        EXIT_LIVE();
+        ENTER_POST_SNAP();
+    }
+
+    public void OnEnteredPocket()
+    {
+        Debug.Log("Entered Pocket");
+    }
+    public void OnExitPocket()
+    {
+        Debug.Log("Exited Pocket");
+    }
+
 }
