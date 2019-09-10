@@ -53,14 +53,14 @@ public class RP_Receiver : MonoBehaviour
 
     private void RUN_Job()
     {
-        cRigid.constraints = RigidbodyConstraints.None;
+        cRigid.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezePositionY;
 
         RP_Manager rpMan = FindObjectOfType<RP_Manager>();
         if(rpMan.mBallThrown)
         {
             Vector3 vSpot = cCatchLog.FCalcInterceptSpot();
-            Vector3 vDir = Vector3.Normalize(vSpot - transform.position);
-            GetComponent<PRAC_AI_Acc>().FCalcAcc(vDir);
+            Vector3 vDir = vSpot - transform.position; vDir.y = 0f;
+            GetComponent<PRAC_AI_Acc>().FCalcAcc(Vector3.Normalize(vDir));
         }else{
             cRouteLog.FRunRoute();
         }
