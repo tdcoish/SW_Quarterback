@@ -10,7 +10,7 @@ public class RP_Hoop : MonoBehaviour
     public string                       mWRTag;
     public Vector3                      mStartRot;
 
-    public float                        mYRot = 20f;
+    public float                        mYRot = 10f;
     public float                        mPeriod = 2f;
 
     void Start()

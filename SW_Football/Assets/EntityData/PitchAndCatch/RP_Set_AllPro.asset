@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b962900cc8742b40b2f36da1885aea3, type: 3}
-  m_Name: RP_Set_Second
+  m_Name: RP_Set_AllPro
   m_EditorClassIdentifier: 
-  mDifficulty: Heroic
+  mDifficulty: All-Pro
   mTimeToThrow: 5
   mPCSpot: {x: 27.5, y: 1.08, z: 37.5}
   mReceiverData:
@@ -31,8 +31,8 @@ MonoBehaviour:
   mRingData:
   - mTag: WR4
     mScale: {x: 0.5701966, y: 0.5701966, z: 0.5701966}
-    mDir: {x: 359.6226, y: 9.950159, z: -0.0000000066702515}
-    mStartPos: {x: 34.44464, y: 4.040788, z: 34.78641}
+    mDir: {x: 359.6226, y: 39.508316, z: -0.000000013340503}
+    mStartPos: {x: 34.45708, y: 0.30999994, z: 34.780685}
   - mTag: WR1
     mScale: {x: 0.86861956, y: 0.86861956, z: 0.86861956}
     mDir: {x: -0, y: -0, z: -0}
@@ -40,7 +40,7 @@ MonoBehaviour:
   - mTag: WR3
     mScale: {x: 1.6001798, y: 1.6001798, z: 1.6001798}
     mDir: {x: -0, y: 63.788578, z: -0}
-    mStartPos: {x: 59.71, y: -5.7287, z: 47.64}
+    mStartPos: {x: 55.85, y: -5.7287, z: 47.64}
   - mTag: WR2
     mScale: {x: 2.4140203, y: 2.4140203, z: 2.4140203}
     mDir: {x: -0, y: 345.09915, z: -0}

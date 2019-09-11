@@ -348,7 +348,6 @@ public class RP_Manager : MonoBehaviour
     // Yeah you have to manually allocate the size of the arrays in the editor.
     private void SaveToSet()
     {
-        DT_Set.mDifficulty = "Change This";
         DT_Set.mPCSpot = rPC.transform.position;
         for(int i=0; i<rRecs.Length; i++){
             DT_Set.mReceiverData[i].mStartPos = rRecs[i].transform.position;
