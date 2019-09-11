@@ -24,7 +24,6 @@ public class OFF_RouteLog : MonoBehaviour
     {
         if(mState == STATE.S_DONE)
         {
-            Debug.Log("Done");
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             // look at the player.
             Vector3 vPos = FindObjectOfType<PC_Controller>().transform.position;

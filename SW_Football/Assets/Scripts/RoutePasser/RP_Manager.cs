@@ -32,7 +32,8 @@ public class RP_Manager : MonoBehaviour
         S_INTRO_TEXT,
         S_PRESNAP,
         S_LIVE,
-        S_POST_PLAY
+        S_POST_PLAY,
+        S_OUTRO
     }
     private STATE               mState;
 
@@ -54,6 +55,7 @@ public class RP_Manager : MonoBehaviour
     public int                  mScore = 0;
     private bool                mInPocket;
     public bool                 mBallThrown;
+    public float                mTimer;             // for now, always start at 5 seconds or something.
 
     // ---------------------------------
     public RP_ReceiverList      rSet;
@@ -89,6 +91,7 @@ public class RP_Manager : MonoBehaviour
             case STATE.S_PRESNAP: RUN_PRESNAP(); break;
             case STATE.S_LIVE: RUN_LIVE(); break;
             case STATE.S_POST_PLAY: RUN_POST_PLAY(); break;
+            case STATE.S_OUTRO: RUN_OUTRO(); break;
         }
 
         // We can always pause or not.
@@ -139,6 +142,10 @@ public class RP_Manager : MonoBehaviour
 
         mHitRing = false;
         mBallCaught = false;
+        mTimer = 10f;
+
+        // EXIT_LIVE();
+        // ENTER_OUTRO();
     }
 
     private void ENTER_POST_SNAP()
@@ -151,6 +158,22 @@ public class RP_Manager : MonoBehaviour
         {
             rec.mState = RP_Receiver.STATE.SPOST_PLAY;
         }
+    }
+
+    private void ENTER_OUTRO()
+    {
+        mState = STATE.S_OUTRO;
+
+        mUI.rOutroCanvas.gameObject.SetActive(true);
+        rPC.GetComponentInChildren<Camera>().enabled = false;
+        rPC.GetComponentInChildren<AudioListener>().enabled = false;
+        rPC.mState = PC_Controller.PC_STATE.SINACTIVE;
+        FindObjectOfType<CAM_Outro>().FActivate();
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        FindObjectOfType<QB_UI>().gameObject.SetActive(false);
     }
 
     private void EXIT_INTRO()
@@ -176,6 +199,10 @@ public class RP_Manager : MonoBehaviour
     private void EXIT_POST_SNAP()
     {
         mUI.rPostPlayCanvas.gameObject.SetActive(false);
+    }
+    private void EXIT_OUTRO()
+    {
+
     }
 
     private void RUN_INTRO()
@@ -214,16 +241,35 @@ public class RP_Manager : MonoBehaviour
 
     private void RUN_LIVE()
     {
+        mTimer -= Time.deltaTime;
+        if(!mBallThrown && mTimer < 0f){
+            HandlePlayResult("Ran out of time, sacked.", false);
+        }
+        mUI.FSetTimerText(mTimer, mBallThrown);
         mUI.FSetPocketText(mInPocket);
+        mUI.FSetCombosDoneText(mCompletions.Count, rRecs.Length);
     }
 
     private void RUN_POST_PLAY()
     {
+        if(mCompletions.Count == rRecs.Length){
+            Debug.Log("You've won this set already");
+            EXIT_POST_SNAP();
+            ENTER_OUTRO();
+            return;
+        }
+
         if(Input.GetKeyDown(KeyCode.Space))
         {
             EXIT_POST_SNAP();
             ENTER_PRESNAP();
         }
+    }
+
+    private void RUN_OUTRO()
+    {
+        // Maybe load the main menu back or something.
+        mUI.FSetOutroScoreText(mScore);
     }
 
     // ------------------------------ Things that happen in the world can trigger these.

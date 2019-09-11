@@ -16,6 +16,7 @@ public class CAM_PlayShowing : MonoBehaviour
 
     private enum CAM_STATE{
         SINACTIVE,
+        S_DEACTIVATING,
         SACTIVE
     }
     private CAM_STATE               mState = CAM_STATE.SINACTIVE;
@@ -32,7 +33,8 @@ public class CAM_PlayShowing : MonoBehaviour
         switch(mState)
         {
             case CAM_STATE.SACTIVE: RUN_Activated(); break;
-            case CAM_STATE.SINACTIVE: RUN_Deactivated(); break;
+            case CAM_STATE.S_DEACTIVATING: RUN_Deactivating(); break;
+            case CAM_STATE.SINACTIVE: RUN_Inactive(); break;
         }
                 
     }
@@ -49,7 +51,7 @@ public class CAM_PlayShowing : MonoBehaviour
     }
 
     // On deactivate, when we get close is when we actually change everything else.
-    private void RUN_Deactivated()
+    private void RUN_Deactivating()
     {
         transform.position = transform.position.Hermite(mPosToSnapTo, 0.2f);
 
@@ -62,6 +64,11 @@ public class CAM_PlayShowing : MonoBehaviour
         {
             TrueDeactivate();
         }
+    }
+
+    private void RUN_Inactive()
+    {
+
     }
 
     public void FActivate()
@@ -86,7 +93,7 @@ public class CAM_PlayShowing : MonoBehaviour
         PC_Controller pc = FindObjectOfType<PC_Controller>();
         mPosToSnapTo = pc.GetComponentInChildren<PC_Camera>().transform.position;
         pc.mState = PC_Controller.PC_STATE.SPRE_SNAP;
-        mState = CAM_STATE.SINACTIVE;           // maybe not the best name
+        mState = CAM_STATE.S_DEACTIVATING;           // maybe not the best name
     }
 
     // This should be called ~0.5 seconds after FDeactivate, every time.
@@ -97,5 +104,7 @@ public class CAM_PlayShowing : MonoBehaviour
         PC_Controller pc = FindObjectOfType<PC_Controller>();
         pc.GetComponentInChildren<Camera>().enabled = true;
         pc.GetComponentInChildren<AudioListener>().enabled = true;
+
+        mState = CAM_STATE.SINACTIVE;
     }
 }
