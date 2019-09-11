@@ -61,6 +61,11 @@ public class RP_Manager : MonoBehaviour
     public RP_ReceiverList      rSet;
     public List<string>         mCompletions;
 
+    // --------------------------------
+    public SO_RP_Set            DT_Set;
+    public RP_Hoop              PF_Ring;
+    public RP_Receiver          PF_Receiver;
+
     void Awake()
     {
         IO_Settings.FLOAD_SETTINGS();
@@ -71,7 +76,10 @@ public class RP_Manager : MonoBehaviour
     {
         mUI = GetComponent<RP_UI>();
         cRouteDrawer = GetComponent<RP_DrawRoutes>();
+
+        LoadSet();
         
+        // Unfortunately, the destroyed receivers and hoops are still around, so we can't get references this frame.
         mState = STATE.S_INTRO_TEXT;
         rPC = FindObjectOfType<PC_Controller>();
         rRecs = FindObjectsOfType<RP_Receiver>();
@@ -81,6 +89,7 @@ public class RP_Manager : MonoBehaviour
         mCompletions = new List<string>();
 
         rSet.FStoreSet();
+        // SaveToSet();
     }
 
     void Update()
@@ -176,9 +185,12 @@ public class RP_Manager : MonoBehaviour
         FindObjectOfType<QB_UI>().gameObject.SetActive(false);
     }
 
+    // Sort of a hack, we need to re-get the references, since we will have invalid ones due to a frame delay when deleting objects.
     private void EXIT_INTRO()
     {
         mUI.rIntroCanvas.gameObject.SetActive(false);
+        rRecs = FindObjectsOfType<RP_Receiver>();
+        rHoops = FindObjectsOfType<RP_Hoop>();
     }
     private void EXIT_PRESNAP()
     {
@@ -332,6 +344,52 @@ public class RP_Manager : MonoBehaviour
 
         EXIT_LIVE();
         ENTER_POST_SNAP();
+    }
+
+
+    // Yeah you have to manually allocate the size of the arrays in the editor.
+    private void SaveToSet()
+    {
+        DT_Set.mDifficulty = "Change This";
+        DT_Set.mPCSpot = rPC.transform.position;
+        for(int i=0; i<rRecs.Length; i++){
+            DT_Set.mReceiverData[i].mStartPos = rRecs[i].transform.position;
+            DT_Set.mReceiverData[i].mRoute = rRecs[i].mRoute;
+            DT_Set.mReceiverData[i].mTag = rRecs[i].mTag;
+        }
+        for(int i=0; i<rHoops.Length; i++){
+            DT_Set.mRingData[i].mStartPos = rHoops[i].transform.position;
+            DT_Set.mRingData[i].mTag = rHoops[i].mWRTag;
+            DT_Set.mRingData[i].mScale = rHoops[i].transform.localScale;
+            DT_Set.mRingData[i].mDir = rHoops[i].transform.rotation.eulerAngles;
+        }
+    }
+
+    private void LoadSet()
+    {
+        // --------------------- Destroy any things that I might have in the scene for convenience sake.
+        RP_Hoop[] hoops = FindObjectsOfType<RP_Hoop>();
+        foreach(RP_Hoop h in hoops){
+            Destroy(h.gameObject);
+        }
+        RP_Receiver[] recs = FindObjectsOfType<RP_Receiver>();
+        foreach(RP_Receiver r in recs){
+            Destroy(r.gameObject);
+        }
+
+        // --------------------- Populate the level as I have saved it.
+        FindObjectOfType<PC_Controller>().transform.position = DT_Set.mPCSpot;
+        for(int i=0; i<DT_Set.mRingData.Length; i++){
+            RP_Hoop r = Instantiate(PF_Ring, DT_Set.mRingData[i].mStartPos, transform.rotation);
+            r.mWRTag = DT_Set.mRingData[i].mTag;
+            r.transform.localScale = DT_Set.mRingData[i].mScale;
+            r.transform.rotation = Quaternion.Euler(DT_Set.mRingData[i].mDir);
+        }
+        for(int i=0; i<DT_Set.mReceiverData.Length; i++){
+            RP_Receiver r = Instantiate(PF_Receiver, DT_Set.mReceiverData[i].mStartPos, transform.rotation);
+            r.mTag = DT_Set.mReceiverData[i].mTag;
+            r.mRoute = DT_Set.mReceiverData[i].mRoute;
+        }
     }
 
 }

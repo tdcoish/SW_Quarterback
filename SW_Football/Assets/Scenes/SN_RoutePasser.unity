@@ -1757,6 +1757,10 @@ MonoBehaviour:
   mTimer: 0
   rSet: {fileID: 991736021}
   mCompletions: []
+  DT_Set: {fileID: 11400000, guid: 4ce8997faccc7cf42b214b95fcaf421d, type: 2}
+  PF_Ring: {fileID: 2399609679290611864, guid: f7cc1230e984bd44d9f391f450e6c0e1, type: 3}
+  PF_Receiver: {fileID: 6188296413336188216, guid: 6685f864c6a9e1d4786856b2e538ae99,
+    type: 3}
 --- !u!4 &681169789
 Transform:
   m_ObjectHideFlags: 0

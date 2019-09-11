@@ -185,6 +185,7 @@
      <Compile Include="Assets\Scripts\RoutePasser\RP_ReceiverList.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_ThrowSpot.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_UI.cs" />
+     <Compile Include="Assets\Scripts\RoutePasser\SO_RP_Set.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\UI_PlayLive.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_Field.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_Mouse.cs" />
