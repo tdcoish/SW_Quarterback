@@ -13,7 +13,42 @@ MonoBehaviour:
   m_Name: RP_Set_AllMadden
   m_EditorClassIdentifier: 
   mDifficulty: All-Madden
-  mTimeToThrow: 3
-  mPCSpot: {x: 0, y: 0, z: 0}
-  mReceiverData: []
-  mRingData: []
+  mTimeToThrow: 4
+  mPCSpot: {x: 27.5, y: 1.08, z: 35.07}
+  mReceiverData:
+  - mTag: HB1
+    mRoute: MHitchL
+    mStartPos: {x: 16.76, y: 0.27982, z: 28.54}
+  - mTag: WR4
+    mRoute: OutL
+    mStartPos: {x: 40.97, y: 0.27982, z: 37.76}
+  - mTag: WR1
+    mRoute: PostR
+    mStartPos: {x: 22.25, y: 0.27982, z: 37.76}
+  - mTag: WR2
+    mRoute: Go
+    mStartPos: {x: 10.32, y: 0.27982, z: 37.76}
+  - mTag: WR3
+    mRoute: SlantL
+    mStartPos: {x: 53.89, y: 0.27982, z: 37.76}
+  mRingData:
+  - mTag: HB1
+    mScale: {x: 0.56723106, y: 0.56723106, z: 0.56723106}
+    mDir: {x: -0, y: 325.9077, z: 0}
+    mStartPos: {x: 15.5, y: 1.6465001, z: 38.63}
+  - mTag: WR4
+    mScale: {x: 0.56723106, y: 0.56723106, z: 0.56723106}
+    mDir: {x: -0, y: 3.462221, z: -0}
+    mStartPos: {x: 30.74, y: 1.6465001, z: 48.12}
+  - mTag: WR1
+    mScale: {x: 1.1275007, y: 1.1275007, z: 1.1275007}
+    mDir: {x: -0, y: 21.293879, z: -0}
+    mStartPos: {x: 40.67, y: 1.5641, z: 60.3}
+  - mTag: WR3
+    mScale: {x: 0.56723106, y: 0.56723106, z: 0.56723106}
+    mDir: {x: -0, y: 45.410107, z: -0}
+    mStartPos: {x: 44.24, y: 1.6465, z: 40.52}
+  - mTag: WR2
+    mScale: {x: 1.2928522, y: 1.2928522, z: 1.2928522}
+    mDir: {x: -0, y: 345.09915, z: -0}
+    mStartPos: {x: 16.8, y: -0.096706, z: 70.98}
