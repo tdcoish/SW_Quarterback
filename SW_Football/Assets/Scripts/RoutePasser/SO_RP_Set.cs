@@ -25,6 +25,7 @@ public class DATA_RP_Ring
 public class SO_RP_Set : ScriptableObject
 {
     public string                   mDifficulty;
+    public float                    mTimeToThrow;
     public Vector3                  mPCSpot;
     public DATA_RP_Receiver[]       mReceiverData;
     public DATA_RP_Ring[]           mRingData;

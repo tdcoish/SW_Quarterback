@@ -10,31 +10,38 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b962900cc8742b40b2f36da1885aea3, type: 3}
-  m_Name: RP_Set_First
+  m_Name: RP_Set_Second
   m_EditorClassIdentifier: 
-  mDifficulty: Change This
-  mTimeToThrow: 10
+  mDifficulty: Heroic
+  mTimeToThrow: 5
   mPCSpot: {x: 27.5, y: 1.08, z: 37.5}
   mReceiverData:
+  - mTag: WR4
+    mRoute: SCrossL
+    mStartPos: {x: 61.5, y: 0.27982, z: 37.76}
   - mTag: WR1
-    mRoute: OutL
+    mRoute: PostL
     mStartPos: {x: 38.248, y: 0.27982, z: 37.76}
   - mTag: WR2
     mRoute: Go
     mStartPos: {x: 10.32, y: 0.27982, z: 37.76}
   - mTag: WR3
-    mRoute: DCrossL
+    mRoute: OutR
     mStartPos: {x: 50.86, y: 0.27982, z: 37.76}
   mRingData:
+  - mTag: WR4
+    mScale: {x: 0.5701966, y: 0.5701966, z: 0.5701966}
+    mDir: {x: 359.6226, y: 9.950159, z: -0.0000000066702515}
+    mStartPos: {x: 34.44464, y: 4.040788, z: 34.78641}
   - mTag: WR1
-    mScale: {x: 0.978649, y: 0.978649, z: 0.978649}
+    mScale: {x: 0.86861956, y: 0.86861956, z: 0.86861956}
     mDir: {x: -0, y: -0, z: -0}
-    mStartPos: {x: 29.38, y: -2.08, z: 46.07}
+    mStartPos: {x: 29.38, y: 1.91, z: 59.67}
   - mTag: WR3
-    mScale: {x: 2.6653671, y: 2.6653671, z: 2.6653671}
-    mDir: {x: -0, y: 28.552124, z: -0}
-    mStartPos: {x: 43.18, y: -13.334, z: 57.76}
+    mScale: {x: 1.6001798, y: 1.6001798, z: 1.6001798}
+    mDir: {x: -0, y: 63.788578, z: -0}
+    mStartPos: {x: 59.71, y: -5.7287, z: 47.64}
   - mTag: WR2
-    mScale: {x: 3.345279, y: 3.345279, z: 3.345279}
+    mScale: {x: 2.4140203, y: 2.4140203, z: 2.4140203}
     mDir: {x: -0, y: 345.09915, z: -0}
-    mStartPos: {x: 19.55, y: -14.751, z: 59.91}
+    mStartPos: {x: 13.88, y: -8.102, z: 72.5}

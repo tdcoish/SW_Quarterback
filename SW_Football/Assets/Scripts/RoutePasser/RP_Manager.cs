@@ -77,7 +77,7 @@ public class RP_Manager : MonoBehaviour
         mUI = GetComponent<RP_UI>();
         cRouteDrawer = GetComponent<RP_DrawRoutes>();
 
-        LoadSet();
+        // LoadSet();
         
         // Unfortunately, the destroyed receivers and hoops are still around, so we can't get references this frame.
         mState = STATE.S_INTRO_TEXT;
@@ -89,7 +89,7 @@ public class RP_Manager : MonoBehaviour
         mCompletions = new List<string>();
 
         rSet.FStoreSet();
-        // SaveToSet();
+        SaveToSet();
     }
 
     void Update()
@@ -151,10 +151,8 @@ public class RP_Manager : MonoBehaviour
 
         mHitRing = false;
         mBallCaught = false;
-        mTimer = 10f;
 
-        // EXIT_LIVE();
-        // ENTER_OUTRO();
+        mTimer = DT_Set.mTimeToThrow;
     }
 
     private void ENTER_POST_SNAP()
@@ -367,6 +365,8 @@ public class RP_Manager : MonoBehaviour
 
     private void LoadSet()
     {
+        mTimer = DT_Set.mTimeToThrow;
+
         // --------------------- Destroy any things that I might have in the scene for convenience sake.
         RP_Hoop[] hoops = FindObjectsOfType<RP_Hoop>();
         foreach(RP_Hoop h in hoops){
