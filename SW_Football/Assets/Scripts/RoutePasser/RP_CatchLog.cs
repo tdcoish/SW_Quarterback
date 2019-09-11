@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class RP_CatchLog : MonoBehaviour
 {
+    public GameObject                   PF_SpotGFX;
+
     public Vector3 FCalcInterceptSpot()
     {
         PROJ_Football fBallRef = FindObjectOfType<PROJ_Football>();
@@ -42,6 +44,7 @@ public class RP_CatchLog : MonoBehaviour
             vSpotToMoveTo = fBallRef.transform.position + vFwdComp*fTm;
             vSpotToMoveTo.y = 0f;
 
+            Instantiate(PF_SpotGFX, vSpotToMoveTo, transform.rotation);
             return vSpotToMoveTo;
         }
 

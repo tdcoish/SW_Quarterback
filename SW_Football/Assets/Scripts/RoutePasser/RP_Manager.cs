@@ -18,8 +18,10 @@ Points need to be allocated, and the UI text needs to be updated.
 Now for resetting the receivers. We need to store receivers starting positions and routes.
 We also need to store which rings correspond to which receivers. Let's start with the hacky version.
 
+Just make a list of the valid completions. When we have all of them, then we are done.
 *************************************************************************************/
 using UnityEngine;
+using System.Collections.Generic;
 
 public class RP_Manager : MonoBehaviour
 {
@@ -55,6 +57,7 @@ public class RP_Manager : MonoBehaviour
 
     // ---------------------------------
     public RP_ReceiverList      rSet;
+    public List<string>         mCompletions;
 
     void Awake()
     {
@@ -72,6 +75,8 @@ public class RP_Manager : MonoBehaviour
         rRecs = FindObjectsOfType<RP_Receiver>();
         rPocket = FindObjectOfType<RP_ThrowSpot>();
         rHoops = FindObjectsOfType<RP_Hoop>();
+
+        mCompletions = new List<string>();
 
         rSet.FStoreSet();
     }
@@ -228,11 +233,17 @@ public class RP_Manager : MonoBehaviour
         mHitRing = true;
     }
     // This will always happen second if things went well.
-    public void OnBallCaught()
+    public void OnBallCaught(string tag)
     {
         mBallCaught = true;
         if(mHitRing)
         {
+            if(mCompletions.Contains(tag))
+            {
+                HandlePlayResult("You already threw that combo. FAILURE.", false);
+                return;
+            }
+            mCompletions.Add(tag);
             HandlePlayResult("Hit both the ring and the target. SUCCESS!", true);
             return;
         }

@@ -605,27 +605,8 @@ PrefabInstance:
       propertyPath: mRoute
       value: DCrossL
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8497306960134077365, guid: 6685f864c6a9e1d4786856b2e538ae99, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6685f864c6a9e1d4786856b2e538ae99, type: 3}
---- !u!1 &335195388 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8568107204541653420, guid: 6685f864c6a9e1d4786856b2e538ae99,
-    type: 3}
-  m_PrefabInstance: {fileID: 335195387}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &335195389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 335195388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afffe95ab3660ae4a8b3736616d458c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &379283045
 GameObject:
   m_ObjectHideFlags: 0
@@ -2448,7 +2429,13 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Press SPACEBAR to snap the ball...
+  m_Text: 'Press T to toggle play art on and off.
+
+    The ball cannot be snapped if the play art is visible.
+
+
+
+    Press SPACEBAR to snap the ball...'
 --- !u!222 &1236020533
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2557,8 +2544,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1278615230}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.44, y: -0.56, z: 31.74}
-  m_LocalScale: {x: 2.7031, y: 0.43246895, z: 2.7031}
+  m_LocalPosition: {x: 27.44, y: -0.56, z: 28.25}
+  m_LocalScale: {x: 9.775633, y: 1.5640035, z: 9.775633}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
@@ -3304,27 +3291,8 @@ PrefabInstance:
       propertyPath: mRoute
       value: Go
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8497306960134077365, guid: 6685f864c6a9e1d4786856b2e538ae99, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6685f864c6a9e1d4786856b2e538ae99, type: 3}
---- !u!1 &1956411776 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8568107204541653420, guid: 6685f864c6a9e1d4786856b2e538ae99,
-    type: 3}
-  m_PrefabInstance: {fileID: 1956411775}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1956411777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1956411776}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afffe95ab3660ae4a8b3736616d458c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1969152762
 GameObject:
   m_ObjectHideFlags: 0

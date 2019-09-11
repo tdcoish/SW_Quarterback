@@ -72,7 +72,7 @@ public class RP_Receiver : MonoBehaviour
             // ---------------------------- Find out if we're going to overrun it. If so, accelerate in the opposite direction.
             // But that gets complicated if we're at a weird angle, so only do this if we're basically going straight there.
             bool isOverrunning = false;
-            if(Vector3.Dot(vDir, Vector3.Normalize(cRigid.velocity)) > 0.99f){
+            if(Vector3.Dot(vDir, Vector3.Normalize(cRigid.velocity)) > 0.98f){
                 Vector3 vProjectedSpot = transform.position + (cRigid.velocity.magnitude * vDir);
                 if(Vector3.Dot(vSpot - vProjectedSpot, vDir) < 0f){
                     Debug.Log("Overrunning");
@@ -111,7 +111,7 @@ public class RP_Receiver : MonoBehaviour
     {
         if(other.GetComponent<PROJ_Football>())
         {
-            rManager.OnBallCaught();
+            rManager.OnBallCaught(mTag);
         }
     }
 

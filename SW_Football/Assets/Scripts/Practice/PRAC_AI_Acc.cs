@@ -1,4 +1,4 @@
-﻿/*************************************************************************************
+/*************************************************************************************
 Goal based movement system. They have some simulated momentum, and they try to go to their 
 goals based on that. I also simulate the human body to a certain extent.
 *************************************************************************************/
