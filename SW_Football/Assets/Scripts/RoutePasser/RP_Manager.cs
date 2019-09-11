@@ -77,7 +77,7 @@ public class RP_Manager : MonoBehaviour
         mUI = GetComponent<RP_UI>();
         cRouteDrawer = GetComponent<RP_DrawRoutes>();
 
-        // LoadSet();
+        LoadSet();
         
         // Unfortunately, the destroyed receivers and hoops are still around, so we can't get references this frame.
         mState = STATE.S_INTRO_TEXT;
@@ -89,7 +89,7 @@ public class RP_Manager : MonoBehaviour
         mCompletions = new List<string>();
 
         rSet.FStoreSet();
-        SaveToSet();
+        // SaveToSet();
     }
 
     void Update()
@@ -384,6 +384,7 @@ public class RP_Manager : MonoBehaviour
             r.mWRTag = DT_Set.mRingData[i].mTag;
             r.transform.localScale = DT_Set.mRingData[i].mScale;
             r.transform.rotation = Quaternion.Euler(DT_Set.mRingData[i].mDir);
+            r.mStartRot = DT_Set.mRingData[i].mDir;
         }
         for(int i=0; i<DT_Set.mReceiverData.Length; i++){
             RP_Receiver r = Instantiate(PF_Receiver, DT_Set.mReceiverData[i].mStartPos, transform.rotation);
