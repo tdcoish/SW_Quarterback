@@ -50,7 +50,7 @@ public class RP_Manager : MonoBehaviour
     private RP_Hoop[]           rHoops;
 
     // -------------------------------- 
-    public bool                 mHitRing;
+    public string               sRingHit;           // set this to "NA" before every frame.
     public bool                 mBallCaught;
     public int                  mScore = 0;
     private bool                mInPocket;
@@ -63,6 +63,10 @@ public class RP_Manager : MonoBehaviour
 
     // --------------------------------
     public SO_RP_Set            DT_Set;
+    public SO_RP_Set            DT_Rookie;
+    public SO_RP_Set            DT_Normie;
+    public SO_RP_Set            DT_Sexy;
+    public SO_RP_Set            DT_Peterman;
     public RP_Hoop              PF_Ring;
     public RP_Receiver          PF_Receiver;
 
@@ -149,10 +153,12 @@ public class RP_Manager : MonoBehaviour
             rec.mState = RP_Receiver.STATE.SDOING_JOB;
         }
 
-        mHitRing = false;
+        sRingHit = "NA";
         mBallCaught = false;
 
         mTimer = DT_Set.mTimeToThrow;
+
+        mUI.FMakeQBUIVisible();
     }
 
     private void ENTER_POST_SNAP()
@@ -205,6 +211,8 @@ public class RP_Manager : MonoBehaviour
 
         // Now here's where we reset the receiver.
         mBallThrown = false;
+
+        mUI.FMakeQBUIInvisible();
     }
     private void EXIT_POST_SNAP()
     {
@@ -283,31 +291,37 @@ public class RP_Manager : MonoBehaviour
     }
 
     // ------------------------------ Things that happen in the world can trigger these.
-    public void OnThroughRing()
+    public void OnThroughRing(string sTag)
     {
         Debug.Log("Hit ring");
-        mHitRing = true;
+        sRingHit = sTag;
     }
     // This will always happen second if things went well.
     public void OnBallCaught(string tag)
     {
-        mBallCaught = true;
-        if(mHitRing)
-        {
-            if(mCompletions.Contains(tag))
-            {
-                HandlePlayResult("You already threw that combo. FAILURE.", false);
-                return;
-            }
-            mCompletions.Add(tag);
-            HandlePlayResult("Hit both the ring and the target. SUCCESS!", true);
+        if(sRingHit == "NA"){
+            HandlePlayResult("Need to throw through the ring first. FAILURE.", false);
             return;
         }
-        HandlePlayResult("Missed Ring. FAILURE.", false);
+
+        if(tag != sRingHit){
+            HandlePlayResult("Right Ring, Wrong Receiver. FAILURE.", false);
+            return;
+        }
+
+        mBallCaught = true;
+        if(mCompletions.Contains(tag))
+        {
+            HandlePlayResult("You already threw that combo. FAILURE.", false);
+            return;
+        }
+        mCompletions.Add(tag);
+        HandlePlayResult("Hit both the ring and the target. SUCCESS!", true);
+        return;
     }
     public void OnBallHitGround()
     {
-        if(!mHitRing){
+        if(sRingHit != "NA"){
             HandlePlayResult("Missed the ring. FAILURE.", false);
             return;
         }
@@ -364,6 +378,18 @@ public class RP_Manager : MonoBehaviour
 
     private void LoadSet()
     {
+        if(RP_GB_Diff.mDif == "NA"){
+            RP_GB_Diff.mDif = "Rookie";
+        }
+        string sDif = RP_GB_Diff.mDif;
+        switch(sDif)
+        {
+            case "Rookie": DT_Set = DT_Rookie; break;
+            case "Normie": DT_Set = DT_Normie; break;
+            case "Sexy": DT_Set = DT_Sexy; break;
+            case "Peterman": DT_Set = DT_Peterman; break;
+        }
+
         mTimer = DT_Set.mTimeToThrow;
 
         // --------------------- Destroy any things that I might have in the scene for convenience sake.

@@ -99,6 +99,7 @@
      <Compile Include="Assets\Scripts\Menus\MN_Play_LOAD.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_PP_LOAD.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_QuitScreen.cs" />
+     <Compile Include="Assets\Scripts\Menus\MN_RP_Diff.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_RP_LOAD.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_Screen.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_Settings.cs" />
@@ -179,6 +180,7 @@
      <Compile Include="Assets\Scripts\RoutePasser\CAM_Outro.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_CatchLog.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_DrawRoutes.cs" />
+     <Compile Include="Assets\Scripts\RoutePasser\RP_GB_Diff.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_Hoop.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_Manager.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_Receiver.cs" />

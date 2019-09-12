@@ -60,6 +60,13 @@ public class MN_Manager : MonoBehaviour
 
     public void BT_RoutePasser()
     {
+        ScreenTransition("RP_Dif");
+    }
+
+    // Called by that script, not us.
+    public void BT_RoutePasserReady()
+    {
+        Debug.Log("Difficulty: " + RP_GB_Diff.mDif);
         ScreenTransition("RP_LOAD");
     }
 

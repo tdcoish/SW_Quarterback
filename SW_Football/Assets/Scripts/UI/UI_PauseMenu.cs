@@ -49,6 +49,7 @@ public class UI_PauseMenu : MonoBehaviour
     // Huh. This might be hard to implement.
     public void BT_Quit()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("SN_MN_Main");
     }
 

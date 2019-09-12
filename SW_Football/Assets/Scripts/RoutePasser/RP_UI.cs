@@ -16,6 +16,8 @@ public class RP_UI : MonoBehaviour
     public Canvas               rScoreCanvas;
     public Canvas               rPauseMenu;
 
+    public QB_UI                rQBUI;
+
 
     void Start()
     {
@@ -64,5 +66,14 @@ public class RP_UI : MonoBehaviour
     public void FSetOutroScoreText(int score)
     {
         rOutroCanvas.GetComponentInChildren<Text>().text = "SCORE: " + score;
+    }
+
+    public void FMakeQBUIVisible()
+    {
+        rQBUI.mState = QB_UI.QB_UI_STATE.SNOTCHARGING;
+    }
+    public void FMakeQBUIInvisible()
+    {
+        rQBUI.mState = QB_UI.QB_UI_STATE.SINVISIBLE;
     }
 }

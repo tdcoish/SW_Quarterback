@@ -31,7 +31,7 @@ public class RP_Hoop : MonoBehaviour
     {
         if(other.GetComponent<PROJ_Football>())
         {
-            rManager.OnThroughRing();
+            rManager.OnThroughRing(mWRTag);
         }
     }
 }
