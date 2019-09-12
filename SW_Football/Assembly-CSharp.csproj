@@ -134,6 +134,8 @@
      <Compile Include="Assets\Scripts\Plays\PLY_FirstDownMark.cs" />
      <Compile Include="Assets\Scripts\Plays\PLY_SnapSpot.cs" />
      <Compile Include="Assets\Scripts\PP\AD_PP.cs" />
+     <Compile Include="Assets\Scripts\PP\DATA_PP_Dif.cs" />
+     <Compile Include="Assets\Scripts\PP\IO_PP_Dif.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Arrow.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Man_Arr.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Man_Targ.cs" />
@@ -261,6 +263,7 @@
      <None Include="Assets\Plays\EditorCreatedPlays\temptla.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Testasdlkfj.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\TESTINGWhatevs.txt" />
+     <None Include="Assets\FILE_IO\PocketPasser\EASY.txt" />
      <None Include="Assets\Plays\Routes\PostR.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Stick_03.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\adsfdas.txt" />

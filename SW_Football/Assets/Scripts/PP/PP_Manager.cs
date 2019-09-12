@@ -73,6 +73,9 @@ public class PP_Manager : MonoBehaviour
     public GE_Event             GE_PauseMenuOpened;
     public GE_Event             GE_PauseMenuClosed;
 
+    // -------------------------------------- Get rid of eventually.
+    public DATA_PP_Dif          lDifficultyData;
+
     private void Start()
     {
         IO_Settings.FLOAD_SETTINGS();
@@ -86,6 +89,11 @@ public class PP_Manager : MonoBehaviour
         refPC = FindObjectOfType<PC_Controller>();
 
         SetStateInstructions();
+
+        // ------------------------------
+        lDifficultyData = IO_PP_Dif.FGetCurrent();
+        IO_PP_Dif.FSaveCurrent(lDifficultyData);
+        lDifficultyData = IO_PP_Dif.FLoadDifficulty(lDifficultyData.mName);
     }
 
     private void Update()

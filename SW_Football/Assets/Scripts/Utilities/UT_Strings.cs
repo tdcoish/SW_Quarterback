@@ -86,9 +86,24 @@ public static class UT_Strings
 
         return new Vector2(float.Parse(xVal), float.Parse(yVal));
     }
+    public static Vector3 FGetVec3FromString(string sVec)
+    {
+        int commaLoc = sVec.IndexOf(',');
+        string xVal = sVec.Substring(1, commaLoc-1);
+        int nextComma = sVec.IndexOf(',', commaLoc+1);
+        string yVal = sVec.Substring(commaLoc+1, nextComma-commaLoc-1);
+        int endBrack = sVec.IndexOf(')');
+        string zVal = sVec.Substring(nextComma+1, endBrack-nextComma-1);
+
+        return new Vector3(float.Parse(xVal), float.Parse(yVal), float.Parse(zVal));
+    }
 
     public static string FConvertVecToString(Vector2 vec2)
     {
         return "("+vec2.x+","+vec2.y+")";
+    }
+    public static string FConvertVecToString(Vector3 vec3)
+    {
+        return "("+vec3.x+","+vec3.y+","+vec3.z+")";
     }
 }
