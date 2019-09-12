@@ -2270,6 +2270,23 @@ MonoBehaviour:
   mStreakBonus: 1
   GE_PauseMenuOpened: {fileID: 11400000, guid: 26e6155c20e8bf444b269a0a1ad70607, type: 2}
   GE_PauseMenuClosed: {fileID: 11400000, guid: d0157709b50eab641bbac962339deba9, type: 2}
+  lDifData:
+    mName: 
+    mPocketScale: {x: 0, y: 0, z: 0}
+    mTimeBetweenTargetChanges: 0
+    mNumTurrets: 0
+    mTurretSpots: []
+    mTurretFireRate: 0
+    mNumTargets: 0
+    mTargetSpots: []
+    mTargetScales: []
+    mBronzeTrophy: 0
+    mSilverTrophy: 0
+    mGoldTrophy: 0
+  PF_Turret: {fileID: 2727632016312466449, guid: abd70d6e95a04614dbcefc827bd09a39,
+    type: 3}
+  PF_Target: {fileID: 841615873662949286, guid: f781899da2206f545b076cc785a84c4b,
+    type: 3}
 --- !u!4 &810600709
 Transform:
   m_ObjectHideFlags: 0
@@ -2438,7 +2455,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   refTurrets: []
   mLastShotFire: 0
-  mFireRate: 1
 --- !u!114 &810600716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2452,7 +2468,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   refTargets: []
-  mReceiverSwitchInterval: 5
   mActiveTarget: 0
   mWaitToMakeRecHot: 2
 --- !u!114 &810600717

@@ -74,7 +74,9 @@ public class PP_Manager : MonoBehaviour
     public GE_Event             GE_PauseMenuClosed;
 
     // -------------------------------------- Get rid of eventually.
-    public DATA_PP_Dif          lDifficultyData;
+    public DATA_PP_Dif          lDifData;
+    public PP_Turret            PF_Turret;
+    public GameObject           PF_Target;
 
     private void Start()
     {
@@ -91,14 +93,18 @@ public class PP_Manager : MonoBehaviour
         SetStateInstructions();
 
         // ------------------------------
-        lDifficultyData = IO_PP_Dif.FGetCurrent();
-        IO_PP_Dif.FSaveCurrent(lDifficultyData);
-        lDifficultyData = IO_PP_Dif.FLoadDifficulty(lDifficultyData.mName);
+        // lDifficultyData = IO_PP_Dif.FGetCurrent();
+        // IO_PP_Dif.FSaveCurrent(lDifficultyData);
+        // lDifficultyData = IO_PP_Dif.FLoadDifficulty(lDifficultyData.mName);
+        lDifData = IO_PP_Dif.FLoadDifficulty("EASY");
+        SetUpDifficulty();
     }
 
     private void Update()
     {
-
+        cTurMan.refTurrets = FindObjectsOfType<PP_Turret>();
+        cTargMan.refTargets = FindObjectsOfType<PP_Target>();
+        
         switch(mState){
             case(PP_State.DISPLAY_INSTRUCTIONS): STATE_INSTRUCTIONS(); break;
             case(PP_State.GAME_ACTIVE): STATE_GAMERUNNING(); break;
@@ -433,6 +439,35 @@ public class PP_Manager : MonoBehaviour
         }
 
         cTrophMan.FHandleTrophyAfterScore();
+    }
+
+    private void SetUpDifficulty()
+    {
+        PP_Target[] targs = FindObjectsOfType<PP_Target>();
+        foreach(PP_Target t in targs){
+            Destroy(t.transform.parent.gameObject);
+        }
+        PP_Turret[] turs = FindObjectsOfType<PP_Turret>();
+        foreach(PP_Turret t in turs){
+            Destroy(t.gameObject);
+        }
+
+        PP_Pocket pock = FindObjectOfType<PP_Pocket>();
+        pock.transform.localScale = lDifData.mPocketScale;
+
+        for(int i=0; i<lDifData.mNumTurrets; i++){
+            // yeah might have to store the rotation.
+            Instantiate(PF_Turret, lDifData.mTurretSpots[i], transform.rotation);
+        }
+
+        for(int i=0; i<lDifData.mNumTargets; i++){
+            var t = Instantiate(PF_Target, lDifData.mTargetSpots[i], transform.rotation);
+            t.transform.localScale = lDifData.mTargetScales[i];
+        }
+
+        cTrophMan.GB_TrophyValues.mBronze = lDifData.mBronzeTrophy;
+        cTrophMan.GB_TrophyValues.mSilver = lDifData.mSilverTrophy;
+        cTrophMan.GB_TrophyValues.mGold = lDifData.mGoldTrophy;
     }
 
 }

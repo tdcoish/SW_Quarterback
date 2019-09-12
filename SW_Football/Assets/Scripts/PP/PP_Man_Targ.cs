@@ -10,7 +10,6 @@ public class PP_Man_Targ : MonoBehaviour
 
     public PP_Target[]          refTargets;
     private float               mLastReceiverSwitch;  
-    public float                mReceiverSwitchInterval = 5f;  
     public int                  mActiveTarget;
     public float                mWaitToMakeRecHot = 2f;
 
@@ -19,13 +18,12 @@ public class PP_Man_Targ : MonoBehaviour
         cPPMan = GetComponent<PP_Manager>();
         cArrMan = GetComponent<PP_Man_Arr>();
 
-        refTargets = FindObjectsOfType<PP_Target>();
     }
 
     public void FHandleSwitchingReceiverIfTimeRunsOut()
     {
         // now we focus on switching the receiver or not.
-        if(Time.time - mLastReceiverSwitch > mReceiverSwitchInterval && cPPMan.mState == PP_State.GAME_ACTIVE)
+        if(Time.time - mLastReceiverSwitch > cPPMan.lDifData.mTimeBetweenTargetChanges && cPPMan.mState == PP_State.GAME_ACTIVE)
         {
             // There's no active target for a sec.
             mLastReceiverSwitch = Time.time;        // this will get overwritten, but it solves a bug
