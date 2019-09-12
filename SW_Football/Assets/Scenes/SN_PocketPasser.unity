@@ -1916,7 +1916,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   refAudioMixer: {fileID: 24100000, guid: 9d4a21a7f829c2d4e84634851044120e, type: 2}
   SNP_Normal: {fileID: 24500006, guid: 9d4a21a7f829c2d4e84634851044120e, type: 2}
-  SNP_Quiet: {fileID: -4592524735958708089, guid: 9d4a21a7f829c2d4e84634851044120e,
+  SNP_Paused: {fileID: -2854555898081963435, guid: 9d4a21a7f829c2d4e84634851044120e,
     type: 2}
 --- !u!1 &534757588
 GameObject:
