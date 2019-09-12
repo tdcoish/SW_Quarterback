@@ -55,7 +55,7 @@ public class MN_Manager : MonoBehaviour
 
     public void OnPressedPocketPasser()
     {
-        ScreenTransition("PP");
+        ScreenTransition("PP_Dif");
     }
 
     public void BT_RoutePasser()
@@ -70,8 +70,9 @@ public class MN_Manager : MonoBehaviour
         ScreenTransition("RP_LOAD");
     }
 
-    public void OnPressedPlayPP()
+    public void BT_PocketPasserReady()
     {
+        Debug.Log("Difficulty: " + IO_PP_Dif.mDif);
         ScreenTransition("PP_Load");
     }
 

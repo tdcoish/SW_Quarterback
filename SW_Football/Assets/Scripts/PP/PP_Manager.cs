@@ -77,7 +77,6 @@ public class PP_Manager : MonoBehaviour
     public DATA_PP_Dif          lDifData;
     public PP_Turret            PF_Turret;
     public GameObject           PF_Target;
-    public string               mDifToUse = "NORMAL";
     public bool                 mSaveCurrent = true;
 
     private void Start()
@@ -99,8 +98,7 @@ public class PP_Manager : MonoBehaviour
             lDifData = IO_PP_Dif.FGetCurrent(lDifData.mName);
             IO_PP_Dif.FSaveCurrent(lDifData);
         }
-        // lDifficultyData = IO_PP_Dif.FLoadDifficulty(lDifficultyData.mName);
-        lDifData = IO_PP_Dif.FLoadDifficulty(mDifToUse);
+        lDifData = IO_PP_Dif.FLoadDifficulty(IO_PP_Dif.mDif);
         SetUpDifficulty();
     }
 
