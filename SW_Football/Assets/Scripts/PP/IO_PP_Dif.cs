@@ -8,11 +8,11 @@ public static class IO_PP_Dif
 {
     public static DATA_PP_Dif                       mDif;
 
-    public static DATA_PP_Dif FGetCurrent()
+    public static DATA_PP_Dif FGetCurrent(string sName)
     {
         DATA_PP_Dif dif = new DATA_PP_Dif();
 
-        dif.mName = "EASY";
+        dif.mName = sName;
 
         dif.mPocketScale = Object.FindObjectOfType<PP_Pocket>().transform.localScale;
         dif.mTimeBetweenTargetChanges = 5f;

@@ -250,6 +250,7 @@
      <None Include="Assets\Plays\Routes\FlatL.txt" />
      <None Include="Assets\Plays\Routes\BSlantL.txt" />
      <None Include="Assets\Plays\Routes\ZagR.txt" />
+     <None Include="Assets\FILE_IO\PocketPasser\PETERMAN.txt" />
      <None Include="Assets\Plays\Routes\Go.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Stick_02.txt" />
      <None Include="Assets\PlaysText\defPlays.txt" />
