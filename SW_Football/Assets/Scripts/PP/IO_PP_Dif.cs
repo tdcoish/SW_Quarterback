@@ -95,7 +95,7 @@ public static class IO_PP_Dif
         {
             sLine = sr.ReadLine();
             dif.mTurretSpots[i] = UT_Strings.FGetVec3FromString(sLine);
-            Debug.Log(dif.mTurretSpots[i]);
+            // Debug.Log(dif.mTurretSpots[i]);
         }
         sLine = sr.ReadLine();
         k = sLine.IndexOf(':') + 1;

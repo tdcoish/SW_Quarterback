@@ -27,12 +27,60 @@ public class MAN_TrophyRoom : MonoBehaviour
     public float                        mIntroTime = 2f;
     private float                       mTime;
 
+    public DATA_Gamer      mAchievs;
+    public DATA_PP_Dif                  mEasy;
+    public DATA_PP_Dif                  mNorm;
+    public DATA_PP_Dif                  mHard;
+    public DATA_PP_Dif                  mPete;
+
+    public DISPLAY_Minigame[]           mDisplayers;
+    public GameObject                   PF_BronzeTrophy;
+    public GameObject                   PF_SilverTrophy;
+    public GameObject                   PF_GoldTrophy;
+
 
     void Start()
     {
         mState = STATE.SINTRO;
         rCam = FindObjectOfType<CAM_TrophyRoom>();
         mTime = Time.time;
+
+        // ------------------------------
+        // mAchievs = new DATA_Gamer();
+        // mAchievs.mPPHighScores = new MinigameAchievement();
+        // mAchievs.mRPHighScores = new MinigameAchievement();
+        // mAchievs.mPPHighScores.mEasyScore = 2800;
+        // mAchievs.mPPHighScores.mNormalScore = 2800;
+        // mAchievs.mPPHighScores.mHardScore = 1200;
+        // mAchievs.mPPHighScores.mPetermanScore = 250;
+
+        // IO_GamerInfo.FWriteGamerData(mAchievs);
+        DATA_Gamer mAchievs = IO_GamerInfo.FLoadGamerData();
+
+        mEasy = IO_PP_Dif.FLoadDifficulty("EASY");
+        mNorm = IO_PP_Dif.FLoadDifficulty("NORMAL");
+        mHard = IO_PP_Dif.FLoadDifficulty("HARD");
+        mPete = IO_PP_Dif.FLoadDifficulty("PETERMAN");
+
+        // ---------------------------- SETUP easy trophies to start.
+        SpawnTrophiesForDifficulty(mAchievs.mPPHighScores.mEasyScore, mEasy, mDisplayers[0].mClusters[0]);
+        SpawnTrophiesForDifficulty(mAchievs.mPPHighScores.mNormalScore, mNorm, mDisplayers[0].mClusters[1]);
+        SpawnTrophiesForDifficulty(mAchievs.mPPHighScores.mHardScore, mHard, mDisplayers[0].mClusters[2]);
+        SpawnTrophiesForDifficulty(mAchievs.mPPHighScores.mPetermanScore, mPete, mDisplayers[0].mClusters[3]);
+
+    }
+
+    private void SpawnTrophiesForDifficulty(int playerScore, DATA_PP_Dif difData, TP_Cluster cluster)
+    {
+        if(playerScore > difData.mBronzeTrophy){
+            Instantiate(PF_BronzeTrophy, cluster.mBronzeSpot.transform.position, transform.rotation);
+        }
+        if(playerScore > difData.mSilverTrophy){
+            Instantiate(PF_SilverTrophy, cluster.mSilverSpot.transform.position, transform.rotation);
+        }
+        if(playerScore > difData.mGoldTrophy){
+            Instantiate(PF_GoldTrophy, cluster.mGoldSpot.transform.position, transform.rotation);
+        }
     }
 
     void Update()

@@ -206,13 +206,18 @@
      <Compile Include="Assets\Scripts\SO_Data\DT_Route.cs" />
      <Compile Include="Assets\Scripts\SO_Data\DT_TrophyValues.cs" />
      <Compile Include="Assets\Scripts\Sport\MAN_Sport.cs" />
+     <Compile Include="Assets\Scripts\Telemetry\IO_GamerInfo.cs" />
      <Compile Include="Assets\Scripts\TEST\TEMP_FileStoring.cs" />
      <Compile Include="Assets\Scripts\TEST\TEMP_TestAudio.cs" />
      <Compile Include="Assets\Scripts\TEST\TEST_Audio1.cs" />
      <Compile Include="Assets\Scripts\TEST\TEST_Build.cs" />
      <Compile Include="Assets\Scripts\TEST\TEST_LoadSet.cs" />
      <Compile Include="Assets\Scripts\TrophyRoom\CAM_TrophyRoom.cs" />
+     <Compile Include="Assets\Scripts\TrophyRoom\DATA_Gamer.cs" />
+     <Compile Include="Assets\Scripts\TrophyRoom\DISPLAY_Minigame.cs" />
      <Compile Include="Assets\Scripts\TrophyRoom\MAN_TrophyRoom.cs" />
+     <Compile Include="Assets\Scripts\TrophyRoom\TP_Cluster.cs" />
+     <Compile Include="Assets\Scripts\TrophyRoom\TP_Spinner.cs" />
      <Compile Include="Assets\Scripts\TrophyRoom\UI_TrophyRoom.cs" />
      <Compile Include="Assets\Scripts\UI\GFX_UI_Traj.cs" />
      <Compile Include="Assets\Scripts\UI\QB_UI.cs" />
@@ -270,6 +275,7 @@
      <None Include="Assets\Plays\EditorCreatedPlays\Testasdlkfj.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\TESTINGWhatevs.txt" />
      <None Include="Assets\FILE_IO\PocketPasser\HARD.txt" />
+     <None Include="Assets\FILE_IO\GamerInfo\info.txt" />
      <None Include="Assets\Plays\Routes\PostR.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Stick_03.txt" />
      <None Include="Assets\FILE_IO\PocketPasser\NORMAL.txt" />
