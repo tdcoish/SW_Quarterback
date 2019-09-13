@@ -433,6 +433,12 @@ public class PP_Manager : MonoBehaviour
 
     public void OnBallThrown()
     {
+        PP_Projectile[] balls = FindObjectsOfType<PP_Projectile>();
+        foreach(PP_Projectile b in balls){
+            if(Vector3.Distance(b.transform.position, refPC.transform.position) < 8f){
+                Destroy(b.gameObject);
+            }
+        }
         mSackImmunity = true;
         refUI.mSackImmunityTxt.text = "Sack Immunity: YES";
     }
