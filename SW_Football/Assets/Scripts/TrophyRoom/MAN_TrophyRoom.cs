@@ -25,7 +25,7 @@ public class MAN_TrophyRoom : MonoBehaviour
     public int                          mActRoom = 0;
     public int                          mNumRooms = 2;
     public float                        mIntroTime = 2f;
-    private float                       mTime;
+    public float                        mTime;
 
     public DATA_PP_Dif                  mEasy;
     public DATA_PP_Dif                  mNorm;

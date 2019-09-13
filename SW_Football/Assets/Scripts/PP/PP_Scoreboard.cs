@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PP_Scoreboard : MonoBehaviour
 {
+    public Text             mNewHighScoreTXT;
     public Text             mScoreTxt;
     public SO_Int           lScore;
 

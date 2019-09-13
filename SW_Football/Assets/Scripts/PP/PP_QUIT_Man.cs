@@ -22,6 +22,8 @@ public class PP_QUIT_Man : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1f;
+        
         SNP_Paused.TransitionTo(0.1f);
         PROJ_Football[] fbs = FindObjectsOfType<PROJ_Football>();
         foreach(PROJ_Football f in fbs){

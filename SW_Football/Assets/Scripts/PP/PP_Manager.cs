@@ -94,7 +94,7 @@ public class PP_Manager : MonoBehaviour
 
         refPC = FindObjectOfType<PC_Controller>();
 
-        SetStateInstructions();
+        ENTER_INSTRUCTIONS();
 
         // ------------------------------
         if(mSaveCurrent){
@@ -118,7 +118,7 @@ public class PP_Manager : MonoBehaviour
 
     }
 
-    private void SetStateInstructions()
+    private void ENTER_INSTRUCTIONS()
     {
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -146,8 +146,12 @@ public class PP_Manager : MonoBehaviour
             Destroy(refFootballs[i].gameObject);
         }
     }
+    private void EXIT_INSTRUCTIONS()
+    {
+        refInstrUI.gameObject.SetActive(false);
+    }
 
-    private void SetStateGaming()
+    private void ENTER_GAMING()
     {
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -155,8 +159,6 @@ public class PP_Manager : MonoBehaviour
         mGameState = PP_GAME_STATE.CHILLING;
 
         refUI.gameObject.SetActive(true);
-        refInstrUI.gameObject.SetActive(false);
-        refScoreboardUI.SetActive(false);
 
         // testing this bug.
         Time.timeScale = 1f;
@@ -179,9 +181,43 @@ public class PP_Manager : MonoBehaviour
 
         cTargMan.FDeactivateReceiver();
     }
-
-    private void SetStateScoreScreen()
+    private void EXIT_GAMING()
     {
+        refUI.gameObject.SetActive(false);
+    }
+
+    private void ENTER_SCORESCREEN()
+    {   
+        bool bNewHighScore = false;
+        if(lDifData.mName == "EASY"){
+            if(IO_GamerInfo.mInfo.mPPHighScores.mEasyScore < mScore){
+                IO_GamerInfo.mInfo.mPPHighScores.mEasyScore = mScore;
+                bNewHighScore = true;
+            }
+        }
+        else if(lDifData.mName == "NORMAL"){
+            if(IO_GamerInfo.mInfo.mPPHighScores.mNormalScore < mScore){
+                IO_GamerInfo.mInfo.mPPHighScores.mNormalScore = mScore;
+                bNewHighScore = true;
+            }
+        }
+        else if(lDifData.mName == "HARD"){
+            if(IO_GamerInfo.mInfo.mPPHighScores.mHardScore < mScore){
+                IO_GamerInfo.mInfo.mPPHighScores.mHardScore = mScore;
+                bNewHighScore = true;
+            }
+        }
+        else if(lDifData.mName == "PETERMAN"){
+            if(IO_GamerInfo.mInfo.mPPHighScores.mPetermanScore < mScore){
+                IO_GamerInfo.mInfo.mPPHighScores.mPetermanScore = mScore;
+                bNewHighScore = true;
+            }
+        }
+        if(bNewHighScore){
+            IO_GamerInfo.FWriteGamerData(IO_GamerInfo.mInfo);
+        }
+
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
@@ -190,6 +226,11 @@ public class PP_Manager : MonoBehaviour
         refUI.gameObject.SetActive(false);
         refInstrUI.gameObject.SetActive(false);
         refScoreboardUI.SetActive(true);
+        if(bNewHighScore){
+            refScoreboardUI.GetComponent<PP_Scoreboard>().mNewHighScoreTXT.text = "NEW HIGH SCORE!";
+        }else{
+            refScoreboardUI.GetComponent<PP_Scoreboard>().mNewHighScoreTXT.text = "Good Game";
+        }
 
         DestroyExistingProjectilesArrowsAndDeactivateTurrets();
 
@@ -197,32 +238,28 @@ public class PP_Manager : MonoBehaviour
         refPC.mState = PC_Controller.PC_STATE.SINACTIVE;
         refPC.GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
+    private void EXIT_SCORESCREEN()
+    {
+        refScoreboardUI.SetActive(false);
+    }
 
     private void STATE_INSTRUCTIONS()
     {
         if(Input.anyKey)
         {
-            SetStateGaming();
+            EXIT_INSTRUCTIONS();
+            ENTER_GAMING();
         }
     }
 
     private void STATE_GAMERUNNING()
     {
         HandlePocketPosition();
-
-        refUI.mScoreTxt.text = "Score: " + mScore;
-
-        cTargMan.FHandleSwitchingReceiverIfTimeRunsOut();
-
         HandleTimeLeft();
 
+        refUI.mScoreTxt.text = "Score: " + mScore;
+        cTargMan.FHandleSwitchingReceiverIfTimeRunsOut();
         cTurMan.FHandleTurrets();
-
-        // for the build
-        if(Input.GetKeyDown(KeyCode.L))
-        {
-            Application.Quit();
-        }
 
         // if the user presses m, then they bring up the pause menu.
         if(Input.GetKeyDown(KeyCode.M))
@@ -286,7 +323,8 @@ public class PP_Manager : MonoBehaviour
         {
             // There's some unity weirdness here I think, where this wasn't updated until later.
             mScoreGlobal.Val = mScore;
-            SetStateScoreScreen();
+            EXIT_GAMING();
+            ENTER_SCORESCREEN();
         }
     }
 
@@ -374,7 +412,8 @@ public class PP_Manager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        SetStateInstructions();
+        EXIT_GAMING();
+        ENTER_INSTRUCTIONS();
         GE_PauseMenuClosed.Raise(null);
     }
     
