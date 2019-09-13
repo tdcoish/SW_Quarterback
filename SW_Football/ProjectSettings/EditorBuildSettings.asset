@@ -44,4 +44,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SN_RoutePasser.unity
     guid: 2bac862a33783c646acfe2268e2eebb3
+  - enabled: 1
+    path: Assets/Scenes/SN_TrophyRoom.unity
+    guid: 3226d2827ad9b0e4ab422626f2dc4293
   m_configObjects: {}

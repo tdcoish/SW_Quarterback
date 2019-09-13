@@ -105,4 +105,9 @@ public class MN_Manager : MonoBehaviour
     {
         SceneManager.LoadScene("ED_Plays2");
     }
+
+    public void BT_TrophyRoom()
+    {
+        SceneManager.LoadScene("SN_TrophyRoom");
+    }
 }
