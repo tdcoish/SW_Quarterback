@@ -33,7 +33,7 @@ public static class IO_GamerInfo
         sw.Close();
     }
 
-    public static DATA_Gamer FLoadGamerData()
+    public static void FLoadGamerData()
     {
         string sPath = Application.dataPath + "/FILE_IO/GamerInfo/info.txt";
         string[] sLines = System.IO.File.ReadAllLines(sPath);
@@ -60,6 +60,6 @@ public static class IO_GamerInfo
             }
         }
 
-        return dt;
+        mInfo = dt;
     }
 }

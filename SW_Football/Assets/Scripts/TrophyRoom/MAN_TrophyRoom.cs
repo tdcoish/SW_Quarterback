@@ -27,7 +27,6 @@ public class MAN_TrophyRoom : MonoBehaviour
     public float                        mIntroTime = 2f;
     private float                       mTime;
 
-    public DATA_Gamer      mAchievs;
     public DATA_PP_Dif                  mEasy;
     public DATA_PP_Dif                  mNorm;
     public DATA_PP_Dif                  mHard;
@@ -55,7 +54,7 @@ public class MAN_TrophyRoom : MonoBehaviour
         // mAchievs.mPPHighScores.mPetermanScore = 250;
 
         // IO_GamerInfo.FWriteGamerData(mAchievs);
-        DATA_Gamer mAchievs = IO_GamerInfo.FLoadGamerData();
+        IO_GamerInfo.FLoadGamerData();
 
         mEasy = IO_PP_Dif.FLoadDifficulty("EASY");
         mNorm = IO_PP_Dif.FLoadDifficulty("NORMAL");
@@ -63,10 +62,10 @@ public class MAN_TrophyRoom : MonoBehaviour
         mPete = IO_PP_Dif.FLoadDifficulty("PETERMAN");
 
         // ---------------------------- SETUP easy trophies to start.
-        SpawnTrophiesForDifficulty(mAchievs.mPPHighScores.mEasyScore, mEasy, mDisplayers[0].mClusters[0]);
-        SpawnTrophiesForDifficulty(mAchievs.mPPHighScores.mNormalScore, mNorm, mDisplayers[0].mClusters[1]);
-        SpawnTrophiesForDifficulty(mAchievs.mPPHighScores.mHardScore, mHard, mDisplayers[0].mClusters[2]);
-        SpawnTrophiesForDifficulty(mAchievs.mPPHighScores.mPetermanScore, mPete, mDisplayers[0].mClusters[3]);
+        SpawnTrophiesForDifficulty(IO_GamerInfo.mInfo.mPPHighScores.mEasyScore, mEasy, mDisplayers[0].mClusters[0]);
+        SpawnTrophiesForDifficulty(IO_GamerInfo.mInfo.mPPHighScores.mNormalScore, mNorm, mDisplayers[0].mClusters[1]);
+        SpawnTrophiesForDifficulty(IO_GamerInfo.mInfo.mPPHighScores.mHardScore, mHard, mDisplayers[0].mClusters[2]);
+        SpawnTrophiesForDifficulty(IO_GamerInfo.mInfo.mPPHighScores.mPetermanScore, mPete, mDisplayers[0].mClusters[3]);
 
     }
 

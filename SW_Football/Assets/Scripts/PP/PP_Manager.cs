@@ -79,9 +79,12 @@ public class PP_Manager : MonoBehaviour
     public GameObject           PF_Target;
     public bool                 mSaveCurrent = true;
 
+    // ------------------------------------- Gamer info stuffs. Keep track of how often they pass, I guess?
+
     private void Start()
     {
         IO_Settings.FLOAD_SETTINGS();
+        IO_GamerInfo.FLoadGamerData();
 
         cTurMan = GetComponent<PP_Man_Tur>();
         cTargMan = GetComponent<PP_Man_Targ>();
