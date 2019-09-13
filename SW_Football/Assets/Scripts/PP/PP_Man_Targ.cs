@@ -12,6 +12,7 @@ public class PP_Man_Targ : MonoBehaviour
     private float               mLastReceiverSwitch;  
     public int                  mActiveTarget;
     public float                mWaitToMakeRecHot = 2f;
+    public float                mExtraTimeForDistance;
 
     void Start()
     {
@@ -23,7 +24,7 @@ public class PP_Man_Targ : MonoBehaviour
     public void FHandleSwitchingReceiverIfTimeRunsOut()
     {
         // now we focus on switching the receiver or not.
-        if(Time.time - mLastReceiverSwitch > cPPMan.lDifData.mTimeBetweenTargetChanges && cPPMan.mState == PP_State.GAME_ACTIVE)
+        if(Time.time - mLastReceiverSwitch > cPPMan.lDifData.mTimeBetweenTargetChanges+mExtraTimeForDistance && cPPMan.mState == PP_State.GAME_ACTIVE)
         {
             // There's no active target for a sec.
             mLastReceiverSwitch = Time.time;        // this will get overwritten, but it solves a bug
@@ -70,6 +71,11 @@ public class PP_Man_Targ : MonoBehaviour
         vPos.y += 7f;
 
         cArrMan.FSpawnArrow(vPos, refTargets[ind].transform.rotation);
+
+        // Now we need to set the extra time that this guy gets due to him being further away.
+        float fDis = Vector3.Distance(FindObjectOfType<PP_Pocket>().transform.position, refTargets[mActiveTarget].transform.position);
+        mExtraTimeForDistance = fDis/10f - 1f;
+        mExtraTimeForDistance = (float)System.Math.Round((double)mExtraTimeForDistance, 0);
 
         mLastReceiverSwitch = Time.time;
     }

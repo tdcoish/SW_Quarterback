@@ -2645,6 +2645,7 @@ MonoBehaviour:
   refTargets: []
   mActiveTarget: 0
   mWaitToMakeRecHot: 2
+  mExtraTimeForDistance: 0
 --- !u!114 &810600717
 MonoBehaviour:
   m_ObjectHideFlags: 0
