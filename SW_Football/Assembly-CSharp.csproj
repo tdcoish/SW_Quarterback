@@ -239,6 +239,7 @@
      <None Include="Assets\Plays\Routes\Seam.txt" />
      <None Include="Assets\Plays\Routes\PostL.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Sail_02.txt" />
+     <None Include="Assets\FILE_IO\PitchAndCatch\EASY3.txt" />
      <None Include="Assets\Plays\Routes\SHitchL.txt" />
      <None Include="Assets\Plays\Routes\SlantL.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\TestingAbain.txt" />
@@ -279,6 +280,7 @@
      <None Include="Assets\Plays\Routes\PostR.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Stick_03.txt" />
      <None Include="Assets\FILE_IO\PocketPasser\NORMAL.txt" />
+     <None Include="Assets\FILE_IO\PitchAndCatch\EASY4.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\adsfdas.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Smash2.txt" />
      <None Include="Assets\Plays\Routes\SeamR.txt" />

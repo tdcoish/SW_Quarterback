@@ -62,28 +62,26 @@ public static class IO_RP_Dif
             }
             if(sLines[i].Contains("RECEIVER")){
                 int num = int.Parse(sLines[i+1]);
-                int startInd = i+2;
+                int ind = i+2;
                 for(int j=0; j<num; j++)
                 {
-                    startInd += j*3;
                     DATA_RP_Receiver r = new DATA_RP_Receiver();
-                    r.mTag = sLines[startInd];
-                    r.mRoute = sLines[startInd+1];
-                    r.mStartPos = UT_Strings.FGetVec3FromString(sLines[startInd+2]);
+                    r.mTag = sLines[ind++];
+                    r.mRoute = sLines[ind++];
+                    r.mStartPos = UT_Strings.FGetVec3FromString(sLines[ind++]);
                     s.mReceiverData.Add(r);
                 }
             }
             if(sLines[i].Contains("RING")){
                 int num = int.Parse(sLines[i+1]);
-                int startInd = i+2;
+                int ind = i+2;
                 for(int j=0; j<num; j++)
                 {
-                    startInd += j*4;
                     DATA_RP_Ring r = new DATA_RP_Ring();
-                    r.mTag = sLines[startInd];
-                    r.mScale = UT_Strings.FGetVec3FromString(sLines[startInd+1]);
-                    r.mDir = UT_Strings.FGetVec3FromString(sLines[startInd+2]);
-                    r.mStartPos = UT_Strings.FGetVec3FromString(sLines[startInd+3]);
+                    r.mTag = sLines[ind++];
+                    r.mScale = UT_Strings.FGetVec3FromString(sLines[ind++]);
+                    r.mDir = UT_Strings.FGetVec3FromString(sLines[ind++]);
+                    r.mStartPos = UT_Strings.FGetVec3FromString(sLines[ind++]);
                     s.mRingData.Add(r);
                 }
             }

@@ -118,6 +118,9 @@ public class QB_UI : MonoBehaviour
 
         // How much should inaccuracy scale the image? Let's say that an inaccuracy of 1 degree is the norm, so we scale proportionally after that.
         float fCrossScale = GB_ThrowInaccuracy.Val;
+        if(fCrossScale == 0f){
+            fCrossScale = 0.01f;
+        }
         mAccuracy.transform.localScale = new Vector3(fCrossScale, fCrossScale, fCrossScale);
 
         // ----------------------------------------- Look accuracy stuffs.

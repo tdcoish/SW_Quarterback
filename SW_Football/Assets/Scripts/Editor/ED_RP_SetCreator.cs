@@ -21,7 +21,6 @@ public class ED_RP_SetCreator : MonoBehaviour
         for(int i=0; i<recs.Length; i++)
         {
             DATA_RP_Receiver r = new DATA_RP_Receiver();
-            Debug.Log(r.mTag);
             r.mTag = recs[i].mTag;
             r.mRoute = recs[i].mRoute;
             r.mStartPos = recs[i].transform.position;

@@ -78,9 +78,8 @@ public class RP_Manager : MonoBehaviour
 
         // IO_RP_Diff.FLoadSet("EASY1");
         IO_RP_Dif.FSaveSet(mActiveSet);
-        mActiveSet = IO_RP_Dif.FLoadSet("EASY1");
-        mActiveSet.mName = "EASY2";
-        IO_RP_Dif.FSaveSet(mActiveSet);
+        mActiveSet = IO_RP_Dif.FLoadSet("EASY4");
+        // IO_RP_Dif.FSaveSet(mActiveSet);
 
         
         // Unfortunately, the destroyed receivers and hoops are still around, so we can't get references this frame.
@@ -137,6 +136,7 @@ public class RP_Manager : MonoBehaviour
             RP_Hoop clone = Instantiate(PF_Ring, r.mStartPos, Quaternion.Euler(r.mDir));
             clone.mWRTag = r.mTag;
             clone.transform.localScale = r.mScale;
+            clone.mStartRot = r.mDir;
             rHoops.Add(clone);
         }
         Debug.Log("Receivers Instantiated: " + rRecs.Count);
@@ -313,6 +313,7 @@ public class RP_Manager : MonoBehaviour
     {
         Debug.Log("Hit ring");
         sRingHit = sTag;
+        Debug.Log(sRingHit);
     }
     // This will always happen second if things went well.
     public void OnBallCaught(string tag)
@@ -340,10 +341,10 @@ public class RP_Manager : MonoBehaviour
     public void OnBallHitGround()
     {
         if(sRingHit != "NA"){
-            HandlePlayResult("Missed the ring. FAILURE.", false);
+            HandlePlayResult("Missed the player. FAILURE", false);
             return;
         }
-        HandlePlayResult("Missed the player. FAILURE", false);
+        HandlePlayResult("Missed the ring. FAILURE.", false);
     }
 
     public void OnEnteredPocket()

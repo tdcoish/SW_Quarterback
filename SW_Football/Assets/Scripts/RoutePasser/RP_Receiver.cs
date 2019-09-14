@@ -75,7 +75,7 @@ public class RP_Receiver : MonoBehaviour
             if(Vector3.Dot(vDir, Vector3.Normalize(cRigid.velocity)) > 0.98f){
                 Vector3 vProjectedSpot = transform.position + (cRigid.velocity.magnitude * vDir);
                 if(Vector3.Dot(vSpot - vProjectedSpot, vDir) < 0f){
-                    Debug.Log("Overrunning");
+                    // Debug.Log("Overrunning");
                     isOverrunning = true;
                     GetComponent<PRAC_AI_Acc>().FCalcAcc(Vector3.Normalize(-vDir));
                 }
