@@ -113,6 +113,7 @@ public class QB_UI : MonoBehaviour
         if(mState == QB_UI_STATE.SCHARGING){
             ShowThrowBar();
         }
+        ShowThrowBar();
         // Always show the maximum throw power bar.
         mThrowMaxBar.fillAmount = GB_ThrowMaxCharge.Val / IO_Settings.mSet.lPlayerData.mThrowSpd;
 

@@ -63,9 +63,10 @@ public class RP_UI : MonoBehaviour
         rPostPlayCanvas.GetComponentInChildren<Text>().text = msg;
     }
 
-    public void FSetOutroScoreText(int score)
+    public void FSetOutroText(int score, int numThrows)
     {
-        rOutroCanvas.GetComponentInChildren<Text>().text = "SCORE: " + score;
+        rOutroCanvas.GetComponent<UI_Outro>().mThrows.text = "THROWS: " + numThrows;
+        rOutroCanvas.GetComponent<UI_Outro>().mScore.text = "SCORE: " + score;
     }
 
     public void FMakeQBUIVisible()

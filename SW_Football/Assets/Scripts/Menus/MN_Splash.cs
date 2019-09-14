@@ -7,6 +7,7 @@ mAudioSrc.clip.length;
 *************************************************************************************/
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 // For now only works with this, looking to make this more broadly
 public abstract class tdcState
@@ -29,6 +30,8 @@ public class MN_Splash : MonoBehaviour
     public GameObject               mLogoScreen;
     public GameObject               mCopyrightScreen;
 
+    public AudioMixer               mAudioMixer;
+    public AudioMixerSnapshot       SNP_Paused;
     public AudioSource              sfx_logo;
     public AudioSource              sfx_copyright;
 
@@ -45,6 +48,7 @@ public class MN_Splash : MonoBehaviour
         // IO_RouteList.FWRITE_ALL_ROUTES_AS_TEXT();
 
         mState = SplashState.SLOGO;
+        mAudioMixer.SetFloat("MASTER_VOLUME", IO_Settings.mSet.lMasterVolume);
 
         ENTER_Logo();
     }
@@ -55,6 +59,11 @@ public class MN_Splash : MonoBehaviour
         {
             case SplashState.SLOGO: RUN_Logo(); break;
             case SplashState.SCOPYRIGHT: RUN_Copyright(); break;
+        }
+
+        if(Input.anyKeyDown){
+		    SNP_Paused.TransitionTo(0.5f);
+            SceneManager.LoadScene("SN_MN_Main");
         }
     }
 

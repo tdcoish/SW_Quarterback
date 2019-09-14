@@ -190,6 +190,7 @@
      <Compile Include="Assets\Scripts\RoutePasser\RP_Receiver.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_ThrowSpot.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_UI.cs" />
+     <Compile Include="Assets\Scripts\RoutePasser\UI_Outro.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\UI_PlayLive.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_Field.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_Mouse.cs" />

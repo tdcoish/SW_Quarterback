@@ -53,6 +53,7 @@ public class RP_Manager : MonoBehaviour
     public string               sRingHit;           // set this to "NA" before every frame.
     public bool                 mBallCaught;
     public int                  mScore = 0;
+    public int                  mNumThrows = 0;
     private bool                mInPocket;
     public bool                 mBallThrown;
     public float                mTimer;             // for now, always start at 5 seconds or something.
@@ -80,7 +81,6 @@ public class RP_Manager : MonoBehaviour
         IO_RP_Dif.FSaveSet(mActiveSet);
         mActiveSet = IO_RP_Dif.FLoadSet("EASY4");
         // IO_RP_Dif.FSaveSet(mActiveSet);
-
         
         // Unfortunately, the destroyed receivers and hoops are still around, so we can't get references this frame.
         // Instead, do this on exitIntro.
@@ -111,6 +111,9 @@ public class RP_Manager : MonoBehaviour
 
         mUI.rIntroCanvas.gameObject.SetActive(true);
         rPC.mState = PC_Controller.PC_STATE.SINACTIVE;
+
+        // this is kind of to solve a bug with respect to throwing.
+        rPC.GE_QB_StopThrow.Raise(null);
 
         // Destroy all receivers and rings who are still in the scene.
         RP_Receiver[] recs = FindObjectsOfType<RP_Receiver>();
@@ -199,6 +202,7 @@ public class RP_Manager : MonoBehaviour
         mState = STATE.S_OUTRO;
 
         mUI.rOutroCanvas.gameObject.SetActive(true);
+        mUI.FSetOutroText(mScore, mNumThrows);
         rPC.GetComponentInChildren<Camera>().enabled = false;
         rPC.GetComponentInChildren<AudioListener>().enabled = false;
         rPC.mState = PC_Controller.PC_STATE.SINACTIVE;
@@ -305,7 +309,6 @@ public class RP_Manager : MonoBehaviour
     private void RUN_OUTRO()
     {
         // Maybe load the main menu back or something.
-        mUI.FSetOutroScoreText(mScore);
     }
 
     // ------------------------------ Things that happen in the world can trigger these.
@@ -346,6 +349,17 @@ public class RP_Manager : MonoBehaviour
         }
         HandlePlayResult("Missed the ring. FAILURE.", false);
     }
+    
+    public void OnBallThrown()
+    {
+        mNumThrows++;
+
+        mBallThrown = true;
+        if(!mInPocket)
+        {
+            HandlePlayResult("Threw from outside pocket. FAILURE.", false);
+        }
+    }
 
     public void OnEnteredPocket()
     {
@@ -354,15 +368,6 @@ public class RP_Manager : MonoBehaviour
     public void OnExitPocket()
     {
         mInPocket = false;
-    }
-    
-    public void OnBallThrown()
-    {
-        mBallThrown = true;
-        if(!mInPocket)
-        {
-            HandlePlayResult("Threw from outside pocket. FAILURE.", false);
-        }
     }
 
     private void HandlePlayResult(string msg, bool success)
