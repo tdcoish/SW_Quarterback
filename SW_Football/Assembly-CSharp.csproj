@@ -181,16 +181,15 @@
      <Compile Include="Assets\Scripts\PreSport\MAN_ShowMatchup.cs" />
      <Compile Include="Assets\Scripts\PROJ_Football.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\CAM_Outro.cs" />
+     <Compile Include="Assets\Scripts\RoutePasser\DATA_RP_Set.cs" />
+     <Compile Include="Assets\Scripts\RoutePasser\IO_RP_Dif.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_CatchLog.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_DrawRoutes.cs" />
-     <Compile Include="Assets\Scripts\RoutePasser\RP_GB_Diff.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_Hoop.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_Manager.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_Receiver.cs" />
-     <Compile Include="Assets\Scripts\RoutePasser\RP_ReceiverList.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_ThrowSpot.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\RP_UI.cs" />
-     <Compile Include="Assets\Scripts\RoutePasser\SO_RP_Set.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\UI_PlayLive.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_Field.cs" />
      <Compile Include="Assets\Scripts\RT_Editor\RT_Mouse.cs" />
@@ -261,6 +260,7 @@
      <None Include="Assets\Plays\Routes\ZagR.txt" />
      <None Include="Assets\FILE_IO\PocketPasser\PETERMAN.txt" />
      <None Include="Assets\Plays\Routes\Go.txt" />
+     <None Include="Assets\FILE_IO\PitchAndCatch\EASY2.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Stick_02.txt" />
      <None Include="Assets\PlaysText\defPlays.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Smash.txt" />
@@ -286,6 +286,7 @@
      <None Include="Assets\Plays\Routes\SCrossL.txt" />
      <None Include="Assets\Plays\Routes\MHitchL.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Stick_01.txt" />
+     <None Include="Assets\FILE_IO\PitchAndCatch\EASY1.txt" />
      <None Include="Assets\Plays\Routes\DCrossR.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\HB_Wheel.txt" />
      <None Include="Assets\Plays\Routes\Flat.txt" />

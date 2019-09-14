@@ -3,6 +3,7 @@ This stores an individual set for the Pitch And Catch minigame. We have three of
 for each difficulty level.
 *************************************************************************************/
 using UnityEngine;
+using System.Collections.Generic;
 
 [System.Serializable]
 public class DATA_RP_Receiver
@@ -21,12 +22,12 @@ public class DATA_RP_Ring
     public Vector3              mStartPos;
 }
 
-[CreateAssetMenu(fileName="RP_Set", menuName="DT/RP_Set")]
-public class SO_RP_Set : ScriptableObject
+[System.Serializable]
+public class DATA_RP_Set
 {
-    public string                   mDifficulty;
+    public string                   mName;
     public float                    mTimeToThrow;
     public Vector3                  mPCSpot;
-    public DATA_RP_Receiver[]       mReceiverData;
-    public DATA_RP_Ring[]           mRingData;
+    public List<DATA_RP_Receiver>   mReceiverData;
+    public List<DATA_RP_Ring>       mRingData;
 }

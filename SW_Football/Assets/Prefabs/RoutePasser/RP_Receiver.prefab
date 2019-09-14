@@ -357,7 +357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 860f7fca1214a224cb9527b9f525f677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mRoute: OutL
+  mRoute: PostR
   mTag: WR1
   mState: 0
 --- !u!114 &6188296413336188217

@@ -44,10 +44,10 @@ public class RP_Manager : MonoBehaviour
     }
     private PRESNAP_STATE       mPreState;
 
-    private PC_Controller       rPC;
-    private RP_Receiver[]       rRecs;
-    private RP_ThrowSpot        rPocket;
-    private RP_Hoop[]           rHoops;
+    private PC_Controller           rPC;
+    private List<RP_Receiver>       rRecs;
+    private RP_ThrowSpot            rPocket;
+    private List<RP_Hoop>           rHoops;
 
     // -------------------------------- 
     public string               sRingHit;           // set this to "NA" before every frame.
@@ -58,15 +58,10 @@ public class RP_Manager : MonoBehaviour
     public float                mTimer;             // for now, always start at 5 seconds or something.
 
     // ---------------------------------
-    public RP_ReceiverList      rSet;
+    public DATA_RP_Set          mActiveSet;
     public List<string>         mCompletions;
 
     // --------------------------------
-    public SO_RP_Set            DT_Set;
-    public SO_RP_Set            DT_Rookie;
-    public SO_RP_Set            DT_Normie;
-    public SO_RP_Set            DT_Sexy;
-    public SO_RP_Set            DT_Peterman;
     public RP_Hoop              PF_Ring;
     public RP_Receiver          PF_Receiver;
 
@@ -81,19 +76,20 @@ public class RP_Manager : MonoBehaviour
         mUI = GetComponent<RP_UI>();
         cRouteDrawer = GetComponent<RP_DrawRoutes>();
 
-        LoadSet();
+        // IO_RP_Diff.FLoadSet("EASY1");
+        IO_RP_Dif.FSaveSet(mActiveSet);
+        mActiveSet = IO_RP_Dif.FLoadSet("EASY1");
+        mActiveSet.mName = "EASY2";
+        IO_RP_Dif.FSaveSet(mActiveSet);
+
         
         // Unfortunately, the destroyed receivers and hoops are still around, so we can't get references this frame.
-        mState = STATE.S_INTRO_TEXT;
+        // Instead, do this on exitIntro.
         rPC = FindObjectOfType<PC_Controller>();
-        rRecs = FindObjectsOfType<RP_Receiver>();
         rPocket = FindObjectOfType<RP_ThrowSpot>();
-        rHoops = FindObjectsOfType<RP_Hoop>();
 
         mCompletions = new List<string>();
-
-        rSet.FStoreSet();
-        // SaveToSet();
+        ENTER_INTRO();
     }
 
     void Update()
@@ -116,12 +112,37 @@ public class RP_Manager : MonoBehaviour
 
         mUI.rIntroCanvas.gameObject.SetActive(true);
         rPC.mState = PC_Controller.PC_STATE.SINACTIVE;
-        foreach(RP_Receiver rec in rRecs)
+
+        // Destroy all receivers and rings who are still in the scene.
+        RP_Receiver[] recs = FindObjectsOfType<RP_Receiver>();
+        RP_Hoop[] hoops = FindObjectsOfType<RP_Hoop>();
+        foreach(RP_Receiver rec in recs)
         {
-            rec.mState = RP_Receiver.STATE.SPRE_SNAP;
+            Destroy(rec.gameObject);
         }
+        foreach(RP_Hoop h in hoops){
+            Destroy(h.gameObject);
+        }
+
+        // ------------------- And spawn in our receivers and hoops.
+        rRecs = new List<RP_Receiver>();
+        rHoops = new List<RP_Hoop>();
+        foreach(DATA_RP_Receiver r in mActiveSet.mReceiverData){
+            RP_Receiver clone = Instantiate(PF_Receiver, r.mStartPos, transform.rotation);
+            clone.mTag = r.mTag;
+            clone.mRoute = r.mRoute;
+            rRecs.Add(clone);
+        }
+        foreach(DATA_RP_Ring r in mActiveSet.mRingData){
+            RP_Hoop clone = Instantiate(PF_Ring, r.mStartPos, Quaternion.Euler(r.mDir));
+            clone.mWRTag = r.mTag;
+            clone.transform.localScale = r.mScale;
+            rHoops.Add(clone);
+        }
+        Debug.Log("Receivers Instantiated: " + rRecs.Count);
+        Debug.Log("Hoops Instantiated: " + rHoops.Count);
     }
-    
+
     private void ENTER_PRESNAP()
     {
         mState = STATE.S_PRESNAP;
@@ -129,15 +150,15 @@ public class RP_Manager : MonoBehaviour
 
         mUI.rPreSnapCanvas.gameObject.SetActive(true);
         rPC.mState = PC_Controller.PC_STATE.SPRE_SNAP;
-        rPC.transform.position = rSet.mPCSpot;
+        rPC.transform.position = mActiveSet.mPCSpot;
         foreach(RP_Receiver rec in rRecs)
         {
-            rec.transform.position = rSet.FGetRecSpot(rec.mTag);
+            rec.transform.position = FGetRecStartingSpot(rec.mTag);
             rec.FENTER_PRE_SNAP();
         }
         foreach(RP_Hoop hoop in rHoops)
         {
-            hoop.transform.position = rSet.FGetRingSpot(hoop.mWRTag);
+            hoop.transform.position = FGetRingStartingSpot(hoop.mWRTag);
             // hoop.transform.LookAt(rPocket.transform.position);
         }
     }
@@ -156,7 +177,7 @@ public class RP_Manager : MonoBehaviour
         sRingHit = "NA";
         mBallCaught = false;
 
-        mTimer = DT_Set.mTimeToThrow;
+        mTimer = mActiveSet.mTimeToThrow;
 
         mUI.FMakeQBUIVisible();
     }
@@ -189,12 +210,9 @@ public class RP_Manager : MonoBehaviour
         FindObjectOfType<QB_UI>().gameObject.SetActive(false);
     }
 
-    // Sort of a hack, we need to re-get the references, since we will have invalid ones due to a frame delay when deleting objects.
     private void EXIT_INTRO()
     {
         mUI.rIntroCanvas.gameObject.SetActive(false);
-        rRecs = FindObjectsOfType<RP_Receiver>();
-        rHoops = FindObjectsOfType<RP_Hoop>();
     }
     private void EXIT_PRESNAP()
     {
@@ -265,12 +283,12 @@ public class RP_Manager : MonoBehaviour
         }
         mUI.FSetTimerText(mTimer, mBallThrown);
         mUI.FSetPocketText(mInPocket);
-        mUI.FSetCombosDoneText(mCompletions.Count, rRecs.Length);
+        mUI.FSetCombosDoneText(mCompletions.Count, rRecs.Count);
     }
 
     private void RUN_POST_PLAY()
     {
-        if(mCompletions.Count == rRecs.Length){
+        if(mCompletions.Count == rRecs.Count){
             Debug.Log("You've won this set already");
             EXIT_POST_SNAP();
             ENTER_OUTRO();
@@ -359,63 +377,30 @@ public class RP_Manager : MonoBehaviour
     }
 
 
-    // Yeah you have to manually allocate the size of the arrays in the editor.
-    private void SaveToSet()
+    public Vector3 FGetRecStartingSpot(string wrTag)
     {
-        DT_Set.mPCSpot = rPC.transform.position;
-        for(int i=0; i<rRecs.Length; i++){
-            DT_Set.mReceiverData[i].mStartPos = rRecs[i].transform.position;
-            DT_Set.mReceiverData[i].mRoute = rRecs[i].mRoute;
-            DT_Set.mReceiverData[i].mTag = rRecs[i].mTag;
+        foreach(DATA_RP_Receiver r in mActiveSet.mReceiverData){
+
+            if(r.mTag == wrTag)
+            {
+                return r.mStartPos;
+            }
         }
-        for(int i=0; i<rHoops.Length; i++){
-            DT_Set.mRingData[i].mStartPos = rHoops[i].transform.position;
-            DT_Set.mRingData[i].mTag = rHoops[i].mWRTag;
-            DT_Set.mRingData[i].mScale = rHoops[i].transform.localScale;
-            DT_Set.mRingData[i].mDir = rHoops[i].transform.rotation.eulerAngles;
-        }
+
+        Debug.Log("No spot with that tag found");
+        return Vector3.zero;
     }
 
-    private void LoadSet()
+    public Vector3 FGetRingStartingSpot(string ringTag)
     {
-        if(RP_GB_Diff.mDif == "NA"){
-            RP_GB_Diff.mDif = "Rookie";
+        foreach(DATA_RP_Ring r in mActiveSet.mRingData){
+            if(r.mTag == ringTag){
+                return r.mStartPos;
+            }
         }
-        string sDif = RP_GB_Diff.mDif;
-        switch(sDif)
-        {
-            case "Rookie": DT_Set = DT_Rookie; break;
-            case "Normie": DT_Set = DT_Normie; break;
-            case "Sexy": DT_Set = DT_Sexy; break;
-            case "Peterman": DT_Set = DT_Peterman; break;
-        }
-
-        mTimer = DT_Set.mTimeToThrow;
-
-        // --------------------- Destroy any things that I might have in the scene for convenience sake.
-        RP_Hoop[] hoops = FindObjectsOfType<RP_Hoop>();
-        foreach(RP_Hoop h in hoops){
-            Destroy(h.gameObject);
-        }
-        RP_Receiver[] recs = FindObjectsOfType<RP_Receiver>();
-        foreach(RP_Receiver r in recs){
-            Destroy(r.gameObject);
-        }
-
-        // --------------------- Populate the level as I have saved it.
-        FindObjectOfType<PC_Controller>().transform.position = DT_Set.mPCSpot;
-        for(int i=0; i<DT_Set.mRingData.Length; i++){
-            RP_Hoop r = Instantiate(PF_Ring, DT_Set.mRingData[i].mStartPos, transform.rotation);
-            r.mWRTag = DT_Set.mRingData[i].mTag;
-            r.transform.localScale = DT_Set.mRingData[i].mScale;
-            r.transform.rotation = Quaternion.Euler(DT_Set.mRingData[i].mDir);
-            r.mStartRot = DT_Set.mRingData[i].mDir;
-        }
-        for(int i=0; i<DT_Set.mReceiverData.Length; i++){
-            RP_Receiver r = Instantiate(PF_Receiver, DT_Set.mReceiverData[i].mStartPos, transform.rotation);
-            r.mTag = DT_Set.mReceiverData[i].mTag;
-            r.mRoute = DT_Set.mReceiverData[i].mRoute;
-        }
+        
+        Debug.Log("No ring spot with that tag found");
+        return Vector3.zero;
     }
 
 }
