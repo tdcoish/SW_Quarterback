@@ -1753,6 +1753,9 @@ MonoBehaviour:
     mTimeToThrow: 10
     mPCSpot: {x: 27.5, y: 1.08, z: 33.53}
     mReceiverData:
+    - mTag: WR3
+      mRoute: OutR
+      mStartPos: {x: 38.27, y: 0.27982, z: 29.74}
     - mTag: WR2
       mRoute: Go
       mStartPos: {x: 13.73, y: 0.27982, z: 28.46}
@@ -1760,9 +1763,13 @@ MonoBehaviour:
       mRoute: SlantL
       mStartPos: {x: 49.53, y: 0.27982, z: 29.74}
     mRingData:
+    - mTag: WR3
+      mScale: {x: 4.2237835, y: 4.2237835, z: 4.2237835}
+      mDir: {x: -0, y: 48.18822, z: -0}
+      mStartPos: {x: 54.82, y: -21.49, z: 37.62}
     - mTag: WR2
       mScale: {x: 2.802513, y: 2.802513, z: 2.802513}
-      mDir: {x: -0, y: 314.73026, z: 0}
+      mDir: {x: -0, y: 344.64023, z: 0}
       mStartPos: {x: 16.72, y: -9.3326, z: 51.69}
     - mTag: WR1
       mScale: {x: 2.1997726, y: 2.1997726, z: 2.1997726}
@@ -4264,7 +4271,7 @@ PrefabInstance:
     - target: {fileID: 1129546326127227084, guid: 6685f864c6a9e1d4786856b2e538ae99,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 38.27
+      value: 44.03
       objectReference: {fileID: 0}
     - target: {fileID: 1129546326127227084, guid: 6685f864c6a9e1d4786856b2e538ae99,
         type: 3}
