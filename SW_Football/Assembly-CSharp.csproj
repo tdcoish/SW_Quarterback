@@ -180,6 +180,9 @@
      <Compile Include="Assets\Scripts\Practice\PRS_AssignMan.cs" />
      <Compile Include="Assets\Scripts\PreSport\MAN_ShowMatchup.cs" />
      <Compile Include="Assets\Scripts\PROJ_Football.cs" />
+     <Compile Include="Assets\Scripts\RouteEditor\ED_RT_Grid.cs" />
+     <Compile Include="Assets\Scripts\RouteEditor\ED_RT_Man.cs" />
+     <Compile Include="Assets\Scripts\RouteEditor\ED_RT_Square.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\CAM_Outro.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\DATA_RP_Set.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\IO_RP_Dif.cs" />
