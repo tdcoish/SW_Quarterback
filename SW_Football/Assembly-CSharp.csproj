@@ -182,6 +182,7 @@
      <Compile Include="Assets\Scripts\PROJ_Football.cs" />
      <Compile Include="Assets\Scripts\RouteEditor\ED_RT_Grid.cs" />
      <Compile Include="Assets\Scripts\RouteEditor\ED_RT_Man.cs" />
+     <Compile Include="Assets\Scripts\RouteEditor\ED_RT_Rt_Node.cs" />
      <Compile Include="Assets\Scripts\RouteEditor\ED_RT_Square.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\CAM_Outro.cs" />
      <Compile Include="Assets\Scripts\RoutePasser\DATA_RP_Set.cs" />
