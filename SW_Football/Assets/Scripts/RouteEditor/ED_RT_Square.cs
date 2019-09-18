@@ -5,13 +5,6 @@ using UnityEngine;
 
 public class ED_RT_Square : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+    public int                          x;
+    public int                          y;
 }

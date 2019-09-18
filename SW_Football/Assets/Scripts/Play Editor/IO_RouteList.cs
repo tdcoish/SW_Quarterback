@@ -36,6 +36,21 @@ public static class IO_RouteList
         return true;
     }
 
+    public static bool FWRITE_GRID_ROUTE(DATA_Route route)
+    {
+        string sName =route.mName;
+        StreamWriter sw = new StreamWriter(Application.dataPath+"/FILE_IO/Routes/"+sName+".txt");
+        sw.WriteLine(route.mName);
+        sw.WriteLine(route.mSpots.Length);
+        for(int j=0; j<route.mSpots.Length; j++){
+            sw.WriteLine("("+route.mSpots[j].x+","+route.mSpots[j].y+")");
+        }
+
+        sw.Close();
+
+        return true;
+    }
+
     public static bool FCHECK_ROUTE_EXISTS(string sName)
     {
         foreach (DATA_Route rt in mRoutes)

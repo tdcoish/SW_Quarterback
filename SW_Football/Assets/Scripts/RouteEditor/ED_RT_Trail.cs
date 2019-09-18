@@ -3,8 +3,15 @@
 *************************************************************************************/
 using UnityEngine;
 
-public class ED_RT_Rt_Node : MonoBehaviour
+public class ED_RT_Trail : MonoBehaviour
 {
-    public int                      x;
-    public int                      y;
+    void Start()
+    {
+        
+    }
+
+    void Update()
+    {
+        
+    }
 }

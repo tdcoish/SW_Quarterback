@@ -3,8 +3,8 @@
 *************************************************************************************/
 using UnityEngine;
 
-public class ED_RT_Rt_Node : MonoBehaviour
+public class ED_FM_Square : MonoBehaviour
 {
-    public int                      x;
-    public int                      y;
+    public int                                      x;
+    public int                                      y;
 }
