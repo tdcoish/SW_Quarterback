@@ -35,6 +35,8 @@ public class ED_OP_Man : MonoBehaviour
     public Text                 mCurRole;
     public Text                 mNewRole;
 
+    public GameObject           mUI_RouteEditing;
+
     public List<string>         lRoles;
     private int                 ixRl;
     public List<ED_OP_Ply>      mAths;
@@ -122,7 +124,8 @@ public class ED_OP_Man : MonoBehaviour
 
         }
     }
-    private void EXIT_NONE_SELECTED(){}
+    private void EXIT_NONE_SELECTED(){
+    }
     private void ENTER_SELECTED(){
         mCurTag.text = mAths[ixPly].mTag;
         mCurRole.text = mAths[ixPly].mRole;
@@ -138,6 +141,13 @@ public class ED_OP_Man : MonoBehaviour
         if(Input.GetMouseButtonDown(1)){
             EXIT_SELECTED();
             ENTER_NONE_SELECTED();
+            return;
+        }
+
+        if(mAths[ixPly].mRole == "ROUTE"){
+            mUI_RouteEditing.SetActive(true);
+        }else{
+            mUI_RouteEditing.SetActive(false);
         }
     }
     private void EXIT_SELECTED(){
@@ -149,11 +159,15 @@ public class ED_OP_Man : MonoBehaviour
         foreach(ED_OP_Mark m in marks){
             Destroy(m.gameObject);
         }
+
+        mUI_RouteEditing.SetActive(false);
     }
 
     private void ENTER_ROUTE_EDITING()
     {
         mState = STATE.S_ROUTE_EDITING;
+    }
+    private void EXIT_ROUTE_EDITING(){
     }
     private void RUN_ROUTE_EDITING()
     {
@@ -206,6 +220,7 @@ public class ED_OP_Man : MonoBehaviour
     }
     public void BT_RouteStopEdit()
     {
+        EXIT_ROUTE_EDITING();
         ENTER_SELECTED();
     }
 
