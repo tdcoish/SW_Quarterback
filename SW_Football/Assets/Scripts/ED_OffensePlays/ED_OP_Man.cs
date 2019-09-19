@@ -2,6 +2,12 @@
 Load in the default formation, theoretically I need to shove some roles in there, but 
 fuck it, I'll just add those in later. The really obnoxious part is that I'm going to 
 have to outright add route data into the role for each player.
+
+Alright, here's the hard part. Now I have to outright make the route editor come up. That 
+means I also have to have the 
+What if I just let you straight up put routes in there? Maybe I would have to make a line
+renderer, but that wouldn't be too hard.
+Yeah, for now, make an edit route tool so you can just do it right there.
 *************************************************************************************/
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +19,7 @@ public class ED_OP_Man : MonoBehaviour
         S_BEGIN,
         S_NONE_SELECTED,
         S_SELECTED_PLAYER,
+        S_ROUTE_EDITING,
         S_END
     }
     public STATE                                    mState;
@@ -22,6 +29,7 @@ public class ED_OP_Man : MonoBehaviour
     public ED_OP_GFX_Job                GFX_Block;
     public ED_OP_GFX_Job                GFX_QB;
     public ED_OP_GFX_Job                GFX_Rec;
+    public ED_OP_GFX_RT_ND              GFX_Rt_Nd;
 
     public Text                 mCurTag;
     public Text                 mCurRole;
@@ -53,6 +61,7 @@ public class ED_OP_Man : MonoBehaviour
             case STATE.S_BEGIN: RUN_BEGIN(); break;
             case STATE.S_NONE_SELECTED: RUN_NONE_SELECTED(); break;
             case STATE.S_SELECTED_PLAYER: RUN_SELECTED(); break;
+            case STATE.S_ROUTE_EDITING: RUN_ROUTE_EDITING(); break;
         }
     }
     
@@ -142,6 +151,32 @@ public class ED_OP_Man : MonoBehaviour
         }
     }
 
+    private void ENTER_ROUTE_EDITING()
+    {
+        mState = STATE.S_ROUTE_EDITING;
+    }
+    private void RUN_ROUTE_EDITING()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector2.zero);
+            
+            if(hit.collider != null)
+            {
+                if(hit.collider.GetComponent<ED_OP_Square>() != null)
+                {
+                    Debug.Log("Hit grid square");
+                    Debug.Log(hit.transform.position);
+                    ED_OP_Square s = hit.collider.GetComponent<ED_OP_Square>();
+                    Vector3 vRecPos = rGrid.FGetPos(s.x, s.y);
+                    var clone = Instantiate(GFX_Rt_Nd, vRecPos, transform.rotation);
+                    clone.GetComponent<Image>().rectTransform.SetParent(rGrid.transform);
+                }
+            }
+
+        }
+    }
+
     public void BT_RoleNext(){
         ixRl++;
         if(ixRl > lRoles.Count-1){
@@ -162,6 +197,16 @@ public class ED_OP_Man : MonoBehaviour
         mCurRole.text = mAths[ixPly].mRole;
 
         RenderJobs();
+    }
+
+    public void BT_RouteEdit()
+    {
+        EXIT_SELECTED();
+        ENTER_ROUTE_EDITING();
+    }
+    public void BT_RouteStopEdit()
+    {
+        ENTER_SELECTED();
     }
 
     // spawn a little graphic depending on the job?
