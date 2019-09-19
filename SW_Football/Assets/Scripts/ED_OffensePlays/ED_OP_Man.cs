@@ -19,6 +19,9 @@ public class ED_OP_Man : MonoBehaviour
 
     public Image                        PF_Ath;
     public Image                        PF_Marker;
+    public ED_OP_GFX_Job                GFX_Block;
+    public ED_OP_GFX_Job                GFX_QB;
+    public ED_OP_GFX_Job                GFX_Rec;
 
     public Text                 mCurTag;
     public Text                 mCurRole;
@@ -83,6 +86,7 @@ public class ED_OP_Man : MonoBehaviour
     private void EXIT_BEGIN(){
     }
     private void ENTER_NONE_SELECTED(){
+        RenderJobs();
         mState = STATE.S_NONE_SELECTED;
     }
     private void RUN_NONE_SELECTED()
@@ -156,6 +160,37 @@ public class ED_OP_Man : MonoBehaviour
     {
         mAths[ixPly].mRole = mNewRole.text;
         mCurRole.text = mAths[ixPly].mRole;
+
+        RenderJobs();
+    }
+
+    // spawn a little graphic depending on the job?
+    private void RenderJobs()
+    {
+        ED_OP_GFX_Job[] gfx = FindObjectsOfType<ED_OP_GFX_Job>();
+        foreach(ED_OP_GFX_Job g in gfx){
+            Destroy(g.gameObject);
+        }
+
+        for(int i=0; i<mAths.Count; i++)
+        {
+            if(mAths[i].mRole == "BLOCK"){
+                Vector3 vPos = mAths[i].transform.position;
+                vPos.y -= 2f;
+                var clone = Instantiate(GFX_Block, vPos, transform.rotation);
+                clone.GetComponent<Image>().rectTransform.SetParent(rGrid.transform);
+            } else if(mAths[i].mRole == "ROUTE"){
+                Vector3 vPos = mAths[i].transform.position;
+                vPos.y -= 2f;
+                var clone = Instantiate(GFX_Rec, vPos, transform.rotation);
+                clone.GetComponent<Image>().rectTransform.SetParent(rGrid.transform);
+            } else if(mAths[i].mRole == "QB"){
+                Vector3 vPos = mAths[i].transform.position;
+                vPos.y -= 2f;
+                var clone = Instantiate(GFX_QB, vPos, transform.rotation);
+                clone.GetComponent<Image>().rectTransform.SetParent(rGrid.transform);
+            }
+        }
     }
 
     public void LoadValidRoles()

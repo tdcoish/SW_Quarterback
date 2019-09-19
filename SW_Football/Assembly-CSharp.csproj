@@ -90,6 +90,7 @@
      <Compile Include="Assets\Scripts\DT_Types\SO_Int.cs" />
      <Compile Include="Assets\Scripts\DT_Types\SO_Transform.cs" />
      <Compile Include="Assets\Scripts\DT_Types\SO_Vec3.cs" />
+     <Compile Include="Assets\Scripts\ED_OffensePlays\ED_OP_GFX_Job.cs" />
      <Compile Include="Assets\Scripts\ED_OffensePlays\ED_OP_Grid.cs" />
      <Compile Include="Assets\Scripts\ED_OffensePlays\ED_OP_Man.cs" />
      <Compile Include="Assets\Scripts\ED_OffensePlays\ED_OP_Mark.cs" />
