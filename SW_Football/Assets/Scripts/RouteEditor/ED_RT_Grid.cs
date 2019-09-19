@@ -35,18 +35,4 @@ public class ED_RT_Grid : MonoBehaviour
         int el = y*mSqrLnth + x;
         return mSquares[el].transform.position;
     }
-
-    public int FGetInd(ED_RT_Square s)
-    {
-        for(int i=0; i<mSquares.Length; i++)
-        {
-            if(s == mSquares[i]){
-                Debug.Log(s);
-                return i;
-            }
-        }
-
-        Debug.Log("No match");
-        return -1;
-    }
 }

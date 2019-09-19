@@ -47,4 +47,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SN_TrophyRoom.unity
     guid: 3226d2827ad9b0e4ab422626f2dc4293
+  - enabled: 1
+    path: Assets/Scenes/ED_Formation.unity
+    guid: 0545525e2109d5d47a9f61814687ad6b
+  - enabled: 1
+    path: Assets/Scenes/ED_Route.unity
+    guid: 14a805d08414a74418ad6674947b0546
   m_configObjects: {}
