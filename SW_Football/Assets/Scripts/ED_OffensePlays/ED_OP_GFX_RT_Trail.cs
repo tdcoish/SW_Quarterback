@@ -3,9 +3,15 @@
 *************************************************************************************/
 using UnityEngine;
 
-public class ED_OP_GFX_RT_ND : MonoBehaviour
+public class ED_OP_GFX_RT_Trail : MonoBehaviour
 {
-    public string                           mTag;
-    public int                              mIxX;
-    public int                              mIxY;
+    void Start()
+    {
+        
+    }
+
+    void Update()
+    {
+        
+    }
 }

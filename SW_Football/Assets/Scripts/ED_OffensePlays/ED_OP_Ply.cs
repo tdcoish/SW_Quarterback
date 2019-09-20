@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class ED_OP_Ply : MonoBehaviour
 {
-    public int                              x;
-    public int                              y;
+    public int                              mIxX;
+    public int                              mIxY;
 
     public string                           mTag = "QB";
     public string                           mRole = "BLOCK";

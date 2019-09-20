@@ -13,6 +13,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
+public class DATA_ORoute{
+    public string               mOwner;
+    public List<Vector2>        mSpots = new List<Vector2>();
+}
+
+public class DATA_OffPlay{
+    public string               mName;
+    public string[]             mTags;
+    public string[]             mRoles;
+    public List<DATA_ORoute>     mRoutes = new List<DATA_ORoute>();
+}
+
 public class ED_OP_Man : MonoBehaviour
 {
     public enum STATE{
@@ -30,13 +42,17 @@ public class ED_OP_Man : MonoBehaviour
     public ED_OP_GFX_Job                GFX_QB;
     public ED_OP_GFX_Job                GFX_Rec;
     public ED_OP_GFX_RT_ND              GFX_Rt_Nd;
+    public ED_OP_GFX_RT_ND              GFX_Rt_Nd_Set;      // This is what's used for the finished route. First is the route placer.
+    public ED_OP_GFX_RT_Trail           GFX_RT_Trail;
 
     public Text                 mCurTag;
     public Text                 mCurRole;
     public Text                 mNewRole;
 
-    public GameObject           mUI_RouteEditing;
+    public GameObject           mUI_ChooseEditRoute;
+    public GameObject           mUI_RouteSaveCancel;
 
+    public List<ED_OP_GFX_RT_ND>        rRouteNodes;
     public List<string>         lRoles;
     private int                 ixRl;
     public List<ED_OP_Ply>      mAths;
@@ -45,10 +61,15 @@ public class ED_OP_Man : MonoBehaviour
     public ED_OP_Grid           rGrid;
     public Vector2              mSnapSpot;          // in indices
 
+    public DATA_OffPlay         mPlay;
 
     void Start()
     {
         mAths = new List<ED_OP_Ply>();
+        rRouteNodes = new List<ED_OP_GFX_RT_ND>();
+
+        mPlay = new DATA_OffPlay();
+        mPlay.mName = "NAME ME";
 
         mSnapSpot.x = rGrid.mAxLth / 2;
         mSnapSpot.y = rGrid.mAxLth - 5;
@@ -86,8 +107,9 @@ public class ED_OP_Man : MonoBehaviour
 
             ED_OP_Ply p = clone.GetComponent<ED_OP_Ply>();
             p.mTag = f.mTags[i];
-            p.x = x;
-            p.y = y;
+            p.mRole = "NO_ROLE";
+            p.mIxX = x;
+            p.mIxY = y;
             mAths.Add(p);
         }
 
@@ -145,9 +167,9 @@ public class ED_OP_Man : MonoBehaviour
         }
 
         if(mAths[ixPly].mRole == "ROUTE"){
-            mUI_RouteEditing.SetActive(true);
+            mUI_ChooseEditRoute.SetActive(true);
         }else{
-            mUI_RouteEditing.SetActive(false);
+            mUI_ChooseEditRoute.SetActive(false);
         }
     }
     private void EXIT_SELECTED(){
@@ -160,14 +182,26 @@ public class ED_OP_Man : MonoBehaviour
             Destroy(m.gameObject);
         }
 
-        mUI_RouteEditing.SetActive(false);
+        mUI_ChooseEditRoute.SetActive(false);
     }
 
     private void ENTER_ROUTE_EDITING()
     {
         mState = STATE.S_ROUTE_EDITING;
+        mUI_RouteSaveCancel.SetActive(true);
+
+        // Put a route node down right where the player is.
+        Vector3 vRecPos = rGrid.FGetPos(mAths[ixPly].mIxX, mAths[ixPly].mIxY);
+        var clone = Instantiate(GFX_Rt_Nd, vRecPos, transform.rotation);
+        ED_OP_GFX_RT_ND n = clone.GetComponent<ED_OP_GFX_RT_ND>();
+        n.mIxX = mAths[ixPly].mIxX;
+        n.mIxY = mAths[ixPly].mIxY;
+        rRouteNodes.Add(n);
+        clone.GetComponent<Image>().rectTransform.SetParent(rGrid.transform);
     }
     private void EXIT_ROUTE_EDITING(){
+        mUI_RouteSaveCancel.SetActive(false);
+        RenderJobs();
     }
     private void RUN_ROUTE_EDITING()
     {
@@ -184,6 +218,10 @@ public class ED_OP_Man : MonoBehaviour
                     ED_OP_Square s = hit.collider.GetComponent<ED_OP_Square>();
                     Vector3 vRecPos = rGrid.FGetPos(s.x, s.y);
                     var clone = Instantiate(GFX_Rt_Nd, vRecPos, transform.rotation);
+                    ED_OP_GFX_RT_ND n = clone.GetComponent<ED_OP_GFX_RT_ND>();
+                    n.mIxX = s.x;
+                    n.mIxY = s.y;
+                    rRouteNodes.Add(n);
                     clone.GetComponent<Image>().rectTransform.SetParent(rGrid.transform);
                 }
             }
@@ -218,7 +256,52 @@ public class ED_OP_Man : MonoBehaviour
         EXIT_SELECTED();
         ENTER_ROUTE_EDITING();
     }
-    public void BT_RouteStopEdit()
+    public void BT_RouteCancel()
+    {
+        foreach(ED_OP_GFX_RT_ND n in rRouteNodes){
+            Destroy(n.gameObject);
+        }
+        rRouteNodes.Clear();
+
+        RouteStopEdit();
+    }
+    /*********************
+    Should check that we don't already have a route for this receiver. If we do, just overwrite
+    that route.
+    ******************************************************************************** */
+    public void BT_RouteUse()
+    {
+        if(rRouteNodes.Count < 2){
+            Debug.Log("ERROR. Must have at least 2 route nodes");
+            return;
+        }
+
+        DATA_ORoute r = new DATA_ORoute();
+        r.mOwner = mAths[ixPly].mTag;
+        // ------------------------------- Remove existing route if their is one.
+        for(int i=0; i<mPlay.mRoutes.Count; i++){
+            if(mPlay.mRoutes[i].mOwner == r.mOwner){
+                mPlay.mRoutes.RemoveAt(i);
+                Debug.Log("Removing existing route for: " + r.mOwner);
+                break;
+            }
+        }
+
+        // ------------------------------ Fill the positions according to the current list
+        r.mSpots = new List<Vector2>();
+        r.mSpots.Add(new Vector2(0, 0));
+        for(int i=1; i<rRouteNodes.Count; i++){
+
+            Vector2 v = new Vector2(); 
+            v.x = rRouteNodes[i].mIxX - mAths[ixPly].mIxX;
+            v.y = rRouteNodes[i].mIxY - mAths[ixPly].mIxY;
+            Debug.Log("Spot: " + v);
+            r.mSpots.Add(v);
+        }
+        mPlay.mRoutes.Add(r);
+        Debug.Log("Number of routes: " + mPlay.mRoutes.Count);
+    }
+    public void RouteStopEdit()
     {
         EXIT_ROUTE_EDITING();
         ENTER_SELECTED();
@@ -251,6 +334,39 @@ public class ED_OP_Man : MonoBehaviour
                 clone.GetComponent<Image>().rectTransform.SetParent(rGrid.transform);
             }
         }
+
+        // render a whole bunch of nodes.
+        for(int i=0; i<mPlay.mRoutes.Count; i++)
+        {
+            // ------------- Find the player owning the route, and then bump each node by that much.
+            Vector2 vPlayerPosInIdices = new Vector2();
+            for(int j=0; j<mAths.Count; j++){
+                if(mAths[j].mTag == mPlay.mRoutes[i].mOwner){
+                    vPlayerPosInIdices.x = mAths[j].mIxX;
+                    vPlayerPosInIdices.y = mAths[j].mIxY;
+                    break;
+                }
+            }
+
+            for(int j=0; j<mPlay.mRoutes[i].mSpots.Count; j++){
+                Vector2 v2 = mPlay.mRoutes[i].mSpots[j];
+                v2 += vPlayerPosInIdices;
+                var clone = Instantiate(GFX_Rt_Nd_Set, rGrid.FGetPos((int)v2.x, (int)v2.y), transform.rotation);
+                clone.GetComponent<Image>().rectTransform.SetParent(rGrid.transform);
+                
+                Debug.Log("Spawning stlkjsd");
+            }
+
+        }
+
+        // //Now we gotta render the little dots representing the route.
+        // // Luckily, we can actually just place one in the middle of each point.
+        // for(int i=1; i<rRouteNodes.Count; i++)
+        // {
+        //     Vector3 vMid = rRouteNodes[i].transform.position - ((rRouteNodes[i].transform.position - rRouteNodes[i-1].transform.position) / 2f);
+        //     var clone = Instantiate(GFX_RT_Trail, vMid, transform.rotation);
+        //     clone.GetComponent<Image>().rectTransform.SetParent(rGrid.transform);
+        // }
     }
 
     public void LoadValidRoles()
