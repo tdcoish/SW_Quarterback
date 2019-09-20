@@ -19,7 +19,7 @@ public class DATA_ORoute{
 }
 
 public class DATA_OffPlay{
-    public string               mName;
+    public string               mName = "NAME ME";
     public string[]             mTags;
     public string[]             mRoles;
     public List<DATA_ORoute>     mRoutes = new List<DATA_ORoute>();
@@ -48,6 +48,9 @@ public class ED_OP_Man : MonoBehaviour
     public Text                 mCurTag;
     public Text                 mCurRole;
     public Text                 mNewRole;
+    public Text                 mPlayName;
+
+    public InputField           _inName;
 
     public GameObject           mUI_ChooseEditRoute;
     public GameObject           mUI_RouteSaveCancel;
@@ -69,7 +72,9 @@ public class ED_OP_Man : MonoBehaviour
         rRouteNodes = new List<ED_OP_GFX_RT_ND>();
 
         mPlay = new DATA_OffPlay();
-        mPlay.mName = "NAME ME";
+        mPlay.mTags = new string[11];
+        mPlay.mRoles = new string[11];
+        Debug.Log(mPlay.mName);
 
         mSnapSpot.x = rGrid.mAxLth / 2;
         mSnapSpot.y = rGrid.mAxLth - 5;
@@ -200,6 +205,11 @@ public class ED_OP_Man : MonoBehaviour
         clone.GetComponent<Image>().rectTransform.SetParent(rGrid.transform);
     }
     private void EXIT_ROUTE_EDITING(){
+        foreach(ED_OP_GFX_RT_ND n in rRouteNodes){
+            Destroy(n.gameObject);
+        }
+        rRouteNodes.Clear();
+
         mUI_RouteSaveCancel.SetActive(false);
         RenderJobs();
     }
@@ -258,11 +268,6 @@ public class ED_OP_Man : MonoBehaviour
     }
     public void BT_RouteCancel()
     {
-        foreach(ED_OP_GFX_RT_ND n in rRouteNodes){
-            Destroy(n.gameObject);
-        }
-        rRouteNodes.Clear();
-
         RouteStopEdit();
     }
     /*********************
@@ -300,6 +305,8 @@ public class ED_OP_Man : MonoBehaviour
         }
         mPlay.mRoutes.Add(r);
         Debug.Log("Number of routes: " + mPlay.mRoutes.Count);
+
+        RouteStopEdit();
     }
     public void RouteStopEdit()
     {
@@ -313,6 +320,14 @@ public class ED_OP_Man : MonoBehaviour
         ED_OP_GFX_Job[] gfx = FindObjectsOfType<ED_OP_GFX_Job>();
         foreach(ED_OP_GFX_Job g in gfx){
             Destroy(g.gameObject);
+        }
+        ED_OP_GFX_RT_ND[] gfx_nodes = FindObjectsOfType<ED_OP_GFX_RT_ND>();
+        foreach(ED_OP_GFX_RT_ND n in gfx_nodes){
+            Destroy(n.gameObject);
+        }
+        ED_OP_GFX_RT_Trail[] trails = FindObjectsOfType<ED_OP_GFX_RT_Trail>();
+        foreach(ED_OP_GFX_RT_Trail t in trails){
+            Destroy(t.gameObject);
         }
 
         for(int i=0; i<mAths.Count; i++)
@@ -354,19 +369,43 @@ public class ED_OP_Man : MonoBehaviour
                 var clone = Instantiate(GFX_Rt_Nd_Set, rGrid.FGetPos((int)v2.x, (int)v2.y), transform.rotation);
                 clone.GetComponent<Image>().rectTransform.SetParent(rGrid.transform);
                 
-                Debug.Log("Spawning stlkjsd");
+                // ------------------- Also spawn little trail paths.
+                if(j > 0){
+                    Vector3 vEnd = rGrid.FGetPos((int)v2.x, (int)v2.y);
+                    Vector2 vStart = mPlay.mRoutes[i].mSpots[j-1];
+                    vStart += vPlayerPosInIdices;
+                    Vector3 vIter = rGrid.FGetPos((int)vStart.x, (int)vStart.y);
+                    float fStep = 5f;
+                    Vector3 vDir = Vector3.Normalize(vEnd - vIter);
+                    while(true){
+                        vIter += vDir * fStep;
+                        if(Vector3.Dot(vIter - vEnd, vDir) > 0f){
+                            Debug.Log("Overshot");
+                            break;
+                        }
+                        var cloney = Instantiate(GFX_RT_Trail, vIter, transform.rotation);
+                        cloney.GetComponent<Image>().rectTransform.SetParent(rGrid.transform);
+
+                    }
+                }
             }
 
         }
+    }
 
-        // //Now we gotta render the little dots representing the route.
-        // // Luckily, we can actually just place one in the middle of each point.
-        // for(int i=1; i<rRouteNodes.Count; i++)
-        // {
-        //     Vector3 vMid = rRouteNodes[i].transform.position - ((rRouteNodes[i].transform.position - rRouteNodes[i-1].transform.position) / 2f);
-        //     var clone = Instantiate(GFX_RT_Trail, vMid, transform.rotation);
-        //     clone.GetComponent<Image>().rectTransform.SetParent(rGrid.transform);
-        // }
+    public void BT_SavePlay()
+    {
+        for(int i=0; i<mAths.Count; i++)
+        {
+            mPlay.mTags[i] = mAths[i].mTag;
+            mPlay.mRoles[i] = mAths[i].mRole;
+        }
+        IO_OffensivePlays.FWritePlay(mPlay);
+    }
+
+    public void IF_Name(){
+        mPlay.mName = _inName.text;
+        mPlayName.text = mPlay.mName;
     }
 
     public void LoadValidRoles()
