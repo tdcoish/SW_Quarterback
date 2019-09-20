@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 6783409208774118358}
   - component: {fileID: 1832944152458864396}
   - component: {fileID: 2017520036290922013}
+  - component: {fileID: 8139045847164804822}
+  - component: {fileID: 8139045847164804821}
   m_Layer: 0
   m_Name: PLY_Offender (1)
   m_TagString: Untagged
@@ -137,9 +139,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95d28fa1d70873849bea81dcf826794d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mState: 0
+  mHitLastFrame: 0
+  dThingThatHitUs:
+    mWgt: 0
+    mVel: {x: 0, y: 0, z: 0}
+    mPos: {x: 0, y: 0, z: 0}
+  mJob:
+    mTag: 
+    mRole: 
+    mDetail: 
+    mStart: {x: 0, y: 0}
   mTag: 
   mRole: 
   mSpots: []
+--- !u!114 &8139045847164804822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5952822079713681980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c8211562a974d1409b3d133b3c15c70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8139045847164804821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5952822079713681980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e7a93936fa3e984fba2f5a41c07ac2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mRouteSpots: []
+  mState: 0
 --- !u!1 &6776322197127834601
 GameObject:
   m_ObjectHideFlags: 0

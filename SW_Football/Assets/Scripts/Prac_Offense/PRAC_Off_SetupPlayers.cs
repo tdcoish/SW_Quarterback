@@ -53,6 +53,13 @@ public class PRAC_Off_SetupPlayers : MonoBehaviour
                 }
             }
         }
+        
+        // --------------------------- Shove the player "into" the QB position.
+        for(int i=0; i<plys.Count; i++){
+            if(plys[i].mTag == "QB"){
+                FindObjectOfType<PC_Controller>().transform.position = plys[i].transform.position;
+            }
+        }
 
         return;
     }
