@@ -14,7 +14,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class DATA_ORoute{
-    public string               mOwner;
+    public string               mOwner; 
     public List<Vector2>        mSpots = new List<Vector2>();
 }
 
@@ -81,6 +81,10 @@ public class ED_OP_Man : MonoBehaviour
 
         LoadValidRoles();
         ENTER_BEGIN();
+
+        DATA_OffPlay oPlay = IO_OffensivePlays.FLoadPlay("Sail");
+        oPlay.mName = "TestWrite";
+        IO_OffensivePlays.FWritePlay(oPlay);
     }
 
     void Update()

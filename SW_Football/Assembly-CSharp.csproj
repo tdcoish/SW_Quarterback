@@ -312,6 +312,7 @@
      <None Include="Assets\FILE_IO\Routes\DeepIn.txt" />
      <None Include="Assets\FILE_IO\Routes\ShortHitch.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\temptla.txt" />
+     <None Include="Assets\FILE_IO\OffensivePlays\TestWrite.txt" />
      <None Include="Assets\FILE_IO\Formations\TEST2.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Testasdlkfj.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\TESTINGWhatevs.txt" />

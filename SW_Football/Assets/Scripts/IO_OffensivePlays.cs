@@ -3,6 +3,7 @@
 *************************************************************************************/
 using UnityEngine;
 using System.IO;
+using System.Collections.Generic;
 
 public static class IO_OffensivePlays
 {
@@ -73,5 +74,58 @@ public static class IO_OffensivePlays
         }
 
         sw.Close();
+    }
+
+    public static DATA_OffPlay FLoadPlay(string name)
+    {
+        string path = Application.dataPath+"/FILE_IO/OffensivePlays/"+name+".txt";
+        string[] sLines = System.IO.File.ReadAllLines(path);
+
+        DATA_OffPlay p = new DATA_OffPlay();
+        
+        for(int i=0; i<sLines.Length; i++)
+        {
+            if(sLines[i].Contains("NUM PLAYERS")){
+                int numPlayers = int.Parse(sLines[i+1]);
+                p.mTags = new string[numPlayers];
+                p.mRoles = new string[numPlayers];
+            }
+        }
+
+        for(int i=0; i<sLines.Length; i++)
+        {
+            if(sLines[i].Contains("NAME")){
+                p.mName = sLines[i+1];
+            }
+
+            if(sLines[i].Contains("NUM PLAYERS")){
+                int ix = i+2;
+                for(int j=0; j<p.mTags.Length; j++){
+                    p.mTags[j] = sLines[ix++];
+                    p.mRoles[j] = sLines[ix++];
+                }
+            }
+
+            if(sLines[i].Contains("NUM RECEIVERS")){
+                int num = int.Parse(sLines[i+1]);
+                int ix = i+3;
+                for(int j=0; j<num; j++)
+                {
+                    DATA_ORoute r = new DATA_ORoute();
+                    r.mOwner = sLines[ix++];
+                    ix++;       // skip over NUM SPOTS line
+                    int numSpots = int.Parse(sLines[ix++]);
+                    r.mSpots = new List<Vector2>();
+                    for(int k=0; k<numSpots; k++){
+                        Vector2 v = UT_Strings.FGetVecFromString(sLines[ix++]);
+                        r.mSpots.Add(v);
+                    }
+
+                    p.mRoutes.Add(r);
+                }
+            }
+        }
+
+        return p;
     }
 }
