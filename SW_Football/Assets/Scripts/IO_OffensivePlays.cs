@@ -55,6 +55,8 @@ public static class IO_OffensivePlays
         StreamWriter sw = new StreamWriter(Application.dataPath+"/FILE_IO/OffensivePlays/"+sName+".txt");
         sw.WriteLine("NAME");
         sw.WriteLine(p.mName);
+        sw.WriteLine("FORMATION");
+        sw.WriteLine(p.mFormation);
         sw.WriteLine("NUM PLAYERS");
         sw.WriteLine(p.mTags.Length);
         for(int i=0; i<p.mTags.Length; i++){
@@ -96,6 +98,10 @@ public static class IO_OffensivePlays
         {
             if(sLines[i].Contains("NAME")){
                 p.mName = sLines[i+1];
+            }
+
+            if(sLines[i].Contains("FORMATION")){
+                p.mFormation = sLines[i+1];
             }
 
             if(sLines[i].Contains("NUM PLAYERS")){

@@ -1,5 +1,7 @@
 NAME
 TestWrite
+FORMATION
+Default
 NUM PLAYERS
 11
 QB

@@ -1,5 +1,7 @@
 NAME
 Sail
+FORMATION
+Default
 NUM PLAYERS
 11
 QB

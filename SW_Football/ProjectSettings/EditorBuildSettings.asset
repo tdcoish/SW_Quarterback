@@ -53,4 +53,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ED_Route.unity
     guid: 14a805d08414a74418ad6674947b0546
+  - enabled: 1
+    path: Assets/Scenes/ED_OffPlay.unity
+    guid: 2b1af3f2d45bf9d4b85bd742bdfac056
+  - enabled: 1
+    path: Assets/Scenes/SN_PracOffense.unity
+    guid: 1f390f76a2bc5754fa79beb10f868293
   m_configObjects: {}

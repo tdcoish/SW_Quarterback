@@ -167,6 +167,9 @@
      <Compile Include="Assets\Scripts\PP\PP_Trophy.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Turret.cs" />
      <Compile Include="Assets\Scripts\PP\PP_UI.cs" />
+     <Compile Include="Assets\Scripts\Prac_Offense\PRAC_Off_Man.cs" />
+     <Compile Include="Assets\Scripts\Prac_Offense\PRAC_Off_Ply.cs" />
+     <Compile Include="Assets\Scripts\Prac_Offense\PRAC_Off_SetupPlayers.cs" />
      <Compile Include="Assets\Scripts\Practice\CAM_PlayShowing.cs" />
      <Compile Include="Assets\Scripts\Practice\DEF_ManLog.cs" />
      <Compile Include="Assets\Scripts\Practice\DEF_RushLog.cs" />

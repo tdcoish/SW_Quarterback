@@ -20,6 +20,7 @@ public class DATA_ORoute{
 
 public class DATA_OffPlay{
     public string               mName = "NAME ME";
+    public string               mFormation;
     public string[]             mTags;
     public string[]             mRoles;
     public List<DATA_ORoute>     mRoutes = new List<DATA_ORoute>();
@@ -84,6 +85,7 @@ public class ED_OP_Man : MonoBehaviour
 
         DATA_OffPlay oPlay = IO_OffensivePlays.FLoadPlay("Sail");
         oPlay.mName = "TestWrite";
+        oPlay.mFormation = "Default";
         IO_OffensivePlays.FWritePlay(oPlay);
     }
 
