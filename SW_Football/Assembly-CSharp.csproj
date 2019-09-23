@@ -256,6 +256,7 @@
      <None Include="Assets\FILE_IO\Formations\2-2_Default.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\DoubleSmash.txt" />
      <None Include="Assets\Plays\Routes\MHitchR.txt" />
+     <None Include="Assets\FILE_IO\OffensivePlays\Verts.txt" />
      <None Include="Assets\FILE_IO\Formations\SHOT_311.txt" />
      <None Include="Assets\FILE_IO\Formations\SHOT_401_TripsRight.txt" />
      <None Include="Assets\Settings\Settings.txt" />
@@ -267,6 +268,7 @@
      <None Include="Assets\Plays\EditorCreatedPlays\whatevs.txt" />
      <None Include="Assets\Plays\Routes\Seam.txt" />
      <None Include="Assets\Plays\Routes\PostL.txt" />
+     <None Include="Assets\FILE_IO\Formations\0-1_Default.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Sail_02.txt" />
      <None Include="Assets\FILE_IO\OffensivePlays\Curls02.txt" />
      <None Include="Assets\FILE_IO\PitchAndCatch\EASY3.txt" />
@@ -295,6 +297,7 @@
      <None Include="Assets\Plays\Routes\BSlantL.txt" />
      <None Include="Assets\FILE_IO\Routes\DeepSlant.txt" />
      <None Include="Assets\Plays\Routes\ZagR.txt" />
+     <None Include="Assets\FILE_IO\Formations\0-1_Balanced.txt" />
      <None Include="Assets\FILE_IO\PocketPasser\PETERMAN.txt" />
      <None Include="Assets\Plays\Routes\Go.txt" />
      <None Include="Assets\FILE_IO\PitchAndCatch\EASY2.txt" />
@@ -308,13 +311,17 @@
      <None Include="Assets\Plays\EditorCreatedPlays\Smash.txt" />
      <None Include="Assets\RoutesText\routes.txt" />
      <None Include="Assets\FILE_IO\Routes\DeepCorner.txt" />
+     <None Include="Assets\FILE_IO\OffensivePlays\ShouldntSave.txt" />
+     <None Include="Assets\FILE_IO\OffensivePlays\GoallineStick.txt" />
      <None Include="Assets\Plays\Routes\DCrossL.txt" />
      <None Include="Assets\ZonesText\zones.txt" />
      <None Include="Assets\FILE_IO\Formations\Default.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Rando_01.txt" />
+     <None Include="Assets\FILE_IO\Formations\2-3_Default.txt" />
      <None Include="Assets\FILE_IO\Routes\DeepHitch.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\TestCov3Beat.txt" />
      <None Include="Assets\FILE_IO\Routes\ShortCross.txt" />
+     <None Include="Assets\FILE_IO\Formations\3-2_Default.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\RandoPlay.txt" />
      <None Include="Assets\Plays\Routes\BSlantR.txt" />
      <None Include="Assets\FILE_IO\Routes\DeepIn.txt" />
@@ -339,6 +346,7 @@
      <None Include="Assets\FILE_IO\Routes\DeepHook.txt" />
      <None Include="Assets\Plays\Routes\SCrossL.txt" />
      <None Include="Assets\Plays\Routes\MHitchL.txt" />
+     <None Include="Assets\FILE_IO\Formations\2-3_GoalShotgun.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Stick_01.txt" />
      <None Include="Assets\FILE_IO\PitchAndCatch\EASY1.txt" />
      <None Include="Assets\FILE_IO\Formations\1-1_TestLOS.txt" />

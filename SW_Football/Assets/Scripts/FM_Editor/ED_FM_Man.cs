@@ -25,6 +25,7 @@ public class ED_FM_Man : MonoBehaviour
     public Text                                     mLineOfScrim;
     public Button                                   mSaveBtn;
     public UI_SavedTxt                              mSavedText;
+    public Dropdown                                 mDPFormations;
 
     public ED_FM_Grid                               rGrid;
     public Vector2                                  mSnapSpot;
@@ -63,7 +64,32 @@ public class ED_FM_Man : MonoBehaviour
     // Here we have to load in the default, and put the default there.
     private void RUN_BEGIN()
     {
-        DATA_Formation f = IO_Formations.FLOAD_FORMATION("Default");
+        ClearGridOfPlayers();
+        LoadAndDisplayFormation("Default");
+        PopulateDropdownList();
+
+        ENTER_UNSELECTED();
+    }
+
+    private void PopulateDropdownList(){
+        //------------------- Populate the dropdown list.
+        mDPFormations.options = new List<Dropdown.OptionData>();
+        string[] sFormationNames = IO_Formations.FReturnFormationNames();
+        foreach(string s in sFormationNames){
+            mDPFormations.options.Add(new Dropdown.OptionData(s));
+        }
+    }
+    private void ClearGridOfPlayers()
+    {
+        ED_FM_Ply[] players = FindObjectsOfType<ED_FM_Ply>();
+        foreach(ED_FM_Ply p in players){
+            Destroy(p.gameObject);
+        }
+
+        mAths.Clear();
+    }
+    private void LoadAndDisplayFormation(string name){
+        DATA_Formation f = IO_Formations.FLOAD_FORMATION(name);
 
         Debug.Log("Num Players: " + f.mSpots.Length);
         for(int i=0; i<f.mSpots.Length; i++)
@@ -83,8 +109,6 @@ public class ED_FM_Man : MonoBehaviour
             p.y = y;
             mAths.Add(p);
         }
-
-        ENTER_UNSELECTED();
     }
 
     private void ENTER_SELECTED()
@@ -271,6 +295,8 @@ public class ED_FM_Man : MonoBehaviour
 
         IO_Formations.FWRITE_FORMATION(f);
         mSavedText.FSetVisible();
+
+        PopulateDropdownList();
     }
 
     public void BT_TagSet()
@@ -396,5 +422,10 @@ public class ED_FM_Man : MonoBehaviour
 
     public void BT_MainMenu(){
         SceneManager.LoadScene("SN_MN_Main");        
+    }
+
+    public void DP_ChangeFormation(){
+        ClearGridOfPlayers();
+        LoadAndDisplayFormation(mDPFormations.options[mDPFormations.value].text);
     }
 }

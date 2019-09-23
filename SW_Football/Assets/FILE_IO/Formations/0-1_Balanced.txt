@@ -1,0 +1,27 @@
+NAME
+0-1_Balanced
+NUM PLAYERS
+11
+POSITIONS AND TAGS
+QB
+(0,4)
+TE1
+(6,0)
+WR2
+(12,2)
+OL5
+(4,0)
+OL4
+(2,0)
+OL3
+(0,0)
+OL2
+(-2,0)
+WR3
+(10,0)
+WR1
+(-8,2)
+OL1
+(-4,0)
+WR4
+(-12,2)

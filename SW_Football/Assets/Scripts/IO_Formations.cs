@@ -90,4 +90,15 @@ public static class IO_Formations
         }
 
     }
+
+    public static string[] FReturnFormationNames()
+    {
+        string sPath = Application.dataPath + "/FILE_IO/Formations/";
+        string[] files = Directory.GetFiles(sPath, "*.txt");
+        for(int i=0; i<files.Length; i++){
+            files[i] = files[i].Substring(sPath.Length);
+            files[i] = files[i].Substring(0, files[i].Length-4);        // get rid of that .txt
+        }
+        return files;
+    }
 }
