@@ -23,6 +23,8 @@ public class ED_FM_Man : MonoBehaviour
     public Text                                     mCurSelectedTag;
     public Text                                     mNewTag;
     public Text                                     mLineOfScrim;
+    public Button                                   mSaveBtn;
+    public UI_SavedTxt                              mSavedText;
 
     public ED_FM_Grid                               rGrid;
     public Vector2                                  mSnapSpot;
@@ -34,6 +36,7 @@ public class ED_FM_Man : MonoBehaviour
     private int                                     mTagInd = 0;
 
     public Canvas                                   rSelected;
+    public GameObject                               rUITagging;
     public Canvas                                   rUnselected;
 
     void Start()
@@ -142,6 +145,7 @@ public class ED_FM_Man : MonoBehaviour
 
     private void RUN_SELECTED()
     {
+        // --------------------- Line of Scrimmage
         int numOnLOS = 0;
         foreach(ED_FM_Ply p in mAths){
             if(p.y == 0){
@@ -150,10 +154,21 @@ public class ED_FM_Man : MonoBehaviour
         }
         if(numOnLOS < 7){
             mLineOfScrim.gameObject.SetActive(true);
+            mSaveBtn.gameObject.SetActive(false);
         }else{
             mLineOfScrim.gameObject.SetActive(false);
+            mSaveBtn.gameObject.SetActive(true);
+        }
+
+        // ------------------------------ Tagging, not for OL and QB
+        if(mAths[ixPly].mTag.Contains("OL") || mAths[ixPly].mTag.Contains("QB")){
+            rUITagging.SetActive(false);
+        }else{
+            rUITagging.SetActive(true);
         }
         
+        // -------------------------------
+
         mCurSelectedTag.text = mAths[ixPly].mTag;
         if(Input.GetMouseButtonDown(1)){
             EXIT_SELECTED();
@@ -227,8 +242,22 @@ public class ED_FM_Man : MonoBehaviour
 
     public void BT_SaveFormation()
     {
+        if(mNameField.text == ""){
+            Debug.Log("ERROR. No Name");
+            return;
+        }
+        // Formations are saved using the personnel data. RB->TE. So 2WR, 1RB, 2TE becomes 12
         DATA_Formation f = new DATA_Formation();
-        f.mName = mNameField.text;
+        int numRB = 0;
+        int numTE = 0;
+        foreach(ED_FM_Ply p in mAths){
+            if(p.mTag.Contains("TE")){
+                numTE++;
+            }else if(p.mTag.Contains("RB")){
+                numRB++;
+            }
+        }
+        f.mName = numRB+"-"+numTE+"_"+mNameField.text;
         ED_FM_Ply[] players = FindObjectsOfType<ED_FM_Ply>();
         f.mSpots = new Vector2[players.Length];
         f.mTags = new string[players.Length];
@@ -241,6 +270,7 @@ public class ED_FM_Man : MonoBehaviour
         }
 
         IO_Formations.FWRITE_FORMATION(f);
+        mSavedText.FSetVisible();
     }
 
     public void BT_TagSet()
@@ -287,6 +317,58 @@ public class ED_FM_Man : MonoBehaviour
         
         foreach(ED_FM_Ply p in mAths){
             tags.Remove(p.mTag);
+        }
+
+        // Here I want to remove the "extra" tags. Eg. no WR4 when WR3 is available.
+        int wrNum = 10;
+        int rbNum = 10;
+        int teNum = 10;
+        foreach(string t in tags){
+            if(t.Contains("WR")){
+                int n = int.Parse(t.Substring(2));
+                if(n < wrNum){
+                    wrNum = n;
+                }
+            }
+            if(t.Contains("TE")){
+                int n = int.Parse(t.Substring(2));
+                if(n < teNum){
+                    teNum = n;
+                }
+            }
+            if(t.Contains("RB")){
+                int n = int.Parse(t.Substring(2));
+                if(n < rbNum){
+                    rbNum = n;
+                }
+            }
+        }
+
+        for(int i=0; i<tags.Count; i++){
+            if(tags[i].Contains("WR")){
+                int n = int.Parse(tags[i].Substring(2));
+                if(n > wrNum){
+                    tags.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+            }
+            if(tags[i].Contains("TE")){
+                int n = int.Parse(tags[i].Substring(2));
+                if(n > teNum){
+                    tags.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+            }
+            if(tags[i].Contains("RB")){
+                int n = int.Parse(tags[i].Substring(2));
+                if(n > rbNum){
+                    tags.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+            }
         }
 
         return tags;

@@ -103,6 +103,7 @@
      <Compile Include="Assets\Scripts\FM_Editor\ED_FM_Man.cs" />
      <Compile Include="Assets\Scripts\FM_Editor\ED_FM_Ply.cs" />
      <Compile Include="Assets\Scripts\FM_Editor\ED_FM_Square.cs" />
+     <Compile Include="Assets\Scripts\FM_Editor\UI_SavedTxt.cs" />
      <Compile Include="Assets\Scripts\GameManagement\GM_Endzone.cs" />
      <Compile Include="Assets\Scripts\GameManagement\GM_Manager.cs" />
      <Compile Include="Assets\Scripts\GE_System\GE_Event.cs" />
@@ -252,6 +253,7 @@
      <Compile Include="Assets\Scripts\Utilities\UT_Strings.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_VecConversion.cs" />
      <None Include="Assets\Plays\EditorCreatedPlays\Cover3Beater.txt" />
+     <None Include="Assets\FILE_IO\Formations\2-2_Default.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\DoubleSmash.txt" />
      <None Include="Assets\Plays\Routes\MHitchR.txt" />
      <None Include="Assets\FILE_IO\Formations\SHOT_311.txt" />
@@ -260,6 +262,7 @@
      <None Include="Assets\Plays\EditorCreatedPlays\Smash_01.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\sdf.txt" />
      <None Include="Assets\FILE_IO\Routes\ShortSlant.txt" />
+     <None Include="Assets\FILE_IO\Formations\1-2_asdfdasf.txt" />
      <None Include="Assets\Plays\Routes\FlatR.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\whatevs.txt" />
      <None Include="Assets\Plays\Routes\Seam.txt" />
@@ -323,6 +326,7 @@
      <None Include="Assets\FILE_IO\PocketPasser\HARD.txt" />
      <None Include="Assets\FILE_IO\OffensivePlays\Sail.txt" />
      <None Include="Assets\FILE_IO\GamerInfo\info.txt" />
+     <None Include="Assets\FILE_IO\Formations\1-1_Default.txt" />
      <None Include="Assets\Plays\Routes\PostR.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Stick_03.txt" />
      <None Include="Assets\FILE_IO\PocketPasser\NORMAL.txt" />
@@ -337,12 +341,14 @@
      <None Include="Assets\Plays\Routes\MHitchL.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Stick_01.txt" />
      <None Include="Assets\FILE_IO\PitchAndCatch\EASY1.txt" />
+     <None Include="Assets\FILE_IO\Formations\1-1_TestLOS.txt" />
      <None Include="Assets\FILE_IO\Routes\DeepGo.txt" />
      <None Include="Assets\FILE_IO\Routes\ShortFlat.txt" />
      <None Include="Assets\Plays\Routes\DCrossR.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\HB_Wheel.txt" />
      <None Include="Assets\Plays\Routes\Flat.txt" />
      <None Include="Assets\FILE_IO\Routes\MidOutUp.txt" />
+     <None Include="Assets\FILE_IO\Formations\1-2_.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\HulkSmash.txt" />
      <None Include="Assets\FILE_IO\Routes\MidHook.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Testsdl.txt" />
