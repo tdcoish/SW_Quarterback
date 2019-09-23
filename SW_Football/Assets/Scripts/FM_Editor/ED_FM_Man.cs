@@ -4,6 +4,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class ED_FM_Man : MonoBehaviour
 {
@@ -17,15 +18,17 @@ public class ED_FM_Man : MonoBehaviour
     public STATE                                    mState;
 
     public Image                                    PF_Player;
+    public ED_OP_Mark                               PF_Marker;
     public InputField                               mNameField;
     public Text                                     mCurSelectedTag;
     public Text                                     mNewTag;
+    public Text                                     mLineOfScrim;
 
     public ED_FM_Grid                               rGrid;
     public Vector2                                  mSnapSpot;
 
     public List<ED_FM_Ply>                          mAths;
-    public int                                      mActive = -1;
+    public int                                      ixPly = -1;
     public List<string>                             mValidTags;
     public List<string>                             mTagsAvailable;
     private int                                     mTagInd = 0;
@@ -85,6 +88,10 @@ public class ED_FM_Man : MonoBehaviour
     {
         mState = STATE.S_Selected;
         rSelected.gameObject.SetActive(true);
+        Vector3 vPos = mAths[ixPly].transform.position;
+        var clone = Instantiate(PF_Marker, vPos, transform.rotation);
+        clone.GetComponent<Image>().rectTransform.SetParent(mAths[ixPly].transform);
+        mLineOfScrim.gameObject.SetActive(true);
     }
     private void EXIT_UNSELECTED()
     {
@@ -97,8 +104,13 @@ public class ED_FM_Man : MonoBehaviour
     }
     private void EXIT_SELECTED()
     {
-        mActive = -1;
+        ixPly = -1;
         rSelected.gameObject.SetActive(false);
+        ED_OP_Mark[] marks = FindObjectsOfType<ED_OP_Mark>();
+        foreach(ED_OP_Mark m in marks){
+            Destroy(m.gameObject); 
+        }
+        mLineOfScrim.gameObject.SetActive(false);
     }
 
     private void RUN_NONE_SELECTED()
@@ -116,7 +128,7 @@ public class ED_FM_Man : MonoBehaviour
                     ED_FM_Ply p = hit.collider.GetComponent<ED_FM_Ply>();
                     for(int i=0; i<mAths.Count; i++){
                         if(mAths[i].mTag == p.mTag){
-                            mActive = i;
+                            ixPly = i;
                             EXIT_UNSELECTED();
                             ENTER_SELECTED();
                             break;
@@ -130,8 +142,19 @@ public class ED_FM_Man : MonoBehaviour
 
     private void RUN_SELECTED()
     {
+        int numOnLOS = 0;
+        foreach(ED_FM_Ply p in mAths){
+            if(p.y == 0){
+                numOnLOS++;
+            }
+        }
+        if(numOnLOS < 7){
+            mLineOfScrim.gameObject.SetActive(true);
+        }else{
+            mLineOfScrim.gameObject.SetActive(false);
+        }
         
-        mCurSelectedTag.text = mAths[mActive].mTag;
+        mCurSelectedTag.text = mAths[ixPly].mTag;
         if(Input.GetMouseButtonDown(1)){
             EXIT_SELECTED();
             ENTER_UNSELECTED();
@@ -141,6 +164,16 @@ public class ED_FM_Man : MonoBehaviour
     // Pass in how far to the right, and up you want to move them.
     private void RepositionPlayer(ED_FM_Ply p, int x, int y)
     {
+        int newX = p.x + x;
+        int newY = p.y - y;
+
+        foreach(ED_FM_Ply ply in mAths){
+            if(ply.x == newX && ply.y == newY){
+                Debug.Log("There's already a player on that spot");
+                return;
+            }
+        }
+
         p.x += x;
         if(p.x > rGrid.mAxisLength - 1){
             p.x = rGrid.mAxisLength - 1;
@@ -161,35 +194,35 @@ public class ED_FM_Man : MonoBehaviour
 
     public void BT_LeftHard()
     {
-        RepositionPlayer(mAths[mActive], -5, 0);
+        RepositionPlayer(mAths[ixPly], -5, 0);
     }
     public void BT_Left()
     {
-        RepositionPlayer(mAths[mActive], -1, 0);
+        RepositionPlayer(mAths[ixPly], -1, 0);
     }
     public void BT_UpHard()
     {
-        RepositionPlayer(mAths[mActive], 0, 5);
+        RepositionPlayer(mAths[ixPly], 0, 5);
     }
     public void BT_Up()
     {
-        RepositionPlayer(mAths[mActive], 0, 1);
+        RepositionPlayer(mAths[ixPly], 0, 1);
     }
     public void BT_RightHard()
     {
-        RepositionPlayer(mAths[mActive], 5, 0);
+        RepositionPlayer(mAths[ixPly], 5, 0);
     }
     public void BT_Right()
     {
-        RepositionPlayer(mAths[mActive], 1, 0);
+        RepositionPlayer(mAths[ixPly], 1, 0);
     }
     public void BT_DownHard()
     {
-        RepositionPlayer(mAths[mActive], 0, -5);
+        RepositionPlayer(mAths[ixPly], 0, -5);
     }
     public void BT_Down()
     {
-        RepositionPlayer(mAths[mActive], 0, -1);
+        RepositionPlayer(mAths[ixPly], 0, -1);
     }
 
     public void BT_SaveFormation()
@@ -216,7 +249,7 @@ public class ED_FM_Man : MonoBehaviour
             Debug.Log("Wrong state to set tag");
             return;
         }
-        mAths[mActive].mTag = mNewTag.text;
+        mAths[ixPly].mTag = mNewTag.text;
     }
 
     public void BT_TagNext()
@@ -277,5 +310,9 @@ public class ED_FM_Man : MonoBehaviour
         mValidTags.Add("OL3");
         mValidTags.Add("OL4");
         mValidTags.Add("OL5");
+    }
+
+    public void BT_MainMenu(){
+        SceneManager.LoadScene("SN_MN_Main");        
     }
 }

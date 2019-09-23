@@ -12,6 +12,7 @@ Yeah, for now, make an edit route tool so you can just do it right there.
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class DATA_ORoute{
     public string               mOwner; 
@@ -36,6 +37,11 @@ public class ED_OP_Man : MonoBehaviour
         S_END
     }
     public STATE                                    mState;
+    public enum ROLE_STATE{
+        S_Changeable,
+        S_Static
+    }
+    public ROLE_STATE                               mRoleSt;
 
     public Image                        PF_Ath;
     public Image                        PF_Marker;
@@ -50,11 +56,14 @@ public class ED_OP_Man : MonoBehaviour
     public Text                 mCurRole;
     public Text                 mNewRole;
     public Text                 mPlayName;
+    
+    public Dropdown             mDropFormation;
 
     public InputField           _inName;
 
     public GameObject           mUI_ChooseEditRoute;
     public GameObject           mUI_RouteSaveCancel;
+    public GameObject           mUI_RoleChanger;
 
     public List<ED_OP_GFX_RT_ND>        rRouteNodes;
     public List<string>         lRoles;
@@ -69,6 +78,10 @@ public class ED_OP_Man : MonoBehaviour
 
     void Start()
     {
+
+        IO_Formations.FLoadAllFormations();
+        FormationValueSetting();
+
         mAths = new List<ED_OP_Ply>();
         rRouteNodes = new List<ED_OP_GFX_RT_ND>();
 
@@ -102,27 +115,10 @@ public class ED_OP_Man : MonoBehaviour
     // Get all the players set up on the grid.
     private void ENTER_BEGIN(){
         mState = STATE.S_BEGIN;
-
+        mRoleSt = ROLE_STATE.S_Static;
     }
     private void RUN_BEGIN(){
-        DATA_Formation f = IO_Formations.FLOAD_FORMATION("Default");
-        
-        for(int i=0; i<f.mSpots.Length; i++){
-            int x = (int)mSnapSpot.x;
-            int y = (int)mSnapSpot.y;
-            x += (int)(f.mSpots[i].x / 2);
-            y += (int)f.mSpots[i].y / 2;
-            Vector3 vPos = rGrid.FGetPos(x, y);
-            var clone = Instantiate(PF_Ath, vPos, transform.rotation);
-            clone.rectTransform.SetParent(rGrid.transform);
-
-            ED_OP_Ply p = clone.GetComponent<ED_OP_Ply>();
-            p.mTag = f.mTags[i];
-            p.mRole = "NO_ROLE";
-            p.mIxX = x;
-            p.mIxY = y;
-            mAths.Add(p);
-        }
+        SetUpNewFormation("Default");
 
         EXIT_BEGIN();
         ENTER_NONE_SELECTED();
@@ -164,6 +160,13 @@ public class ED_OP_Man : MonoBehaviour
         mCurRole.text = mAths[ixPly].mRole;
 
         mState = STATE.S_SELECTED_PLAYER;
+        if(mAths[ixPly].mTag.Contains("OL") || mAths[ixPly].mTag.Contains("QB")){
+            mRoleSt = ROLE_STATE.S_Static;
+            mUI_RoleChanger.SetActive(false);
+        }else{
+            mRoleSt = ROLE_STATE.S_Changeable;
+            mUI_RoleChanger.SetActive(true);
+        }
 
         Vector3 vPos = mAths[ixPly].transform.position;
         var clone = Instantiate(PF_Marker, vPos, transform.rotation);
@@ -194,6 +197,7 @@ public class ED_OP_Man : MonoBehaviour
         }
 
         mUI_ChooseEditRoute.SetActive(false);
+        mUI_RoleChanger.SetActive(false);
     }
 
     private void ENTER_ROUTE_EDITING()
@@ -320,8 +324,7 @@ public class ED_OP_Man : MonoBehaviour
         ENTER_SELECTED();
     }
 
-    // spawn a little graphic depending on the job?
-    private void RenderJobs()
+    private void DestroyJobGraphics()
     {
         ED_OP_GFX_Job[] gfx = FindObjectsOfType<ED_OP_GFX_Job>();
         foreach(ED_OP_GFX_Job g in gfx){
@@ -335,6 +338,11 @@ public class ED_OP_Man : MonoBehaviour
         foreach(ED_OP_GFX_RT_Trail t in trails){
             Destroy(t.gameObject);
         }
+    }
+    // spawn a little graphic depending on the job?
+    private void RenderJobs()
+    {
+        DestroyJobGraphics();
 
         for(int i=0; i<mAths.Count; i++)
         {
@@ -386,7 +394,6 @@ public class ED_OP_Man : MonoBehaviour
                     while(true){
                         vIter += vDir * fStep;
                         if(Vector3.Dot(vIter - vEnd, vDir) > 0f){
-                            Debug.Log("Overshot");
                             break;
                         }
                         var cloney = Instantiate(GFX_RT_Trail, vIter, transform.rotation);
@@ -397,6 +404,67 @@ public class ED_OP_Man : MonoBehaviour
             }
 
         }
+    }
+
+    // Assumes formations have already been loaded in.
+    private void FormationValueSetting()
+    {
+        List<string> formationNames = new List<string>();
+        foreach(DATA_Formation f in IO_Formations.mFormations){
+            formationNames.Add(f.mName);
+        }
+        mDropFormation.ClearOptions();
+        mDropFormation.AddOptions(formationNames);
+    }
+
+    public void BT_FormationUpdate()
+    {
+        string text = mDropFormation.captionText.text;
+        Debug.Log("They want to load this formation: " + text);
+        SetUpNewFormation(text);
+    }
+
+    private void SetUpNewFormation(string name)
+    {
+        // ----------------------------- Destroy the old spawned items
+        ED_OP_Ply[] plys = FindObjectsOfType<ED_OP_Ply>();
+        foreach(ED_OP_Ply p in plys){
+            Destroy(p.gameObject);
+        }
+
+        // ----------------------------- Clear the play data.
+        mPlay.mName = "NAME ME";
+        mPlay.mFormation = name;
+        mPlay.mRoutes.Clear();
+
+        // ----------------------------- Spawn the new formation.
+        mAths.Clear();
+        DATA_Formation f = IO_Formations.FLOAD_FORMATION(name);
+        for(int i=0; i<f.mSpots.Length; i++){
+            int x = (int)mSnapSpot.x;
+            int y = (int)mSnapSpot.y;
+            x += (int)(f.mSpots[i].x / 2);
+            y += (int)f.mSpots[i].y / 2;
+            Vector3 vPos = rGrid.FGetPos(x, y);
+            var clone = Instantiate(PF_Ath, vPos, transform.rotation);
+            clone.rectTransform.SetParent(rGrid.transform);
+
+            ED_OP_Ply p = clone.GetComponent<ED_OP_Ply>();
+            p.mTag = f.mTags[i];
+            p.mRole = "NO_ROLE";
+            if(p.mTag.Contains("OL")){
+                p.mRole = "BLOCK";
+            }else if(p.mTag.Contains("QB")){
+                p.mRole = "QB";
+            }
+            p.mIxX = x;
+            p.mIxY = y;
+            mAths.Add(p);
+        }
+
+        // --------------------------- Clear the active route list and the graphics.
+        rRouteNodes.Clear();
+        DestroyJobGraphics();
     }
 
     public void BT_SavePlay()
@@ -420,5 +488,10 @@ public class ED_OP_Man : MonoBehaviour
         lRoles.Add("BLOCK");
         lRoles.Add("QB");
         lRoles.Add("ROUTE");
+    }
+
+    public void BT_MainMenu()
+    {
+        SceneManager.LoadScene("SN_MN_Main");        
     }
 }

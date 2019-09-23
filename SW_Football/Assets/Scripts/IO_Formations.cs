@@ -13,6 +13,8 @@ public class DATA_Formation
 public static class IO_Formations
 {
     
+    public static DATA_Formation[]              mFormations;
+
     public static void FWRITE_FORMATION(DATA_Formation f)
     {
         if(f.mSpots.Length != f.mTags.Length){
@@ -36,6 +38,7 @@ public static class IO_Formations
         sw.Close();
     }
 
+    // I still want this to return a valid new formation every time, not a reference to the already loaded one. Subject to change.
     public static DATA_Formation FLOAD_FORMATION(string sName)
     {
         string sPath = Application.dataPath+"/FILE_IO/Formations/"+sName+".txt";
@@ -68,5 +71,23 @@ public static class IO_Formations
         }
 
         return f;
+    }
+
+    public static void FLoadAllFormations()
+    {
+        string sPath = Application.dataPath+"/FILE_IO/Formations/";
+        string[] files = Directory.GetFiles(sPath, "*.txt");
+
+        for(int i=0; i<files.Length; i++){
+            files[i] = files[i].Substring(sPath.Length);
+            files[i] = files[i].Substring(0, files[i].Length-4);        // get rid of .txt
+            Debug.Log(files[i]);
+        }
+
+        mFormations = new DATA_Formation[files.Length];
+        for(int i=0; i<mFormations.Length; i++){
+            mFormations[i] = FLOAD_FORMATION(files[i]);
+        }
+
     }
 }

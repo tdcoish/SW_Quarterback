@@ -110,4 +110,11 @@ public class MN_Manager : MonoBehaviour
     {
         SceneManager.LoadScene("SN_TrophyRoom");
     }
+
+    public void BT_Formation(){
+        SceneManager.LoadScene("ED_Formation");
+    }
+    public void BT_OffensivePlays(){
+        SceneManager.LoadScene("ED_OffPlay");
+    }
 }
