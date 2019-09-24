@@ -134,4 +134,15 @@ public static class IO_OffensivePlays
 
         return p;
     }
+
+    public static string[] FReturnPlayNames()
+    {
+        string sPath = Application.dataPath + "/FILE_IO/OffensivePlays/";
+        string[] files = Directory.GetFiles(sPath, "*.txt");
+        for(int i=0; i<files.Length; i++){
+            files[i] = files[i].Substring(sPath.Length);
+            files[i] = files[i].Substring(0, files[i].Length-4);        // get rid of that .txt
+        }
+        return files;
+    }
 }

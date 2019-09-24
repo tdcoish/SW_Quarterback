@@ -202,7 +202,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2034438297}
         m_MethodName: OnResumePressed
         m_Mode: 1
         m_Arguments:
@@ -521,7 +521,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2034438297}
         m_MethodName: OnQuitPressed
         m_Mode: 1
         m_Arguments:
@@ -2734,6 +2734,7 @@ MonoBehaviour:
   mState: 0
   mPlay: Sail
   rSnapSpot: {fileID: 1773159825}
+  UI_PauseScreen: {fileID: 796079241}
 --- !u!114 &2034438298
 MonoBehaviour:
   m_ObjectHideFlags: 0

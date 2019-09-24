@@ -56,8 +56,10 @@ public class ED_OP_Man : MonoBehaviour
     public Text                 mCurRole;
     public Text                 mNewRole;
     public Text                 mPlayName;
+    public UI_SavedTxt          mSaved;
     
     public Dropdown             mDropFormation;
+    public Dropdown             mDropPlays;
 
     public InputField           _inName;
 
@@ -80,15 +82,14 @@ public class ED_OP_Man : MonoBehaviour
     {
 
         IO_Formations.FLoadAllFormations();
-        FormationValueSetting();
+        RefreshFormationDropdown();
+        RefreshPlaysDropdown();
 
         mAths = new List<ED_OP_Ply>();
         rRouteNodes = new List<ED_OP_GFX_RT_ND>();
 
-        mPlay = new DATA_OffPlay();
-        mPlay.mTags = new string[11];
-        mPlay.mRoles = new string[11];
-        Debug.Log(mPlay.mName);
+        mPlay = IO_OffensivePlays.FLoadPlay("Default");
+        mPlay.mName = "NO NAME";
 
         mSnapSpot.x = rGrid.mAxLth / 2;
         mSnapSpot.y = rGrid.mAxLth - 5;
@@ -96,10 +97,10 @@ public class ED_OP_Man : MonoBehaviour
         LoadValidRoles();
         ENTER_BEGIN();
 
-        DATA_OffPlay oPlay = IO_OffensivePlays.FLoadPlay("Sail");
-        oPlay.mName = "TestWrite";
-        oPlay.mFormation = "Default";
-        IO_OffensivePlays.FWritePlay(oPlay);
+        // DATA_OffPlay oPlay = IO_OffensivePlays.FLoadPlay("Default");
+        // oPlay.mName = "TestWrite";
+        // oPlay.mFormation = "Default";
+        // IO_OffensivePlays.FWritePlay(oPlay);
     }
 
     void Update()
@@ -118,7 +119,8 @@ public class ED_OP_Man : MonoBehaviour
         mRoleSt = ROLE_STATE.S_Static;
     }
     private void RUN_BEGIN(){
-        SetUpNewFormation("Default");
+        SetUpNewFormation(mPlay.mFormation);
+        RenderJobs();
 
         EXIT_BEGIN();
         ENTER_NONE_SELECTED();
@@ -263,11 +265,22 @@ public class ED_OP_Man : MonoBehaviour
         }
         mNewRole.text = lRoles[ixRl];
     }
+    // If they used to run a route, we have to remove that from the routes.
     public void BT_UpdateRole()
     {
         mAths[ixPly].mRole = mNewRole.text;
         mCurRole.text = mAths[ixPly].mRole;
 
+        mPlay.mRoles[ixPly] = mAths[ixPly].mRole;
+
+        // If we have a route with that owner, then just kill it.
+        for(int i=0; i<mPlay.mRoutes.Count; i++){
+            if(mPlay.mRoutes[i].mOwner == mAths[ixPly].mTag){
+                Debug.Log("Getting rid of old route");
+                mPlay.mRoutes.RemoveAt(i);
+                break;
+            }
+        }
         RenderJobs();
     }
 
@@ -407,7 +420,7 @@ public class ED_OP_Man : MonoBehaviour
     }
 
     // Assumes formations have already been loaded in.
-    private void FormationValueSetting()
+    private void RefreshFormationDropdown()
     {
         List<string> formationNames = new List<string>();
         foreach(DATA_Formation f in IO_Formations.mFormations){
@@ -415,6 +428,14 @@ public class ED_OP_Man : MonoBehaviour
         }
         mDropFormation.ClearOptions();
         mDropFormation.AddOptions(formationNames);
+    }
+    private void RefreshPlaysDropdown()
+    {
+        mDropPlays.options = new List<Dropdown.OptionData>();
+        string[] offPlayNames = IO_OffensivePlays.FReturnPlayNames();
+        foreach(string s in offPlayNames){
+            mDropPlays.options.Add(new Dropdown.OptionData(s));
+        }
     }
 
     public void BT_FormationUpdate()
@@ -424,6 +445,19 @@ public class ED_OP_Man : MonoBehaviour
         SetUpNewFormation(text);
     }
 
+    public void BT_PlaysUpdate()
+    {
+        string text = mDropPlays.captionText.text;
+        Debug.Log("They want to see this play shown: " + text);
+        DATA_OffPlay p = IO_OffensivePlays.FLoadPlay(text);
+        p.mName = "NO NAME";
+        SetUpNewFormation(p.mFormation);
+        SetPlayerRolesFromPlayData(p);
+        mPlay = p;
+        RenderJobs();
+    }
+
+    // This has nasty side effects. For one, overwrites existing roles.
     private void SetUpNewFormation(string name)
     {
         // ----------------------------- Destroy the old spawned items
@@ -464,17 +498,79 @@ public class ED_OP_Man : MonoBehaviour
 
         // --------------------------- Clear the active route list and the graphics.
         rRouteNodes.Clear();
-        DestroyJobGraphics();
+        DestroyJobGraphics(); 
     }
 
+    private void SetPlayerRolesFromPlayData(DATA_OffPlay play)
+    {
+        if(mAths.Count != play.mRoles.Length){
+            Debug.Log("ERROR. Number of players in scene does not match number of players in play");
+            Debug.Log(mAths.Count);
+            Debug.Log(play.mRoles.Length);
+            return;
+        }
+        for(int i=0; i<mAths.Count; i++){
+            for(int j=0; j<play.mRoles.Length; j++){
+                if(play.mTags[j] == mAths[i].mTag){
+                    mAths[i].mRole = play.mRoles[j];
+                }
+            }
+        }
+        return;
+    }
+
+    // I realize now that we need some way of building the play from the scene, at least for the most part.
+    // God this is ugly. It's half baked, and relies on getting the rest previously.
+    private void GetPlayFromSceneData()
+    {   
+        if(mPlay.mFormation != mDropFormation.options[mDropFormation.value].text){
+            Debug.Log("The play formation doesn't match the dropdown formation. Probably an issue");
+        }
+        mPlay.mRoles = new string[mAths.Count];
+        mPlay.mTags = new string[mAths.Count];
+        for(int i=0; i<mAths.Count; i++){
+            mPlay.mRoles[i] = mAths[i].mRole;
+            mPlay.mTags[i] = mAths[i].mTag;
+        }
+    }
     public void BT_SavePlay()
     {
+        if(mPlay.mName == "NAME ME"){
+            Debug.Log("No name for this play");
+            return;
+        }
+        // Course, only gets us some of the play. Sigh.
+        GetPlayFromSceneData();
+        foreach(string s in mPlay.mRoles){
+            if(s == "NO_ROLE"){
+                Debug.Log("One or more player does not have a role");
+                return;
+            }
+        }
         for(int i=0; i<mAths.Count; i++)
         {
             mPlay.mTags[i] = mAths[i].mTag;
             mPlay.mRoles[i] = mAths[i].mRole;
         }
+        // ---------------- give it a name corresponding to personnel, RB->TE
+        int numRB = 0;
+        int numTE = 0;
+        foreach(string s in mPlay.mTags){
+            if(s.Contains("TE")){
+                numTE++;
+            }else if(s.Contains("RB")){
+                numRB++;
+            }
+        }
+        string sOldName = mPlay.mName;
+        string sPlayName = numRB+"-"+numTE+"_"+mPlay.mName;
+        mPlay.mName = sPlayName;
+        Debug.Log("Saving as: " + sPlayName);
         IO_OffensivePlays.FWritePlay(mPlay);
+        mPlay.mName = sOldName;
+
+        RefreshPlaysDropdown();
+        mSaved.FSetVisible();
     }
 
     public void IF_Name(){

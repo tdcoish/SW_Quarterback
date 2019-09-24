@@ -117,4 +117,7 @@ public class MN_Manager : MonoBehaviour
     public void BT_OffensivePlays(){
         SceneManager.LoadScene("ED_OffPlay");
     }
+    public void BT_OffensePractice(){
+        SceneManager.LoadScene("SN_PracOffense");
+    }
 }

@@ -2,6 +2,7 @@
 New manager for the practice offense scene.
 *************************************************************************************/
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PRAC_Off_Man : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class PRAC_Off_Man : MonoBehaviour
     public string                               mPlay = "Sail";
 
     public PLY_SnapSpot                         rSnapSpot;
+
+    public GameObject                           UI_PauseScreen;
 
     void Start()
     {
@@ -29,6 +32,21 @@ public class PRAC_Off_Man : MonoBehaviour
             case PRAC_STATE.SPRE_SNAP: RUN_PreSnap(); break;
             case PRAC_STATE.SPLAY_RUNNING: RUN_Live(); break;
             case PRAC_STATE.SPOST_PLAY: RUN_PostPlay(); break;
+        }
+
+        // if the user presses m, then they bring up the pause menu.
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            Time.timeScale = 0f;
+            UI_PauseScreen.SetActive(true);
+
+            // have to show the mouse, as well as disable the player camera.
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            FindObjectOfType<PC_Controller>().mState = PC_Controller.PC_STATE.SINACTIVE;
+
+            //GE_PauseMenuOpened.Raise(null);
         }
     }
 
@@ -97,4 +115,28 @@ public class PRAC_Off_Man : MonoBehaviour
 
     }
     void RUN_PostPlay(){}
+
+
+    public void OnResumePressed()
+    {
+        UI_PauseScreen.SetActive(false);
+        Time.timeScale = 1f;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        FindObjectOfType<PC_Controller>().mState = PC_Controller.PC_STATE.SACTIVE;
+
+        // GE_PauseMenuClosed.Raise(null);
+    }
+    // Since we're displaying the scoreboard screen, this is still fine
+    public void OnQuitPressed()
+    {
+        // refUI.gameObject.SetActive(false);
+        // MN_PauseScreen.SetActive(false);
+        // refScoreboardUI.SetActive(false);
+        // refQuitUI.SetActive(true);
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("SN_MN_Main");        
+    }
 }
