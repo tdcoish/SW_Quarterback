@@ -74,9 +74,14 @@ public class CAM_PlayShowing : MonoBehaviour
     public void FActivate()
     {
         PC_Controller pc = FindObjectOfType<PC_Controller>();
+        PLY_SnapSpot snap = FindObjectOfType<PLY_SnapSpot>();
         mPosToSnapTo = pc.transform.position;
         mPosToSnapTo.y += 20f;
-        mPosToSnapTo.z -= 15f;
+        if(pc.transform.position.z > snap.transform.position.z){
+            mPosToSnapTo.z += 15f;
+        }else{
+            mPosToSnapTo.z -= 15f;
+        }
         transform.position = pc.GetComponentInChildren<PC_Camera>().transform.position;
 
         pc.GetComponentInChildren<Camera>().enabled = false;

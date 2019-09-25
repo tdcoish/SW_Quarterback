@@ -14,19 +14,6 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-public class DATA_ORoute{
-    public string               mOwner; 
-    public List<Vector2>        mSpots = new List<Vector2>();
-}
-
-public class DATA_OffPlay{
-    public string               mName = "NAME ME";
-    public string               mFormation;
-    public string[]             mTags;
-    public string[]             mRoles;
-    public List<DATA_ORoute>     mRoutes = new List<DATA_ORoute>();
-}
-
 public class ED_OP_Man : MonoBehaviour
 {
     public enum STATE{

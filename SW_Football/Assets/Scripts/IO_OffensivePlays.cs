@@ -5,6 +5,19 @@ using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
 
+public class DATA_ORoute{
+    public string               mOwner; 
+    public List<Vector2>        mSpots = new List<Vector2>();
+}
+
+public class DATA_OffPlay{
+    public string               mName = "NAME ME";
+    public string               mFormation;
+    public string[]             mTags;
+    public string[]             mRoles;
+    public List<DATA_ORoute>     mRoutes = new List<DATA_ORoute>();
+}
+
 public static class IO_OffensivePlays
 {
     

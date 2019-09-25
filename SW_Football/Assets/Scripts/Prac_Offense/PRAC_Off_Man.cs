@@ -9,8 +9,10 @@ using UnityEngine.SceneManagement;
 public class PRAC_Off_Man : MonoBehaviour
 {
     private PRAC_Off_SetupPlayers               cPlayerSetup;
+    private PRAC_Off_ShowGFX                    cShowPreSnapGFX;
 
     public PRAC_STATE                           mState;
+    public PRESNAP_STATE                        mPreSnapState;
     public string                               mPlay = "Sail";
 
     public PLY_SnapSpot                         rSnapSpot;
@@ -22,7 +24,8 @@ public class PRAC_Off_Man : MonoBehaviour
     {
         IO_Settings.FLOAD_SETTINGS();
 
-        cPlayerSetup = GetComponent<PRAC_Off_SetupPlayers>();    
+        cPlayerSetup = GetComponent<PRAC_Off_SetupPlayers>();   
+        cShowPreSnapGFX = GetComponent<PRAC_Off_ShowGFX>(); 
 
         ENTER_PickPlay();
     }
@@ -84,18 +87,43 @@ public class PRAC_Off_Man : MonoBehaviour
         }
         FindObjectOfType<PC_Controller>().mState = PC_Controller.PC_STATE.SPRE_SNAP;
 
+        cShowPreSnapGFX.FShowOffensivePlay(IO_OffensivePlays.FLoadPlay(mPlay), rSnapSpot);
     }
     // Fill in the high camera stuff later.
     void RUN_PreSnap()
     {
+        switch(mPreSnapState)
+        {
+            case PRESNAP_STATE.SREADYTOSNAP: RUN_SnapReady(); break;
+            case PRESNAP_STATE.SHIGHCAM: RUN_HighCam(); break;
+        }
+    }
+    void RUN_SnapReady(){
         if(Input.GetKeyDown(KeyCode.Space))
         {
             EXIT_PreSnap();
             ENTER_Live();
         }
+
+        // We also need the camera to go to the higher perspective.
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            cShowPreSnapGFX.FStopShowingPlayArt();
+            cShowPreSnapGFX.FShowOffensivePlay(IO_OffensivePlays.FLoadPlay(mPlay), rSnapSpot);
+            FindObjectOfType<CAM_PlayShowing>().FActivate();
+            mPreSnapState = PRESNAP_STATE.SHIGHCAM;
+        }
+    }
+    void RUN_HighCam(){
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            cShowPreSnapGFX.FStopShowingPlayArt();
+            FindObjectOfType<CAM_PlayShowing>().FDeactivate();
+            mPreSnapState = PRESNAP_STATE.SREADYTOSNAP;
+        }
     }
     void EXIT_PreSnap(){
-
+        cShowPreSnapGFX.FStopShowingPlayArt();
     }
     void ENTER_Live(){
         mState = PRAC_STATE.SPLAY_RUNNING;

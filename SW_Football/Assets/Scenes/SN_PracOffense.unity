@@ -270,7 +270,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &300465258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2698,6 +2698,7 @@ GameObject:
   - component: {fileID: 2034438298}
   - component: {fileID: 2034438297}
   - component: {fileID: 2034438296}
+  - component: {fileID: 2034438301}
   m_Layer: 0
   m_Name: PRAC_Manager
   m_TagString: Untagged
@@ -2732,6 +2733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mState: 0
+  mPreSnapState: 0
   mPlay: Sail
   rSnapSpot: {fileID: 1773159825}
   UI_PauseScreen: {fileID: 796079241}
@@ -2768,6 +2770,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2034438301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034438295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d74892413187619479b19a71b1c4610f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GFX_PassBlock: {fileID: 7717907871966445933, guid: 362b72fb9e385774489d3273d748ef9f,
+    type: 3}
+  GFX_RouteTrail: {fileID: 2939388692476086213, guid: b430b080a2d30af45ada47a578a02a6c,
+    type: 3}
 --- !u!1 &2114044596
 GameObject:
   m_ObjectHideFlags: 0
