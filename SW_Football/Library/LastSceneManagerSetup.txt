@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/ED_OffPlay.unity
+- path: Assets/Scenes/SN_PracOffense.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
