@@ -1,5 +1,7 @@
 ﻿/*************************************************************************************
 New manager for the practice offense scene.
+
+Alright, I can now pick the play.
 *************************************************************************************/
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,21 +16,22 @@ public class PRAC_Off_Man : MonoBehaviour
     public PLY_SnapSpot                         rSnapSpot;
 
     public GameObject                           UI_PauseScreen;
+    public PRAC_PB_UI                           UI_PlayPicker;
 
     void Start()
     {
         IO_Settings.FLOAD_SETTINGS();
 
         cPlayerSetup = GetComponent<PRAC_Off_SetupPlayers>();    
-        cPlayerSetup.FSetUpPlayers(mPlay, rSnapSpot);
 
-        ENTER_PreSnap();
+        ENTER_PickPlay();
     }
 
     void Update()
     {
         switch(mState){
             case PRAC_STATE.SPICK_PLAY: RUN_PickPlay(); break;
+            case PRAC_STATE.SPLAY_PICKED: RUN_PlayPicked(); break;
             case PRAC_STATE.SPRE_SNAP: RUN_PreSnap(); break;
             case PRAC_STATE.SPLAY_RUNNING: RUN_Live(); break;
             case PRAC_STATE.SPOST_PLAY: RUN_PostPlay(); break;
@@ -52,10 +55,24 @@ public class PRAC_Off_Man : MonoBehaviour
 
     void ENTER_PickPlay(){
         mState = PRAC_STATE.SPICK_PLAY;
-        cPlayerSetup.FSetUpPlayers(mPlay, rSnapSpot);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        UI_PlayPicker.gameObject.SetActive(true);
+        UI_PlayPicker.FSetUpPlaybookImagery();
     }
     void RUN_PickPlay()
     {
+        UI_PlayPicker.FRunUpdate();
+    }
+    void EXIT_PickPlay(){
+        Cursor.lockState = CursorLockMode.Locked;
+        UI_PlayPicker.gameObject.SetActive(false);
+        Cursor.visible = false;
+    }
+    void ENTER_PlayPicked(){
+        mState = PRAC_STATE.SPLAY_PICKED;
+    }
+    void RUN_PlayPicked(){
         ENTER_PreSnap();
     }
 
@@ -115,6 +132,20 @@ public class PRAC_Off_Man : MonoBehaviour
 
     }
     void RUN_PostPlay(){}
+
+
+    public void FOffPlayPicked(string name)
+    {
+        if(mState != PRAC_STATE.SPICK_PLAY){
+            Debug.Log("ERROR. Picked play from wrong state");
+            return;
+        }
+        mPlay = name;
+        cPlayerSetup.FSetUpPlayers(mPlay, rSnapSpot);
+
+        EXIT_PickPlay();
+        ENTER_PlayPicked();
+    }
 
 
     public void OnResumePressed()
