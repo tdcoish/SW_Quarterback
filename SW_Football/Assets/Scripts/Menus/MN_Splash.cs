@@ -56,6 +56,7 @@ public class MN_Splash : MonoBehaviour
         IO_ZoneList.FLOAD_ZONES();
 
         // IO_RouteList.FWRITE_ALL_ROUTES_AS_TEXT();
+        DeleteOldFiles();
 
         mState = SplashState.SLOGO;
         mAudioMixer.SetFloat("MASTER_VOLUME", IO_Settings.mSet.lMasterVolume);
@@ -77,7 +78,7 @@ public class MN_Splash : MonoBehaviour
         }
 
         if(mPrintPlays){
-            PrintCreatedFiles();
+            // PrintCreatedFiles();
             TransferCreatedFiles();
             mPrintPlays = false;
         }
@@ -164,6 +165,23 @@ public class MN_Splash : MonoBehaviour
 
             // I have to admit, I'm impressed it's that easy.
             System.IO.File.Copy(s, newPath);
+        }
+    }
+
+    // Called at start, deletes the old files from play art directory and resources.
+    private void DeleteOldFiles()
+    {
+        string resDir = Application.dataPath+"/Resources/PlayArt/Offense/";
+        string plyDir = Application.dataPath+"/PLAYART_CREATION/PlayArt/Offense/";
+
+        // Turns out we want to delete the .meta files as well.
+        string[] plyFiles = Directory.GetFiles(plyDir);
+        string[] resFiles = Directory.GetFiles(resDir);
+        foreach(string s in plyFiles){
+            File.Delete(s);
+        }
+        foreach(string s in resFiles){
+            File.Delete(s);
         }
     }
 }
