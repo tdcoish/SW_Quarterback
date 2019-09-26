@@ -56,7 +56,8 @@ public class MN_Splash : MonoBehaviour
         IO_ZoneList.FLOAD_ZONES();
 
         // IO_RouteList.FWRITE_ALL_ROUTES_AS_TEXT();
-        DeleteOldFiles();
+        DeleteOldFilesFromPlayArtDirectories();
+        TransferCurrentFormationsAndPlaysIntoPlayArtDirectories();
 
         mState = SplashState.SLOGO;
         mAudioMixer.SetFloat("MASTER_VOLUME", IO_Settings.mSet.lMasterVolume);
@@ -168,8 +169,30 @@ public class MN_Splash : MonoBehaviour
         }
     }
 
+    private void TransferCurrentFormationsAndPlaysIntoPlayArtDirectories()
+    {
+        string formDir = Application.dataPath+"/PLAYART_CREATION/Formations/";
+        string textPlayDir = Application.dataPath+"/PLAYART_CREATION/OffensivePlays/";
+        string oldFormDir = Application.dataPath+"/FILE_IO/Formations/";
+        string oldPlayDir = Application.dataPath+"/FILE_IO/OffensivePlays/";
+
+        string[] plyFiles = Directory.GetFiles(oldPlayDir, "*.txt");
+        foreach(string s in plyFiles)
+        {
+            string playNameWithoutPath = s.Substring(oldPlayDir.Length);
+            File.Copy(s, textPlayDir+playNameWithoutPath);
+        }
+
+        string[] formFiles = Directory.GetFiles(oldFormDir, "*.txt");
+        foreach(string s in formFiles)
+        {
+            string formNameWithoutPath = s.Substring(oldFormDir.Length);
+            File.Copy(s, formDir+formNameWithoutPath);
+        }
+
+    }
     // Called at start, deletes the old files from play art directory and resources.
-    private void DeleteOldFiles()
+    private void DeleteOldFilesFromPlayArtDirectories()
     {
         string resDir = Application.dataPath+"/Resources/PlayArt/Offense/";
         string plyDir = Application.dataPath+"/PLAYART_CREATION/PlayArt/Offense/";
@@ -183,5 +206,17 @@ public class MN_Splash : MonoBehaviour
         foreach(string s in resFiles){
             File.Delete(s);
         }
+
+        string formDir = Application.dataPath+"/PLAYART_CREATION/Formations/";
+        string textPlays = Application.dataPath+"/PLAYART_CREATION/OffensivePlays/";
+        string[] textPlyFiles = Directory.GetFiles(textPlays);
+        string[] formFiles = Directory.GetFiles(formDir);
+        foreach(string s in textPlyFiles){
+            File.Delete(s);
+        }
+        foreach(string s in formFiles){
+            File.Delete(s);
+        }
     }
+
 }

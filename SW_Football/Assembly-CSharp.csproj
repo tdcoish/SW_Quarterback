@@ -375,6 +375,7 @@
      <None Include="Assets\PLAYART_CREATION\Formations\1-1_Default.txt" />
      <None Include="Assets\Plays\Routes\Flat.txt" />
      <None Include="Assets\FILE_IO\Routes\MidOutUp.txt" />
+     <None Include="Assets\PLAYART_CREATION\OffensivePlays\1-2_TestSave.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\HulkSmash.txt" />
      <None Include="Assets\FILE_IO\Routes\MidHook.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Testsdl.txt" />
