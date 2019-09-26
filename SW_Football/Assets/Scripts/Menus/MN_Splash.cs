@@ -10,12 +10,35 @@ Okay there seem to be some issues. I think Unity takes a little bit to load in t
 them or whatever, so you have to load them in update once, which I hope is reliable.
 
 mAudioSrc.clip.length;
+
+
+Texture2D.LoadImage((pnghere)) seems promising. Apparently we can just shove png's into there.
+Maybe then I can create sprites right then and there.
+That's legacy. I probably have to create a color[] array, then make a texture using 
+Texture2D.SetPixels();
+Wait, I'm seeing ImageConversion.LoadImage(Texture2d tex, byte[] data, bool markNonReadable)
+which apparently can be used to load in .png files.
+Maybe not, you need to save that with the .bytes extension.
+Alright, I think I might need to be using C# .Net image stuffs. File.ReadAllBytes(path)
+might be a good place to start. Also, Bitmap is a great idea apparently. 
+
+For the record, I had massive issues importing System.Drawing. Got the correct answer from
+here: https://gamedev.stackexchange.com/questions/133372/system-drawing-dll-not-found/147506
+
+Note, the %UnityFolder% referenced is the installation folder of Unity. My project now feels 
+very fragile, but it does appear to be working.
+
+Lol, turns out I might not have needed to do this anyways.
+
+Ideally, I'd just save the new files as sprites, but I'm not sure how to do that.
 *************************************************************************************/
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using UnityEngine.Audio;
 using System.Diagnostics;
 using System.IO;
+using System.Drawing;
 
 // For now only works with this, looking to make this more broadly
 public abstract class tdcState
@@ -43,6 +66,8 @@ public class MN_Splash : MonoBehaviour
     public AudioSource              sfx_logo;
     public AudioSource              sfx_copyright;
 
+    public Text                     mDebugText;
+
     private SplashState             mState;
 
     public bool                     mPrintPlays = false;
@@ -55,9 +80,13 @@ public class MN_Splash : MonoBehaviour
         IO_Settings.FLOAD_SETTINGS();
         IO_ZoneList.FLOAD_ZONES();
 
+        mDebugText.text = "Loading in stuffs";
+
         // IO_RouteList.FWRITE_ALL_ROUTES_AS_TEXT();
         DeleteOldFilesFromPlayArtDirectories();
         TransferCurrentFormationsAndPlaysIntoPlayArtDirectories();
+
+        mDebugText.text = "Should have transfered text files with formation and plays";
 
         mState = SplashState.SLOGO;
         mAudioMixer.SetFloat("MASTER_VOLUME", IO_Settings.mSet.lMasterVolume);
@@ -80,6 +109,7 @@ public class MN_Splash : MonoBehaviour
 
         if(mPrintPlays){
             // PrintCreatedFiles();
+            mDebugText.text = "Should have created all the plays";
             TransferCreatedFiles();
             mPrintPlays = false;
         }
@@ -88,6 +118,8 @@ public class MN_Splash : MonoBehaviour
     // Once the jingle is done, we switch to the next screen.
     private void ENTER_Logo()
     {
+        mDebugText.text = "ENTER_Logo has been called";
+
         mState = SplashState.SLOGO;
         sfx_logo.Play();
         mTime = Time.time;
@@ -100,6 +132,7 @@ public class MN_Splash : MonoBehaviour
         p.StartInfo.CreateNoWindow = true;
         p.EnableRaisingEvents = true;
         p.Exited += new System.EventHandler(PROC_PlayArtExited);
+        mDebugText.text = "About to start the process";
         p.Start();
     }
     private void RUN_Logo()
@@ -149,9 +182,13 @@ public class MN_Splash : MonoBehaviour
         }
     }
 
+    /*********************************************************************************
+    This is going to convert those files textures. dfdfdfdf
+    ******************************************************************************** */
     private void TransferCreatedFiles()
     {
-        string newDir = Application.dataPath+"/Resources/PlayArt/Offense/";
+        // string newDir = Application.dataPath+"/Resources/PlayArt/Offense/";
+        string newDir = Application.dataPath+"/FILE_IO/PlayArt/Offense/";
         string oldDir = Application.dataPath+"/PLAYART_CREATION/PlayArt/Offense/";
         // gonna use the length of oldPath as a ghetto way of getting the filename using substring.
 
@@ -165,7 +202,13 @@ public class MN_Splash : MonoBehaviour
             UnityEngine.Debug.Log("New Path: " + newPath);
 
             // I have to admit, I'm impressed it's that easy.
-            System.IO.File.Copy(s, newPath);
+            // byte[] fileData;
+            // Texture2D tex = null;
+            // fileData = File.ReadAllBytes(s);
+            // tex = new Texture2D(256, 256);
+            // tex.LoadImage(fileData);
+
+            File.Copy(s, newPath, true);
         }
     }
 
@@ -180,21 +223,25 @@ public class MN_Splash : MonoBehaviour
         foreach(string s in plyFiles)
         {
             string playNameWithoutPath = s.Substring(oldPlayDir.Length);
-            File.Copy(s, textPlayDir+playNameWithoutPath);
+            File.Copy(s, textPlayDir+playNameWithoutPath, true);
         }
 
         string[] formFiles = Directory.GetFiles(oldFormDir, "*.txt");
         foreach(string s in formFiles)
         {
             string formNameWithoutPath = s.Substring(oldFormDir.Length);
-            File.Copy(s, formDir+formNameWithoutPath);
+            File.Copy(s, formDir+formNameWithoutPath, true);
         }
 
     }
+    /****************************************************************************
+    I think I found the problem. There is no resources folder. Unity just uses that to make streamable 
+    assets. We have to save to somewhere else. This works for the Editor, but the build will be broken.
+    ************************************************************************** */
     // Called at start, deletes the old files from play art directory and resources.
     private void DeleteOldFilesFromPlayArtDirectories()
     {
-        string resDir = Application.dataPath+"/Resources/PlayArt/Offense/";
+        string resDir = Application.dataPath+"/FILE_IO/PlayArt/Offense/";
         string plyDir = Application.dataPath+"/PLAYART_CREATION/PlayArt/Offense/";
 
         // Turns out we want to delete the .meta files as well.

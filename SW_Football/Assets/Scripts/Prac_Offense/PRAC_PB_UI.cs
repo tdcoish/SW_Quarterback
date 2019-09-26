@@ -4,6 +4,7 @@ I am a god. I have overdelivered.
 *************************************************************************************/
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 public class PRAC_PB_UI : MonoBehaviour
 {
@@ -75,11 +76,26 @@ public class PRAC_PB_UI : MonoBehaviour
             }
 
             // We also want to put some text on them to show the play name.
-            string path = "PlayArt/Offense/" + offPlayNames[i];
+            string path = Application.dataPath+"/FILE_IO/PlayArt/Offense/" + offPlayNames[i] + ".png";
             Debug.Log("Play: " + path);
 
             int el = i - (mPlayArts.Length * mPage);
-            Texture2D tex = Resources.Load<Texture2D>(path);
+
+            // old
+            // Texture2D tex = Resources.Load<Texture2D>(path);
+            // Rect r = new Rect(0, 0, 256, 256);
+            // Sprite spr = Sprite.Create(tex, r, new Vector2(1f, 1f));
+            // mPlayArts[el].GetComponent<Image>().sprite = spr;
+            // mPlayArts[el].mName = offPlayNames[i];
+            // mPlayArts[el].GetComponentInChildren<Text>().text = offPlayNames[i];
+
+            // new
+            byte[] fileData;
+            Texture2D tex = null;
+            fileData = File.ReadAllBytes(path);
+            tex = new Texture2D(256, 256);
+            tex.LoadImage(fileData);
+
             Rect r = new Rect(0, 0, 256, 256);
             Sprite spr = Sprite.Create(tex, r, new Vector2(1f, 1f));
             mPlayArts[el].GetComponent<Image>().sprite = spr;
