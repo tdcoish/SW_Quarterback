@@ -5,8 +5,8 @@ NUM PLAYERS
 POSITIONS AND TAGS
 QB
 (0,4)
-WR3
-(-10,0)
+RB2
+(2,4)
 WR2
 (12,0)
 OL5
@@ -17,10 +17,10 @@ OL3
 (0,0)
 OL2
 (-2,0)
-RB2
-(2,4)
+WR3
+(-8,2)
 WR1
-(8,2)
+(-10,0)
 OL1
 (-4,0)
 RB1

@@ -1,0 +1,66 @@
+NAME
+1-1_DeepStretch
+FORMATION
+1-1_Trips
+NUM PLAYERS
+11
+RB1
+ROUTE
+OL1
+BLOCK
+WR1
+ROUTE
+WR3
+ROUTE
+OL2
+BLOCK
+OL3
+BLOCK
+OL4
+BLOCK
+OL5
+BLOCK
+WR2
+ROUTE
+TE1
+ROUTE
+QB
+QB
+NUM RECEIVERS
+5
+ROUTES
+WR3
+NUM SPOTS
+5
+(0,0)
+(0,-5)
+(2,-8)
+(6,-10)
+(10,-10)
+WR2
+NUM SPOTS
+3
+(0,0)
+(0,-5)
+(-1,-10)
+WR1
+NUM SPOTS
+4
+(0,0)
+(0,-2)
+(4,-5)
+(11,-6)
+TE1
+NUM SPOTS
+4
+(0,0)
+(0,-1)
+(-1,-2)
+(-5,-2)
+RB1
+NUM SPOTS
+4
+(0,0)
+(-3,1)
+(-5,0)
+(-6,-1)

@@ -1,5 +1,5 @@
 NAME
-1-1_Trips
+1-2_2Wide
 NUM PLAYERS
 11
 POSITIONS AND TAGS
@@ -8,9 +8,9 @@ RB1
 OL1
 (-4,0)
 WR1
-(-10,2)
-WR3
-(-8,0)
+(-10,0)
+TE1
+(-6,0)
 OL2
 (-2,0)
 OL3
@@ -20,8 +20,8 @@ OL4
 OL5
 (4,0)
 WR2
-(-12,0)
-TE1
-(6,0)
+(-14,2)
+TE2
+(6,2)
 QB
 (0,4)
