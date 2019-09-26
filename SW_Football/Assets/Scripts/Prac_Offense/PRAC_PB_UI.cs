@@ -1,5 +1,6 @@
 ﻿/*************************************************************************************
-
+Holy shit I can actually procedurally create and load in the plays I want. Holy shit.
+I am a god. I have overdelivered.
 *************************************************************************************/
 using UnityEngine;
 using UnityEngine.UI;
@@ -78,7 +79,9 @@ public class PRAC_PB_UI : MonoBehaviour
             Debug.Log("Play: " + path);
 
             int el = i - (mPlayArts.Length * mPage);
-            Sprite spr = Resources.Load<Sprite>(path);
+            Texture2D tex = Resources.Load<Texture2D>(path);
+            Rect r = new Rect(0, 0, 256, 256);
+            Sprite spr = Sprite.Create(tex, r, new Vector2(1f, 1f));
             mPlayArts[el].GetComponent<Image>().sprite = spr;
             mPlayArts[el].mName = offPlayNames[i];
             mPlayArts[el].GetComponentInChildren<Text>().text = offPlayNames[i];

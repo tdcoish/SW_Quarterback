@@ -254,6 +254,7 @@
      <Compile Include="Assets\Scripts\Utilities\UT_Grounded.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_Strings.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_VecConversion.cs" />
+     <None Include="Assets\PLAYART_CREATION\OffensivePlays\1-1_FourHooks.txt" />
      <None Include="Assets\PLAYART_CREATION\OffensivePlays\1-1_Sail.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Cover3Beater.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\DoubleSmash.txt" />
@@ -276,6 +277,8 @@
      <None Include="Assets\Plays\Routes\SHitchL.txt" />
      <None Include="Assets\Plays\Routes\SlantL.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\TestingAbain.txt" />
+     <None Include="Assets\PLAYART_CREATION\OffensivePlays\1-1_DeepTest.txt" />
+     <None Include="Assets\FILE_IO\OffensivePlays\1-2_Crossers.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\TESTINGBABY.txt" />
      <None Include="Assets\FILE_IO\OffensivePlays\1-2_Spacing.txt" />
      <None Include="Assets\Plays\Routes\WeirdCross.txt" />
@@ -289,6 +292,7 @@
      <None Include="Assets\FILE_IO\Routes\ShortIn.txt" />
      <None Include="Assets\FILE_IO\Routes\MidHitch.txt" />
      <None Include="Assets\Plays\Priorities\Defenders.txt" />
+     <None Include="Assets\FILE_IO\OffensivePlays\1-1_FourHooks.txt" />
      <None Include="Assets\Plays\Routes\SHitchR.txt" />
      <None Include="Assets\Plays\Priorities\Receivers.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Sail_01.txt" />
@@ -297,9 +301,11 @@
      <None Include="Assets\FILE_IO\PocketPasser\EASY.txt" />
      <None Include="Assets\Plays\Routes\FlatL.txt" />
      <None Include="Assets\Plays\Routes\BSlantL.txt" />
+     <None Include="Assets\PLAYART_CREATION\Formations\1-2_Default.txt" />
      <None Include="Assets\PLAYART_CREATION\OffensivePlays\1-1_ModifiedSmash.txt" />
      <None Include="Assets\FILE_IO\Routes\DeepSlant.txt" />
      <None Include="Assets\Plays\Routes\ZagR.txt" />
+     <None Include="Assets\FILE_IO\OffensivePlays\1-1_MidHook.txt" />
      <None Include="Assets\FILE_IO\PocketPasser\PETERMAN.txt" />
      <None Include="Assets\Plays\Routes\Go.txt" />
      <None Include="Assets\PLAYART_CREATION\OffensivePlays\1-2_SkinnyPost.txt" />
@@ -309,6 +315,8 @@
      <None Include="Assets\FILE_IO\Routes\MidPost.txt" />
      <None Include="Assets\FILE_IO\OffensivePlays\1-1_ModifiedSmash.txt" />
      <None Include="Assets\PLAYART_CREATION\Formations\1-2_Wide.txt" />
+     <None Include="Assets\FILE_IO\OffensivePlays\1-1_DeepTest.txt" />
+     <None Include="Assets\FILE_IO\Formations\1-2_Default.txt" />
      <None Include="Assets\FILE_IO\Routes\MidIn.txt" />
      <None Include="Assets\FILE_IO\Routes\MidOut.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Stick_02.txt" />
@@ -316,6 +324,7 @@
      <None Include="Assets\PlaysText\defPlays.txt" />
      <None Include="Assets\FILE_IO\OffensivePlays\1-2_Sail.txt" />
      <None Include="Assets\FILE_IO\OffensivePlays\1-2_SkinnyPost.txt" />
+     <None Include="Assets\PLAYART_CREATION\OffensivePlays\1-2_Crossers.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Smash.txt" />
      <None Include="Assets\RoutesText\routes.txt" />
      <None Include="Assets\FILE_IO\Routes\DeepCorner.txt" />
@@ -352,6 +361,7 @@
      <None Include="Assets\PLAYART_CREATION\OffensivePlays\Sail.txt" />
      <None Include="Assets\PLAYART_CREATION\Formations\1-0_Default.txt" />
      <None Include="Assets\PLAYART_CREATION\Formations\Default.txt" />
+     <None Include="Assets\PLAYART_CREATION\OffensivePlays\1-1_MidHook.txt" />
      <None Include="Assets\Plays\Routes\PostR.txt" />
      <None Include="Assets\FILE_IO\OffensivePlays\1-1_DumbPlay.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Stick_03.txt" />
