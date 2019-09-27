@@ -582,6 +582,9 @@
  <Reference Include="nunit.framework">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.8f1/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
+ <Reference Include="System.Drawing">
+ <HintPath>C:/Programming/SW_Quarterback/SW_Quarterback/SW_Football/Assets/System.Drawing.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.Analytics.Editor">
  <HintPath>C:/Programming/SW_Quarterback/SW_Quarterback/SW_Football/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Editor.dll</HintPath>
  </Reference>
@@ -590,9 +593,6 @@
  </Reference>
  <Reference Include="Unity.Analytics.Tracker">
  <HintPath>C:/Programming/SW_Quarterback/SW_Quarterback/SW_Football/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
- </Reference>
- <Reference Include="System.Drawing">
- <HintPath>C:/Programming/SW_Quarterback/SW_Quarterback/SW_Football/Assets/System.Drawing.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.8f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
