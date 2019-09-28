@@ -54,7 +54,7 @@ public class RP_Receiver : MonoBehaviour
     public void FENTER_PRE_SNAP()
     {
         mState = STATE.SPRE_SNAP;
-        cRouteLog.mState = OFF_RouteLog.STATE.S_FOLLOWING;
+        cRouteLog.mState = OFF_RouteLog.STATE.S_BLIND;
         SetUpRoute();
     }
 
