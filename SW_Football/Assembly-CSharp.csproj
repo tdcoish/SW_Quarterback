@@ -99,6 +99,16 @@
      <Compile Include="Assets\Scripts\ED_OffensePlays\ED_OP_Ply.cs" />
      <Compile Include="Assets\Scripts\ED_OffensePlays\ED_OP_Square.cs" />
      <Compile Include="Assets\Scripts\Environment\EN_FieldGround.cs" />
+     <Compile Include="Assets\Scripts\Exhibition\EX_CoinToss.cs" />
+     <Compile Include="Assets\Scripts\Exhibition\EX_Intro.cs" />
+     <Compile Include="Assets\Scripts\Exhibition\EX_Man.cs" />
+     <Compile Include="Assets\Scripts\Exhibition\EX_PL_Live.cs" />
+     <Compile Include="Assets\Scripts\Exhibition\EX_PL_Pick.cs" />
+     <Compile Include="Assets\Scripts\Exhibition\EX_PL_Res.cs" />
+     <Compile Include="Assets\Scripts\Exhibition\EX_Plays.cs" />
+     <Compile Include="Assets\Scripts\Exhibition\UI_CoinToss.cs" />
+     <Compile Include="Assets\Scripts\Exhibition\UI_PL_Res.cs" />
+     <Compile Include="Assets\Scripts\Exhibition\UI_Sim.cs" />
      <Compile Include="Assets\Scripts\FM_Editor\ED_FM_Grid.cs" />
      <Compile Include="Assets\Scripts\FM_Editor\ED_FM_Man.cs" />
      <Compile Include="Assets\Scripts\FM_Editor\ED_FM_Ply.cs" />
@@ -108,6 +118,7 @@
      <Compile Include="Assets\Scripts\GameManagement\GM_Manager.cs" />
      <Compile Include="Assets\Scripts\GE_System\GE_Event.cs" />
      <Compile Include="Assets\Scripts\GE_System\GE_Listener.cs" />
+     <Compile Include="Assets\Scripts\GE_System\GE_Manager.cs" />
      <Compile Include="Assets\Scripts\IO_Formations.cs" />
      <Compile Include="Assets\Scripts\IO_OffensivePlays.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_Manager.cs" />
@@ -174,6 +185,7 @@
      <Compile Include="Assets\Scripts\Prac_Offense\PRAC_Off_SetupPlayers.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\PRAC_Off_ShowGFX.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\PRAC_PB_UI.cs" />
+     <Compile Include="Assets\Scripts\Prac_Offense\TRG_Catch.cs" />
      <Compile Include="Assets\Scripts\Practice\CAM_PlayShowing.cs" />
      <Compile Include="Assets\Scripts\Practice\DEF_ManLog.cs" />
      <Compile Include="Assets\Scripts\Practice\DEF_RushLog.cs" />
@@ -253,6 +265,7 @@
      <Compile Include="Assets\Scripts\Utilities\SingletonBehaviour.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_Extensions.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_Grounded.cs" />
+     <Compile Include="Assets\Scripts\Utilities\UT_MinSec.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_Strings.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_VecConversion.cs" />
      <None Include="Assets\PLAYART_CREATION\Formations\2-1_Default.txt" />

@@ -47,8 +47,10 @@ public class AN_OffPlayer : MonoBehaviour
                                 cAnimator.SetBool("isRunning", true);
                             }else if(cAthlete.GetComponent<OFF_RouteLog>().mState == OFF_RouteLog.STATE.S_GET_OPEN){
                                 cAnimator.SetBool("isDoneRoute", true);
-                            } else if(cAthlete.GetComponent<OFF_RouteLog>().mState == OFF_RouteLog.STATE.S_LOOKING_FOR_BALL){
-                                cAnimator.SetBool("isLookingForBall", true);
+                            } else if(cAthlete.GetComponent<OFF_RouteLog>().mState == OFF_RouteLog.STATE.S_CAN_REACT_TO_THROW){
+                                cAnimator.SetBool("isReactableWhileRunning", true);
+                            } else if(cAthlete.GetComponent<OFF_RouteLog>().mState == OFF_RouteLog.STATE.S_CATCHING_BALL_TRY){
+                                cAnimator.SetBool("isTryingToCatch", true);
                             }
                             break;
             case "BLOCK": cAnimator.SetBool("isStrafing", true); break;
@@ -85,6 +87,7 @@ public class AN_OffPlayer : MonoBehaviour
         cAnimator.SetBool("isPreSnap", false);
         cAnimator.SetBool("isStrafing", false);
         cAnimator.SetBool("isDoneRoute", false);
-        cAnimator.SetBool("isLookingForBall", false);
+        cAnimator.SetBool("isReactableWhileRunning", false);
+        cAnimator.SetBool("isTryingToCatch", false);
     }
 }

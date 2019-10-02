@@ -14,10 +14,14 @@ public class PRAC_Off_Ply : PRAC_Ath
     private OFF_RouteLog                        cRouteLog;
     private OFF_BlockLog                        cBlockLog;
 
+    // Planning on using this to calculate where we need to go to catch the ball.
+    private TRG_Catch                           cCatchRadius;
+
     void Start()
     {
         cRouteLog = GetComponent<OFF_RouteLog>();
         cBlockLog = GetComponent<OFF_BlockLog>();
+        cCatchRadius = GetComponentInChildren<TRG_Catch>();
 
         SetupRouteSpots();
     }
@@ -41,5 +45,10 @@ public class PRAC_Off_Ply : PRAC_Ath
             case "ROUTE": cRouteLog.FRunRoute(); break;
             case "BLOCK": cBlockLog.FRunBlocking(); break;
         }
+    }
+
+    public void FCaughtBall()
+    {
+        Debug.Log("I caught the ball!");
     }
 }

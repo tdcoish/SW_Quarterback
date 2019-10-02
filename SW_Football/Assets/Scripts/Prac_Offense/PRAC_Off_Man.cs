@@ -156,6 +156,11 @@ public class PRAC_Off_Man : MonoBehaviour
         }
         FindObjectOfType<PC_Controller>().mState = PC_Controller.PC_STATE.SINACTIVE;
 
+        PROJ_Football[] footballs = FindObjectsOfType<PROJ_Football>();
+        foreach(PROJ_Football f in footballs){
+            Destroy(f.gameObject);
+        }
+
         ENTER_PickPlay();
 
     }
