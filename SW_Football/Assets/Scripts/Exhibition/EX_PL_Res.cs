@@ -40,35 +40,34 @@ public class EX_PL_Res : TDC_Component
         }
 
         res += cLive.mResult.mDis + " yards";
+        mUI.mTxtRes.text = "Result: " + res;
+
         // now figure out the remaining down and distance.
-        cPlays.mGameData.mBallLoc += cLive.mResult.mDis;
-        int disToFirstDown = cPlays.mGameData.mMarkerDown - cPlays.mGameData.mBallLoc;
+        cPlays.mGameData.mBallLoc = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, cLive.mResult.mDis);
+        int disToFirstDown = cPlays.FCalcDistance(cPlays.mGameData.mBallLoc, cPlays.mGameData.mDownMark, cPlays.mGameData.mPossession);        
         cPlays.mGameData.mDown++;
         if(disToFirstDown <= 0){
             // they got a first down.
-            cPlays.mGameData.mMarkerDown = cPlays.mGameData.mBallLoc + 10;
+            cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
             cPlays.mGameData.mDown = GameData.DOWN.FIRST;
             disToFirstDown = 10;
         }else if(cPlays.mGameData.mDown == GameData.DOWN.LENGTH){
             // Turnover on downs.
             Debug.Log("Turnover on downs, handle later");
         }
-        string downAndDis = "";
-        switch(cPlays.mGameData.mDown)
-        {
-            case GameData.DOWN.FIRST: downAndDis+="First"; break;
-            case GameData.DOWN.SECOND: downAndDis+="Second"; break;
-            case GameData.DOWN.THIRD: downAndDis+="Third"; break;
-            case GameData.DOWN.FOURTH: downAndDis+="Fourth"; break;
-        }
-
-        downAndDis += " and " + disToFirstDown;
-        res += downAndDis;
-        mUI.mTxtRes.text = "Result: " + res;
+        
+        // ---------------------------------- calc time left
+        cPlays.mGameData.mTimeInQuarter -= cLive.mResult.mTimeTaken;
+        cPlays.mGameData.mTimeStruct = UT_MinSec.FSecsToMin((int)cPlays.mGameData.mTimeInQuarter);
 
         // "Ran the ball for 7 yards. "
         // "Turnover!"
         // "Ran for Touchdown"
+
+        cPlays.mUI.FSetBallText(cPlays.mGameData.mBallLoc);
+        cPlays.mUI.FSetDownAndDisText(cPlays.mGameData.mDown, disToFirstDown);
+        cPlays.mUI.FSetTimeText(cPlays.mGameData.mTimeStruct, cPlays.mGameData.mQuarter);
+        cPlays.mUI.FSetPossessionText(cPlays.mGameData.mPossession);
 
         mTime = Time.time;
     }
@@ -93,4 +92,5 @@ public class EX_PL_Res : TDC_Component
         FExit();
         cPick.FEnter();
     }
+
 }

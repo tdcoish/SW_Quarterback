@@ -9,7 +9,7 @@ public struct TDC_Time{
     public int                      mSec;
 }
 
-public static class UT_MinutesSeconds
+public static class UT_MinSec
 {
     public static int FMinToSecs(TDC_Time t)
     {

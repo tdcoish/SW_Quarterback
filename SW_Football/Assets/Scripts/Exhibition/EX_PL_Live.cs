@@ -51,6 +51,7 @@ public class EX_PL_Live : TDC_Component
         mResult.mDis = (int)runDis;
         mResult.mChoice = PLAY_CHOICE.C_RUN;
         mResult.mTurnover = false;
+        mResult.mTimeTaken = 20f;
 
         cResult.FEnter();
     }

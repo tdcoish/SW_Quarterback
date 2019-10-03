@@ -17,6 +17,7 @@ public struct PLAY_RESULT{
     public PLAY_CHOICE                  mChoice;
     public int                          mDis;
     public bool                         mTurnover;
+    public float                        mTimeTaken;
 }
 
 public struct GameData{
@@ -51,10 +52,8 @@ public struct GameData{
         public POSSESSION               mSide;
         public int                      mYardMark;
     }
-    public FIELD_POS                    mFieldLoc;
-
-    public int                          mBallLoc;       // int might be the wrong datatype
-    public int                          mMarkerDown;
+    public FIELD_POS                    mBallLoc;
+    public FIELD_POS                    mDownMark;
 }
 
 public class EX_Plays : TDC_Component
@@ -101,14 +100,14 @@ public class EX_Plays : TDC_Component
         mGameData.mDown = GameData.DOWN.FIRST;
         // I need a way of representing the ball location.
         // like OPP 40, or HOME 40, or something.
-        mGameData.mBallLoc = 20;
-        mGameData.mFieldLoc.mSide = GameData.POSSESSION.HOME;
-        mGameData.mFieldLoc.mYardMark = 20;
-        mGameData.mMarkerDown = 30;      
+        mGameData.mBallLoc.mYardMark = 20;
+        mGameData.mBallLoc.mSide = GameData.POSSESSION.HOME;
+        mGameData.mDownMark = FCalcNewSpot(mGameData.mBallLoc, mGameData.mPossession, 10);
+        // mGameData.mMarkerDown;      
         mGameData.mQuarter = GameData.QUARTER.FIRST;
         mGameData.mTimeStruct.mMin = 15;
         mGameData.mTimeStruct.mSec = 0;
-        mGameData.mTimeInQuarter = UT_MinutesSeconds.FMinToSecs(mGameData.mTimeStruct);
+        mGameData.mTimeInQuarter = UT_MinSec.FMinToSecs(mGameData.mTimeStruct);
         mGameData.mPossession = GameData.POSSESSION.HOME;
         mUI.FSetTimeText(mGameData.mTimeStruct, mGameData.mQuarter);
     }
@@ -122,4 +121,65 @@ public class EX_Plays : TDC_Component
             case STATE.S_RESULT: cRes.FRunUpdate(); break;
         }
     }
+
+    public GameData.FIELD_POS FCalcNewSpot(GameData.FIELD_POS startSpot, GameData.POSSESSION hasBall, int dis)
+    {
+        GameData.FIELD_POS newSpot;
+        newSpot.mSide = startSpot.mSide;
+
+        if(startSpot.mSide == hasBall)
+        {
+            newSpot.mYardMark = startSpot.mYardMark + dis;
+        }else{
+            newSpot.mYardMark = startSpot.mYardMark - dis;
+        }
+
+        if(newSpot.mYardMark > 50){
+            newSpot.mYardMark = 50 - (newSpot.mYardMark - 50);
+            if(startSpot.mSide == GameData.POSSESSION.HOME){
+                newSpot.mSide = GameData.POSSESSION.AWAY;
+            }else{
+                newSpot.mSide = GameData.POSSESSION.HOME;
+            }
+        }
+
+        if(newSpot.mYardMark < 0){
+            Debug.Log("Somewhere in the endzone?");
+            newSpot.mYardMark = 0;
+        }
+
+        return newSpot;
+    }
+
+    /**********************************************************************
+    So if we pass in HOME 47, and AWAY 37, we should get a result of +16.
+
+    Might have to return a FIELD_POS struct, with the mSide representing the 
+    direction.
+    **********************************************************************/
+    public int FCalcDistance(GameData.FIELD_POS pos1, GameData.FIELD_POS pos2, GameData.POSSESSION hasBall)
+    {
+        int dis;
+        if(pos2.mSide == pos1.mSide)
+        {
+            dis = pos2.mYardMark - pos1.mYardMark;
+            if(hasBall != pos1.mSide){
+                dis *= -1;
+            }
+        }else{
+            dis = (50 - pos2.mYardMark) + (50 - pos1.mYardMark);
+            if(pos1.mSide != hasBall){
+                dis *= -1;
+            }
+        }
+
+        return dis;
+    }
+
+    // Let's convert everything to HOME
+    // If I'm HOME, I know I'm going to AWAY
+    // And I'm on my OWN 45.
+    // Therefore, I increase the number
+    // But because OWN 55 is too far, that gets converted to 
+    // AWAY 45
 }
