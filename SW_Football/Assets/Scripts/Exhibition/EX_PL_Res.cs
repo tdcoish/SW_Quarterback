@@ -31,6 +31,53 @@ public class EX_PL_Res : TDC_Component
         cPlays.mState = EX_Plays.STATE.S_RESULT;
         mUI.gameObject.SetActive(true);
         
+
+        // ---------------------------------------- figure out the remaining down and distance. Assuming no turnovers or halftime/over.
+        cPlays.mGameData.mBallLoc = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, cLive.mResult.mDis);
+        int disToFirstDown = cPlays.FCalcDistance(cPlays.mGameData.mBallLoc, cPlays.mGameData.mDownMark, cPlays.mGameData.mPossession);        
+
+        cPlays.mGameData.mDown++;
+        if(disToFirstDown <= 0){
+            // they got a first down.
+            cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
+            cPlays.mGameData.mDown = GameData.DOWN.FIRST;
+            disToFirstDown = 10;
+        }
+
+        // --------------------------------------------------- Handle turnovers
+        if(cPlays.mGameData.mDown == GameData.DOWN.LENGTH || cLive.mResult.mTurnover){
+            Debug.Log("Turnover, either downs or ingame");
+            cPlays.mGameData.mDown = GameData.DOWN.FIRST;
+            cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
+            disToFirstDown = 10;
+            if(cPlays.mGameData.mPossession == GameData.POSSESSION.HOME){
+                cPlays.mGameData.mPossession = GameData.POSSESSION.AWAY;
+            }else{
+                cPlays.mGameData.mPossession = GameData.POSSESSION.HOME;
+            }
+        }
+
+        // ------------------------------------------------------ Handle touchdowns, or safeties.
+        bool touchdown = false;
+        if(cPlays.mGameData.mBallLoc.mYardMark == 0)
+        {
+            touchdown = true;
+            // handle safeties later.
+            if(cPlays.mGameData.mPossession == GameData.POSSESSION.HOME){
+                cPlays.mGameData.mScores.mHome += 7;
+                cPlays.mGameData.mPossession = GameData.POSSESSION.AWAY;
+                cPlays.mGameData.mBallLoc.mSide = GameData.POSSESSION.AWAY;
+                cPlays.mGameData.mBallLoc.mYardMark = 25;
+                cPlays.mGameData.mDown = GameData.DOWN.FIRST;
+            }else{
+                cPlays.mGameData.mScores.mAway += 7;
+                cPlays.mGameData.mPossession = GameData.POSSESSION.HOME;
+                cPlays.mGameData.mBallLoc.mSide = GameData.POSSESSION.HOME;
+                cPlays.mGameData.mBallLoc.mYardMark = 25;
+                cPlays.mGameData.mDown = GameData.DOWN.FIRST;
+            }
+        }
+
         // ---------------------------------- calc time left
         cPlays.mGameData.mTimeInQuarter -= cLive.mResult.mTimeTaken;
         cPlays.mGameData.mTimeStruct = UT_MinSec.FSecsToMin((int)cPlays.mGameData.mTimeInQuarter);
@@ -50,8 +97,6 @@ public class EX_PL_Res : TDC_Component
                 cPlays.mGameData.mBallLoc.mYardMark = 25;
                 cPlays.mGameData.mDown = GameData.DOWN.FIRST;
                 cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
-
-                return;
             }
             if(cPlays.mGameData.mQuarter == GameData.QUARTER.OT)
             {
@@ -65,73 +110,8 @@ public class EX_PL_Res : TDC_Component
             cPlays.mGameData.mTimeInQuarter = UT_MinSec.FMinToSecs(cPlays.mGameData.mTimeStruct);
         }
 
-        // now figure out the remaining down and distance.
-        cPlays.mGameData.mBallLoc = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, cLive.mResult.mDis);
-        int disToFirstDown = cPlays.FCalcDistance(cPlays.mGameData.mBallLoc, cPlays.mGameData.mDownMark, cPlays.mGameData.mPossession);        
-
-        cPlays.mGameData.mDown++;
-        if(disToFirstDown <= 0){
-            // they got a first down.
-            cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
-            cPlays.mGameData.mDown = GameData.DOWN.FIRST;
-            disToFirstDown = 10;
-        }
-        
         // ------------------------------------------------------------- Show the result of the play.
-        string res = "";
-        switch(cLive.mResult.mChoice)
-        {
-            case PLAY_CHOICE.C_RUN: res += "Ran the ball for "; break;
-            case PLAY_CHOICE.C_PASS: res += "Passed the ball for "; break;
-            case PLAY_CHOICE.C_PUNT: res += "Punted the ball for "; break;
-        }
-
-        res += cLive.mResult.mDis + " yards";
-        // kind of a hack, turnovers overwrite everything we just did.
-        if(cPlays.mGameData.mDown == GameData.DOWN.LENGTH || cLive.mResult.mTurnover){
-            // Turnover on downs.
-            Debug.Log("Turnover, either downs or ingame, handle later");
-            res = "Turnover, either downs or ingame";
-        }
-        mUI.mTxtRes.text = "Result: " + res;
-        
-
-        // "Ran the ball for 7 yards. "
-        // "Turnover!"
-        // "Ran for Touchdown"
-
-        // --------------------------------------------------- Handle turnovers
-        if(cPlays.mGameData.mDown == GameData.DOWN.LENGTH || cLive.mResult.mTurnover){
-            Debug.Log("Turnover, either downs or ingame, handle later");
-            cPlays.mGameData.mDown = GameData.DOWN.FIRST;
-            cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
-            disToFirstDown = 10;
-            if(cPlays.mGameData.mPossession == GameData.POSSESSION.HOME){
-                cPlays.mGameData.mPossession = GameData.POSSESSION.AWAY;
-            }else{
-                cPlays.mGameData.mPossession = GameData.POSSESSION.HOME;
-            }
-        }
-
-        // ------------------------------------------------------ Handle touchdowns, or safeties.
-        if(cPlays.mGameData.mBallLoc.mYardMark == 0)
-        {
-            // handle safeties later.
-            if(cPlays.mGameData.mPossession == GameData.POSSESSION.HOME){
-                cPlays.mGameData.mScores.mHome += 7;
-                cPlays.mGameData.mPossession = GameData.POSSESSION.AWAY;
-                cPlays.mGameData.mBallLoc.mSide = GameData.POSSESSION.AWAY;
-                cPlays.mGameData.mBallLoc.mYardMark = 25;
-                cPlays.mGameData.mDown = GameData.DOWN.FIRST;
-            }else{
-                cPlays.mGameData.mScores.mAway += 7;
-                cPlays.mGameData.mPossession = GameData.POSSESSION.HOME;
-                cPlays.mGameData.mBallLoc.mSide = GameData.POSSESSION.HOME;
-                cPlays.mGameData.mBallLoc.mYardMark = 25;
-                cPlays.mGameData.mDown = GameData.DOWN.FIRST;
-            }
-            mUI.mTxtRes.text = "TOUCHDOWN!";
-        }
+        mUI.FSetResultText(cPlays.mChoice, cLive.mResult.mTurnover, cLive.mResult.mDis, touchdown);
 
         cPlays.mUI.FSetBallText(cPlays.mGameData.mBallLoc);
         cPlays.mUI.FSetDownAndDisText(cPlays.mGameData.mDown, disToFirstDown);
