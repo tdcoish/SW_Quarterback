@@ -102,11 +102,13 @@
      <Compile Include="Assets\Scripts\Exhibition\EX_CoinToss.cs" />
      <Compile Include="Assets\Scripts\Exhibition\EX_Intro.cs" />
      <Compile Include="Assets\Scripts\Exhibition\EX_Man.cs" />
+     <Compile Include="Assets\Scripts\Exhibition\EX_Over.cs" />
      <Compile Include="Assets\Scripts\Exhibition\EX_PL_Live.cs" />
      <Compile Include="Assets\Scripts\Exhibition\EX_PL_Pick.cs" />
      <Compile Include="Assets\Scripts\Exhibition\EX_PL_Res.cs" />
      <Compile Include="Assets\Scripts\Exhibition\EX_Plays.cs" />
      <Compile Include="Assets\Scripts\Exhibition\UI_CoinToss.cs" />
+     <Compile Include="Assets\Scripts\Exhibition\UI_Over.cs" />
      <Compile Include="Assets\Scripts\Exhibition\UI_PL_Res.cs" />
      <Compile Include="Assets\Scripts\Exhibition\UI_Sim.cs" />
      <Compile Include="Assets\Scripts\FM_Editor\ED_FM_Grid.cs" />

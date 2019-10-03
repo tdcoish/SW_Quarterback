@@ -20,6 +20,11 @@ public struct PLAY_RESULT{
     public float                        mTimeTaken;
 }
 
+public struct GAME_SCORE{
+    public int                          mHome;
+    public int                          mAway;
+}
+
 public struct GameData{
     public TDC_Time                     mTimeStruct;
     public float                        mTimeInQuarter;
@@ -28,7 +33,8 @@ public struct GameData{
         SECOND,
         THIRD,
         FOURTH,
-        OT
+        OT,
+        LENGTH
     }
     public QUARTER                      mQuarter;
 
@@ -47,6 +53,8 @@ public struct GameData{
     }
     public POSSESSION                   mPossession;
 
+    public POSSESSION                   mReceivedFirst;
+
     // So AWAY 37, or HOME 43, or whatever.
     public struct FIELD_POS{
         public POSSESSION               mSide;
@@ -54,6 +62,8 @@ public struct GameData{
     }
     public FIELD_POS                    mBallLoc;
     public FIELD_POS                    mDownMark;
+
+    public GAME_SCORE                   mScores;
 }
 
 public class EX_Plays : TDC_Component
@@ -101,15 +111,25 @@ public class EX_Plays : TDC_Component
         // I need a way of representing the ball location.
         // like OPP 40, or HOME 40, or something.
         mGameData.mBallLoc.mYardMark = 20;
-        mGameData.mBallLoc.mSide = GameData.POSSESSION.HOME;
+        if(mGameData.mReceivedFirst == GameData.POSSESSION.HOME){
+            mGameData.mBallLoc.mSide = GameData.POSSESSION.HOME;
+            mGameData.mPossession = GameData.POSSESSION.HOME;
+        }else{
+            mGameData.mBallLoc.mSide = GameData.POSSESSION.AWAY;
+            mGameData.mPossession = GameData.POSSESSION.AWAY;
+        }
         mGameData.mDownMark = FCalcNewSpot(mGameData.mBallLoc, mGameData.mPossession, 10);
         // mGameData.mMarkerDown;      
         mGameData.mQuarter = GameData.QUARTER.FIRST;
         mGameData.mTimeStruct.mMin = 15;
         mGameData.mTimeStruct.mSec = 0;
         mGameData.mTimeInQuarter = UT_MinSec.FMinToSecs(mGameData.mTimeStruct);
-        mGameData.mPossession = GameData.POSSESSION.HOME;
         mUI.FSetTimeText(mGameData.mTimeStruct, mGameData.mQuarter);
+    }
+
+    public override void FExit()
+    {
+        mUI.gameObject.SetActive(false);
     }
 
     // Alright, here's where we're gonna need a state inside this state.
@@ -144,7 +164,6 @@ public class EX_Plays : TDC_Component
         }
 
         if(newSpot.mYardMark < 0){
-            Debug.Log("Somewhere in the endzone?");
             newSpot.mYardMark = 0;
         }
 

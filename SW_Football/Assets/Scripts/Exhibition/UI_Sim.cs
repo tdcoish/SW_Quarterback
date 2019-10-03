@@ -10,6 +10,8 @@ public class UI_Sim : MonoBehaviour
     public Text                             mTxtTimeAndQuarter;
     public Text                             mTxtBallSpot;
     public Text                             mTxtDownAndDis;
+    public Text                             mTxtHomeScore;
+    public Text                             mTxtAwayScore;
 
     public void FSetTimeText(TDC_Time t, GameData.QUARTER q)
     {
@@ -59,5 +61,11 @@ public class UI_Sim : MonoBehaviour
     public void FSetPossessionText(GameData.POSSESSION pos)
     {
         mTxtPossession.text = "Possession: " + pos;
+    }
+
+    public void FSetScoresText(GAME_SCORE scores)
+    {
+        mTxtHomeScore.text = "HOME: " + scores.mHome;
+        mTxtAwayScore.text = "AWAY: " + scores.mAway;
     }
 }

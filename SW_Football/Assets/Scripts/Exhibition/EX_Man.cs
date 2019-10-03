@@ -14,6 +14,7 @@ public class EX_Man : MonoBehaviour
     private EX_Intro                        cIntroMan;
     private EX_CoinToss                     cCoinMan;
     private EX_Plays                        cPlayMan;
+    private EX_Over                         cOverMan;
 
     public enum STATE{
         S_INTRO,
@@ -31,6 +32,7 @@ public class EX_Man : MonoBehaviour
         cIntroMan = GetComponent<EX_Intro>();
         cCoinMan = GetComponent<EX_CoinToss>();
         cPlayMan = GetComponent<EX_Plays>();
+        cOverMan = GetComponent<EX_Over>();
 
         cIntroMan.FEnter();
     }
@@ -42,6 +44,7 @@ public class EX_Man : MonoBehaviour
             case STATE.S_INTRO: cIntroMan.FRunUpdate(); break;
             case STATE.S_COIN_TOSS: cCoinMan.FRunUpdate(); break;
             case STATE.S_PLAYING: cPlayMan.FRunUpdate(); break;
+            case STATE.S_END: cOverMan.FRunUpdate(); break;
         }    
     }
 

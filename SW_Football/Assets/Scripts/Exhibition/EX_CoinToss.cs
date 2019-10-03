@@ -95,12 +95,14 @@ public class EX_CoinToss : TDC_Component
         mPickedCorrectly = false;
         if(rand > 0.5f){
             mUI.mTxtHeadOrTail.text = "HEADS!";
-            if(mPickedHeads) mPickedCorrectly = true;
+            if(mPickedHeads){
+                mPickedCorrectly = true;
+            } 
         }else{
             mUI.mTxtHeadOrTail.text = "TAILS!";
             if(!mPickedHeads) mPickedCorrectly = true;
         }
-        
+
         mTime = Time.time;
     }
     public void RUN_Result()
@@ -145,19 +147,30 @@ public class EX_CoinToss : TDC_Component
     public void BT_HeadsOrTails(bool heads)
     {
         mUI.mTxtHeadOrTail.gameObject.SetActive(true);
-        mUI.mTxtHeadOrTail.text = "You Picked: Heads";
+        if(heads){
+            mUI.mTxtHeadOrTail.text = "You Picked: Heads";
+        }else{
+            mUI.mTxtHeadOrTail.text = "You Picked: Tails";
+        }
         mPickedHeads = heads;
         ENTER_Flipping();
     }
 
     public void BT_Kick()
     {
+        cPlayMan.mGameData.mReceivedFirst = GameData.POSSESSION.AWAY;
+        StartPlaying();
     }
     public void BT_Receive()
+    {
+        cPlayMan.mGameData.mReceivedFirst = GameData.POSSESSION.HOME;
+        StartPlaying();
+    }
+
+    private void StartPlaying()
     {
         FExit();
         cMan.mState = EX_Man.STATE.S_PLAYING;
         cPlayMan.FEnter();
     }
-
 }

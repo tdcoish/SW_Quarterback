@@ -44,14 +44,14 @@ public class EX_PL_Live : TDC_Component
         float rand = Random.Range(-1f, 1f);
         rand = Mathf.Pow(rand, 3);
 
-        float avg = 2f;
+        float avg = 10f;
         float range = 10f;
         float runDis = avg + (range*rand);
 
         mResult.mDis = (int)runDis;
         mResult.mChoice = PLAY_CHOICE.C_RUN;
         mResult.mTurnover = false;
-        mResult.mTimeTaken = 20f;
+        mResult.mTimeTaken = 200f;
 
         cResult.FEnter();
     }

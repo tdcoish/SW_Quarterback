@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class EX_PL_Res : TDC_Component
 {
-    
+    private EX_Over                             cOverMan;
     private EX_Plays                            cPlays;
     private EX_PL_Pick                          cPick;
     private EX_PL_Live                          cLive;
@@ -19,22 +19,51 @@ public class EX_PL_Res : TDC_Component
     void Start()
     {
         cPlays = GetComponent<EX_Plays>();
+        cOverMan = GetComponent<EX_Over>();
         cPick = GetComponent<EX_PL_Pick>();
         cLive = GetComponent<EX_PL_Live>();
 
         mUI.gameObject.SetActive(false);
     }
 
-    // Need to handle if they went for a first down.
     public override void FEnter()
     {
         cPlays.mState = EX_Plays.STATE.S_RESULT;
         mUI.gameObject.SetActive(true);
         
-
         // ---------------------------------- calc time left
         cPlays.mGameData.mTimeInQuarter -= cLive.mResult.mTimeTaken;
         cPlays.mGameData.mTimeStruct = UT_MinSec.FSecsToMin((int)cPlays.mGameData.mTimeInQuarter);
+        if(cPlays.mGameData.mTimeInQuarter <= 0)
+        {
+            cPlays.mGameData.mQuarter++;
+            // now special logic for the halftime or game being over.
+            if(cPlays.mGameData.mQuarter == GameData.QUARTER.THIRD){
+                Debug.Log("It's halftime");
+                if(cPlays.mGameData.mReceivedFirst == GameData.POSSESSION.HOME){
+                    cPlays.mGameData.mBallLoc.mSide = GameData.POSSESSION.AWAY;
+                    cPlays.mGameData.mPossession = GameData.POSSESSION.AWAY;
+                }else{
+                    cPlays.mGameData.mBallLoc.mSide = GameData.POSSESSION.HOME;
+                    cPlays.mGameData.mPossession = GameData.POSSESSION.HOME;
+                }
+                cPlays.mGameData.mBallLoc.mYardMark = 25;
+                cPlays.mGameData.mDown = GameData.DOWN.FIRST;
+                cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
+
+                return;
+            }
+            if(cPlays.mGameData.mQuarter == GameData.QUARTER.OT)
+            {
+                Debug.Log("Unless it's tied, game should be over");
+                cPlays.FExit();
+                cOverMan.FEnter();
+            }
+
+            cPlays.mGameData.mTimeStruct.mMin = 15;
+            cPlays.mGameData.mTimeStruct.mSec = 0;
+            cPlays.mGameData.mTimeInQuarter = UT_MinSec.FMinToSecs(cPlays.mGameData.mTimeStruct);
+        }
 
         // now figure out the remaining down and distance.
         cPlays.mGameData.mBallLoc = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, cLive.mResult.mDis);
@@ -84,10 +113,31 @@ public class EX_PL_Res : TDC_Component
             }
         }
 
+        // ------------------------------------------------------ Handle touchdowns, or safeties.
+        if(cPlays.mGameData.mBallLoc.mYardMark == 0)
+        {
+            // handle safeties later.
+            if(cPlays.mGameData.mPossession == GameData.POSSESSION.HOME){
+                cPlays.mGameData.mScores.mHome += 7;
+                cPlays.mGameData.mPossession = GameData.POSSESSION.AWAY;
+                cPlays.mGameData.mBallLoc.mSide = GameData.POSSESSION.AWAY;
+                cPlays.mGameData.mBallLoc.mYardMark = 25;
+                cPlays.mGameData.mDown = GameData.DOWN.FIRST;
+            }else{
+                cPlays.mGameData.mScores.mAway += 7;
+                cPlays.mGameData.mPossession = GameData.POSSESSION.HOME;
+                cPlays.mGameData.mBallLoc.mSide = GameData.POSSESSION.HOME;
+                cPlays.mGameData.mBallLoc.mYardMark = 25;
+                cPlays.mGameData.mDown = GameData.DOWN.FIRST;
+            }
+            mUI.mTxtRes.text = "TOUCHDOWN!";
+        }
+
         cPlays.mUI.FSetBallText(cPlays.mGameData.mBallLoc);
         cPlays.mUI.FSetDownAndDisText(cPlays.mGameData.mDown, disToFirstDown);
         cPlays.mUI.FSetTimeText(cPlays.mGameData.mTimeStruct, cPlays.mGameData.mQuarter);
         cPlays.mUI.FSetPossessionText(cPlays.mGameData.mPossession);
+        cPlays.mUI.FSetScoresText(cPlays.mGameData.mScores);
 
         mTime = Time.time;
     }
