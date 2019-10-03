@@ -1,5 +1,7 @@
 ﻿/*************************************************************************************
 Figures out what the meaning of the last play is. 
+
+Turnover means 1st and 10. New down marker. 
 *************************************************************************************/
 using UnityEngine;
 
@@ -29,8 +31,24 @@ public class EX_PL_Res : TDC_Component
         cPlays.mState = EX_Plays.STATE.S_RESULT;
         mUI.gameObject.SetActive(true);
         
-        // here we handle the result of the last play.
 
+        // ---------------------------------- calc time left
+        cPlays.mGameData.mTimeInQuarter -= cLive.mResult.mTimeTaken;
+        cPlays.mGameData.mTimeStruct = UT_MinSec.FSecsToMin((int)cPlays.mGameData.mTimeInQuarter);
+
+        // now figure out the remaining down and distance.
+        cPlays.mGameData.mBallLoc = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, cLive.mResult.mDis);
+        int disToFirstDown = cPlays.FCalcDistance(cPlays.mGameData.mBallLoc, cPlays.mGameData.mDownMark, cPlays.mGameData.mPossession);        
+
+        cPlays.mGameData.mDown++;
+        if(disToFirstDown <= 0){
+            // they got a first down.
+            cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
+            cPlays.mGameData.mDown = GameData.DOWN.FIRST;
+            disToFirstDown = 10;
+        }
+        
+        // ------------------------------------------------------------- Show the result of the play.
         string res = "";
         switch(cLive.mResult.mChoice)
         {
@@ -40,29 +58,31 @@ public class EX_PL_Res : TDC_Component
         }
 
         res += cLive.mResult.mDis + " yards";
-        mUI.mTxtRes.text = "Result: " + res;
-
-        // now figure out the remaining down and distance.
-        cPlays.mGameData.mBallLoc = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, cLive.mResult.mDis);
-        int disToFirstDown = cPlays.FCalcDistance(cPlays.mGameData.mBallLoc, cPlays.mGameData.mDownMark, cPlays.mGameData.mPossession);        
-        cPlays.mGameData.mDown++;
-        if(disToFirstDown <= 0){
-            // they got a first down.
-            cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
-            cPlays.mGameData.mDown = GameData.DOWN.FIRST;
-            disToFirstDown = 10;
-        }else if(cPlays.mGameData.mDown == GameData.DOWN.LENGTH){
+        // kind of a hack, turnovers overwrite everything we just did.
+        if(cPlays.mGameData.mDown == GameData.DOWN.LENGTH || cLive.mResult.mTurnover){
             // Turnover on downs.
-            Debug.Log("Turnover on downs, handle later");
+            Debug.Log("Turnover, either downs or ingame, handle later");
+            res = "Turnover, either downs or ingame";
         }
+        mUI.mTxtRes.text = "Result: " + res;
         
-        // ---------------------------------- calc time left
-        cPlays.mGameData.mTimeInQuarter -= cLive.mResult.mTimeTaken;
-        cPlays.mGameData.mTimeStruct = UT_MinSec.FSecsToMin((int)cPlays.mGameData.mTimeInQuarter);
 
         // "Ran the ball for 7 yards. "
         // "Turnover!"
         // "Ran for Touchdown"
+
+        // --------------------------------------------------- Handle turnovers
+        if(cPlays.mGameData.mDown == GameData.DOWN.LENGTH || cLive.mResult.mTurnover){
+            Debug.Log("Turnover, either downs or ingame, handle later");
+            cPlays.mGameData.mDown = GameData.DOWN.FIRST;
+            cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
+            disToFirstDown = 10;
+            if(cPlays.mGameData.mPossession == GameData.POSSESSION.HOME){
+                cPlays.mGameData.mPossession = GameData.POSSESSION.AWAY;
+            }else{
+                cPlays.mGameData.mPossession = GameData.POSSESSION.HOME;
+            }
+        }
 
         cPlays.mUI.FSetBallText(cPlays.mGameData.mBallLoc);
         cPlays.mUI.FSetDownAndDisText(cPlays.mGameData.mDown, disToFirstDown);

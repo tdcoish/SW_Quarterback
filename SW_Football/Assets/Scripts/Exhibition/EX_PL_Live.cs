@@ -44,7 +44,7 @@ public class EX_PL_Live : TDC_Component
         float rand = Random.Range(-1f, 1f);
         rand = Mathf.Pow(rand, 3);
 
-        float avg = 4f;
+        float avg = 2f;
         float range = 10f;
         float runDis = avg + (range*rand);
 
