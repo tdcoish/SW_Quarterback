@@ -99,6 +99,7 @@
      <Compile Include="Assets\Scripts\ED_OffensePlays\ED_OP_Ply.cs" />
      <Compile Include="Assets\Scripts\ED_OffensePlays\ED_OP_Square.cs" />
      <Compile Include="Assets\Scripts\Environment\EN_FieldGround.cs" />
+     <Compile Include="Assets\Scripts\Exhibition\CAM_Sim.cs" />
      <Compile Include="Assets\Scripts\Exhibition\EX_CoinToss.cs" />
      <Compile Include="Assets\Scripts\Exhibition\EX_Intro.cs" />
      <Compile Include="Assets\Scripts\Exhibition\EX_Man.cs" />
@@ -107,6 +108,11 @@
      <Compile Include="Assets\Scripts\Exhibition\EX_PL_Pick.cs" />
      <Compile Include="Assets\Scripts\Exhibition\EX_PL_Res.cs" />
      <Compile Include="Assets\Scripts\Exhibition\EX_Plays.cs" />
+     <Compile Include="Assets\Scripts\Exhibition\MARK_Ball.cs" />
+     <Compile Include="Assets\Scripts\Exhibition\MARK_Center.cs" />
+     <Compile Include="Assets\Scripts\Exhibition\MARK_DownStart.cs" />
+     <Compile Include="Assets\Scripts\Exhibition\MARK_EndZone.cs" />
+     <Compile Include="Assets\Scripts\Exhibition\MARK_FirstDown.cs" />
      <Compile Include="Assets\Scripts\Exhibition\UI_CoinToss.cs" />
      <Compile Include="Assets\Scripts\Exhibition\UI_Over.cs" />
      <Compile Include="Assets\Scripts\Exhibition\UI_PL_Res.cs" />

@@ -120,6 +120,7 @@ public class EX_Plays : TDC_Component
             mGameData.mPossession = GameData.POSSESSION.AWAY;
         }
         mGameData.mDownMark = FCalcNewSpot(mGameData.mBallLoc, mGameData.mPossession, 10);
+        cRes.FGFX_PlaceFirstDownMarkers(mGameData.mBallLoc, mGameData.mDownMark);
         // mGameData.mMarkerDown;      
         mGameData.mQuarter = GameData.QUARTER.FIRST;
         mGameData.mTimeStruct.mMin = 15;

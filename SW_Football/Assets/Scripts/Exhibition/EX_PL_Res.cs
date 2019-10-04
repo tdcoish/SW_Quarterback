@@ -11,6 +11,13 @@ public class EX_PL_Res : TDC_Component
     private EX_Plays                            cPlays;
     private EX_PL_Pick                          cPick;
     private EX_PL_Live                          cLive;
+
+    public MARK_EndZone                         rAway;
+    public MARK_EndZone                         rHome;
+    public MARK_Center                          rCenter;
+    public MARK_Ball                            rBall;
+    public MARK_DownStart                       rDownStart;
+    public MARK_FirstDown                       rFirstDown;
     
     public UI_PL_Res                            mUI;
 
@@ -42,6 +49,8 @@ public class EX_PL_Res : TDC_Component
             cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
             cPlays.mGameData.mDown = GameData.DOWN.FIRST;
             disToFirstDown = 10;
+
+            FGFX_PlaceFirstDownMarkers(cPlays.mGameData.mBallLoc, cPlays.mGameData.mDownMark);
         }
 
         // --------------------------------------------------- Handle turnovers. Need to handle touchbacks here.
@@ -60,6 +69,8 @@ public class EX_PL_Res : TDC_Component
                 cPlays.mGameData.mPossession = GameData.POSSESSION.HOME;
             }
             cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
+
+            FGFX_PlaceFirstDownMarkers(cPlays.mGameData.mBallLoc, cPlays.mGameData.mDownMark);
         }
 
         // ------------------------------------------------------ Handle touchdowns, or safeties.
@@ -81,6 +92,8 @@ public class EX_PL_Res : TDC_Component
             }
 
             cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
+
+            FGFX_PlaceFirstDownMarkers(cPlays.mGameData.mBallLoc, cPlays.mGameData.mDownMark);
         }
 
         // ---------------------------------- calc time left
@@ -125,6 +138,9 @@ public class EX_PL_Res : TDC_Component
         cPlays.mUI.FSetPossessionText(cPlays.mGameData.mPossession);
         cPlays.mUI.FSetScoresText(cPlays.mGameData.mScores);
 
+        // ------------------------------------------ Graphically move the ball forwards. 
+        rBall.transform.position = GetPositionOnFieldInWorldCoordinates(cPlays.mGameData.mBallLoc);
+
         mTime = Time.time;
     }
 
@@ -147,6 +163,31 @@ public class EX_PL_Res : TDC_Component
     {
         FExit();
         cPick.FEnter();
+    }
+
+    private Vector3 GetPositionOnFieldInWorldCoordinates(GameData.FIELD_POS fPos)
+    {
+        if(fPos.mSide == GameData.POSSESSION.HOME){
+            Vector3 pos = rHome.transform.position;
+            float percent = fPos.mYardMark*2f / 100f;
+            pos = Vector3.Lerp(rHome.transform.position, rCenter.transform.position, percent);
+            return pos;
+        }else{
+            Vector3 pos = rAway.transform.position;
+            float percent = fPos.mYardMark*2f / 100f;
+            pos = Vector3.Lerp(rAway.transform.position, rCenter.transform.position, percent);
+            return pos;
+        }
+    }
+
+    public void FGFX_PlaceFirstDownMarkers(GameData.FIELD_POS start, GameData.FIELD_POS firstDown)
+    {
+        Vector3 pos = GetPositionOnFieldInWorldCoordinates(start);
+        pos.x = 0;
+        rDownStart.transform.position = pos;
+        pos = GetPositionOnFieldInWorldCoordinates(firstDown);
+        pos.x = 0;
+        rFirstDown.transform.position = pos;
     }
 
 }
