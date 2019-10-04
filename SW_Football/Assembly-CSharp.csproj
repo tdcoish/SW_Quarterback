@@ -113,6 +113,7 @@
      <Compile Include="Assets\Scripts\Exhibition\MARK_DownStart.cs" />
      <Compile Include="Assets\Scripts\Exhibition\MARK_EndZone.cs" />
      <Compile Include="Assets\Scripts\Exhibition\MARK_FirstDown.cs" />
+     <Compile Include="Assets\Scripts\Exhibition\MARK_PlaySpot.cs" />
      <Compile Include="Assets\Scripts\Exhibition\UI_CoinToss.cs" />
      <Compile Include="Assets\Scripts\Exhibition\UI_Over.cs" />
      <Compile Include="Assets\Scripts\Exhibition\UI_PL_Res.cs" />

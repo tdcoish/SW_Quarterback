@@ -18,9 +18,11 @@ public class EX_PL_Res : TDC_Component
     public MARK_Ball                            rBall;
     public MARK_DownStart                       rDownStart;
     public MARK_FirstDown                       rFirstDown;
-    
+    public MARK_PlaySpot                        PF_PlaySpot;
+
     public UI_PL_Res                            mUI;
 
+    private int                                 mPlayNumForDrive;
     private float                               mTime;
 
     void Start()
@@ -55,6 +57,12 @@ public class EX_PL_Res : TDC_Component
 
         // --------------------------------------------------- Handle turnovers. Need to handle touchbacks here.
         if(cPlays.mGameData.mDown == GameData.DOWN.LENGTH || cLive.mResult.mTurnover){
+            mPlayNumForDrive = 0;
+            MARK_PlaySpot[] spots = FindObjectsOfType<MARK_PlaySpot>();
+            foreach(MARK_PlaySpot s in spots){
+                Destroy(s.gameObject);
+            }
+
             cPlays.mGameData.mDown = GameData.DOWN.FIRST;
 
             // handle touchback
@@ -77,6 +85,12 @@ public class EX_PL_Res : TDC_Component
         bool touchdown = false;
         if(cPlays.mGameData.mBallLoc.mYardMark == 0)
         {
+            mPlayNumForDrive = 0;
+            MARK_PlaySpot[] spots = FindObjectsOfType<MARK_PlaySpot>();
+            foreach(MARK_PlaySpot s in spots){
+                Destroy(s.gameObject);
+            }
+
             touchdown = true;
             cPlays.mGameData.mDown = GameData.DOWN.FIRST;
             cPlays.mGameData.mBallLoc.mYardMark = 25;
@@ -139,8 +153,23 @@ public class EX_PL_Res : TDC_Component
         cPlays.mUI.FSetScoresText(cPlays.mGameData.mScores);
 
         // ------------------------------------------ Graphically move the ball forwards. 
-        rBall.transform.position = GetPositionOnFieldInWorldCoordinates(cPlays.mGameData.mBallLoc);
+        rBall.transform.position = FGetPositionOnFieldInWorldCoordinates(cPlays.mGameData.mBallLoc);
 
+        // ------------------------------------------ Graphically render the result of the play. Show where they came from, to where they are.
+        mPlayNumForDrive++;
+        Vector3 curPos = FGetPositionOnFieldInWorldCoordinates(cPlays.mGameData.mBallLoc);
+        curPos.x = mPlayNumForDrive;
+        GameData.FIELD_POS fLastPos = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, cLive.mResult.mDis*-1);
+        Vector3 lastPos = FGetPositionOnFieldInWorldCoordinates(fLastPos);
+        lastPos.x = mPlayNumForDrive;
+        int yards = FGetRawYardDistance(cPlays.mGameData.mBallLoc, fLastPos);
+
+        // now just spawn the little nodes for each yard between them?
+        for(int i=0; i<yards; i++){
+            Vector3 iterPos = Vector3.Lerp(lastPos, curPos, (float)i/(float)yards);
+            Instantiate(PF_PlaySpot, iterPos, transform.rotation);
+        }
+        // ------------------------------------------
         mTime = Time.time;
     }
 
@@ -165,7 +194,7 @@ public class EX_PL_Res : TDC_Component
         cPick.FEnter();
     }
 
-    private Vector3 GetPositionOnFieldInWorldCoordinates(GameData.FIELD_POS fPos)
+    public Vector3 FGetPositionOnFieldInWorldCoordinates(GameData.FIELD_POS fPos)
     {
         if(fPos.mSide == GameData.POSSESSION.HOME){
             Vector3 pos = rHome.transform.position;
@@ -180,12 +209,22 @@ public class EX_PL_Res : TDC_Component
         }
     }
 
+    // Just returns the distance in yardage between two things. No sign at all.
+    public int FGetRawYardDistance(GameData.FIELD_POS pos1, GameData.FIELD_POS pos2)
+    {
+        if(pos1.mSide == pos2.mSide){
+            return System.Math.Abs(pos2.mYardMark - pos1.mYardMark);
+        }else{
+            return (50 - pos1.mYardMark) + (50 - pos2.mYardMark);
+        }
+    }
+
     public void FGFX_PlaceFirstDownMarkers(GameData.FIELD_POS start, GameData.FIELD_POS firstDown)
     {
-        Vector3 pos = GetPositionOnFieldInWorldCoordinates(start);
+        Vector3 pos = FGetPositionOnFieldInWorldCoordinates(start);
         pos.x = 0;
         rDownStart.transform.position = pos;
-        pos = GetPositionOnFieldInWorldCoordinates(firstDown);
+        pos = FGetPositionOnFieldInWorldCoordinates(firstDown);
         pos.x = 0;
         rFirstDown.transform.position = pos;
     }
