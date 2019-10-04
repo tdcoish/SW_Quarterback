@@ -44,17 +44,22 @@ public class EX_PL_Res : TDC_Component
             disToFirstDown = 10;
         }
 
-        // --------------------------------------------------- Handle turnovers
+        // --------------------------------------------------- Handle turnovers. Need to handle touchbacks here.
         if(cPlays.mGameData.mDown == GameData.DOWN.LENGTH || cLive.mResult.mTurnover){
-            Debug.Log("Turnover, either downs or ingame");
             cPlays.mGameData.mDown = GameData.DOWN.FIRST;
-            cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
+
+            // handle touchback
+            if(cPlays.mGameData.mBallLoc.mYardMark <= 0){
+                cPlays.mGameData.mBallLoc.mYardMark = 20;
+                Debug.Log("Touchback");
+            }
             disToFirstDown = 10;
             if(cPlays.mGameData.mPossession == GameData.POSSESSION.HOME){
                 cPlays.mGameData.mPossession = GameData.POSSESSION.AWAY;
             }else{
                 cPlays.mGameData.mPossession = GameData.POSSESSION.HOME;
             }
+            cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
         }
 
         // ------------------------------------------------------ Handle touchdowns, or safeties.
@@ -62,20 +67,20 @@ public class EX_PL_Res : TDC_Component
         if(cPlays.mGameData.mBallLoc.mYardMark == 0)
         {
             touchdown = true;
+            cPlays.mGameData.mDown = GameData.DOWN.FIRST;
+            cPlays.mGameData.mBallLoc.mYardMark = 25;
             // handle safeties later.
             if(cPlays.mGameData.mPossession == GameData.POSSESSION.HOME){
                 cPlays.mGameData.mScores.mHome += 7;
                 cPlays.mGameData.mPossession = GameData.POSSESSION.AWAY;
                 cPlays.mGameData.mBallLoc.mSide = GameData.POSSESSION.AWAY;
-                cPlays.mGameData.mBallLoc.mYardMark = 25;
-                cPlays.mGameData.mDown = GameData.DOWN.FIRST;
             }else{
                 cPlays.mGameData.mScores.mAway += 7;
                 cPlays.mGameData.mPossession = GameData.POSSESSION.HOME;
                 cPlays.mGameData.mBallLoc.mSide = GameData.POSSESSION.HOME;
-                cPlays.mGameData.mBallLoc.mYardMark = 25;
-                cPlays.mGameData.mDown = GameData.DOWN.FIRST;
             }
+
+            cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
         }
 
         // ---------------------------------- calc time left
@@ -112,6 +117,7 @@ public class EX_PL_Res : TDC_Component
 
         // ------------------------------------------------------------- Show the result of the play.
         mUI.FSetResultText(cPlays.mChoice, cLive.mResult.mTurnover, cLive.mResult.mDis, touchdown);
+        mUI.mPlayInfo.text = cLive.mResult.mInfo;
 
         cPlays.mUI.FSetBallText(cPlays.mGameData.mBallLoc);
         cPlays.mUI.FSetDownAndDisText(cPlays.mGameData.mDown, disToFirstDown);

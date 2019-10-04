@@ -15,6 +15,7 @@ public enum PLAY_CHOICE{
 
 public struct PLAY_RESULT{
     public PLAY_CHOICE                  mChoice;
+    public string                       mInfo;              // eg. SACKED. Ran for 3 yards.
     public int                          mDis;
     public bool                         mTurnover;
     public float                        mTimeTaken;

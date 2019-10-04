@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class UI_PL_Res : MonoBehaviour
 {
     public Text                                             mTxtRes;
+    public Text                                             mPlayInfo;  
 
     public void FSetResultText(PLAY_CHOICE choice, bool turnover, int dis, bool touchdown)
     {
