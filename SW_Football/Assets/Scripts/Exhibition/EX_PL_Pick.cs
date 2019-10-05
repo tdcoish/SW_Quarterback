@@ -51,5 +51,11 @@ public class EX_PL_Pick : TDC_Component
         FExit();
         cLive.FEnter();
     }
+    public void BT_Kick()
+    {
+        cPlays.mChoice = PLAY_CHOICE.C_KICK;
+        FExit();
+        cLive.FEnter();
+    }
 
 }

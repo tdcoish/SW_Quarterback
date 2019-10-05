@@ -12,6 +12,9 @@ public class EX_PL_Live : TDC_Component
     private EX_Plays                            cPlays;
     private EX_PL_Res                           cResult;
 
+    public MARK_EndZone                         rHomeEnd;
+    public MARK_EndZone                         rAwayEnd;
+
     public PLAY_RESULT                          mResult;
 
     void Start()
@@ -33,6 +36,7 @@ public class EX_PL_Live : TDC_Component
             case PLAY_CHOICE.C_PASS: PlayPass(); break;
             case PLAY_CHOICE.C_RUN: PlayRun(); break;
             case PLAY_CHOICE.C_PUNT: PlayPunt(); break;
+            case PLAY_CHOICE.C_KICK: PlayKick(); break;
         }
     }
 
@@ -113,6 +117,52 @@ public class EX_PL_Live : TDC_Component
         mResult.mTimeTaken = 15f;
         mResult.mTurnover = true;
         mResult.mInfo = "Punted for " + mResult.mDis + " net yards";
+
+        cResult.FEnter();
+    }
+
+    // Failure rate should be exponential. So 95% from 35 yards -> 50% from 50, or something.
+    private void PlayKick()
+    {
+        mResult.mChoice = PLAY_CHOICE.C_KICK;
+
+        // calc dis of the field goal.
+        int dis;
+        GameData.FIELD_POS uprightPos;
+        if(cPlays.mGameData.mPossession == GameData.POSSESSION.HOME){
+            uprightPos = cResult.FGetFieldPosFromWorldCoordinates(rAwayEnd.transform.position.z);
+            Debug.Log("upright spot: " + uprightPos.mYardMark);
+            dis = cResult.FGetRawYardDistance(uprightPos, cPlays.mGameData.mBallLoc) + 15;
+        } else{
+            uprightPos = cResult.FGetFieldPosFromWorldCoordinates(rHomeEnd.transform.position.z);
+            Debug.Log("upright spot: " + uprightPos.mYardMark);
+            dis = cResult.FGetRawYardDistance(uprightPos, cPlays.mGameData.mBallLoc) + 15;
+        }
+
+        Debug.Log("Field goal distance: " + dis);
+
+        // you always score when kicking less than 20.
+        float gimmieDis = 20f;
+        int adjDis = dis;
+        adjDis -= (int)gimmieDis;
+        // always miss when kicking further than 65.
+        float missProb = (float)adjDis / (65f-gimmieDis);
+        missProb = Mathf.Pow(missProb, 3);
+        Debug.Log("Miss Probability: " + missProb);
+
+        float chance = Random.Range(0f, 1f);
+        if(chance < missProb)
+        {
+            mResult.mSuccessfulFieldGoal = false;
+            mResult.mInfo = "Missed field goal from: " + dis + " yards";
+        }else{
+            mResult.mSuccessfulFieldGoal = true;
+            mResult.mInfo = "Hit field goal from: " + dis + " yards";
+        }
+
+        mResult.mTimeTaken = 5f;
+        mResult.mTurnover = false;                  // just manually handling the field goal as its own thing
+        mResult.mDis = 0;
 
         cResult.FEnter();
     }

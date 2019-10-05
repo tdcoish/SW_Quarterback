@@ -10,7 +10,8 @@ using UnityEngine;
 public enum PLAY_CHOICE{
     C_RUN,
     C_PASS,
-    C_PUNT
+    C_PUNT,
+    C_KICK
 }
 
 public struct PLAY_RESULT{
@@ -19,6 +20,7 @@ public struct PLAY_RESULT{
     public int                          mDis;
     public bool                         mTurnover;
     public float                        mTimeTaken;
+    public bool                         mSuccessfulFieldGoal;
 }
 
 public struct GAME_SCORE{

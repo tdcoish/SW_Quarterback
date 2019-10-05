@@ -39,7 +39,6 @@ public class EX_PL_Res : TDC_Component
     {
         cPlays.mState = EX_Plays.STATE.S_RESULT;
         mUI.gameObject.SetActive(true);
-        
 
         // ---------------------------------------- figure out the remaining down and distance. Assuming no turnovers or halftime/over.
         cPlays.mGameData.mBallLoc = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, cLive.mResult.mDis);
@@ -52,6 +51,31 @@ public class EX_PL_Res : TDC_Component
             cPlays.mGameData.mDown = GameData.DOWN.FIRST;
             disToFirstDown = 10;
 
+            FGFX_PlaceFirstDownMarkers(cPlays.mGameData.mBallLoc, cPlays.mGameData.mDownMark);
+        }
+
+        // ------------------------------------------------------ Handle Field Goals
+        if(cLive.mResult.mChoice == PLAY_CHOICE.C_KICK)
+        {       
+            if(cLive.mResult.mSuccessfulFieldGoal){
+                if(cPlays.mGameData.mPossession == GameData.POSSESSION.HOME){
+                    cPlays.mGameData.mScores.mHome += 3;
+                }else{
+                    cPlays.mGameData.mScores.mAway += 3;
+                }
+                cPlays.mGameData.mBallLoc.mYardMark = 25;
+            }
+
+            Debug.Log("Changing possession");
+            if(cPlays.mGameData.mPossession == GameData.POSSESSION.HOME){
+                cPlays.mGameData.mPossession = GameData.POSSESSION.AWAY;
+            }else{
+                cPlays.mGameData.mPossession = GameData.POSSESSION.HOME;
+            }
+
+            cPlays.mGameData.mDown = GameData.DOWN.FIRST;
+
+            cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
             FGFX_PlaceFirstDownMarkers(cPlays.mGameData.mBallLoc, cPlays.mGameData.mDownMark);
         }
 
@@ -105,6 +129,12 @@ public class EX_PL_Res : TDC_Component
                 cPlays.mGameData.mBallLoc.mSide = GameData.POSSESSION.HOME;
             }
 
+            if(cPlays.mGameData.mQuarter == GameData.QUARTER.OT){
+                Debug.Log("Team won in overtime");
+                cPlays.FExit();
+                cOverMan.FEnter();
+            }
+
             cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
 
             FGFX_PlaceFirstDownMarkers(cPlays.mGameData.mBallLoc, cPlays.mGameData.mDownMark);
@@ -129,10 +159,22 @@ public class EX_PL_Res : TDC_Component
                 cPlays.mGameData.mBallLoc.mYardMark = 25;
                 cPlays.mGameData.mDown = GameData.DOWN.FIRST;
                 cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
+            }else if(cPlays.mGameData.mQuarter == GameData.QUARTER.OT)
+            {
+                Debug.Log("It's Overtime");
+                if(cPlays.mGameData.mReceivedFirst == GameData.POSSESSION.HOME){
+                    cPlays.mGameData.mBallLoc.mSide = GameData.POSSESSION.AWAY;
+                    cPlays.mGameData.mPossession = GameData.POSSESSION.AWAY;
+                }else{
+                    cPlays.mGameData.mBallLoc.mSide = GameData.POSSESSION.HOME;
+                    cPlays.mGameData.mPossession = GameData.POSSESSION.HOME;
+                }
+                cPlays.mGameData.mBallLoc.mYardMark = 25;
+                cPlays.mGameData.mDown = GameData.DOWN.FIRST;
+                cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
             }
             if(cPlays.mGameData.mQuarter == GameData.QUARTER.OT)
             {
-                Debug.Log("Unless it's tied, game should be over");
                 cPlays.FExit();
                 cOverMan.FEnter();
             }
@@ -207,6 +249,26 @@ public class EX_PL_Res : TDC_Component
             pos = Vector3.Lerp(rAway.transform.position, rCenter.transform.position, percent);
             return pos;
         }
+    }
+
+    public GameData.FIELD_POS FGetFieldPosFromWorldCoordinates(float z)
+    {
+        float disToAwayEnd = Mathf.Abs(z - rAway.transform.position.z);
+        float disToHomeEnd = Mathf.Abs(z - rHome.transform.position.z);
+        float disToCenter = Mathf.Abs(z - rCenter.transform.position.z);
+
+        GameData.FIELD_POS pos;
+        if(disToAwayEnd < disToHomeEnd){
+            pos.mSide = GameData.POSSESSION.AWAY;
+            float perc = disToAwayEnd / (disToCenter + disToAwayEnd);
+            pos.mYardMark = (int)(50 * perc);
+        }else{
+            pos.mSide = GameData.POSSESSION.HOME;
+            float perc = disToHomeEnd / (disToCenter + disToHomeEnd);
+            pos.mYardMark = (int)(50 * perc);
+        }
+
+        return pos;
     }
 
     // Just returns the distance in yardage between two things. No sign at all.
