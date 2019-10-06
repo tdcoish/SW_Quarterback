@@ -17,7 +17,7 @@ This might be unusable.
 using UnityEngine;
 using System.Collections.Generic;
 
-public enum TDC_GE { GE_BallCaught, GE_Tackled }; // ... Other events
+public enum TDC_GE { GE_BallCaught, GE_Tackled, GE_BallHitGround }; // ... Other events
 public static class TDC_EventManager
 {
     // Stores the delegates that get called when an event is fired

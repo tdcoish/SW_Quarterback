@@ -195,6 +195,7 @@
      <Compile Include="Assets\Scripts\Prac_Offense\PRAC_Off_ShowGFX.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\PRAC_PB_UI.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\TRG_Catch.cs" />
+     <Compile Include="Assets\Scripts\Prac_Offense\UI_PostPlay.cs" />
      <Compile Include="Assets\Scripts\Practice\CAM_PlayShowing.cs" />
      <Compile Include="Assets\Scripts\Practice\DEF_ManLog.cs" />
      <Compile Include="Assets\Scripts\Practice\DEF_RushLog.cs" />
@@ -273,6 +274,7 @@
      <Compile Include="Assets\Scripts\Utilities\LifeSpan.cs" />
      <Compile Include="Assets\Scripts\Utilities\SingletonBehaviour.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_Extensions.cs" />
+     <Compile Include="Assets\Scripts\Utilities\UT_FindComponent.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_Grounded.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_MinSec.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_Strings.cs" />

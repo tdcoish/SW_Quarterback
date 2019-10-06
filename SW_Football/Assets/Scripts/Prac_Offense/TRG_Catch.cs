@@ -9,8 +9,6 @@ public class TRG_Catch : MonoBehaviour
     void Start()
     {
         cAth = GetComponentInParent<PRAC_Off_Ply>();
-
-        TDC_EventManager.FAddHandler(TDC_GE.GE_BallCaught, OnBallCaught);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -22,11 +20,5 @@ public class TRG_Catch : MonoBehaviour
 
             TDC_EventManager.FBroadcast(TDC_GE.GE_BallCaught);
         }
-    }
-
-    // Most likely another receiver will trigger this, not us.
-    public void OnBallCaught()
-    {
-        Debug.Log("Someone caught the ball");
     }
 }

@@ -23,6 +23,8 @@ public class PRAC_Off_Ply : PRAC_Ath
         cBlockLog = GetComponent<OFF_BlockLog>();
         cCatchRadius = GetComponentInChildren<TRG_Catch>();
 
+        cCatchRadius.gameObject.SetActive(false);
+
         SetupRouteSpots();
     }
 

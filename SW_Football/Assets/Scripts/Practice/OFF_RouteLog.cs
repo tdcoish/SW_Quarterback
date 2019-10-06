@@ -18,11 +18,17 @@ public class OFF_RouteLog : MonoBehaviour
     }
     public STATE                    mState;
 
+    private Rigidbody                           cRigid;
     private RP_CatchLog                         cCatchLog;
+    private TRG_Catch                           cCatchRadius;
+    private PRAC_AI_Acc                         cAcc;
 
-    private void Start()
+    private void Awake()
     {
+        cRigid = GetComponent<Rigidbody>();
         cCatchLog = GetComponent<RP_CatchLog>();
+        cCatchRadius = GetComponentInChildren<TRG_Catch>();
+        cAcc = GetComponent<PRAC_AI_Acc>();
 
         mState = STATE.S_BLIND;
     }
@@ -53,7 +59,12 @@ public class OFF_RouteLog : MonoBehaviour
         Vector3 dis = mRouteSpots[0] - transform.position;
         dis.y = 0f;
         dis = Vector3.Normalize(dis);
-        GetComponent<PRAC_AI_Acc>().FCalcAcc(dis);
+        Vector3 vAcc = cAcc.FCalcAccFunc(dis, cAcc.mSpd);
+        cRigid.velocity += vAcc;
+        if(cRigid.velocity.magnitude > cAcc.mSpd){
+            cRigid.velocity *= cAcc.mSpd/cRigid.velocity.magnitude;
+        }
+        transform.forward = cRigid.velocity.normalized;
 
         if(Vector3.Distance(mRouteSpots[0], transform.position) < 2f){
             mRouteSpots.RemoveAt(0);
@@ -64,7 +75,7 @@ public class OFF_RouteLog : MonoBehaviour
     private void ENTER_CanReactToThrow()
     {
         mState = STATE.S_CAN_REACT_TO_THROW;
-
+        cCatchRadius.gameObject.SetActive(true);
     }
 
     // Basically, they're not done running the route yet, but they are looking for the ball.
@@ -78,7 +89,13 @@ public class OFF_RouteLog : MonoBehaviour
         Vector3 dis = mRouteSpots[0] - transform.position;
         dis.y = 0f;
         dis = Vector3.Normalize(dis);
-        GetComponent<PRAC_AI_Acc>().FCalcAcc(dis);
+        Vector3 vAcc = cAcc.FCalcAccFunc(dis, cAcc.mSpd);
+        cRigid.velocity += vAcc;
+        if(cRigid.velocity.magnitude > cAcc.mSpd){
+            cRigid.velocity *= cAcc.mSpd/cRigid.velocity.magnitude;
+        }
+        transform.forward = cRigid.velocity.normalized;
+
 
         if(Vector3.Distance(mRouteSpots[0], transform.position) < 2f){
             mRouteSpots.RemoveAt(0);
@@ -101,7 +118,13 @@ public class OFF_RouteLog : MonoBehaviour
         Vector3 dis = vSpotToGetTo - transform.position;
         dis.y = 0f;
         dis = Vector3.Normalize(dis);
-        GetComponent<PRAC_AI_Acc>().FCalcAcc(dis);          // god, it's so ugly that we have these side effects.
+        Vector3 vAcc = cAcc.FCalcAccFunc(dis, cAcc.mSpd);
+        cRigid.velocity += vAcc;
+        if(cRigid.velocity.magnitude > cAcc.mSpd){
+            cRigid.velocity *= cAcc.mSpd/cRigid.velocity.magnitude;
+        }
+        transform.forward = cRigid.velocity.normalized;
+
     }
 
     private void ENTER_GetOpen()

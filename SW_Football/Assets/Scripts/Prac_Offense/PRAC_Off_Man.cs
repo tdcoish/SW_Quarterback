@@ -6,6 +6,11 @@ Alright, I can now pick the play.
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public struct PRAC_PLAY_RES
+{
+    public bool                         mBallCaught;
+}
+
 public class PRAC_Off_Man : MonoBehaviour
 {
     private PRAC_Off_SetupPlayers               cPlayerSetup;
@@ -19,6 +24,11 @@ public class PRAC_Off_Man : MonoBehaviour
 
     public GameObject                           UI_PauseScreen;
     public PRAC_PB_UI                           UI_PlayPicker;
+    public UI_PostPlay                          UI_PostPlay;
+
+    public PRAC_PLAY_RES                        mRes;
+
+    private float                               mTime;
 
     void Start()
     {
@@ -26,6 +36,11 @@ public class PRAC_Off_Man : MonoBehaviour
 
         cPlayerSetup = GetComponent<PRAC_Off_SetupPlayers>();   
         cShowPreSnapGFX = GetComponent<PRAC_Off_ShowGFX>(); 
+
+        TDC_EventManager.FAddHandler(TDC_GE.GE_BallCaught, E_ReceiverCatchesBall);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_BallHitGround, E_BallHitsGround);
+
+        UI_PostPlay.gameObject.SetActive(false);
 
         ENTER_PickPlay();
     }
@@ -139,7 +154,7 @@ public class PRAC_Off_Man : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space))
         {
             // Now we just repeat the whole shebang.
-            ENTER_PostSnap();
+            ENTER_PostPlay();
             return;
         }
     }
@@ -147,9 +162,37 @@ public class PRAC_Off_Man : MonoBehaviour
     void EXIT_Live(){
 
     }
-    void ENTER_PostSnap(){
+    void ENTER_PostPlay(){
         mState = PRAC_STATE.SPOST_PLAY;
 
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        UI_PostPlay.gameObject.SetActive(true);
+        if(mRes.mBallCaught){
+            UI_PostPlay.mTxtResult.text = "Caught the ball";
+        }else{
+            UI_PostPlay.mTxtResult.text = "No catch";
+        }
+        PRAC_Ath[] aths = FindObjectsOfType<PRAC_Ath>();
+        foreach(PRAC_Ath a in aths){
+            a.mState = PRAC_Ath.PRAC_ATH_STATE.SPOST_PLAY;
+        }
+
+        mTime = Time.time;
+    }
+    void RUN_PostPlay(){
+        if(Time.time - mTime > 3f){
+            EXIT_PostPlay();
+            ENTER_PickPlay();
+        }
+        if(Input.GetKeyDown(KeyCode.Space)){
+            EXIT_PostPlay();
+            ENTER_PickPlay();
+        }
+    }
+    void EXIT_PostPlay(){
+        UI_PostPlay.gameObject.SetActive(false);
         PRAC_Ath[] aths = FindObjectsOfType<PRAC_Ath>();
         foreach(PRAC_Ath a in aths){
             Destroy(a.gameObject);
@@ -161,11 +204,14 @@ public class PRAC_Off_Man : MonoBehaviour
             Destroy(f.gameObject);
         }
 
-        ENTER_PickPlay();
-
+        mRes.mBallCaught = false;
     }
-    void RUN_PostPlay(){}
 
+    public void BT_NextPlay()
+    {
+        EXIT_PostPlay();
+        ENTER_PickPlay();
+    }
 
     public void FOffPlayPicked(string name)
     {
@@ -202,5 +248,24 @@ public class PRAC_Off_Man : MonoBehaviour
         // refQuitUI.SetActive(true);
         Time.timeScale = 1f;
         SceneManager.LoadScene("SN_MN_Main");        
+    }
+
+    public void E_BallHitsGround()
+    {
+        PROJ_Football[] footballs = FindObjectsOfType<PROJ_Football>();
+        foreach(PROJ_Football f in footballs){
+            Destroy(f.gameObject);
+        }
+
+        if(mState == PRAC_STATE.SPLAY_RUNNING){
+            ENTER_PostPlay();
+        }
+    }
+
+    public void E_ReceiverCatchesBall()
+    {
+        Debug.Log("Receiver Caught ball!");
+        mRes.mBallCaught = true;
+        ENTER_PostPlay();
     }
 }

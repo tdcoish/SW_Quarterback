@@ -69,10 +69,17 @@ public class PRAC_Ath : MonoBehaviour
         
     }
 
-    // Again, nothing. Eventually some animations or something.
+    // Again, nothing. Maybe they can slowly walk back to the snap?
     protected virtual void RUN_PostPlay()
     {
-
+        PLY_SnapSpot s = FindObjectOfType<PLY_SnapSpot>();
+        if(s != null){
+            Vector3 vDis = transform.position - s.transform.position;
+            vDis = Vector3.Normalize(vDis);
+            cRigid.velocity = vDis * 0.1f;
+        }else{
+            cRigid.velocity = Vector3.zero;
+        }
     }
 
     /******************************************************************

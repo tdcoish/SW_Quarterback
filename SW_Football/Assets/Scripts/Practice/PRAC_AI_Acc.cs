@@ -68,4 +68,41 @@ public class PRAC_AI_Acc : MonoBehaviour
         }
 
     }
+
+    /*******************************************************************************
+    Has been re-written to be functional. You're gonna have to manually make sure to cap
+    the velocity in case it goes too fast.
+    ****************************************************************************** */
+    public Vector3 FCalcAccFunc(Vector3 dir, float maxSpd)
+    {
+        dir.y = 0f;
+        dir = Vector3.Normalize(dir);
+
+        // Find the correct vector of acceleration
+        float fAngle = Vector3.SignedAngle(dir, transform.forward, Vector3.up);
+        float fPercentMaxSpd = cRigid.velocity.magnitude / maxSpd;
+        float fAccAngle = fAngle * (1+fPercentMaxSpd);
+        if(Mathf.Abs(fAccAngle) > 180f){
+            fAccAngle *= 180f/Mathf.Abs(fAccAngle);
+        } 
+
+        Vector3 vAccDir = Quaternion.AngleAxis(-fAccAngle, Vector3.up) * transform.forward;
+        vAccDir = Vector3.Normalize(vAccDir);
+
+        // Debug.DrawLine(transform.position, transform.position+dir*10f, Color.green);
+        // Debug.DrawLine(transform.position, transform.position+vAccDir*10f, Color.cyan);
+        // Debug.DrawLine(transform.position, transform.position + cRigid.velocity, Color.black);
+
+        // Find the acceleration WRT our current velocity.
+        // We add a bit of a fudge factor using fVelDot to make decelerating from full speed faster,
+        // and acceleration nearing full speed slower.
+        float fAcc = Time.fixedDeltaTime * mAcc;
+        float fVelDot = Vector3.Dot(vAccDir, transform.forward*cRigid.velocity.magnitude);
+        fVelDot /= maxSpd;
+        fVelDot *= -0.5f;           // We want a noticeable but not overpowering effect.
+        fVelDot += 1f;              // should technically be 0.5f for best accuracy.
+        Vector3 vAcc = vAccDir * fAcc * fVelDot;
+
+        return vAcc;
+    }
 }

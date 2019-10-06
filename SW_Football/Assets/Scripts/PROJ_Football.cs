@@ -39,8 +39,10 @@ public class PROJ_Football : MonoBehaviour
     {
         if(mGrounded) return;
 
-        if(collision.transform.GetComponent<EN_FieldGround>() != null){
+        EN_FieldGround field = UT_FindComponent.FindComponent<EN_FieldGround>(collision.gameObject);
+        if(field != null){
             GE_FB_HitGround.Raise(null);
+            TDC_EventManager.FBroadcast(TDC_GE.GE_BallHitGround);
             mGrounded = true;
         }
     }
