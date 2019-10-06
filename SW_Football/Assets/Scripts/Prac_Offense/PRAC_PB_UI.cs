@@ -12,6 +12,9 @@ public class PRAC_PB_UI : MonoBehaviour
     public Text                                 mTXTPage;
     public int                                  mPage = 0;
 
+    // probably move this later.
+    public Text                                 mTxtLineEnabled;
+
     public PRAC_PlayArt[]                       mPlayArts;
 
     // Basically we're just testing for if they are hitting the offensive plays.
@@ -36,24 +39,14 @@ public class PRAC_PB_UI : MonoBehaviour
         }
     }
 
-    // public virtual void FSetUpPlaybookImagery()
-    // {
-    //     string[] offPlayNames = IO_OffensivePlays.FReturnPlayNames();
-    //     for(int i = 0; i<mPlayArts.Length; i++)
-    //     {
-    //         if(i+1 > offPlayNames.Length){
-    //             break;
-    //         }
-
-    //         // We also want to put some text on them to show the play name.
-    //         string path = "PlayArt/Offense/" + offPlayNames[i];
-    //         Debug.Log("Play: " + path);
-    //         Sprite spr = Resources.Load<Sprite>(path);
-    //         mPlayArts[i].GetComponent<Image>().sprite = spr;
-    //         mPlayArts[i].mName = offPlayNames[i];
-    //         mPlayArts[i].GetComponentInChildren<Text>().text = offPlayNames[i];
-    //     }
-    // }
+    public void FSetLineEnabledText(bool enabled)
+    {
+        if(enabled){
+            mTxtLineEnabled.text = "Line enabled";
+        }else{
+            mTxtLineEnabled.text = "Line Disabled";
+        }
+    }
 
     public virtual void FSetUpPlaybookImagery()
     {

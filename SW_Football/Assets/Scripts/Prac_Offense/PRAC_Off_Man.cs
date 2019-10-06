@@ -29,6 +29,7 @@ public class PRAC_Off_Man : MonoBehaviour
     public PRAC_PLAY_RES                        mRes;
 
     private float                               mTime;
+    private bool                                mLineExists = true;
 
     void Start()
     {
@@ -66,8 +67,6 @@ public class PRAC_Off_Man : MonoBehaviour
             Cursor.visible = true;
 
             FindObjectOfType<PC_Controller>().mState = PC_Controller.PC_STATE.SINACTIVE;
-
-            //GE_PauseMenuOpened.Raise(null);
         }
     }
 
@@ -77,6 +76,7 @@ public class PRAC_Off_Man : MonoBehaviour
         Cursor.visible = true;
         UI_PlayPicker.gameObject.SetActive(true);
         UI_PlayPicker.FSetUpPlaybookImagery();
+        UI_PlayPicker.FSetLineEnabledText(mLineExists);
     }
     void RUN_PickPlay()
     {
@@ -86,6 +86,19 @@ public class PRAC_Off_Man : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         UI_PlayPicker.gameObject.SetActive(false);
         Cursor.visible = false;
+
+        if(!mLineExists){
+            Debug.Log("Here");
+            PRAC_Off_Ply[] aths = FindObjectsOfType<PRAC_Off_Ply>();
+            foreach(PRAC_Off_Ply a in aths){
+                if(a.mRole == "BLOCK"){
+                    Debug.Log("Here");
+                    Destroy(a.gameObject);
+                }else{
+                    Debug.Log(a.mJob.mRole);
+                }
+            }
+        }
     }
     void ENTER_PlayPicked(){
         mState = PRAC_STATE.SPLAY_PICKED;
@@ -248,6 +261,12 @@ public class PRAC_Off_Man : MonoBehaviour
         // refQuitUI.SetActive(true);
         Time.timeScale = 1f;
         SceneManager.LoadScene("SN_MN_Main");        
+    }
+
+    public void BT_ToggleLineEnabled()
+    {
+        mLineExists = !mLineExists;
+        UI_PlayPicker.FSetLineEnabledText(mLineExists);
     }
 
     public void E_BallHitsGround()
