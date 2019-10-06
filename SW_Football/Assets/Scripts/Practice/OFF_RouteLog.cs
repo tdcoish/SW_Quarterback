@@ -112,13 +112,30 @@ public class OFF_RouteLog : MonoBehaviour
     {
         mState = STATE.S_CATCHING_BALL_TRY;
     }
+
+    /***********************************************************************
+    The issue here is that we don't want the player to be running too fast
+    to the spot. Currently, they will run to the spot and only then start slowing
+    down. We need them to anticipate this.
+
+    So we need to figure out WHEN they need to be in that spot, and move at the 
+    appropriate velocity. So they should accelerate relative to what that velocity
+    should be.
+    ********************************************************************* */
     void RUN_TryCatchBall()
     {
         Vector3 vSpotToGetTo = cCatchLog.FCalcInterceptSpot();
         Vector3 dis = vSpotToGetTo - transform.position;
         dis.y = 0f;
-        dis = Vector3.Normalize(dis);
-        Vector3 vAcc = cAcc.FCalcAccFunc(dis, cAcc.mSpd);
+        float airTime = cCatchLog.FCalcInterceptTime();
+        // since I know how far I need to go, I also know the exact velocity I should be using.
+        Vector3 vVel = dis / airTime;
+
+        // Now subtract our current velocity, and we have the direction to accelerate in.
+        Vector3 vAccDir = vVel - cRigid.velocity;
+        vAccDir = Vector3.Normalize(vAccDir);
+
+        Vector3 vAcc = cAcc.FCalcAccFunc(vAccDir, cAcc.mSpd);
         cRigid.velocity += vAcc;
         if(cRigid.velocity.magnitude > cAcc.mSpd){
             cRigid.velocity *= cAcc.mSpd/cRigid.velocity.magnitude;
