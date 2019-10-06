@@ -120,4 +120,8 @@ public class MN_Manager : MonoBehaviour
     public void BT_OffensePractice(){
         SceneManager.LoadScene("SN_PracOffense");
     }
+    public void BT_Exhibition()
+    {
+        SceneManager.LoadScene("SN_Exhibition");
+    }
 }

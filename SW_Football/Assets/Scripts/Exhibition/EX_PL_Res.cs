@@ -161,20 +161,24 @@ public class EX_PL_Res : TDC_Component
                 cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
             }else if(cPlays.mGameData.mQuarter == GameData.QUARTER.OT)
             {
-                Debug.Log("It's Overtime");
-                if(cPlays.mGameData.mReceivedFirst == GameData.POSSESSION.HOME){
-                    cPlays.mGameData.mBallLoc.mSide = GameData.POSSESSION.AWAY;
-                    cPlays.mGameData.mPossession = GameData.POSSESSION.AWAY;
+                if(cPlays.mGameData.mScores.mAway != cPlays.mGameData.mScores.mHome){
+                    cPlays.FExit();
+                    cOverMan.FEnter();
+                    cPlays.mGameData.mDown++;
                 }else{
-                    cPlays.mGameData.mBallLoc.mSide = GameData.POSSESSION.HOME;
-                    cPlays.mGameData.mPossession = GameData.POSSESSION.HOME;
+                    Debug.Log("It's Overtime");
+                    if(cPlays.mGameData.mReceivedFirst == GameData.POSSESSION.HOME){
+                        cPlays.mGameData.mBallLoc.mSide = GameData.POSSESSION.AWAY;
+                        cPlays.mGameData.mPossession = GameData.POSSESSION.AWAY;
+                    }else{
+                        cPlays.mGameData.mBallLoc.mSide = GameData.POSSESSION.HOME;
+                        cPlays.mGameData.mPossession = GameData.POSSESSION.HOME;
+                    }
+                    cPlays.mGameData.mBallLoc.mYardMark = 25;
+                    cPlays.mGameData.mDown = GameData.DOWN.FIRST;
+                    cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
                 }
-                cPlays.mGameData.mBallLoc.mYardMark = 25;
-                cPlays.mGameData.mDown = GameData.DOWN.FIRST;
-                cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
-            }
-            if(cPlays.mGameData.mQuarter == GameData.QUARTER.OT)
-            {
+            }else if(cPlays.mGameData.mQuarter == GameData.QUARTER.LENGTH){
                 cPlays.FExit();
                 cOverMan.FEnter();
             }
