@@ -97,6 +97,10 @@ public class QB_UI : MonoBehaviour
         mBar.fillAmount = 0f;
 
         mLookStorer = new ForwardVecStorer(50);
+
+        TDC_EventManager.FAddHandler(TDC_GE.GE_QB_StopThrow, E_StopCharging);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_QB_ReleaseBall, E_StopCharging);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_QB_StartWindup, E_StartCharging);
     }
 
     // Update is called once per frame
@@ -139,12 +143,11 @@ public class QB_UI : MonoBehaviour
         mBar.fillAmount = GB_ThrowCharge.Val;
     }
 
-    // QB_Start_Charging
-    public void QB_Charging(){
+    public void E_StartCharging(){
         mState = QB_UI_STATE.SCHARGING;
     }
 
-    public void QB_ThrewBall(){
+    public void E_StopCharging(){
         mState = QB_UI_STATE.SNOTCHARGING;
         mBar.fillAmount = 0f;
     }

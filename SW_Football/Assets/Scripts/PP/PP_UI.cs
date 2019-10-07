@@ -19,6 +19,8 @@ public class PP_UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        TDC_EventManager.FAddHandler(TDC_GE.GE_OutPocket, E_PlayerLeftPocket);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_InPocket, E_PlayerBackInPocket);
         mPocketWarningTxt.gameObject.SetActive(false);
     }
 
@@ -31,12 +33,12 @@ public class PP_UI : MonoBehaviour
         mSackedTxt.color = col;
     }
 
-    public void OnPlayerLeftPocket()
+    public void E_PlayerLeftPocket()
     {
         mPocketWarningTxt.gameObject.SetActive(true);
     }
 
-    public void OnPlayerBackInPocket()
+    public void E_PlayerBackInPocket()
     {
         mPocketWarningTxt.gameObject.SetActive(false);
     }

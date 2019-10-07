@@ -13,9 +13,6 @@ public class PROJ_Football : MonoBehaviour
 
     public GameObject               PF_Particles;
 
-    [SerializeField]
-    private GE_Event                GE_FB_HitGround;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +38,6 @@ public class PROJ_Football : MonoBehaviour
 
         EN_FieldGround field = UT_FindComponent.FindComponent<EN_FieldGround>(collision.gameObject);
         if(field != null){
-            GE_FB_HitGround.Raise(null);
             TDC_EventManager.FBroadcast(TDC_GE.GE_BallHitGround);
             mGrounded = true;
         }

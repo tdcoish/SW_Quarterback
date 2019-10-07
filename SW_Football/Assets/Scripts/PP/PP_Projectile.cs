@@ -7,13 +7,12 @@ using UnityEngine;
 public class PP_Projectile : MonoBehaviour
 {
     public GameObject           PF_DeathParticles;
-    public GE_Event             GE_TennisBallHitPlayer;
 
     void OnTriggerEnter(Collider other)
     {
         if(other.GetComponent<PC_Controller>())
         {
-            GE_TennisBallHitPlayer.Raise(null);
+            TDC_EventManager.FBroadcast(TDC_GE.GE_PP_SackBallHit);
             Destroy(gameObject);
         }
     }

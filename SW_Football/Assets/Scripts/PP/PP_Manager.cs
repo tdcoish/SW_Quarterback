@@ -80,11 +80,21 @@ public class PP_Manager : MonoBehaviour
     public bool                 mSaveCurrent = true;
 
     // ------------------------------------- Gamer info stuffs. Keep track of how often they pass, I guess?
-
-    private void Start()
+    void Awake()
     {
         IO_Settings.FLOAD_SETTINGS();
         IO_GamerInfo.FLoadGamerData();
+
+        TDC_EventManager.FRemoveAllHandlers();
+    }
+    private void Start()
+    {
+        TDC_EventManager.FAddHandler(TDC_GE.GE_PP_SackBallHit, E_SackBallHitPlayer);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_QB_ReleaseBall, E_BallThrown);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_BallHitGround, E_BallHitGround);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_InPocket, E_StepIntoPocket);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_OutPocket, E_StepOutOfPocket);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_PP_TargetHit, E_TargetHit);
 
         cTurMan = GetComponent<PP_Man_Tur>();
         cTargMan = GetComponent<PP_Man_Targ>();
@@ -137,7 +147,7 @@ public class PP_Manager : MonoBehaviour
         refPC.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
         // this is kind of to solve a bug with respect to throwing.
-        refPC.GE_QB_StopThrow.Raise(null);
+        TDC_EventManager.FBroadcast(TDC_GE.GE_QB_StopThrow);
     
         DestroyExistingProjectilesArrowsAndDeactivateTurrets();
         // Also destroy all footballs
@@ -329,7 +339,7 @@ public class PP_Manager : MonoBehaviour
     }
 
     // This needs a looksie
-    public void OnTargetHit()
+    public void E_TargetHit()
     {
         DestroyFootballs();
 
@@ -357,18 +367,18 @@ public class PP_Manager : MonoBehaviour
         cTargMan.FDeactivateReceiver();
     }
 
-    public void OnStepOutOfPocket()
+    public void E_StepOutOfPocket()
     {
         mIsOutOfPocket = true;
         mLastTimeInPocket = Time.time;
     }
 
-    public void OnStepIntoPocket()
+    public void E_StepIntoPocket()
     {
         mIsOutOfPocket = false;
     }
 
-    public void OnBallHitPlayer()
+    public void E_SackBallHitPlayer()
     {
         if(mSackImmunity)
         {
@@ -393,6 +403,8 @@ public class PP_Manager : MonoBehaviour
         MN_PauseScreen.SetActive(false);
         refScoreboardUI.SetActive(false);
         refQuitUI.SetActive(true);
+
+        TDC_EventManager.FRemoveAllHandlers();
     }
     public void OnResumePressed()
     {
@@ -431,7 +443,7 @@ public class PP_Manager : MonoBehaviour
         refUI.mSackImmunityTxt.text = "Sack Immunity: NO";
     }
 
-    public void OnBallThrown()
+    public void E_BallThrown()
     {
         PP_Projectile[] balls = FindObjectsOfType<PP_Projectile>();
         foreach(PP_Projectile b in balls){
@@ -443,7 +455,7 @@ public class PP_Manager : MonoBehaviour
         refUI.mSackImmunityTxt.text = "Sack Immunity: YES";
     }
 
-    public void OnBallHitGround()
+    public void E_BallHitGround()
     {
         cAud.FPlayClip(cAud.mBallHitGround);
         refUI.mSackImmunityTxt.text = "Sack Immunity: NO";

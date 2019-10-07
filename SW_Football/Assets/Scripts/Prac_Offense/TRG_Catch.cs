@@ -16,7 +16,7 @@ public class TRG_Catch : MonoBehaviour
         if(other.GetComponent<PROJ_Football>() != null)
         {
             Debug.Log("I just got hit by the football");
-            cAth.FCaughtBall();
+            // cAth.FCaughtBall();
 
             TDC_EventManager.FBroadcast(TDC_GE.GE_BallCaught);
         }

@@ -44,7 +44,6 @@ GameObject:
   - component: {fileID: 8715241792742129379}
   - component: {fileID: 8715241792742129383}
   - component: {fileID: 375416082}
-  - component: {fileID: 366671866}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -147,9 +146,6 @@ MonoBehaviour:
   mThrowChrg: {fileID: 11400000, guid: cc532729a38ccb844bc2bfc7941d5f4e, type: 2}
   mThrowMax: {fileID: 11400000, guid: b46deec74840dc042af957add803cb8c, type: 2}
   mThrowAngle: {fileID: 11400000, guid: 84c7a5618441c1a40b7f1931d95b33e5, type: 2}
-  GE_QB_StartThrow: {fileID: 11400000, guid: 40d201a536cb4dc46b060eaa4b32bff1, type: 2}
-  GE_QB_ReleaseBall: {fileID: 11400000, guid: cc068b33e2480924485591ee46966c8a, type: 2}
-  GE_QB_StopThrow: {fileID: 11400000, guid: ccdecd27a0357d840ac70f05ee5e5a50, type: 2}
   RefPlayerPos: {fileID: 11400000, guid: aa0cdd5c33f3fed4db456a4cda6b4b00, type: 2}
   mThrowStartAngle: {x: 0, y: 0, z: 0}
   GB_LookInaccuracy: {fileID: 11400000, guid: cb64403833b403748b02b76f8d8aa10a, type: 2}
@@ -171,34 +167,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
---- !u!114 &366671866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8715241792742129376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8d4f195d4e0ed4c8a7d2fc136c5311, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: ccdecd27a0357d840ac70f05ee5e5a50, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8715241792742129383}
-        m_MethodName: ThrowStopped
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: Response, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &8715241793636834110
 GameObject:
   m_ObjectHideFlags: 0

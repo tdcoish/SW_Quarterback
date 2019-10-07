@@ -47,10 +47,6 @@ public class PC_Controller : MonoBehaviour
     private Rigidbody               cRigid;
     private PC_Camera               cCam;
 
-    public GE_Event                 GE_QB_StartThrow;
-    public GE_Event                 GE_QB_ReleaseBall;
-    public GE_Event                 GE_QB_StopThrow;
-
     // if false, then we're doing vehicle-style controls
     private bool                    mFPSVision = true;
 
@@ -72,9 +68,13 @@ public class PC_Controller : MonoBehaviour
         mState = PC_STATE.SINACTIVE;
         mThrowState = PC_THROW_STATE.SNOT_THROWING;
         mThrowChrg.Val = 0f;
+        mThrowMax.Val = IO_Settings.mSet.lPlayerData.mThrowSpd;
+        Debug.Log("Charge now: " + mThrowChrg.Val);
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+        TDC_EventManager.FAddHandler(TDC_GE.GE_QB_StopThrow, E_ThrowStopped);
 
         SetInaccuraciesToZero();
     }
@@ -158,11 +158,14 @@ public class PC_Controller : MonoBehaviour
         vThrowDir.x += fXAcc; vThrowDir.y += fYAcc;
         vThrowDir = Vector3.Normalize(vThrowDir);
 
+        Debug.Log("Throw Dir: " + vThrowDir);
+        Debug.Log("Throw Charge: " + mThrowChrg.Val);
+        Debug.Log("Throw Speed Maximum: " + IO_Settings.mSet.lPlayerData.mThrowSpd);
         clone.GetComponent<Rigidbody>().velocity = vThrowDir * mThrowChrg.Val * IO_Settings.mSet.lPlayerData.mThrowSpd;
         mThrowChrg.Val = 0f;
 
         mThrowState = PC_THROW_STATE.S_RECOVERING;
-        GE_QB_ReleaseBall.Raise(null);
+        TDC_EventManager.FBroadcast(TDC_GE.GE_QB_ReleaseBall);
 
         SetInaccuraciesToZero();
         Invoke("CanThrowAgain", 1.0f);
@@ -173,7 +176,7 @@ public class PC_Controller : MonoBehaviour
     {
         if(Input.GetMouseButton(0)){
             // mThrowMax.Val = IO_Settings.mSet.lPlayerData.mThrowSpd;
-            GE_QB_StartThrow.Raise(null);
+            TDC_EventManager.FBroadcast(TDC_GE.GE_QB_StartWindup);
             mThrowStartAngle = cCam.transform.forward;
 
             mThrowState = PC_THROW_STATE.S_CHARGING;
@@ -198,7 +201,7 @@ public class PC_Controller : MonoBehaviour
     {
         // RMB stops throw
         if(Input.GetMouseButton(1)){
-            GE_QB_StopThrow.Raise(null);
+            TDC_EventManager.FBroadcast(TDC_GE.GE_QB_StopThrow);
             return;
         }
 
@@ -254,13 +257,13 @@ public class PC_Controller : MonoBehaviour
         // once the throw has decayed to half power, then it's just canceled.
         if(mThrowChrg.Val < 0.5f * mThrowMax.Val / IO_Settings.mSet.lPlayerData.mThrowSpd)
         {
-            GE_QB_StopThrow.Raise(null);
+            TDC_EventManager.FBroadcast(TDC_GE.GE_QB_StopThrow);
             return;
         }
 
         // RMB stops throw
         if(Input.GetMouseButton(1)){
-            GE_QB_StopThrow.Raise(null);
+            TDC_EventManager.FBroadcast(TDC_GE.GE_QB_StopThrow);
             return;
         }
 
@@ -386,7 +389,7 @@ public class PC_Controller : MonoBehaviour
     }
 
     // They clutch the ball and decide not to throw.
-    public void ThrowStopped()
+    public void E_ThrowStopped()
     {
         mThrowMax.Val = IO_Settings.mSet.lPlayerData.mThrowSpd;
 

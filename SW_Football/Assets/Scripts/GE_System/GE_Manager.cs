@@ -17,7 +17,7 @@ This might be unusable.
 using UnityEngine;
 using System.Collections.Generic;
 
-public enum TDC_GE { GE_BallCaught, GE_Tackled, GE_BallHitGround }; // ... Other events
+public enum TDC_GE { GE_BallCaught, GE_Tackled, GE_BallHitGround, GE_InPocket, GE_OutPocket, GE_QB_StartWindup, GE_QB_StopThrow, GE_QB_ReleaseBall, GE_PP_SackBallHit, GE_PP_TargetHit }; // ... Other events
 public static class TDC_EventManager
 {
     // Stores the delegates that get called when an event is fired
@@ -31,17 +31,28 @@ public static class TDC_EventManager
         else eventTable[evnt] += action;
     }
 
-    public static void RemoveHandler(TDC_GE evnt, System.Action action)
+    public static void FRemoveHandler(TDC_GE evnt, System.Action action)
     {
         if (eventTable[evnt] != null)
             eventTable[evnt] -= action;
         if (eventTable[evnt] == null)
             eventTable.Remove(evnt);
     }
+
+    public static void FRemoveAllHandlers()
+    {
+        System.Array values = System.Enum.GetValues(typeof(TDC_GE));
+
+        foreach(TDC_GE val in values)
+        {
+            eventTable[val] = null;
+        }
+    }
  
     // Fires the event
     public static void FBroadcast(TDC_GE evnt)
     {
+        // Weird, it's giving me an exception when I broadcast an event no one listens to.
         if (eventTable[evnt] != null) eventTable[evnt]();
     }
 }

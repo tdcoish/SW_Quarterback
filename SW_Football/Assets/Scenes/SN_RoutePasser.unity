@@ -1736,10 +1736,6 @@ GameObject:
   - component: {fileID: 681169788}
   - component: {fileID: 681169795}
   - component: {fileID: 681169793}
-  - component: {fileID: 681169792}
-  - component: {fileID: 681169791}
-  - component: {fileID: 681169790}
-  - component: {fileID: 681169794}
   m_Layer: 0
   m_Name: RP_Manager
   m_TagString: Untagged
@@ -1810,90 +1806,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &681169790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 681169787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8d4f195d4e0ed4c8a7d2fc136c5311, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: d38c2ec678eb12c4091636eb8539a250, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 681169788}
-        m_MethodName: OnExitPocket
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: Response, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &681169791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 681169787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8d4f195d4e0ed4c8a7d2fc136c5311, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 03ea134c480780b428a98f475726314c, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 681169788}
-        m_MethodName: OnEnteredPocket
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: Response, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &681169792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 681169787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8d4f195d4e0ed4c8a7d2fc136c5311, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 679ca6cc02b32fa4e91646629a6e03a9, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 681169788}
-        m_MethodName: OnBallHitGround
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: Response, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &681169793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1914,34 +1826,6 @@ MonoBehaviour:
   rScoreCanvas: {fileID: 379283048}
   rPauseMenu: {fileID: 0}
   rQBUI: {fileID: 1632866064}
---- !u!114 &681169794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 681169787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8d4f195d4e0ed4c8a7d2fc136c5311, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: cc068b33e2480924485591ee46966c8a, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 681169788}
-        m_MethodName: OnBallThrown
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: Response, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &681169795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2497,16 +2381,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RP_Receiver (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 6188296413336188216, guid: 6685f864c6a9e1d4786856b2e538ae99,
-        type: 3}
-      propertyPath: mTag
-      value: WR2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6188296413336188216, guid: 6685f864c6a9e1d4786856b2e538ae99,
-        type: 3}
-      propertyPath: mRoute
-      value: Go
-      objectReference: {fileID: 0}
     - target: {fileID: 1129546326127227084, guid: 6685f864c6a9e1d4786856b2e538ae99,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2887,8 +2761,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e44a21f2623fcad45a37c328644568d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GE_EnteredSpot: {fileID: 11400000, guid: 03ea134c480780b428a98f475726314c, type: 2}
-  GE_LeftSpot: {fileID: 11400000, guid: d38c2ec678eb12c4091636eb8539a250, type: 2}
 --- !u!135 &1278615232
 SphereCollider:
   m_ObjectHideFlags: 0

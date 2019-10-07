@@ -70,6 +70,7 @@ public class RP_Manager : MonoBehaviour
     {
         IO_Settings.FLOAD_SETTINGS();
         IO_RouteList.FLOAD_ROUTES();
+        TDC_EventManager.FRemoveAllHandlers();
     }
 
     void Start()
@@ -86,6 +87,12 @@ public class RP_Manager : MonoBehaviour
         // Instead, do this on exitIntro.
         rPC = FindObjectOfType<PC_Controller>();
         rPocket = FindObjectOfType<RP_ThrowSpot>();
+
+        TDC_EventManager.FAddHandler(TDC_GE.GE_BallHitGround, E_BallHitGround);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_InPocket, E_PocketEntered);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_OutPocket, E_PocketExited);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_QB_ReleaseBall, E_BallThrown);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_BallCaught, E_BallCaught);
 
         mCompletions = new List<string>();
         ENTER_INTRO();
@@ -113,7 +120,7 @@ public class RP_Manager : MonoBehaviour
         rPC.mState = PC_Controller.PC_STATE.SINACTIVE;
 
         // this is kind of to solve a bug with respect to throwing.
-        rPC.GE_QB_StopThrow.Raise(null);
+        TDC_EventManager.FBroadcast(TDC_GE.GE_QB_StopThrow);
 
         // Destroy all receivers and rings who are still in the scene.
         RP_Receiver[] recs = FindObjectsOfType<RP_Receiver>();
@@ -341,7 +348,12 @@ public class RP_Manager : MonoBehaviour
         HandlePlayResult("Hit both the ring and the target. SUCCESS!", true);
         return;
     }
-    public void OnBallHitGround()
+    // Blank method just to test the event handler code.
+    // Update, yeah, you need at least one thing that handles a certain event, or it throws nasty exceptions at you.
+    public void E_BallCaught(){
+
+    }
+    public void E_BallHitGround()
     {
         if(sRingHit != "NA"){
             HandlePlayResult("Missed the player. FAILURE", false);
@@ -350,7 +362,7 @@ public class RP_Manager : MonoBehaviour
         HandlePlayResult("Missed the ring. FAILURE.", false);
     }
     
-    public void OnBallThrown()
+    public void E_BallThrown()
     {
         mNumThrows++;
 
@@ -361,11 +373,11 @@ public class RP_Manager : MonoBehaviour
         }
     }
 
-    public void OnEnteredPocket()
+    public void E_PocketEntered()
     {
         mInPocket = true;
     }
-    public void OnExitPocket()
+    public void E_PocketExited()
     {
         mInPocket = false;
     }

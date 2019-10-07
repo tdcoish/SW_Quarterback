@@ -6,9 +6,6 @@ using UnityEngine;
 public class PP_Pocket : MonoBehaviour
 {
 
-    public GE_Event                 GE_LeftPocket;
-    public GE_Event                 GE_EnteredPocket;
-
     void Start()
     {
         
@@ -23,7 +20,7 @@ public class PP_Pocket : MonoBehaviour
     {
         if(other.GetComponent<PC_Controller>())
         {
-            GE_EnteredPocket.Raise(null);
+            TDC_EventManager.FBroadcast(TDC_GE.GE_InPocket);
             Debug.Log("Entered");
         }
     }
@@ -32,7 +29,7 @@ public class PP_Pocket : MonoBehaviour
     {
         if(other.GetComponent<PC_Controller>())
         {
-            GE_LeftPocket.Raise(null);
+            TDC_EventManager.FBroadcast(TDC_GE.GE_OutPocket);
             Debug.Log("Exited");
         }
     }
