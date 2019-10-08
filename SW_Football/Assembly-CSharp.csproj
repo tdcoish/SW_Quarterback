@@ -285,6 +285,7 @@
      <Compile Include="Assets\Scripts\Utilities\UT_Strings.cs" />
      <Compile Include="Assets\Scripts\Utilities\UT_VecConversion.cs" />
      <None Include="Assets\PLAYART_CREATION\Formations\2-1_Default.txt" />
+     <None Include="Assets\FILE_IO\OffensivePlays\0-1_Mesh.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Cover3Beater.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\DoubleSmash.txt" />
      <None Include="Assets\Plays\Routes\MHitchR.txt" />
@@ -300,6 +301,7 @@
      <None Include="Assets\Plays\Routes\PostL.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Sail_02.txt" />
      <None Include="Assets\FILE_IO\Formations\1-0_Default.txt" />
+     <None Include="Assets\FILE_IO\OffensivePlays\0-1_RandoName.txt" />
      <None Include="Assets\PLAYART_CREATION\OffensivePlays\1-1_Sail01.txt" />
      <None Include="Assets\FILE_IO\Formations\2-0_Default.txt" />
      <None Include="Assets\PLAYART_CREATION\OffensivePlays\1-1_DeepStretch.txt" />
@@ -324,7 +326,9 @@
      <None Include="Assets\Plays\Routes\SHitchR.txt" />
      <None Include="Assets\Plays\Priorities\Receivers.txt" />
      <None Include="Assets\FILE_IO\OffensivePlays\1-0_ShortScissors.txt" />
+     <None Include="Assets\FILE_IO\Formations\0-1_Trips.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Sail_01.txt" />
+     <None Include="Assets\PLAYART_CREATION\OffensivePlays\1-2_Posters.txt" />
      <None Include="Assets\FILE_IO\Formations\2-2_Default.txt" />
      <None Include="Assets\PlaysText\plays.txt" />
      <None Include="Assets\FILE_IO\PocketPasser\EASY.txt" />
@@ -344,6 +348,7 @@
      <None Include="Assets\FILE_IO\PitchAndCatch\EASY2.txt" />
      <None Include="Assets\PLAYART_CREATION\Formations\2-0_Default.txt" />
      <None Include="Assets\FILE_IO\Routes\MidPost.txt" />
+     <None Include="Assets\PLAYART_CREATION\Formations\0-1_Trips.txt" />
      <None Include="Assets\FILE_IO\OffensivePlays\1-1_ModifiedSmash.txt" />
      <None Include="Assets\FILE_IO\OffensivePlays\1-1_Sail01.txt" />
      <None Include="Assets\FILE_IO\Formations\1-2_Default.txt" />
@@ -358,6 +363,8 @@
      <None Include="Assets\RoutesText\routes.txt" />
      <None Include="Assets\FILE_IO\Routes\DeepCorner.txt" />
      <None Include="Assets\PLAYART_CREATION\OffensivePlays\2-0_HBWheel.txt" />
+     <None Include="Assets\FILE_IO\OffensivePlays\1-1_ManBeater.txt" />
+     <None Include="Assets\PLAYART_CREATION\OffensivePlays\0-1_RandoName.txt" />
      <None Include="Assets\Plays\Routes\DCrossL.txt" />
      <None Include="Assets\ZonesText\zones.txt" />
      <None Include="Assets\FILE_IO\Formations\Default.txt" />
@@ -366,12 +373,14 @@
      <None Include="Assets\FILE_IO\Routes\DeepHitch.txt" />
      <None Include="Assets\FILE_IO\Formations\1-1_Default.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\TestCov3Beat.txt" />
+     <None Include="Assets\PLAYART_CREATION\OffensivePlays\1-1_ManBeater.txt" />
      <None Include="Assets\FILE_IO\Routes\ShortCross.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\RandoPlay.txt" />
      <None Include="Assets\Plays\Routes\BSlantR.txt" />
      <None Include="Assets\FILE_IO\Routes\DeepIn.txt" />
      <None Include="Assets\FILE_IO\Routes\ShortHitch.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\temptla.txt" />
+     <None Include="Assets\FILE_IO\OffensivePlays\1-2_Posters.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Testasdlkfj.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\TESTINGWhatevs.txt" />
      <None Include="Assets\FILE_IO\PocketPasser\HARD.txt" />
@@ -379,6 +388,7 @@
      <None Include="Assets\FILE_IO\GamerInfo\info.txt" />
      <None Include="Assets\PLAYART_CREATION\Formations\1-0_Default.txt" />
      <None Include="Assets\PLAYART_CREATION\Formations\Default.txt" />
+     <None Include="Assets\PLAYART_CREATION\OffensivePlays\0-1_Mesh.txt" />
      <None Include="Assets\Plays\Routes\PostR.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\Stick_03.txt" />
      <None Include="Assets\FILE_IO\PocketPasser\NORMAL.txt" />
