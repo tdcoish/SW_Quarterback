@@ -1,5 +1,5 @@
 NAME
-1-2_Default
+Default
 FORMATION
 Default
 NUM PLAYERS
