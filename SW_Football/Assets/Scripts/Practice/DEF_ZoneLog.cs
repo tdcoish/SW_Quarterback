@@ -3,9 +3,13 @@ Logic for zone.
 *************************************************************************************/
 using UnityEngine;
 
+[RequireComponent(typeof(AI_Acc))]
+[RequireComponent(typeof(PRAC_Ath))]
 public class DEF_ZoneLog : MonoBehaviour
 {
     private PRAC_Ath            cAth;
+    private PRAC_AI_Acc         cAcc;
+    private Rigidbody           cRigid;
 
     public Vector3              mZoneSpot;
 
@@ -13,7 +17,9 @@ public class DEF_ZoneLog : MonoBehaviour
     void Start()
     {   
         cAth = GetComponent<PRAC_Ath>();
-
+        cAcc = GetComponent<PRAC_AI_Acc>();
+        cRigid = GetComponent<Rigidbody>();
+        
         if(cAth.mJob.mRole == "Zone")
         {
             mZoneSpot = IO_ZoneList.FLOAD_ZONE_BY_NAME(cAth.mJob.mDetail).mSpot;
@@ -31,6 +37,11 @@ public class DEF_ZoneLog : MonoBehaviour
         dis.y = 0f;
         dis = Vector3.Normalize(dis);
 
-        GetComponent<PRAC_AI_Acc>().FCalcAcc(dis);
+        Vector3 vAcc = cAcc.FCalcAccFunc(dis, cAcc.mSpd);
+        cRigid.velocity += vAcc;
+        if(cRigid.velocity.magnitude > cAcc.mSpd){
+            cRigid.velocity *= cAcc.mSpd/cRigid.velocity.magnitude;
+        }
+        transform.forward = cRigid.velocity.normalized;
     }
 }

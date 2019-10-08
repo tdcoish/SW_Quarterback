@@ -710,6 +710,7 @@ GameObject:
   - component: {fileID: 4939099649980798138}
   - component: {fileID: 272286033233868896}
   - component: {fileID: 4578535608141499010}
+  - component: {fileID: 3458219281520886158}
   m_Layer: 0
   m_Name: PLY_Defender
   m_TagString: Untagged
@@ -787,6 +788,19 @@ MonoBehaviour:
     mRole: 
     mDetail: 
     mStart: {x: 0, y: 0}
+--- !u!114 &3458219281520886158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5202812532693892432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9b8092af52d55148bdff0391c0653bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mZoneSpot: {x: 0, y: 0, z: 0}
 --- !u!1 &5591456238140737750
 GameObject:
   m_ObjectHideFlags: 0

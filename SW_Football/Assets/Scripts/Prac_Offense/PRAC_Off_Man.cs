@@ -37,6 +37,7 @@ public class PRAC_Off_Man : MonoBehaviour
     {
         IO_Settings.FLOAD_SETTINGS();
         IO_DefPlays.FLOAD_PLAYS();
+        IO_ZoneList.FLOAD_ZONES();
     }
     void Start()
     {
@@ -115,9 +116,16 @@ public class PRAC_Off_Man : MonoBehaviour
                 {
                     if(p.mJob.mRole == "Pass Rush"){
                         Destroy(p.gameObject);
-                    }else{
-                        Debug.Log(p.mJob.mRole);
                     }
+                }
+            }
+        }
+        // Get rid of the QB
+        {
+            PRAC_Off_Ply[] aths = FindObjectsOfType<PRAC_Off_Ply>();
+            foreach(PRAC_Off_Ply a in aths){
+                if(a.mRole == "QB"){
+                    Destroy(a.gameObject);
                 }
             }
         }
