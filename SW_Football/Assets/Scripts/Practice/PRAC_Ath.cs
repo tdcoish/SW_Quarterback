@@ -28,6 +28,7 @@ public class PRAC_Ath : MonoBehaviour
 
     private Rigidbody               cRigid;
     private PRAC_AI_Acc             cAcc;
+    protected AD_Athletes           cAud;
 
     public bool                     mHitLastFrame = false;
     public DATA_Hitter              dThingThatHitUs;
@@ -38,6 +39,7 @@ public class PRAC_Ath : MonoBehaviour
     {
         cRigid = GetComponent<Rigidbody>();
         cAcc = GetComponent<PRAC_AI_Acc>();
+        cAud = GetComponentInChildren<AD_Athletes>();
         mState = PRAC_ATH_STATE.SPRE_SNAP;
     }
 

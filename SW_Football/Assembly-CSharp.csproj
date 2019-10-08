@@ -71,7 +71,10 @@
      <Compile Include="Assets\Scripts\AI\AI_TakesShove.cs" />
      <Compile Include="Assets\Scripts\AI\AI_Target.cs" />
      <Compile Include="Assets\Scripts\AI\AI_ZoneDefence.cs" />
+     <Compile Include="Assets\Scripts\Audio\AD_Athletes.cs" />
+     <Compile Include="Assets\Scripts\Audio\AD_Exhibition.cs" />
      <Compile Include="Assets\Scripts\Audio\AD_Manager.cs" />
+     <Compile Include="Assets\Scripts\Audio\AD_Player.cs" />
      <Compile Include="Assets\Scripts\Audio\AUD_Snd.cs" />
      <Compile Include="Assets\Scripts\Audio\AUD_TEST_MIXER.cs" />
      <Compile Include="Assets\Scripts\DefPlayCreator\DPC_JobAssignment.cs" />
@@ -123,6 +126,7 @@
      <Compile Include="Assets\Scripts\FM_Editor\ED_FM_Ply.cs" />
      <Compile Include="Assets\Scripts\FM_Editor\ED_FM_Square.cs" />
      <Compile Include="Assets\Scripts\FM_Editor\UI_SavedTxt.cs" />
+     <Compile Include="Assets\Scripts\FX\FX_Football.cs" />
      <Compile Include="Assets\Scripts\GameManagement\GM_Endzone.cs" />
      <Compile Include="Assets\Scripts\GameManagement\GM_Manager.cs" />
      <Compile Include="Assets\Scripts\GE_System\GE_Event.cs" />
@@ -188,6 +192,7 @@
      <Compile Include="Assets\Scripts\PP\PP_Trophy.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Turret.cs" />
      <Compile Include="Assets\Scripts\PP\PP_UI.cs" />
+     <Compile Include="Assets\Scripts\Prac_Offense\AD_Prac.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\AN_OffPlayer.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\PRAC_Off_Man.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\PRAC_Off_Ply.cs" />

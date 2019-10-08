@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class EX_PL_Res : TDC_Component
 {
+    private AD_Exhibition                       cAud;
     private EX_Over                             cOverMan;
     private EX_Plays                            cPlays;
     private EX_PL_Pick                          cPick;
@@ -27,6 +28,7 @@ public class EX_PL_Res : TDC_Component
 
     void Start()
     {
+        cAud = GetComponentInChildren<AD_Exhibition>();
         cPlays = GetComponent<EX_Plays>();
         cOverMan = GetComponent<EX_Over>();
         cPick = GetComponent<EX_PL_Pick>();
@@ -50,6 +52,7 @@ public class EX_PL_Res : TDC_Component
             cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
             cPlays.mGameData.mDown = GameData.DOWN.FIRST;
             disToFirstDown = 10;
+            cAud.FFirstDown();
 
             FGFX_PlaceFirstDownMarkers(cPlays.mGameData.mBallLoc, cPlays.mGameData.mDownMark);
         }
@@ -65,6 +68,7 @@ public class EX_PL_Res : TDC_Component
                 }
                 cPlays.mGameData.mBallLoc.mYardMark = 25;
             }
+            cAud.FFieldGoal(cLive.mResult.mSuccessfulFieldGoal);
 
             Debug.Log("Changing possession");
             if(cPlays.mGameData.mPossession == GameData.POSSESSION.HOME){
@@ -90,8 +94,10 @@ public class EX_PL_Res : TDC_Component
             cPlays.mGameData.mDown = GameData.DOWN.FIRST;
 
             // handle touchback
+            bool touchBack = false;
             if(cPlays.mGameData.mBallLoc.mYardMark <= 0){
                 cPlays.mGameData.mBallLoc.mYardMark = 20;
+                touchBack = true;
                 Debug.Log("Touchback");
             }
             disToFirstDown = 10;
@@ -103,6 +109,9 @@ public class EX_PL_Res : TDC_Component
             cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
 
             FGFX_PlaceFirstDownMarkers(cPlays.mGameData.mBallLoc, cPlays.mGameData.mDownMark);
+            if(!touchBack){
+                cAud.FTurnover();
+            }
         }
 
         // ------------------------------------------------------ Handle touchdowns, or safeties.
@@ -116,6 +125,7 @@ public class EX_PL_Res : TDC_Component
             }
 
             touchdown = true;
+            cAud.FTouchDown();
             cPlays.mGameData.mDown = GameData.DOWN.FIRST;
             cPlays.mGameData.mBallLoc.mYardMark = 25;
             // handle safeties later.
@@ -159,6 +169,8 @@ public class EX_PL_Res : TDC_Component
                 cPlays.mGameData.mBallLoc.mYardMark = 25;
                 cPlays.mGameData.mDown = GameData.DOWN.FIRST;
                 cPlays.mGameData.mDownMark = cPlays.FCalcNewSpot(cPlays.mGameData.mBallLoc, cPlays.mGameData.mPossession, 10);
+
+                
             }else if(cPlays.mGameData.mQuarter == GameData.QUARTER.OT)
             {
                 if(cPlays.mGameData.mScores.mAway != cPlays.mGameData.mScores.mHome){
@@ -167,6 +179,7 @@ public class EX_PL_Res : TDC_Component
                     cPlays.mGameData.mDown++;
                 }else{
                     Debug.Log("It's Overtime");
+                    cAud.FOverTime();
                     if(cPlays.mGameData.mReceivedFirst == GameData.POSSESSION.HOME){
                         cPlays.mGameData.mBallLoc.mSide = GameData.POSSESSION.AWAY;
                         cPlays.mGameData.mPossession = GameData.POSSESSION.AWAY;

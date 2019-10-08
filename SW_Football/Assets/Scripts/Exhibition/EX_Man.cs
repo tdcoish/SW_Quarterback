@@ -16,6 +16,8 @@ public class EX_Man : MonoBehaviour
     private EX_Plays                        cPlayMan;
     private EX_Over                         cOverMan;
 
+    private AD_Exhibition                   cAud;
+
     public enum STATE{
         S_INTRO,
         S_COIN_TOSS,
@@ -34,6 +36,8 @@ public class EX_Man : MonoBehaviour
         cPlayMan = GetComponent<EX_Plays>();
         cOverMan = GetComponent<EX_Over>();
 
+        cAud = GetComponentInChildren<AD_Exhibition>();
+
         cIntroMan.FEnter();
     }
 
@@ -45,7 +49,12 @@ public class EX_Man : MonoBehaviour
             case STATE.S_COIN_TOSS: cCoinMan.FRunUpdate(); break;
             case STATE.S_PLAYING: cPlayMan.FRunUpdate(); break;
             case STATE.S_END: cOverMan.FRunUpdate(); break;
-        }    
+        }  
+
+        // test
+        if(Input.GetKeyDown(KeyCode.N)){
+            cAud.FTouchDown();
+        }  
     }
 
 }

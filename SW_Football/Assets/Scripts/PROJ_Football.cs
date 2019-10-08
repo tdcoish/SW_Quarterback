@@ -11,7 +11,7 @@ public class PROJ_Football : MonoBehaviour
 
     private bool                    mGrounded = false;
 
-    public GameObject               PF_Particles;
+    public FX_Football              PF_PartAndSFX;
 
     // Start is called before the first frame update
     void Start()
@@ -40,11 +40,13 @@ public class PROJ_Football : MonoBehaviour
         if(field != null){
             TDC_EventManager.FBroadcast(TDC_GE.GE_BallHitGround);
             mGrounded = true;
+            FX_Football s = Instantiate(PF_PartAndSFX, transform.position, transform.rotation);
+            s.mClunk.Play();
         }
     }
 
     void OnDestroy()
     {
-        Instantiate(PF_Particles, transform.position, transform.rotation);
+        Instantiate(PF_PartAndSFX, transform.position, transform.rotation);
     }
 }

@@ -15,6 +15,7 @@ public class PRAC_Off_Man : MonoBehaviour
 {
     private PRAC_Off_SetupPlayers               cPlayerSetup;
     private PRAC_Off_ShowGFX                    cShowPreSnapGFX;
+    private AD_Prac                             cAud;
 
     public PRAC_STATE                           mState;
     public PRESNAP_STATE                        mPreSnapState;
@@ -29,14 +30,18 @@ public class PRAC_Off_Man : MonoBehaviour
     public PRAC_PLAY_RES                        mRes;
 
     private float                               mTime;
-    private bool                                mLineExists = true;
+    private bool                                mLineExists = false;
 
-    void Start()
+    void Awake()
     {
         IO_Settings.FLOAD_SETTINGS();
+    }
+    void Start()
+    {
 
         cPlayerSetup = GetComponent<PRAC_Off_SetupPlayers>();   
         cShowPreSnapGFX = GetComponent<PRAC_Off_ShowGFX>(); 
+        cAud = GetComponentInChildren<AD_Prac>();
 
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallCaught, E_ReceiverCatchesBall);
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallHitGround, E_BallHitsGround);
@@ -109,6 +114,8 @@ public class PRAC_Off_Man : MonoBehaviour
 
     void ENTER_PreSnap(){
         mState = PRAC_STATE.SPRE_SNAP;
+        cAud.mWhistle.Play();
+
         PRAC_Ath[] aths = FindObjectsOfType<PRAC_Ath>();
         foreach(PRAC_Ath a in aths){
             a.mState = PRAC_Ath.PRAC_ATH_STATE.SPRE_SNAP;

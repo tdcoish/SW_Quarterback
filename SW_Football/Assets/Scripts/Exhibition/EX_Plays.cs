@@ -71,6 +71,8 @@ public struct GameData{
 
 public class EX_Plays : TDC_Component
 {
+
+    private AD_Exhibition               cAud;
     private EX_Man                      cMan;
     private EX_PL_Pick                  cPick;
     private EX_PL_Live                  cLive;
@@ -90,6 +92,7 @@ public class EX_Plays : TDC_Component
 
     void Start()
     {
+        cAud = GetComponentInChildren<AD_Exhibition>();
         cMan = GetComponent<EX_Man>();
         cPick = GetComponent<EX_PL_Pick>();
         cLive = GetComponent<EX_PL_Live>();
@@ -134,6 +137,7 @@ public class EX_Plays : TDC_Component
     public override void FExit()
     {
         mUI.gameObject.SetActive(false);
+        cAud.FGameOver();
     }
 
     // Alright, here's where we're gonna need a state inside this state.

@@ -46,6 +46,7 @@ public class PC_Controller : MonoBehaviour
 
     private Rigidbody               cRigid;
     private PC_Camera               cCam;
+    private AD_Player               cAud;
 
     // if false, then we're doing vehicle-style controls
     private bool                    mFPSVision = true;
@@ -64,6 +65,7 @@ public class PC_Controller : MonoBehaviour
     {
         cRigid = GetComponent<Rigidbody>();
         cCam = GetComponentInChildren<PC_Camera>();
+        cAud = GetComponentInChildren<AD_Player>();
 
         mState = PC_STATE.SINACTIVE;
         mThrowState = PC_THROW_STATE.SNOT_THROWING;
@@ -147,6 +149,8 @@ public class PC_Controller : MonoBehaviour
 
     private void ThrowBall()
     {
+        cAud.FBallThrown(mThrowChrg.Val); 
+        
         PROJ_Football clone = Instantiate(PF_Football, mThrowPoint.transform.position, transform.rotation);
 
         // now we add in the innacuracy.
@@ -177,6 +181,7 @@ public class PC_Controller : MonoBehaviour
         if(Input.GetMouseButton(0)){
             // mThrowMax.Val = IO_Settings.mSet.lPlayerData.mThrowSpd;
             TDC_EventManager.FBroadcast(TDC_GE.GE_QB_StartWindup);
+            cAud.mThrowStart.Play();
             mThrowStartAngle = cCam.transform.forward;
 
             mThrowState = PC_THROW_STATE.S_CHARGING;
@@ -202,6 +207,7 @@ public class PC_Controller : MonoBehaviour
         // RMB stops throw
         if(Input.GetMouseButton(1)){
             TDC_EventManager.FBroadcast(TDC_GE.GE_QB_StopThrow);
+            cAud.mThrowCancel.Play();
             return;
         }
 
