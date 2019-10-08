@@ -6,10 +6,8 @@ using System.Collections.Generic;
 
 public class PRAC_Off_SetupPlayers : MonoBehaviour
 {
-
     public PRAC_Off_Ply                                 PF_OffPlayer;
 
-    
     public void FSetUpPlayers(string sOffName, PLY_SnapSpot rSnapSpot)
     {
         DATA_OffPlay p = IO_OffensivePlays.FLoadPlay(sOffName);

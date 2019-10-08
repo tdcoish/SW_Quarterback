@@ -15,6 +15,7 @@ public class PRAC_Off_Man : MonoBehaviour
 {
     private PRAC_Off_SetupPlayers               cPlayerSetup;
     private PRAC_Off_ShowGFX                    cShowPreSnapGFX;
+    private PRAC_Def_SetupPlayers               cDefPlayerSetup;
     private AD_Prac                             cAud;
 
     public PRAC_STATE                           mState;
@@ -31,16 +32,18 @@ public class PRAC_Off_Man : MonoBehaviour
 
     private float                               mTime;
     private bool                                mLineExists = false;
-
+    public bool                                 mDefenseExists = false;
     void Awake()
     {
         IO_Settings.FLOAD_SETTINGS();
+        IO_DefPlays.FLOAD_PLAYS();
     }
     void Start()
     {
 
         cPlayerSetup = GetComponent<PRAC_Off_SetupPlayers>();   
         cShowPreSnapGFX = GetComponent<PRAC_Off_ShowGFX>(); 
+        cDefPlayerSetup = GetComponent<PRAC_Def_SetupPlayers>();
         cAud = GetComponentInChildren<AD_Prac>();
 
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallCaught, E_ReceiverCatchesBall);
@@ -101,6 +104,20 @@ public class PRAC_Off_Man : MonoBehaviour
                     Destroy(a.gameObject);
                 }else{
                     Debug.Log(a.mJob.mRole);
+                }
+            }
+        }
+        // now defense as well.
+        if(mDefenseExists){
+            if(!mLineExists){
+                PRAC_Def_Ply[] aths = FindObjectsOfType<PRAC_Def_Ply>();
+                foreach(PRAC_Def_Ply p in aths)
+                {
+                    if(p.mJob.mRole == "Pass Rush"){
+                        Destroy(p.gameObject);
+                    }else{
+                        Debug.Log(p.mJob.mRole);
+                    }
                 }
             }
         }
@@ -243,6 +260,12 @@ public class PRAC_Off_Man : MonoBehaviour
         }
         mPlay = name;
         cPlayerSetup.FSetUpPlayers(mPlay, rSnapSpot);
+
+        if(mDefenseExists){
+            // set up defense here
+            // TODO:
+            cDefPlayerSetup.FSetUpPlayers("Cover 2", rSnapSpot);
+        }
 
         EXIT_PickPlay();
         ENTER_PlayPicked();
