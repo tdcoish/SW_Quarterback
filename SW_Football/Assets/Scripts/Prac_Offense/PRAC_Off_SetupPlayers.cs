@@ -25,7 +25,7 @@ public class PRAC_Off_SetupPlayers : MonoBehaviour
         {
             Vector3 vSpot = new Vector3();
             vSpot.x = f.mSpots[i].x;
-            vSpot.z = f.mSpots[i].y;
+            vSpot.z = f.mSpots[i].y * -1f;
             vSpot.y = 1f;
             vSpot += rSnapSpot.transform.position;
             var clone = Instantiate(PF_OffPlayer, vSpot, transform.rotation);
@@ -50,6 +50,12 @@ public class PRAC_Off_SetupPlayers : MonoBehaviour
             for(int j=0; j<plys.Count; j++){
                 if(plys[j].mTag == p.mRoutes[i].mOwner){
                     plys[j].mSpots = p.mRoutes[i].mSpots;
+                    for(int k=0; k<plys[j].mSpots.Count; k++)
+                    {
+                        Vector2 v = plys[j].mSpots[k];
+                        v.y *= -1f;
+                        plys[j].mSpots[k] = v;
+                    }
                 }
             }
         }

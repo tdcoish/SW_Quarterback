@@ -19,6 +19,7 @@ public class PRAC_Off_ShowGFX : MonoBehaviour
             for(int j=0; j<f.mSpots.Length; j++){
                 if(f.mTags[j] == offPlay.mTags[i]){
                     vStart = f.mSpots[j];
+                    vStart.y *= -1f;
                 }
             }
             if(offPlay.mRoles[i] == "BLOCK"){
@@ -46,9 +47,13 @@ public class PRAC_Off_ShowGFX : MonoBehaviour
         for(int i=1; i<nodes.Count; i++)
         {
             // render a bunch of spots, along the path from a -> b. We're actually going backwards, but it doesn't matter.
-            Vector3 vStartPos = vPos + (UT_VecConversion.ConvertVec2(nodes[i]) * 2f);
-            Vector3 vFinalPos = vPos + (UT_VecConversion.ConvertVec2(nodes[i-1]) * 2f);
-            
+            Vector3 vINode = UT_VecConversion.ConvertVec2(nodes[i]) * 2f;
+            vINode.z *= -1f;
+            Vector3 vIMinusOneNode = UT_VecConversion.ConvertVec2(nodes[i-1]) * 2f;
+            vIMinusOneNode.z *= -1f;
+            Vector3 vStartPos = vPos + vINode;
+            Vector3 vFinalPos = vPos + vIMinusOneNode;
+
             Vector3 vIterPos = vStartPos;
             Vector3 vDir = Vector3.Normalize(vFinalPos - vStartPos);
             while(Vector3.Dot(vDir, vFinalPos - vIterPos) > 0f)
