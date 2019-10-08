@@ -1,4 +1,4 @@
-﻿/*************************************************************************************
+/*************************************************************************************
 Load in the default formation, theoretically I need to shove some roles in there, but 
 fuck it, I'll just add those in later. The really obnoxious part is that I'm going to 
 have to outright add route data into the role for each player.

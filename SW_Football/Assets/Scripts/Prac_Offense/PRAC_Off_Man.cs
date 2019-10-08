@@ -114,7 +114,8 @@ public class PRAC_Off_Man : MonoBehaviour
 
     void ENTER_PreSnap(){
         mState = PRAC_STATE.SPRE_SNAP;
-        cAud.mWhistle.Play();
+
+        cAud.FPlayWhistle();
 
         PRAC_Ath[] aths = FindObjectsOfType<PRAC_Ath>();
         foreach(PRAC_Ath a in aths){
@@ -189,6 +190,7 @@ public class PRAC_Off_Man : MonoBehaviour
         Cursor.visible = true;
 
         UI_PostPlay.gameObject.SetActive(true);
+        cAud.FPlayOver(mRes.mBallCaught);
         if(mRes.mBallCaught){
             UI_PostPlay.mTxtResult.text = "Caught the ball";
         }else{

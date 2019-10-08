@@ -613,7 +613,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b3ad2dcbd137074583c7eb852193567, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mWhistle: {fileID: 306158091}
+  mAudioSrc: {fileID: 306158091}
+  mClips:
+  - mName: Whistle
+    mClip: {fileID: 8300000, guid: 36251184d6ad4124cbba9eeb7bb49218, type: 3}
+  - mName: PLY_Good0
+    mClip: {fileID: 8300000, guid: 6c79ea6be3da96a41aefa07135483f1f, type: 3}
+  - mName: PLY_Fail0
+    mClip: {fileID: 8300000, guid: 04a3fca26a5c8c54d862aef960d9a0e5, type: 3}
 --- !u!1 &353329718
 GameObject:
   m_ObjectHideFlags: 0
@@ -2633,22 +2640,22 @@ PrefabInstance:
     - target: {fileID: 8715241792742129380, guid: 3fcb15e83f59e7544a78d44040e4602c,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8715241792742129380, guid: 3fcb15e83f59e7544a78d44040e4602c,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.99988496
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8715241792742129380, guid: 3fcb15e83f59e7544a78d44040e4602c,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8715241792742129380, guid: 3fcb15e83f59e7544a78d44040e4602c,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.015170317
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8715241792742129380, guid: 3fcb15e83f59e7544a78d44040e4602c,
         type: 3}
@@ -2663,7 +2670,7 @@ PrefabInstance:
     - target: {fileID: 8715241792742129380, guid: 3fcb15e83f59e7544a78d44040e4602c,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 181.73799
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8715241792742129380, guid: 3fcb15e83f59e7544a78d44040e4602c,
         type: 3}

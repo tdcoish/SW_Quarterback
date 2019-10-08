@@ -50,11 +50,12 @@ public class EX_Man : MonoBehaviour
             case STATE.S_PLAYING: cPlayMan.FRunUpdate(); break;
             case STATE.S_END: cOverMan.FRunUpdate(); break;
         }  
+    }
 
-        // test
-        if(Input.GetKeyDown(KeyCode.N)){
-            cAud.FTouchDown();
-        }  
+    public void BT_Quit()
+    {
+        TDC_EventManager.FRemoveAllHandlers();
+        UnityEngine.SceneManagement.SceneManager.LoadScene("SN_MN_Main");
     }
 
 }
