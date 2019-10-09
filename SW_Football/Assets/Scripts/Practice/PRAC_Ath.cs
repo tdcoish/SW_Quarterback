@@ -135,4 +135,14 @@ public class PRAC_Ath : MonoBehaviour
         cRigid.velocity += vTheirForceIntoUs;
     }
 
+    public Rigidbody FApplyAccelerationToRigidbody(Rigidbody rigid, Vector3 vAcc, float fMaxSpd)
+    {
+        rigid.velocity += vAcc;
+        if(rigid.velocity.magnitude > fMaxSpd){
+            rigid.velocity *= fMaxSpd/rigid.velocity.magnitude;
+        }
+
+        return rigid;
+    }
+
 }
