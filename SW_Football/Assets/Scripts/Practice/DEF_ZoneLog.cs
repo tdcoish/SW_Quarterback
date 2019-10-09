@@ -8,9 +8,10 @@ using UnityEngine;
 [RequireComponent(typeof(PRAC_Ath))]
 public class DEF_ZoneLog : MonoBehaviour
 {
+    private Rigidbody           cRigid;
     private PRAC_Ath            cAth;
     private PRAC_AI_Acc         cAcc;
-    private Rigidbody           cRigid;
+    private RP_CatchLog         cCatchLog;
 
     public enum STATE{
         S_GETTING_TO_SPOT,
@@ -25,9 +26,10 @@ public class DEF_ZoneLog : MonoBehaviour
     // Maybe have this as a function that we call.
     void Start()
     {   
+        cRigid = GetComponent<Rigidbody>();
         cAth = GetComponent<PRAC_Ath>();
         cAcc = GetComponent<PRAC_AI_Acc>();
-        cRigid = GetComponent<Rigidbody>();
+        cCatchLog = GetComponent<RP_CatchLog>();
 
         if(cAth.mJob.mRole == "Zone")
         {
@@ -67,8 +69,8 @@ public class DEF_ZoneLog : MonoBehaviour
             cRigid.velocity *= cAcc.mSpd/cRigid.velocity.magnitude;
         }
         transform.forward = cRigid.velocity.normalized;
-
-        if(CheckIfBallThrown()){
+        
+        if(cAth.FCheckIfBallThrown()){
             ENTER_TryCatchBall();
         }
 
@@ -132,22 +134,34 @@ public class DEF_ZoneLog : MonoBehaviour
 
         float fDepth = vDisPlayerToZone.magnitude;
 
+        if(cAth.FCheckIfBallThrown()){
+            ENTER_TryCatchBall();
+        }
+
     }
     private void RUN_ManUp(){}
-    private void RUN_TryCatchBall(){}
+    private void RUN_TryCatchBall(){
+        Vector3 vSpotToGetTo = cCatchLog.FCalcInterceptSpot();
+        Vector3 dis = vSpotToGetTo - transform.position;
+        dis.y = 0f;
+        float airTime = cCatchLog.FCalcInterceptTime();
+        // since I know how far I need to go, I also know the exact velocity I should be using.
+        Vector3 vVel = dis / airTime;
+
+        // Now subtract our current velocity, and we have the direction to accelerate in.
+        Vector3 vAccDir = vVel - cRigid.velocity;
+        vAccDir = Vector3.Normalize(vAccDir);
+
+        Vector3 vAcc = cAcc.FCalcAccFunc(vAccDir, cAcc.mSpd);
+        cRigid.velocity += vAcc;
+        if(cRigid.velocity.magnitude > cAcc.mSpd){
+            cRigid.velocity *= cAcc.mSpd/cRigid.velocity.magnitude;
+        }
+        transform.forward = cRigid.velocity.normalized;
+    }
 
     private void ENTER_TryCatchBall(){
         mState = STATE.S_CATCHING_BALL_TRY;
-    }
-
-    private bool CheckIfBallThrown()
-    {
-        PROJ_Football f = FindObjectOfType<PROJ_Football>();
-        if(f!=null){
-            return true;
-        }
-
-        return false;
     }
 
 }

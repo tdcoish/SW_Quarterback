@@ -19,6 +19,7 @@ public class OFF_RouteLog : MonoBehaviour
     public STATE                    mState;
 
     private Rigidbody                           cRigid;
+    private PRAC_Ath                            cAth;
     private RP_CatchLog                         cCatchLog;
     private TRG_Catch                           cCatchRadius;
     private PRAC_AI_Acc                         cAcc;
@@ -29,6 +30,7 @@ public class OFF_RouteLog : MonoBehaviour
         cCatchLog = GetComponent<RP_CatchLog>();
         cCatchRadius = GetComponentInChildren<TRG_Catch>();
         cAcc = GetComponent<PRAC_AI_Acc>();
+        cAth = GetComponent<PRAC_Ath>();
 
         mState = STATE.S_BLIND;
     }
@@ -103,7 +105,7 @@ public class OFF_RouteLog : MonoBehaviour
 
         // Somewhere here, if we find the ball is being thrown to us, we need to enter a state where we just
         // try to get that ball.
-        if(CheckIfBallThrown()){
+        if(cAth.FCheckIfBallThrown()){
             ENTER_TryCatchBall();
         }
     }
@@ -156,7 +158,7 @@ public class OFF_RouteLog : MonoBehaviour
     }
     private void RUN_GetOpen()
     {
-        if(CheckIfBallThrown()){
+        if(cAth.FCheckIfBallThrown()){
             ENTER_TryCatchBall();
         }
     }
@@ -164,14 +166,5 @@ public class OFF_RouteLog : MonoBehaviour
     // Called in both get open and look for ball while running route
     // Try for no side effects.
     // But it's also if they specifically can see the ball, which they might not due to the angle or whatever.
-    private bool CheckIfBallThrown()
-    {
-        PROJ_Football f = FindObjectOfType<PROJ_Football>();
-        if(f!=null){
-            return true;
-        }
-
-        return false;
-    }
 
 }

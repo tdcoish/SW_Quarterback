@@ -5,20 +5,25 @@ using UnityEngine;
 
 public class TRG_Catch : MonoBehaviour
 {
-    private PRAC_Off_Ply                        cAth;
+    private PRAC_Ath                            cAth;
     void Start()
     {
-        cAth = GetComponentInParent<PRAC_Off_Ply>();
+        cAth = GetComponentInParent<PRAC_Ath>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.GetComponent<PROJ_Football>() != null)
         {
-            Debug.Log("I just got hit by the football");
-            cAth.FCaughtBall();
+            if(cAth != null){
+                cAth.FCaughtBall();
+            }
 
-            TDC_EventManager.FBroadcast(TDC_GE.GE_BallCaught);
+            if(GetComponentInParent<PRAC_Off_Ply>()){
+                TDC_EventManager.FBroadcast(TDC_GE.GE_BallCaught_Rec);
+            }else{
+                TDC_EventManager.FBroadcast(TDC_GE.GE_BallCaught_Int);
+            }
         }
     }
 }

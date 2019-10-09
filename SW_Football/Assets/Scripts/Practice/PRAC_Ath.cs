@@ -84,6 +84,8 @@ public class PRAC_Ath : MonoBehaviour
         }
     }
 
+    public virtual void FCaughtBall(){}
+
     /******************************************************************
     You hit me with your weight*differenceInVelocity. If I am going 5m/s north,
     and you are going 4m/s north, you hit me at 1m/s * your weight.
@@ -143,6 +145,16 @@ public class PRAC_Ath : MonoBehaviour
         }
 
         return rigid;
+    }
+
+    public bool FCheckIfBallThrown()
+    {
+        PROJ_Football f = FindObjectOfType<PROJ_Football>();
+        if(f!=null){
+            return true;
+        }
+
+        return false;
     }
 
 }

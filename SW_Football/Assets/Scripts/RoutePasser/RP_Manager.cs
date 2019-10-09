@@ -92,7 +92,7 @@ public class RP_Manager : MonoBehaviour
         TDC_EventManager.FAddHandler(TDC_GE.GE_InPocket, E_PocketEntered);
         TDC_EventManager.FAddHandler(TDC_GE.GE_OutPocket, E_PocketExited);
         TDC_EventManager.FAddHandler(TDC_GE.GE_QB_ReleaseBall, E_BallThrown);
-        TDC_EventManager.FAddHandler(TDC_GE.GE_BallCaught, E_BallCaught);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_BallCaught_Rec, E_BallCaught_Rec);
 
         mCompletions = new List<string>();
         ENTER_INTRO();
@@ -350,7 +350,7 @@ public class RP_Manager : MonoBehaviour
     }
     // Blank method just to test the event handler code.
     // Update, yeah, you need at least one thing that handles a certain event, or it throws nasty exceptions at you.
-    public void E_BallCaught(){
+    public void E_BallCaught_Rec(){
 
     }
     public void E_BallHitGround()

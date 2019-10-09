@@ -49,7 +49,7 @@ public class PRAC_Off_Ply : PRAC_Ath
         }
     }
 
-    public void FCaughtBall()
+    public override void FCaughtBall()
     {
         cAud.mCatch.Play();
     }

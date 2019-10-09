@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public struct PRAC_PLAY_RES
 {
     public bool                         mBallCaught;
+    public bool                         mInt;
 }
 
 public class PRAC_Off_Man : MonoBehaviour
@@ -32,7 +33,7 @@ public class PRAC_Off_Man : MonoBehaviour
 
     private float                               mTime;
     private bool                                mLineExists = false;
-    private bool                                mDefenseExists = false;
+    private bool                                mDefenseExists = true;
     void Awake()
     {
         IO_Settings.FLOAD_SETTINGS();
@@ -47,8 +48,9 @@ public class PRAC_Off_Man : MonoBehaviour
         cDefPlayerSetup = GetComponent<PRAC_Def_SetupPlayers>();
         cAud = GetComponentInChildren<AD_Prac>();
 
-        TDC_EventManager.FAddHandler(TDC_GE.GE_BallCaught, E_ReceiverCatchesBall);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_BallCaught_Rec, E_ReceiverCatchesBall);
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallHitGround, E_BallHitsGround);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_BallCaught_Int, E_DefenderCatchesBall);
 
         UI_PostPlay.gameObject.SetActive(false);
 
@@ -86,6 +88,7 @@ public class PRAC_Off_Man : MonoBehaviour
         UI_PlayPicker.gameObject.SetActive(true);
         UI_PlayPicker.FSetUpPlaybookImagery();
         UI_PlayPicker.FSetLineEnabledText(mLineExists);
+        UI_PlayPicker.FSetDefEnabledText(mDefenseExists);
     }
     void RUN_PickPlay()
     {
@@ -211,12 +214,8 @@ public class PRAC_Off_Man : MonoBehaviour
         Cursor.visible = true;
 
         UI_PostPlay.gameObject.SetActive(true);
-        cAud.FPlayOver(mRes.mBallCaught);
-        if(mRes.mBallCaught){
-            UI_PostPlay.mTxtResult.text = "Caught the ball";
-        }else{
-            UI_PostPlay.mTxtResult.text = "No catch";
-        }
+        cAud.FPlayOver(mRes.mBallCaught, mRes.mInt);
+        UI_PostPlay.FSetPostPlayText(mRes);
         PRAC_Ath[] aths = FindObjectsOfType<PRAC_Ath>();
         foreach(PRAC_Ath a in aths){
             a.mState = PRAC_Ath.PRAC_ATH_STATE.SPOST_PLAY;
@@ -248,6 +247,7 @@ public class PRAC_Off_Man : MonoBehaviour
         }
 
         mRes.mBallCaught = false;
+        mRes.mInt = false;
     }
 
     public void BT_NextPlay()
@@ -326,6 +326,12 @@ public class PRAC_Off_Man : MonoBehaviour
     {
         Debug.Log("Receiver Caught ball!");
         mRes.mBallCaught = true;
+        ENTER_PostPlay();
+    }
+    public void E_DefenderCatchesBall()
+    {
+        Debug.Log("Defender caught ball");
+        mRes.mInt = true;
         ENTER_PostPlay();
     }
 }

@@ -25,12 +25,16 @@ public class AD_Prac : MonoBehaviour
         FPlayClip("Whistle");
     }
 
-    public void FPlayOver(bool success)
+    public void FPlayOver(bool bRecCaught, bool bInt)
     {
-        if(success){
-            FPlayClip("PLY_Good0");
+        if(bInt){
+            FPlayClip("PD0");
         }else{
-            FPlayClip("PLY_Fail0");
+            if(bRecCaught){
+                FPlayClip("PLY_Good0");
+            }else{
+                FPlayClip("PLY_Fail0");
+            }
         }
     }
 }
