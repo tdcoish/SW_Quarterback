@@ -32,7 +32,7 @@ public class PRAC_Off_Man : MonoBehaviour
 
     private float                               mTime;
     private bool                                mLineExists = false;
-    public bool                                 mDefenseExists = false;
+    private bool                                mDefenseExists = false;
     void Awake()
     {
         IO_Settings.FLOAD_SETTINGS();
@@ -303,6 +303,11 @@ public class PRAC_Off_Man : MonoBehaviour
     {
         mLineExists = !mLineExists;
         UI_PlayPicker.FSetLineEnabledText(mLineExists);
+    }
+    public void BT_ToggleDefEnabled()
+    {
+        mDefenseExists = !mDefenseExists;
+        UI_PlayPicker.FSetDefEnabledText(mDefenseExists);
     }
 
     public void E_BallHitsGround()

@@ -72,7 +72,7 @@ public class DEF_ZoneLog : MonoBehaviour
             ENTER_TryCatchBall();
         }
 
-        if(dis.magnitude < 1f){
+        if(dis.magnitude < 5f){
             ENTER_ReadQBEyes();
         }
     }
@@ -102,7 +102,7 @@ public class DEF_ZoneLog : MonoBehaviour
         }else{
             Vector3 vCheatSpot = rPC.transform.position + vDisPlayerToZone.magnitude * vPlayerDir;  
             // can't cheat too much here.
-            float fCheatDis = (vDisPlayerToZone.magnitude / 10f) * 5f;      // every 10 yards, you can cheat 5 more yards.
+            float fCheatDis = (vDisPlayerToZone.magnitude / 10f) * 2f;      // every 10 yards, you can cheat x more yards.
             if(Vector3.Distance(vCheatSpot, mZoneSpot) > fCheatDis)
             {
                 Vector3 vDisToCheatSpot = vCheatSpot - mZoneSpot;

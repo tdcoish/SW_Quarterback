@@ -311,6 +311,7 @@
      <None Include="Assets\FILE_IO\PitchAndCatch\EASY3.txt" />
      <None Include="Assets\PLAYART_CREATION\OffensivePlays\1-1_Post.txt" />
      <None Include="Assets\FILE_IO\Routes\MidWheel.txt" />
+     <None Include="Assets\FILE_IO\OffensivePlays\1-0_Mills2.txt" />
      <None Include="Assets\Plays\Routes\SHitchL.txt" />
      <None Include="Assets\Plays\Routes\SlantL.txt" />
      <None Include="Assets\Plays\EditorCreatedPlays\TestingAbain.txt" />
@@ -368,6 +369,7 @@
      <None Include="Assets\PLAYART_CREATION\OffensivePlays\2-0_HBWheel.txt" />
      <None Include="Assets\FILE_IO\OffensivePlays\1-1_ManBeater.txt" />
      <None Include="Assets\PLAYART_CREATION\OffensivePlays\0-1_RandoName.txt" />
+     <None Include="Assets\PLAYART_CREATION\OffensivePlays\1-0_Mills2.txt" />
      <None Include="Assets\Plays\Routes\DCrossL.txt" />
      <None Include="Assets\ZonesText\zones.txt" />
      <None Include="Assets\FILE_IO\Formations\Default.txt" />
