@@ -97,14 +97,10 @@ public class PRAC_Off_Man : MonoBehaviour
         Cursor.visible = false;
 
         if(!mLineExists){
-            Debug.Log("Here");
             PRAC_Off_Ply[] aths = FindObjectsOfType<PRAC_Off_Ply>();
             foreach(PRAC_Off_Ply a in aths){
                 if(a.mRole == "BLOCK"){
-                    Debug.Log("Here");
                     Destroy(a.gameObject);
-                }else{
-                    Debug.Log(a.mJob.mRole);
                 }
             }
         }

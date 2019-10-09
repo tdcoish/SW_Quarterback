@@ -102,7 +102,8 @@ public class DEF_ZoneLog : MonoBehaviour
         }else{
             Vector3 vCheatSpot = rPC.transform.position + vDisPlayerToZone.magnitude * vPlayerDir;  
             // can't cheat too much here.
-            if(Vector3.Distance(vCheatSpot, mZoneSpot) > 2f)
+            float fCheatDis = (vDisPlayerToZone.magnitude / 10f) * 5f;      // every 10 yards, you can cheat 5 more yards.
+            if(Vector3.Distance(vCheatSpot, mZoneSpot) > fCheatDis)
             {
                 Vector3 vDisToCheatSpot = vCheatSpot - mZoneSpot;
                 vCheatSpot = mZoneSpot + vDisToCheatSpot.normalized * 2f;
@@ -111,14 +112,21 @@ public class DEF_ZoneLog : MonoBehaviour
             Vector3 disNorm = Vector3.Normalize(dis);
 
             // ------- need to, just like catching, prematurely slow down if going too fast.
-            float fTime = Vector3.Dot(cRigid.velocity, dis) * dis.magnitude;
-            Vector3 vIdealVel = dis / fTime;
-            Vector3 vAccDir = vIdealVel - cRigid.velocity;
-            vAccDir = Vector3.Normalize(vAccDir);
-
+            // ------- Turns out, we need to know how quickly we can decelerate, or we can't calc this.
+            // ------- Update. Just pretend that they need to be there in 0.2 seconds.
+            Vector3 vAcc = new Vector3();
+            float fDotVel = Vector3.Dot(cRigid.velocity, dis);
+            if(fDotVel > 0f){       // otherwise time is infinite.
+                float fTime = 0.2f;
+                Vector3 vIdealVel = dis / fTime;
+                Vector3 vAccDir = vIdealVel - cRigid.velocity;
+                vAccDir = Vector3.Normalize(vAccDir);
+                vAcc = cAcc.FCalcAccFunc(vAccDir, cAcc.mSpd/2f);
+            }else{
+                vAcc = cAcc.FCalcAccFunc(disNorm, cAcc.mSpd/2f);
+            }
             // pretend that strafing speed is a lot lower.
-            Vector3 vAcc = cAcc.FCalcAccFunc(disNorm, cAcc.mSpd/4f);
-            cRigid = cAth.FApplyAccelerationToRigidbody(cRigid, vAcc, cAcc.mSpd/4f);
+            cRigid = cAth.FApplyAccelerationToRigidbody(cRigid, vAcc, cAcc.mSpd/2f);
             transform.forward = vDisPlayerToZone.normalized;
         }
 
