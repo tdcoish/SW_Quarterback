@@ -1033,6 +1033,7 @@ GameObject:
   - component: {fileID: 4848968341188075472}
   - component: {fileID: 8139045847164804821}
   - component: {fileID: 1440958400961884236}
+  - component: {fileID: 82072160}
   m_Layer: 0
   m_Name: PLY_Offender
   m_TagString: Untagged
@@ -1165,6 +1166,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PF_SpotGFX: {fileID: 4239476542710410117, guid: 62c5b4165d8a82c4caeeb6184887b80a,
     type: 3}
+--- !u!114 &82072160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7000247713471046457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 652df2f1cfb4bad42ba3bce5ccf4909c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mState: 0
 --- !u!1 &7244371541809469119
 GameObject:
   m_ObjectHideFlags: 0

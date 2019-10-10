@@ -98,7 +98,6 @@ public class OFF_RouteLog : MonoBehaviour
         }
         transform.forward = cRigid.velocity.normalized;
 
-
         if(Vector3.Distance(mRouteSpots[0], transform.position) < 2f){
             mRouteSpots.RemoveAt(0);
         }

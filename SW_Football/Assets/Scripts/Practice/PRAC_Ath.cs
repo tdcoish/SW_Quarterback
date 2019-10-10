@@ -2,7 +2,10 @@
 Just stores the damn info for the play.
 
 Actual way collisions need to be done, is the next frame. Oh but wait, we need to store their
-velocity and weight (and probably like 10 other things before we're done)
+velocity and weight (and probably like 10 other things before we're done).
+
+Okay, they have a new role called "run with ball" wherein they just straight up run to
+the endzone.
 *************************************************************************************/
 using UnityEngine;
 using System.Collections.Generic;
@@ -22,6 +25,7 @@ public class PRAC_Ath : MonoBehaviour
     {
         SPRE_SNAP,
         SDOING_JOB,
+        SRUN_WITH_BALL,
         SPOST_PLAY
     }
     public PRAC_ATH_STATE           mState;
@@ -49,6 +53,7 @@ public class PRAC_Ath : MonoBehaviour
         {
             case PRAC_ATH_STATE.SPRE_SNAP: RUN_PreSnap(); break;
             case PRAC_ATH_STATE.SDOING_JOB: RUN_Job(); break;
+            case PRAC_ATH_STATE.SRUN_WITH_BALL: RUN_RunWithBall(); break;
             case PRAC_ATH_STATE.SPOST_PLAY: RUN_PostPlay(); break;
         }
 
@@ -83,6 +88,8 @@ public class PRAC_Ath : MonoBehaviour
             cRigid.velocity = Vector3.zero;
         }
     }
+
+    protected virtual void RUN_RunWithBall(){}
 
     public virtual void FCaughtBall(){}
 

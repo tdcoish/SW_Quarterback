@@ -13,6 +13,7 @@ public class PRAC_Off_Ply : PRAC_Ath
 
     private OFF_RouteLog                        cRouteLog;
     private OFF_BlockLog                        cBlockLog;
+    private OFF_RunLog                          cRunLog;
 
     // Planning on using this to calculate where we need to go to catch the ball.
     private TRG_Catch                           cCatchRadius;
@@ -22,6 +23,7 @@ public class PRAC_Off_Ply : PRAC_Ath
         cRouteLog = GetComponent<OFF_RouteLog>();
         cBlockLog = GetComponent<OFF_BlockLog>();
         cCatchRadius = GetComponentInChildren<TRG_Catch>();
+        cRunLog = GetComponent<OFF_RunLog>();
 
         cCatchRadius.gameObject.SetActive(false);
 
@@ -49,8 +51,15 @@ public class PRAC_Off_Ply : PRAC_Ath
         }
     }
 
+    // Get to the endzone.
+    protected override void RUN_RunWithBall()
+    {
+        cRunLog.FRunWithBall();
+    }
+
     public override void FCaughtBall()
     {
+        mState = PRAC_ATH_STATE.SRUN_WITH_BALL;
         cAud.mCatch.Play();
     }
 }

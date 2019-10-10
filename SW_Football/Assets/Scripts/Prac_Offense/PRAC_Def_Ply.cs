@@ -16,4 +16,10 @@ public class PRAC_Def_Ply : PRAC_Ath
     {
         cZoneLog.FRunZone();
     }
+
+    // Run interception logic.
+    public override void FCaughtBall()
+    {
+        
+    }
 }
