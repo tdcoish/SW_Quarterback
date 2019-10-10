@@ -21,7 +21,7 @@ public class PROFST_Post : PROFST_St
         Cursor.visible = true;
 
         mUI.gameObject.SetActive(true);
-        cMan.GetComponentInChildren<AD_Prac>().FPlayOver(cMan.mRes.mBallCaught, cMan.mRes.mInt);
+        cMan.cAud.FPlayOver(cMan.mRes.mBallCaught, cMan.mRes.mInt);
         mUI.FSetPostPlayText(cMan.mRes);
         PRAC_Ath[] aths = FindObjectsOfType<PRAC_Ath>();
         foreach(PRAC_Ath a in aths){

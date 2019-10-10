@@ -29,8 +29,13 @@ public class PROFST_Live : PROFST_St
         {
             // Now we just repeat the whole shebang.
             cPost.FEnter();
+            FExit();
             return;
         }
+    }
+    public override void FExit()
+    {
+        cMan.cAud.FPlayWhistle();
     }
 
     public void E_BallHitsGround()
@@ -42,6 +47,7 @@ public class PROFST_Live : PROFST_St
 
         if(cMan.mState == PRAC_STATE.SPLAY_RUNNING){
             cPost.FEnter();
+            FExit();
         }
     }
 
@@ -49,12 +55,24 @@ public class PROFST_Live : PROFST_St
     {
         Debug.Log("Receiver Caught ball!");
         cMan.mRes.mBallCaught = true;
-        cPost.FEnter();
+        Invoke("EnterPost", 5f);
+        PROJ_Football[] footballs = FindObjectsOfType<PROJ_Football>();
+        foreach(PROJ_Football f in footballs){
+            Destroy(f.gameObject);
+        }
     }
     public void E_DefenderCatchesBall()
     {
         Debug.Log("Defender caught ball");
         cMan.mRes.mInt = true;
+        cMan.cAud.FPlayWhistle();
+        cPost.FEnter();
+    }
+
+    private void EnterPost()
+    {
+        Debug.Log("entered");
+        cMan.cAud.FPlayWhistle();
         cPost.FEnter();
     }
 }

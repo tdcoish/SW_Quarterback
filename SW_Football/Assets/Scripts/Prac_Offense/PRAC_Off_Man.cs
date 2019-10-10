@@ -19,7 +19,8 @@ public class PRAC_Off_Man : MonoBehaviour
     private PROFST_Pre                          cPre;
     private PROFST_Post                         cPost;
 
-    private AD_Prac                             cAud;
+    [HideInInspector]
+    public AD_Prac                              cAud;
 
     public PRAC_STATE                           mState;
     public string                               mPlay = "Sail";

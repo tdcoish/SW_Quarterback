@@ -20,7 +20,7 @@ public class PROFST_Pre : PROFST_St
     public override void FEnter(){
         cMan.mState = PRAC_STATE.SPRE_SNAP;
 
-        cMan.GetComponentInChildren<AD_Prac>().FPlayWhistle();
+        cMan.cAud.FPlayWhistle();
 
         PRAC_Ath[] aths = FindObjectsOfType<PRAC_Ath>();
         foreach(PRAC_Ath a in aths){

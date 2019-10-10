@@ -27,6 +27,7 @@ public class AD_Prac : MonoBehaviour
 
     public void FPlayOver(bool bRecCaught, bool bInt)
     {
+        Debug.Log("Playing over");
         if(bInt){
             FPlayClip("PD0");
         }else{
