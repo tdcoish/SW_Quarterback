@@ -31,8 +31,8 @@ public class PRAC_PB_UI : MonoBehaviour
                     string sName = hit.collider.GetComponent<PRAC_PlayArt>().mName;
                     Debug.Log("Picked: " + sName);
 
-                    PRAC_Off_Man pMan = FindObjectOfType<PRAC_Off_Man>();
-                    pMan.FOffPlayPicked(sName);
+                    PROFST_Pick pPicker = FindObjectOfType<PROFST_Pick>();
+                    pPicker.FOffPlayPicked(sName);
                 }
             }else{
                 Debug.Log("Hit nothing");

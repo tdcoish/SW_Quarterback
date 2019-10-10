@@ -13,7 +13,6 @@ using UnityEngine.SceneManagement;
 public enum PRAC_STATE
 {
     SPICK_PLAY,
-    SPLAY_PICKED,           // kind of a hack so we get a frame after spawning players to not have to immediately get the references.
     SPRE_SNAP,
     SPLAY_RUNNING,
     SPOST_PLAY

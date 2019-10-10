@@ -203,6 +203,11 @@
      <Compile Include="Assets\Scripts\Prac_Offense\PRAC_Off_SetupPlayers.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\PRAC_Off_ShowGFX.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\PRAC_PB_UI.cs" />
+     <Compile Include="Assets\Scripts\Prac_Offense\PROFST_Live.cs" />
+     <Compile Include="Assets\Scripts\Prac_Offense\PROFST_Pick.cs" />
+     <Compile Include="Assets\Scripts\Prac_Offense\PROFST_Post.cs" />
+     <Compile Include="Assets\Scripts\Prac_Offense\PROFST_Pre.cs" />
+     <Compile Include="Assets\Scripts\Prac_Offense\PROFST_St.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\TRG_Catch.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\UI_PostPlay.cs" />
      <Compile Include="Assets\Scripts\Practice\CAM_PlayShowing.cs" />
