@@ -7,10 +7,14 @@ public class COL_Tackle : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
-        if(UT_FindComponent.FindComponent<PRAC_Off_Ply>(other.gameObject) != null)
+        PRAC_Off_Ply p = UT_FindComponent.FindComponent<PRAC_Off_Ply>(other.gameObject);
+        if(p != null)
         {
-            Debug.Log("Tackle the offensive player");
-            TDC_EventManager.FBroadcast(TDC_GE.GE_Tackled);
+            if(p.mState == PRAC_Ath.PRAC_ATH_STATE.SRUN_WITH_BALL){
+                Debug.Log("Tackle the offensive player");
+                p.FENTER_Tackled();
+                TDC_EventManager.FBroadcast(TDC_GE.GE_Tackled);
+            }
         }
     }
 }

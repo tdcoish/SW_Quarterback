@@ -26,6 +26,7 @@ public class PRAC_Ath : MonoBehaviour
         SPRE_SNAP,
         SDOING_JOB,
         SRUN_WITH_BALL,
+        STACKLED,
         SPOST_PLAY
     }
     public PRAC_ATH_STATE           mState;
@@ -54,6 +55,7 @@ public class PRAC_Ath : MonoBehaviour
             case PRAC_ATH_STATE.SPRE_SNAP: RUN_PreSnap(); break;
             case PRAC_ATH_STATE.SDOING_JOB: RUN_Job(); break;
             case PRAC_ATH_STATE.SRUN_WITH_BALL: RUN_RunWithBall(); break;
+            case PRAC_ATH_STATE.STACKLED: RUN_Tackled(); break;
             case PRAC_ATH_STATE.SPOST_PLAY: RUN_PostPlay(); break;
         }
 
@@ -87,6 +89,20 @@ public class PRAC_Ath : MonoBehaviour
         }else{
             cRigid.velocity = Vector3.zero;
         }
+    }
+
+    public void FENTER_Tackled()
+    {
+        mState = PRAC_ATH_STATE.STACKLED;
+        cRigid.constraints = RigidbodyConstraints.None;
+        cRigid.velocity = Vector3.up * 10f;
+    }
+    protected virtual void RUN_Tackled()
+    {
+        Vector3 vRot = transform.rotation.eulerAngles;
+        vRot.y += Time.deltaTime * 360f;
+        vRot.z += Time.deltaTime * 360f/2f;
+        transform.rotation = Quaternion.Euler(vRot);
     }
 
     protected virtual void RUN_RunWithBall(){}

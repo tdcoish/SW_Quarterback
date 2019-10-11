@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PROFST_Live : PROFST_St
 {
+    private bool                                mNotLeft;
 
     public override void Start()
     {
@@ -22,6 +23,7 @@ public class PROFST_Live : PROFST_St
         foreach(PRAC_Ath a in aths){
             a.mState = PRAC_Ath.PRAC_ATH_STATE.SDOING_JOB;
         }
+        mNotLeft = true;
     }
     public override void FRun()
     {
@@ -91,11 +93,17 @@ public class PROFST_Live : PROFST_St
 
     public void E_RunnerTackled()
     {
-        Debug.Log("Someone must have tackled someone else");
+        cMan.cAud.FTackle();
+        Invoke("EnterPost", 3f);
     }
 
     private void EnterPost()
     {
+        // because we could invoke this multiple times. What a stupid name.
+        if(!mNotLeft){
+            return;
+        }
+        mNotLeft = false;
         Debug.Log("entered");
         cMan.cAud.FPlayWhistle();
         cPost.FEnter();
