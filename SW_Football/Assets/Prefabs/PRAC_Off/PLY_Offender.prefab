@@ -1087,7 +1087,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mAcc: 3
-  mSpd: 8
+  mSpd: 4
 --- !u!114 &2902261925307713304
 MonoBehaviour:
   m_ObjectHideFlags: 0

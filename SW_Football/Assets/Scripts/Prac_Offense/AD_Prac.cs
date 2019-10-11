@@ -33,6 +33,31 @@ public class AD_Prac : MonoBehaviour
         }
     }
 
+    public void FInterception()
+    {
+        int validClips = FindNumValidClips("INT", mAnnClips);
+        
+        int rand = Random.Range(0, validClips);
+        string clipName = "INT" + rand.ToString();
+        FPlayClipAnnouncer(clipName);
+    }
+    public void FTackle()
+    {
+        int validClips = FindNumValidClips("TACKLE", mAnnClips);
+        
+        int rand = Random.Range(0, validClips);
+        string clipName = "TACKLE" + rand.ToString();
+        FPlayClipAnnouncer(clipName);
+    }
+    public void FCatch()
+    {
+        int validClips = FindNumValidClips("CATCH", mAnnClips);
+        
+        int rand = Random.Range(0, validClips);
+        string clipName = "CATCH" + rand.ToString();
+        FPlayClipAnnouncer(clipName);
+    }
+
     public void FPlayWhistle()
     {
         FPlayClipFX("Whistle");
@@ -42,7 +67,7 @@ public class AD_Prac : MonoBehaviour
     {
         Debug.Log("Playing over");
         if(bInt){
-            FPlayClipAnnouncer("PD0");
+            // FPlayClipAnnouncer("PD0");
         }else{
             if(bRecCaught){
                 FPlayClipAnnouncer("PLY_Good0");
@@ -50,5 +75,17 @@ public class AD_Prac : MonoBehaviour
                 FPlayClipAnnouncer("PLY_Fail0");
             }
         }
+    }
+
+    private int FindNumValidClips(string tag, List<ClipAndGivenName> clipList)
+    {
+        int validClips = 0;
+        for(int i=0; i<clipList.Count; i++)
+        {
+            if(clipList[i].mName.Contains(tag)){
+                validClips++;
+            }
+        }
+        return validClips;
     }
 }

@@ -12,6 +12,7 @@ public class PROFST_Live : PROFST_St
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallCaught_Rec, E_ReceiverCatchesBall);
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallHitGround, E_BallHitsGround);
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallCaught_Int, E_DefenderCatchesBall);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_Tackled, E_RunnerTackled);
     }
 
     public override void FEnter(){
@@ -60,13 +61,37 @@ public class PROFST_Live : PROFST_St
         foreach(PROJ_Football f in footballs){
             Destroy(f.gameObject);
         }
+
+        // ugh, this is a hack, I should be making a list of all the players, and keeping data about them.
+        PRAC_Off_Ply[] offs = FindObjectsOfType<PRAC_Off_Ply>();
+        PRAC_Off_Ply refP = null;
+        foreach(PRAC_Off_Ply p in offs){
+            if(p.mState == PRAC_Ath.PRAC_ATH_STATE.SRUN_WITH_BALL){
+                refP = p;
+            }
+        }
+        // make all the defenders try to tackle that guy.
+        PRAC_Def_Ply[] defenders = FindObjectsOfType<PRAC_Def_Ply>();
+        foreach(PRAC_Def_Ply d in defenders){
+            // shit, even I don't know who the ball carrier is.
+            d.GetComponent<DEF_TackLog>().FEnter();
+            d.GetComponent<DEF_TackLog>().rBallCarrier = refP; 
+            d.mTimeToTackle = true;
+        }
+
+        cMan.cAud.FCatch();
     }
     public void E_DefenderCatchesBall()
     {
         Debug.Log("Defender caught ball");
         cMan.mRes.mInt = true;
-        cMan.cAud.FPlayWhistle();
-        cPost.FEnter();
+        cMan.cAud.FInterception();
+        Invoke("EnterPost", 3f);
+    }
+
+    public void E_RunnerTackled()
+    {
+        Debug.Log("Someone must have tackled someone else");
     }
 
     private void EnterPost()

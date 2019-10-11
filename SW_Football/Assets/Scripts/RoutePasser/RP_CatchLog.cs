@@ -11,7 +11,7 @@ public class RP_CatchLog : MonoBehaviour
     {
         PROJ_Football fBallRef = FindObjectOfType<PROJ_Football>();
         if(fBallRef == null){
-            Debug.Log("No football in scene. Intercept will have issues.");
+            // Debug.Log("No football in scene. Intercept will have issues.");
             return Vector3.zero;
         }
 
@@ -54,7 +54,7 @@ public class RP_CatchLog : MonoBehaviour
     {
         PROJ_Football fBallRef = FindObjectOfType<PROJ_Football>();
         if(fBallRef == null){
-            Debug.Log("No football in scene. Time is infinite.");
+            // Debug.Log("No football in scene. Time is infinite.");
             return 0f;
         }
         

@@ -24,7 +24,7 @@ public class OFF_RunLog : MonoBehaviour
     // Hack, just increase z for now.
     public void FRunWithBall()
     {
-        Debug.Log("Here");
+        // Debug.Log("Here");
         
         Vector3 vDir = new Vector3(0f, 0f, 1f);
         Vector3 vAcc = cAcc.FCalcAccFunc(vDir, cAcc.mSpd);
