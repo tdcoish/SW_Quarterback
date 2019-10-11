@@ -8,16 +8,14 @@ public class UI_PostPlay : MonoBehaviour
 {
     public Text                                     mTxtResult;
 
-    public void FSetPostPlayText(PRAC_PLAY_RES res)
+    public void FSetPostPlayText(PRAC_PlayInfo info)
     {
-        if(res.mInt){
+        if(info.mWasCatch){
+            mTxtResult.text = "Catch for " + System.Math.Round(info.mYardsGained, 0) + " yards";
+        }else if(info.mWasIncompletion){
+            mTxtResult.text = "Incompletion";
+        }else if(info.mWasInterception){
             mTxtResult.text = "INTERCEPTION!";
-            return;
-        }
-        if(res.mBallCaught){
-            mTxtResult.text = "Caught the ball";
-        }else{
-            mTxtResult.text = "No catch";
         }
     }
 }

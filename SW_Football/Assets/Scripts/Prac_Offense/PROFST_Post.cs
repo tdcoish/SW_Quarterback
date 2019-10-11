@@ -21,8 +21,8 @@ public class PROFST_Post : PROFST_St
         Cursor.visible = true;
 
         mUI.gameObject.SetActive(true);
-        cMan.cAud.FPlayOver(cMan.mRes.mBallCaught, cMan.mRes.mInt);
-        mUI.FSetPostPlayText(cMan.mRes);
+        cMan.cAud.FPlayOver(cLive.mInfo);
+        mUI.FSetPostPlayText(cLive.mInfo);
         PRAC_Ath[] aths = FindObjectsOfType<PRAC_Ath>();
         foreach(PRAC_Ath a in aths){
             a.mState = PRAC_Ath.PRAC_ATH_STATE.SPOST_PLAY;
@@ -52,9 +52,6 @@ public class PROFST_Post : PROFST_St
         foreach(PROJ_Football f in footballs){
             Destroy(f.gameObject);
         }
-
-        cMan.mRes.mBallCaught = false;
-        cMan.mRes.mInt = false;
     }
 
     public void BT_NextPlay()

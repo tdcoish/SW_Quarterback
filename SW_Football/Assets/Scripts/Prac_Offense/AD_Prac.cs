@@ -63,17 +63,14 @@ public class AD_Prac : MonoBehaviour
         FPlayClipFX("Whistle");
     }
 
-    public void FPlayOver(bool bRecCaught, bool bInt)
+    public void FPlayOver(PRAC_PlayInfo info)
     {
-        Debug.Log("Playing over");
-        if(bInt){
-            // FPlayClipAnnouncer("PD0");
-        }else{
-            if(bRecCaught){
-                FPlayClipAnnouncer("PLY_Good0");
-            }else{
-                FPlayClipAnnouncer("PLY_Fail0");
-            }
+        if(info.mWasCatch){
+            FPlayClipAnnouncer("PLY_Good0");
+        }else if(info.mWasIncompletion){
+            FPlayClipAnnouncer("PLY_Fail0");
+        }else if(info.mWasInterception){
+            FPlayClipAnnouncer("PLY_Fail0");
         }
     }
 

@@ -6,12 +6,6 @@ Alright, I can now pick the play.
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public struct PRAC_PLAY_RES
-{
-    public bool                         mBallCaught;
-    public bool                         mInt;
-}
-
 public class PRAC_Off_Man : MonoBehaviour
 {
     private PROFST_Live                         cLive;
@@ -28,8 +22,6 @@ public class PRAC_Off_Man : MonoBehaviour
     public PLY_SnapSpot                         rSnapSpot;
 
     public GameObject                           UI_PauseScreen;
-
-    public PRAC_PLAY_RES                        mRes;
 
     public bool                                 mLineExists = false;
     public bool                                 mDefenseExists = true;

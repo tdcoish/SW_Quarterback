@@ -3,9 +3,21 @@
 *************************************************************************************/
 using UnityEngine;
 
+public struct PRAC_PlayInfo{
+    public float                        mYardsGained;
+    public float                        mTackleSpot;
+    public bool                         mWasInterception;
+    public bool                         mWasIncompletion;
+    public bool                         mWasCatch;
+    public bool                         mWasSack;
+    public bool                         mWasTouchdown;
+}
+
 public class PROFST_Live : PROFST_St
 {
     private bool                                mNotLeft;
+
+    public PRAC_PlayInfo                        mInfo;
 
     public override void Start()
     {
@@ -24,6 +36,8 @@ public class PROFST_Live : PROFST_St
             a.mState = PRAC_Ath.PRAC_ATH_STATE.SDOING_JOB;
         }
         mNotLeft = true;
+
+        mInfo = ResetPlayInfo(mInfo);
     }
     public override void FRun()
     {
@@ -43,10 +57,13 @@ public class PROFST_Live : PROFST_St
 
     public void E_BallHitsGround()
     {
+        mInfo.mWasIncompletion = true;
+        
         PROJ_Football[] footballs = FindObjectsOfType<PROJ_Football>();
         foreach(PROJ_Football f in footballs){
             Destroy(f.gameObject);
         }
+
 
         if(cMan.mState == PRAC_STATE.SPLAY_RUNNING){
             cPost.FEnter();
@@ -56,8 +73,8 @@ public class PROFST_Live : PROFST_St
 
     public void E_ReceiverCatchesBall()
     {
-        Debug.Log("Receiver Caught ball!");
-        cMan.mRes.mBallCaught = true;
+        mInfo.mWasCatch = true;
+
         Invoke("EnterPost", 5f);
         PROJ_Football[] footballs = FindObjectsOfType<PROJ_Football>();
         foreach(PROJ_Football f in footballs){
@@ -85,14 +102,27 @@ public class PROFST_Live : PROFST_St
     }
     public void E_DefenderCatchesBall()
     {
-        Debug.Log("Defender caught ball");
-        cMan.mRes.mInt = true;
+        mInfo.mWasInterception = true;
+
         cMan.cAud.FInterception();
         Invoke("EnterPost", 3f);
+        PROJ_Football[] footballs = FindObjectsOfType<PROJ_Football>();
+        foreach(PROJ_Football f in footballs){
+            Destroy(f.gameObject);
+        }
     }
 
     public void E_RunnerTackled()
     {
+        // well shit, gonna need reference to that player.
+        PRAC_Off_Ply[] offs = FindObjectsOfType<PRAC_Off_Ply>();
+        foreach(PRAC_Off_Ply o in offs){
+            if(o.mState == PRAC_Ath.PRAC_ATH_STATE.STACKLED || o.mState == PRAC_Ath.PRAC_ATH_STATE.SRUN_WITH_BALL){
+                mInfo.mTackleSpot = o.transform.position.z;             // should convert to field position. eg. HOME 35.
+                mInfo.mYardsGained = Mathf.Abs(cMan.rSnapSpot.transform.position.z - o.transform.position.z);
+                Debug.Log("Yards gained: " + mInfo.mYardsGained);
+            }
+        }
         cMan.cAud.FTackle();
         Invoke("EnterPost", 3f);
     }
@@ -104,8 +134,19 @@ public class PROFST_Live : PROFST_St
             return;
         }
         mNotLeft = false;
-        Debug.Log("entered");
         cMan.cAud.FPlayWhistle();
         cPost.FEnter();
+    }
+
+    private PRAC_PlayInfo ResetPlayInfo(PRAC_PlayInfo info)
+    {
+        info.mYardsGained = 0f;
+        info.mTackleSpot = 0f;
+        info.mWasInterception = false;
+        info.mWasIncompletion = false;
+        info.mWasCatch = false;
+        info.mWasSack = false;
+        info.mWasTouchdown = false;
+        return info;
     }
 }
