@@ -14,6 +14,7 @@ public class PRAC_PB_UI : MonoBehaviour
 
     // probably move this later.
     public Text                                 mTxtLineEnabled;
+    public Text                                 mTxtOLineEnabled;
     public Text                                 mTxtDefEnabled;
 
     public PRAC_PlayArt[]                       mPlayArts;
@@ -46,6 +47,13 @@ public class PRAC_PB_UI : MonoBehaviour
             mTxtLineEnabled.text = "Line enabled";
         }else{
             mTxtLineEnabled.text = "Line Disabled";
+        }
+    }
+    public void FSetOLineEnabledText(bool enabled){
+        if(enabled){
+            mTxtOLineEnabled.text = "O line enabled";
+        }else{
+            mTxtOLineEnabled.text = "O line disabled";
         }
     }
     public void FSetDefEnabledText(bool enabled)

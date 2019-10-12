@@ -57,6 +57,10 @@ public class AD_Prac : MonoBehaviour
         string clipName = "CATCH" + rand.ToString();
         FPlayClipAnnouncer(clipName);
     }
+    public void FSacked()
+    {
+        FPlayClipAnnouncer("SACKED");
+    }
 
     public void FPlayWhistle()
     {

@@ -2,6 +2,7 @@
 
 *************************************************************************************/
 using UnityEngine;
+using System.Collections.Generic;
 
 public struct PRAC_PlayInfo{
     public float                        mYardsGained;
@@ -18,6 +19,8 @@ public class PROFST_Live : PROFST_St
 {
     private bool                                mNotLeft;
     public bool                                 mMakeCamFollowBall = false;
+    private bool                                mBallThrown = false;
+    public float                                mLastShotFire;
 
     public PRAC_PlayInfo                        mInfo;
 
@@ -25,6 +28,7 @@ public class PROFST_Live : PROFST_St
     {
         base.Start();
         TDC_EventManager.FAddHandler(TDC_GE.GE_QB_ReleaseBall, E_BallThrown);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_PP_SackBallHit, E_SackBallHits);
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallCaught_Rec, E_ReceiverCatchesBall);
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallHitGround, E_BallHitsGround);
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallCaught_Int, E_DefenderCatchesBall);
@@ -39,7 +43,8 @@ public class PROFST_Live : PROFST_St
             a.mState = PRAC_Ath.PRAC_ATH_STATE.SDOING_JOB;
         }
         mNotLeft = true;
-
+        mBallThrown = false;
+        mLastShotFire = Time.time;
         mInfo = ResetPlayInfo(mInfo);
     }
     public override void FRun()
@@ -52,10 +57,38 @@ public class PROFST_Live : PROFST_St
             FExit();
             return;
         }
+
+        HandleTurrets();
     }
     public override void FExit()
     {
         cMan.cAud.FPlayWhistle();
+    }
+
+    private void HandleTurrets()
+    {
+        if(!cMan.mLineExists){
+            return;
+        }
+        if(mBallThrown){
+            return;
+        }
+        if(Time.time - mLastShotFire > 0.5f){
+            int ind = Random.Range(0, cMan.rTurrets.Count);
+            cMan.rTurrets[ind].FFireTurret();
+            mLastShotFire = Time.time;
+        }
+    }
+
+    public void E_SackBallHits()
+    {
+        mInfo.mWasSack = true;
+        PROJ_Football[] footballs = FindObjectsOfType<PROJ_Football>();
+        foreach(PROJ_Football f in footballs){
+            Destroy(f.gameObject);
+        }
+        cMan.cAud.FSacked();
+        Invoke("EnterPost", 1f);
     }
 
     public void E_BallHitsGround()
@@ -67,7 +100,6 @@ public class PROFST_Live : PROFST_St
             Destroy(f.gameObject);
         }
 
-
         if(cMan.mState == PRAC_STATE.SPLAY_RUNNING){
             cPost.FEnter();
             FExit();
@@ -77,20 +109,23 @@ public class PROFST_Live : PROFST_St
     // Super prototype-y, disable pc cam, enable football cam.
     public void E_BallThrown()
     {
-        if(!mMakeCamFollowBall){
-            return;
+        mBallThrown = true;
+
+        if(mMakeCamFollowBall){
+            PC_Controller refPC = FindObjectOfType<PC_Controller>();
+            if(refPC == null){
+                return;
+            }
+            refPC.GetComponentInChildren<Camera>().enabled = false;
+            refPC.GetComponentInChildren<AudioListener>().enabled = false;
         }
 
-        PC_Controller refPC = FindObjectOfType<PC_Controller>();
-        if(refPC == null){
-            return;
+        // ------------------ Destroy all the turrets projectiles.
+        PP_Projectile[] balls = FindObjectsOfType<PP_Projectile>();
+        foreach(PP_Projectile b in balls){
+            Destroy(b.gameObject);
         }
-        PROJ_Football refFootball = FindObjectOfType<PROJ_Football>();
-        if(refFootball == null){
-            return;
-        }
-        refPC.GetComponentInChildren<Camera>().enabled = false;
-        refPC.GetComponentInChildren<AudioListener>().enabled = false;
+
     }
 
     public void E_ReceiverCatchesBall()
@@ -155,6 +190,10 @@ public class PROFST_Live : PROFST_St
         // because we could invoke this multiple times. What a stupid name.
         if(!mNotLeft){
             return;
+        }
+        PP_Projectile[] balls = FindObjectsOfType<PP_Projectile>();
+        foreach(PP_Projectile b in balls){
+            Destroy(b.gameObject);
         }
         mNotLeft = false;
         cMan.cAud.FPlayWhistle();

@@ -20,6 +20,8 @@ public class UI_PostPlay : MonoBehaviour
             mTxtResult.text = "Incompletion";
         }else if(info.mWasInterception){
             mTxtResult.text = "INTERCEPTION!";
+        }else if(info.mWasSack){
+            mTxtResult.text = "SACKED!";
         }
     }
 }

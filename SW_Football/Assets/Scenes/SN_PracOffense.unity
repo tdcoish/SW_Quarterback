@@ -643,6 +643,8 @@ MonoBehaviour:
     mClip: {fileID: 8300000, guid: 59e56beaaaafb704b8d9c2f6427ba18c, type: 3}
   - mName: TERRIBLE
     mClip: {fileID: 8300000, guid: c092d7a0f6b38f24d955a90166d7974a, type: 3}
+  - mName: SACKED
+    mClip: {fileID: 8300000, guid: 9ab55902d0c34f44ea51274675deffeb, type: 3}
   mFXClips:
   - mName: Whistle
     mClip: {fileID: 8300000, guid: 36251184d6ad4124cbba9eeb7bb49218, type: 3}
@@ -2978,6 +2980,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Football
       objectReference: {fileID: 0}
+    - target: {fileID: 3401987330981607372, guid: 0baa2312c185fb84382d77e0f57288d9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8952878489834169968, guid: 0baa2312c185fb84382d77e0f57288d9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3468,7 +3475,9 @@ MonoBehaviour:
   rSnapSpot: {fileID: 1773159825}
   UI_PauseScreen: {fileID: 796079241}
   mLineExists: 0
+  mOlineExists: 0
   mDefenseExists: 1
+  rTurrets: []
 --- !u!114 &2034438298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3539,6 +3548,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45171a2fda22c4d4984ff2197e040c56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mMakeCamFollowBall: 0
+  mLastShotFire: 0
 --- !u!114 &2034438303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3566,6 +3577,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mUI: {fileID: 3536935975866929816}
+  PF_Turret: {fileID: 2727632016312466449, guid: abd70d6e95a04614dbcefc827bd09a39,
+    type: 3}
 --- !u!1 &2114044596
 GameObject:
   m_ObjectHideFlags: 0
@@ -3820,6 +3833,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2034438304}
     - target: {fileID: 1939881459, guid: f0068ada05f32fc45ae38d05f630ab09, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2034438304}
+    - target: {fileID: 1689202784, guid: f0068ada05f32fc45ae38d05f630ab09, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2034438304}

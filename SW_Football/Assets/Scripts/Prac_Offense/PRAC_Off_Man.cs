@@ -5,6 +5,7 @@ Alright, I can now pick the play.
 *************************************************************************************/
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class PRAC_Off_Man : MonoBehaviour
 {
@@ -24,7 +25,11 @@ public class PRAC_Off_Man : MonoBehaviour
     public GameObject                           UI_PauseScreen;
 
     public bool                                 mLineExists = false;
+    public bool                                 mOlineExists = false;
     public bool                                 mDefenseExists = true;
+
+    // For now these are our "pass rushers"
+    public List<PP_Turret>                      rTurrets;    
 
     void Awake()
     {
