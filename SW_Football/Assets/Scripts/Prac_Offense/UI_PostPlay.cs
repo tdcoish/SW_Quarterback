@@ -11,7 +11,11 @@ public class UI_PostPlay : MonoBehaviour
     public void FSetPostPlayText(PRAC_PlayInfo info)
     {
         if(info.mWasCatch){
-            mTxtResult.text = "Catch for " + System.Math.Round(info.mYardsGained, 0) + " yards";
+            if(info.mWasTackled){
+                mTxtResult.text = "Catch for " + System.Math.Round(info.mYardsGained, 0) + " yards";
+            }else{
+                mTxtResult.text = "Catch, and he's still running";
+            }
         }else if(info.mWasIncompletion){
             mTxtResult.text = "Incompletion";
         }else if(info.mWasInterception){

@@ -6,6 +6,7 @@ using UnityEngine;
 public struct PRAC_PlayInfo{
     public float                        mYardsGained;
     public float                        mTackleSpot;
+    public bool                         mWasTackled;
     public bool                         mWasInterception;
     public bool                         mWasIncompletion;
     public bool                         mWasCatch;
@@ -16,12 +17,14 @@ public struct PRAC_PlayInfo{
 public class PROFST_Live : PROFST_St
 {
     private bool                                mNotLeft;
+    public bool                                 mMakeCamFollowBall = false;
 
     public PRAC_PlayInfo                        mInfo;
 
     public override void Start()
     {
         base.Start();
+        TDC_EventManager.FAddHandler(TDC_GE.GE_QB_ReleaseBall, E_BallThrown);
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallCaught_Rec, E_ReceiverCatchesBall);
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallHitGround, E_BallHitsGround);
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallCaught_Int, E_DefenderCatchesBall);
@@ -71,6 +74,25 @@ public class PROFST_Live : PROFST_St
         }
     }
 
+    // Super prototype-y, disable pc cam, enable football cam.
+    public void E_BallThrown()
+    {
+        if(!mMakeCamFollowBall){
+            return;
+        }
+
+        PC_Controller refPC = FindObjectOfType<PC_Controller>();
+        if(refPC == null){
+            return;
+        }
+        PROJ_Football refFootball = FindObjectOfType<PROJ_Football>();
+        if(refFootball == null){
+            return;
+        }
+        refPC.GetComponentInChildren<Camera>().enabled = false;
+        refPC.GetComponentInChildren<AudioListener>().enabled = false;
+    }
+
     public void E_ReceiverCatchesBall()
     {
         mInfo.mWasCatch = true;
@@ -118,6 +140,7 @@ public class PROFST_Live : PROFST_St
         PRAC_Off_Ply[] offs = FindObjectsOfType<PRAC_Off_Ply>();
         foreach(PRAC_Off_Ply o in offs){
             if(o.mState == PRAC_Ath.PRAC_ATH_STATE.STACKLED || o.mState == PRAC_Ath.PRAC_ATH_STATE.SRUN_WITH_BALL){
+                mInfo.mWasTackled = true;
                 mInfo.mTackleSpot = o.transform.position.z;             // should convert to field position. eg. HOME 35.
                 mInfo.mYardsGained = Mathf.Abs(cMan.rSnapSpot.transform.position.z - o.transform.position.z);
                 Debug.Log("Yards gained: " + mInfo.mYardsGained);
@@ -142,6 +165,7 @@ public class PROFST_Live : PROFST_St
     {
         info.mYardsGained = 0f;
         info.mTackleSpot = 0f;
+        info.mWasTackled = false;
         info.mWasInterception = false;
         info.mWasIncompletion = false;
         info.mWasCatch = false;

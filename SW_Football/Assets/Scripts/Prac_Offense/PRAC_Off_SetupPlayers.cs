@@ -24,7 +24,7 @@ public class PRAC_Off_SetupPlayers : MonoBehaviour
             Vector3 vSpot = new Vector3();
             vSpot.x = f.mSpots[i].x;
             vSpot.z = f.mSpots[i].y * -1f;
-            vSpot.y = 1f;
+            vSpot.y = 0f;
             vSpot += rSnapSpot.transform.position;
             var clone = Instantiate(PF_OffPlayer, vSpot, transform.rotation);
             clone.mTag = f.mTags[i];

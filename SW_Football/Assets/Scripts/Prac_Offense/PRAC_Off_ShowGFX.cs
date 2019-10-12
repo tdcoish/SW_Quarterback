@@ -40,7 +40,7 @@ public class PRAC_Off_ShowGFX : MonoBehaviour
     private void RenderRoute(List<Vector2> nodes, Vector3 vStart, PLY_SnapSpot snapSpot)
     {
         // This should be the actual starting spot of the player.
-        Vector3 vPos = vStart; vPos.z = vPos.y; vPos.y = 1f;
+        Vector3 vPos = vStart; vPos.z = vPos.y; vPos.y = 0f;
         vPos += snapSpot.transform.position;
         Instantiate(GFX_RouteTrail, vPos, transform.rotation);
 

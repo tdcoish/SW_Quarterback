@@ -70,7 +70,7 @@ public class AD_Prac : MonoBehaviour
         }else if(info.mWasIncompletion){
             FPlayClipAnnouncer("PLY_Fail0");
         }else if(info.mWasInterception){
-            FPlayClipAnnouncer("PLY_Fail0");
+            FPlayClipAnnouncer("TERRIBLE");
         }
     }
 

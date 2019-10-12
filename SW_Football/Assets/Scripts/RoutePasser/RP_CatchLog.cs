@@ -20,7 +20,7 @@ public class RP_CatchLog : MonoBehaviour
         Vector3 vBallVel = fBallRef.GetComponent<Rigidbody>().velocity;
         float mag = Vector3.Magnitude(vBallVel);
 
-        float fHeightOfInfluence = 2f;          // basically the catch height.
+        float fHeightOfInfluence = 1f;          // basically the catch height.
 
         // ----------------------------------- First if statement is if the ball is already below our hands, and is going down, or it's right there already.
         if(fBallRef.transform.position.y < fHeightOfInfluence)

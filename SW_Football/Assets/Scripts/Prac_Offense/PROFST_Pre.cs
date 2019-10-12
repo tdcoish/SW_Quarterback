@@ -27,8 +27,6 @@ public class PROFST_Pre : PROFST_St
             a.mState = PRAC_Ath.PRAC_ATH_STATE.SPRE_SNAP;
         }
         FindObjectOfType<PC_Controller>().mState = PC_Controller.PC_STATE.SPRE_SNAP;
-
-        cShowPreSnapGFX.FShowOffensivePlay(IO_OffensivePlays.FLoadPlay(cMan.mPlay), cMan.rSnapSpot);
     }
     // Fill in the high camera stuff later.
     public override void FRun()

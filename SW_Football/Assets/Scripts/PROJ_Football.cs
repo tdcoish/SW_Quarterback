@@ -48,5 +48,11 @@ public class PROJ_Football : MonoBehaviour
     void OnDestroy()
     {
         Instantiate(PF_PartAndSFX, transform.position, transform.rotation);
+        PC_Controller refPC = FindObjectOfType<PC_Controller>();
+        if(refPC == null){
+            return;
+        }
+        refPC.GetComponentInChildren<Camera>().enabled = true;
+        refPC.GetComponentInChildren<AudioListener>().enabled = true;
     }
 }
