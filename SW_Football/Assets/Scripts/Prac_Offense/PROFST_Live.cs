@@ -17,7 +17,8 @@ public struct PRAC_PlayInfo{
 
 public class PROFST_Live : PROFST_St
 {
-    private bool                                mNotLeft;
+    private bool                                mCountdownActive;
+    private float                               mCountdownTimer;
     public bool                                 mMakeCamFollowBall = false;
     private bool                                mBallThrown = false;
     public float                                mLastShotFire;
@@ -42,7 +43,7 @@ public class PROFST_Live : PROFST_St
         foreach(PRAC_Ath a in aths){
             a.mState = PRAC_Ath.PRAC_ATH_STATE.SDOING_JOB;
         }
-        mNotLeft = true;
+        mCountdownActive = false;
         mBallThrown = false;
         mLastShotFire = Time.time;
         mInfo = ResetPlayInfo(mInfo);
@@ -59,6 +60,12 @@ public class PROFST_Live : PROFST_St
         }
 
         HandleTurrets();
+        if(mCountdownActive){
+            mCountdownTimer -= Time.deltaTime;
+            if(mCountdownTimer <= 0f){
+                EnterPost();
+            }
+        }
     }
     public override void FExit()
     {
@@ -88,7 +95,8 @@ public class PROFST_Live : PROFST_St
             Destroy(f.gameObject);
         }
         cMan.cAud.FSacked();
-        Invoke("EnterPost", 1f);
+        mCountdownActive = true;
+        mCountdownTimer = 1f;
     }
 
     public void E_BallHitsGround()
@@ -137,7 +145,8 @@ public class PROFST_Live : PROFST_St
     {
         mInfo.mWasCatch = true;
 
-        Invoke("EnterPost", 5f);
+        mCountdownActive = true;
+        mCountdownTimer = 5f;
         PROJ_Football[] footballs = FindObjectsOfType<PROJ_Football>();
         foreach(PROJ_Football f in footballs){
             Destroy(f.gameObject);
@@ -167,7 +176,8 @@ public class PROFST_Live : PROFST_St
         mInfo.mWasInterception = true;
 
         cMan.cAud.FInterception();
-        Invoke("EnterPost", 3f);
+        mCountdownActive = true;
+        mCountdownTimer = 3f;
         PROJ_Football[] footballs = FindObjectsOfType<PROJ_Football>();
         foreach(PROJ_Football f in footballs){
             Destroy(f.gameObject);
@@ -187,20 +197,17 @@ public class PROFST_Live : PROFST_St
             }
         }
         cMan.cAud.FTackle();
-        Invoke("EnterPost", 3f);
+        mCountdownActive = true;
+        mCountdownTimer = 3f;
     }
 
     private void EnterPost()
     {
-        // because we could invoke this multiple times. What a stupid name.
-        if(!mNotLeft){
-            return;
-        }
+
         PP_Projectile[] balls = FindObjectsOfType<PP_Projectile>();
         foreach(PP_Projectile b in balls){
             Destroy(b.gameObject);
         }
-        mNotLeft = false;
         cMan.cAud.FPlayWhistle();
         cPost.FEnter();
     }
