@@ -11,12 +11,15 @@ public class PROJ_Football : MonoBehaviour
 
     private bool                    mGrounded = false;
 
+    public Camera                   mCam;
+
     public FX_Football              PF_PartAndSFX;
 
     // Start is called before the first frame update
     void Start()
     {
         cRigid = GetComponent<Rigidbody>();
+        // mCam.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -54,5 +57,10 @@ public class PROJ_Football : MonoBehaviour
         }
         refPC.GetComponentInChildren<Camera>().enabled = true;
         refPC.GetComponentInChildren<AudioListener>().enabled = true;
+    }
+
+    public void FActivateCam()
+    {
+        mCam.gameObject.SetActive(true);
     }
 }

@@ -16,6 +16,7 @@ public class PRAC_PB_UI : MonoBehaviour
     public Text                                 mTxtLineEnabled;
     public Text                                 mTxtOLineEnabled;
     public Text                                 mTxtDefEnabled;
+    public Text                                 mTxtCamFollow;
 
     public PRAC_PlayArt[]                       mPlayArts;
 
@@ -62,6 +63,14 @@ public class PRAC_PB_UI : MonoBehaviour
             mTxtDefEnabled.text = "Defense Enabled";
         }else{
             mTxtDefEnabled.text = "Defense Disabled";
+        }
+    }
+    public void FSetCamFollowText(bool enabled)
+    {
+        if(enabled){
+            mTxtCamFollow.text = "Cam follows ball";
+        }else{
+            mTxtCamFollow.text = "Cam stays on player";
         }
     }
 

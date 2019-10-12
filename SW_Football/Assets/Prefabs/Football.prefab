@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &741154283
 Transform:
   m_ObjectHideFlags: 0
@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mPos: {fileID: 11400000, guid: 1897fc8717b9b2e498497c1e5d709db3, type: 2}
+  mCam: {fileID: 741154286}
   PF_PartAndSFX: {fileID: 437069222, guid: 895d86e901dbe514fa87c7340e9b2f23, type: 3}
 --- !u!54 &2990268506736182448
 Rigidbody:

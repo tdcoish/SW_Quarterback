@@ -12,7 +12,7 @@ public class PROFST_St : MonoBehaviour
     protected PROFST_Pre                        cPre;
     protected PROFST_Post                       cPost;
 
-    public virtual void Start()
+    private void Awake()
     {
         cMan = GetComponent<PRAC_Off_Man>();    
 
@@ -20,6 +20,11 @@ public class PROFST_St : MonoBehaviour
         cPost = GetComponent<PROFST_Post>();
         cLive = GetComponent<PROFST_Live>();
         cPre = GetComponent<PROFST_Pre>();
+
+    }
+
+    public virtual void Start()
+    {
     }
 
     public virtual void FEnter(){}

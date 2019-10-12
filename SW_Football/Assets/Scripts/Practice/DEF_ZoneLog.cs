@@ -141,10 +141,10 @@ public class DEF_ZoneLog : MonoBehaviour
     }
     private void RUN_ManUp(){}
     private void RUN_TryCatchBall(){
-        Vector3 vSpotToGetTo = cCatchLog.FCalcInterceptSpot();
+        Vector3 vSpotToGetTo = cCatchLog.FCalcInterceptSpot(0.5f);
         Vector3 dis = vSpotToGetTo - transform.position;
         dis.y = 0f;
-        float airTime = cCatchLog.FCalcInterceptTime();
+        float airTime = cCatchLog.FCalcInterceptTime(0.5f);
         // since I know how far I need to go, I also know the exact velocity I should be using.
         Vector3 vVel = dis / airTime;
 

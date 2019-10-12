@@ -123,4 +123,9 @@ public class PROFST_Pick : PROFST_St
         cMan.mDefenseExists = !cMan.mDefenseExists;
         mUI.FSetDefEnabledText(cMan.mDefenseExists);
     }
+    public void BT_ToggleCamFollow()
+    {
+        cLive.mMakeCamFollowBall = !cLive.mMakeCamFollowBall;
+        mUI.FSetCamFollowText(cLive.mMakeCamFollowBall);
+    }
 }

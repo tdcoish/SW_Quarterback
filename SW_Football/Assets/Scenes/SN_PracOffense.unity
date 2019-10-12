@@ -2980,11 +2980,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Football
       objectReference: {fileID: 0}
-    - target: {fileID: 3401987330981607372, guid: 0baa2312c185fb84382d77e0f57288d9,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8952878489834169968, guid: 0baa2312c185fb84382d77e0f57288d9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3840,6 +3835,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2034438304}
+    - target: {fileID: 1584005881, guid: f0068ada05f32fc45ae38d05f630ab09, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2034438304}
+    - target: {fileID: 1584005881, guid: f0068ada05f32fc45ae38d05f630ab09, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BT_ToggleCamFollow
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0068ada05f32fc45ae38d05f630ab09, type: 3}
 --- !u!1001 &1285306173042392557

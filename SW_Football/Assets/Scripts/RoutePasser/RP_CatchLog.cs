@@ -7,7 +7,7 @@ public class RP_CatchLog : MonoBehaviour
 {
     public GameObject                   PF_SpotGFX;
 
-    public Vector3 FCalcInterceptSpot()
+    public Vector3 FCalcInterceptSpot(float fHeightOfInfluence = 1f)
     {
         PROJ_Football fBallRef = FindObjectOfType<PROJ_Football>();
         if(fBallRef == null){
@@ -19,8 +19,6 @@ public class RP_CatchLog : MonoBehaviour
 
         Vector3 vBallVel = fBallRef.GetComponent<Rigidbody>().velocity;
         float mag = Vector3.Magnitude(vBallVel);
-
-        float fHeightOfInfluence = 1f;          // basically the catch height.
 
         // ----------------------------------- First if statement is if the ball is already below our hands, and is going down, or it's right there already.
         if(fBallRef.transform.position.y < fHeightOfInfluence)
@@ -50,7 +48,7 @@ public class RP_CatchLog : MonoBehaviour
     }
 
     // Now we calculate how long it's going to take to get to that spot.
-    public float FCalcInterceptTime()
+    public float FCalcInterceptTime(float fHeightOfInfluence = 1f)
     {
         PROJ_Football fBallRef = FindObjectOfType<PROJ_Football>();
         if(fBallRef == null){
@@ -60,8 +58,6 @@ public class RP_CatchLog : MonoBehaviour
         
         Vector3 vBallVel = fBallRef.GetComponent<Rigidbody>().velocity;
         float mag = Vector3.Magnitude(vBallVel);
-
-        float fHeightOfInfluence = 2f;          // basically the catch height.
 
         // ----------------------------------- First if statement is if the ball is already below our hands, and is going down, or it's right there already.
         if(fBallRef.transform.position.y < fHeightOfInfluence)
