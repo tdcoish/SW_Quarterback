@@ -24,7 +24,7 @@ public static class IO_RouteList
     public static bool FWRITE_ROUTE(DATA_Route route)
     {
         string sName =route.mName;
-        StreamWriter sw = new StreamWriter(Application.dataPath+"/Plays/Routes/"+sName+".txt");
+        StreamWriter sw = new StreamWriter(Application.dataPath+"/FILE_IO/Plays/Routes/"+sName+".txt");
         sw.WriteLine(route.mName);
         sw.WriteLine(route.mSpots.Length);
         for(int j=0; j<route.mSpots.Length; j++){
@@ -68,7 +68,7 @@ public static class IO_RouteList
     {
         Debug.Log("Loading/Reloading routes");
 
-        string sPath = Application.dataPath+"/Plays/Routes/";
+        string sPath = Application.dataPath+"/FILE_IO/Plays/Routes/";
         string[] fPathNames = Directory.GetFiles(sPath, "*.txt");
         mRoutes = new DATA_Route[fPathNames.Length];
 
@@ -122,7 +122,7 @@ public static class IO_RouteList
     public static void FCONVERT_TO_SINGLE_TEXT_FILE()
     {
         // need the num of routes? Sure.
-        StreamWriter sw = new StreamWriter(Application.dataPath+"/RoutesText/routes.txt");
+        StreamWriter sw = new StreamWriter(Application.dataPath+"/FILE_IO/RoutesText/routes.txt");
         sw.WriteLine(mRoutes.Length);
         for(int i=0; i<mRoutes.Length; i++)
         {

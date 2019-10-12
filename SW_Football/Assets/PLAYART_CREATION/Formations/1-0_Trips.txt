@@ -1,0 +1,27 @@
+NAME
+1-0_Trips
+NUM PLAYERS
+11
+POSITIONS AND TAGS
+QB
+(0,4)
+WR3
+(-8,0)
+WR2
+(12,2)
+OL5
+(4,0)
+OL4
+(2,0)
+OL3
+(0,0)
+OL2
+(-2,0)
+WR4
+(-10,2)
+WR1
+(-12,0)
+OL1
+(-4,0)
+RB1
+(-2,4)

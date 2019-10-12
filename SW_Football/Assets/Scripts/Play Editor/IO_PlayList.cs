@@ -16,7 +16,7 @@ public static class IO_PlayList
             return false;
         }
 
-        string sPath = Application.dataPath+"/Plays/";
+        string sPath = Application.dataPath+"/FILE_IO/Plays/";
         
         // first check if that play already exists.
         string[] fPathNames = Directory.GetFiles(sPath, "*.bin");
@@ -51,7 +51,7 @@ public static class IO_PlayList
     // Loads in all plays.
     public static void FLOAD_PLAYS()
     {
-        string path = Application.dataPath+"/Plays/";
+        string path = Application.dataPath+"/FILE_IO/Plays/";
 
         string[] fPathNames = Directory.GetFiles(path, "*.bin");
         foreach(string sName in fPathNames)
@@ -105,7 +105,7 @@ public static class IO_PlayList
     public static void FCONVERT_TO_TEXT_FILES()
     {
         // need the num of routes? Sure.
-        StreamWriter sw = new StreamWriter(Application.dataPath+"/PlaysText/plays.txt");
+        StreamWriter sw = new StreamWriter(Application.dataPath+"/FILE_IO/PlaysText/plays.txt");
         sw.WriteLine("This is a test");
         sw.WriteLine(mPlays.Length);
         for(int i=0; i<mPlays.Length; i++)

@@ -25,7 +25,7 @@ public static class IO_ZoneList
             return false;
         }
 
-        string path = Application.dataPath+"/Plays/Zones/"+zone.mName+".bin";
+        string path = Application.dataPath+"/FILE_IO/Plays/Zones/"+zone.mName+".bin";
 
         BinaryWriter bw = new BinaryWriter(new FileStream(path, FileMode.Create));
         bw.Write(zone.mName);
@@ -52,7 +52,7 @@ public static class IO_ZoneList
 
     public static void FLOAD_ZONES()
     {
-        string path = Application.dataPath+"/Plays/Zones/";
+        string path = Application.dataPath+"/FILE_IO/Plays/Zones/";
 
         string[] fPathNames = Directory.GetFiles(path, "*.bin");
 
@@ -91,7 +91,7 @@ public static class IO_ZoneList
     public static void FCONVERT_TO_TEXT_FILES()
     {
         // need the num of routes? Sure.
-        StreamWriter sw = new StreamWriter(Application.dataPath+"/ZonesText/zones.txt");
+        StreamWriter sw = new StreamWriter(Application.dataPath+"/FILE_IO/ZonesText/zones.txt");
         sw.WriteLine(mZones.Length);
         for(int i=0; i<mZones.Length; i++)
         {

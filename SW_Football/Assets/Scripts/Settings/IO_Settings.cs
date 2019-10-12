@@ -34,7 +34,7 @@ public static class IO_Settings
 
     public static void FLOAD_SETTINGS()
     {
-        string path = Application.dataPath+"/Settings/Settings.txt";
+        string path = Application.dataPath+"/FILE_IO/Settings/Settings.txt";
 
         StreamReader sr = new StreamReader(path);
         string sLine = sr.ReadLine();
@@ -83,7 +83,7 @@ public static class IO_Settings
 
     public static void FWRITE_SETTINGS()
     {
-        string path = Application.dataPath+"/Settings/Settings.txt";
+        string path = Application.dataPath+"/FILE_IO/Settings/Settings.txt";
         StreamWriter sw = new StreamWriter(path);
         string sLine = "Player";
         sw.WriteLine(sLine);
