@@ -6,9 +6,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 
-public class PRAC_PB_UI : MonoBehaviour
+public class PRAC_Pick_UI : MonoBehaviour
 {
-    public Text                                 mOffensivePlayName;
     public Text                                 mTXTPage;
     public int                                  mPage = 0;
 

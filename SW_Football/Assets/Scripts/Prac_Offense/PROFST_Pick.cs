@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class PROFST_Pick : PROFST_St
 {
-    public PRAC_PB_UI                               mUI;
+    public PRAC_Pick_UI                           mUI;
 
-    private PRAC_Off_SetupPlayers               cPlayerSetup;
+    private PRAC_Off_SetupPlayers               cOffPlayerSetup;
     private PRAC_Def_SetupPlayers               cDefPlayerSetup;
 
     public PP_Turret                            PF_Turret;
@@ -17,7 +17,7 @@ public class PROFST_Pick : PROFST_St
     public override void Start()
     {
         base.Start();
-        cPlayerSetup = GetComponent<PRAC_Off_SetupPlayers>();   
+        cOffPlayerSetup = GetComponent<PRAC_Off_SetupPlayers>();   
         cDefPlayerSetup = GetComponent<PRAC_Def_SetupPlayers>();
     }
 
@@ -97,7 +97,7 @@ public class PROFST_Pick : PROFST_St
             return;
         }
         cMan.mPlay = name;
-        cPlayerSetup.FSetUpPlayers(cMan.mPlay, cMan.rSnapSpot);
+        cOffPlayerSetup.FSetUpPlayers(cMan.mPlay, cMan.rSnapSpot);
 
         if(cMan.mDefenseExists){
             // set up defense here

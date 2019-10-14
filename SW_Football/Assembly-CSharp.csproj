@@ -205,7 +205,7 @@
      <Compile Include="Assets\Scripts\Prac_Offense\PRAC_Off_Ply.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\PRAC_Off_SetupPlayers.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\PRAC_Off_ShowGFX.cs" />
-     <Compile Include="Assets\Scripts\Prac_Offense\PRAC_PB_UI.cs" />
+     <Compile Include="Assets\Scripts\Prac_Offense\PRAC_Pick_UI.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\PROFST_Live.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\PROFST_Pick.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\PROFST_Post.cs" />
