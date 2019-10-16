@@ -23,6 +23,8 @@ public class PROFST_Live : PROFST_St
     private bool                                mBallThrown = false;
     public float                                mLastShotFire;
 
+    public PRAC_Ath[]                           rAths;
+
     public PRAC_PlayInfo                        mInfo;
 
     public override void Start()
@@ -39,8 +41,8 @@ public class PROFST_Live : PROFST_St
     public override void FEnter(){
         cMan.mState = PRAC_STATE.SPLAY_RUNNING;
         FindObjectOfType<PC_Controller>().mState = PC_Controller.PC_STATE.SACTIVE;
-        PRAC_Ath[] aths = FindObjectsOfType<PRAC_Ath>();
-        foreach(PRAC_Ath a in aths){
+        rAths = FindObjectsOfType<PRAC_Ath>();
+        foreach(PRAC_Ath a in rAths){
             a.mState = PRAC_Ath.PRAC_ATH_STATE.SDOING_JOB;
         }
         mCountdownActive = false;
@@ -59,7 +61,6 @@ public class PROFST_Live : PROFST_St
             return;
         }
 
-        HandleTurrets();
         if(mCountdownActive){
             mCountdownTimer -= Time.deltaTime;
             if(mCountdownTimer <= 0f){
@@ -70,21 +71,6 @@ public class PROFST_Live : PROFST_St
     public override void FExit()
     {
         cMan.cAud.FPlayWhistle();
-    }
-
-    private void HandleTurrets()
-    {
-        if(!cMan.mLineExists){
-            return;
-        }
-        if(mBallThrown){
-            return;
-        }
-        if(Time.time - mLastShotFire > 0.5f){
-            int ind = Random.Range(0, cMan.rTurrets.Count);
-            cMan.rTurrets[ind].FFireTurret();
-            mLastShotFire = Time.time;
-        }
     }
 
     public void E_SackBallHits()

@@ -5,14 +5,18 @@ using UnityEngine;
 
 public class PRAC_Def_Ply : PRAC_Ath
 {
+    private PRAC_Ath                        cAth;
     private DEF_ZoneLog                     cZoneLog;
     private DEF_TackLog                     cTackLog;
+    private DEF_RushLog                     cRushLog;
     public bool                             mTimeToTackle = false;
 
     void Start()
     {
+        cAth = GetComponent<PRAC_Ath>();
         cZoneLog = GetComponent<DEF_ZoneLog>();    
         cTackLog = GetComponent<DEF_TackLog>();
+        cRushLog = GetComponent<DEF_RushLog>();
     }
 
     protected override void RUN_Job()
@@ -20,7 +24,11 @@ public class PRAC_Def_Ply : PRAC_Ath
         if(mTimeToTackle){ 
             cTackLog.FRun();
         }else{
-            cZoneLog.FRunZone();
+            if(cAth.mJob.mRole == "Pass Rush"){
+                cRushLog.FRunRush();
+            }else{
+                cZoneLog.FRunZone();
+            }
         }
     }
 

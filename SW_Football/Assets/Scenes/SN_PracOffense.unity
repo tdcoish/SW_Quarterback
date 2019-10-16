@@ -3545,6 +3545,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mMakeCamFollowBall: 0
   mLastShotFire: 0
+  rAths: []
 --- !u!114 &2034438303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3572,8 +3573,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mUI: {fileID: 4582114897585249091}
-  PF_Turret: {fileID: 2727632016312466449, guid: abd70d6e95a04614dbcefc827bd09a39,
-    type: 3}
 --- !u!1 &2114044596
 GameObject:
   m_ObjectHideFlags: 0
@@ -5496,6 +5495,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PLY_Offender (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7000247713471046457, guid: 83df1e43cb6d5ca41aacc51fac5dd59d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7000247713471046460, guid: 83df1e43cb6d5ca41aacc51fac5dd59d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5861,6 +5865,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PLY_Defender
+      objectReference: {fileID: 0}
+    - target: {fileID: 5202812532693892432, guid: 58510dddd0979db458905fc1a491f9f9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5202812532693892437, guid: 58510dddd0979db458905fc1a491f9f9,
         type: 3}

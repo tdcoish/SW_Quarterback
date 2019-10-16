@@ -909,6 +909,7 @@ GameObject:
   - component: {fileID: 3458219281520886158}
   - component: {fileID: 267602051}
   - component: {fileID: 7285910957219691576}
+  - component: {fileID: 2072857756}
   m_Layer: 0
   m_Name: PLY_Defender
   m_TagString: Untagged
@@ -964,7 +965,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mAcc: 3
-  mSpd: 6
+  mSpd: 2
 --- !u!114 &4578535608141499010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1031,6 +1032,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cTackleBox: {fileID: 2601389696351404591}
   rBallCarrier: {fileID: 0}
+--- !u!114 &2072857756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5202812532693892432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8bb4b0207454e04aa7fa332ac008666, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5591456238140737750
 GameObject:
   m_ObjectHideFlags: 0
