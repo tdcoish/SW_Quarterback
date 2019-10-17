@@ -11,6 +11,11 @@ public class TEST_OLineObj : MonoBehaviour
     private float                           mLastShoveTime;
     public float                            mShoveIntervalTime = 0.1f;
 
+    public float                mTopSpd = 2f;
+    public float                mWgt = 200f;
+    public float                mInternalPwr = 400f;
+    public float                mArmPwr = 400f;
+
     void Start()
     {
         cRigid = GetComponent<Rigidbody>();
@@ -19,6 +24,22 @@ public class TEST_OLineObj : MonoBehaviour
 
     void Update()
     {
+        if(mActive)
+        {
+            PRAC_Def_Ply[] rushers = FindObjectsOfType<PRAC_Def_Ply>();
+            if(rushers.Length == 0){
+                return;
+            }
+            PRAC_Def_Ply closest = FuncFindClosest(rushers, transform.position);
+
+            // ---------------------- Shove nearest.
+            Vector3 vShove = closest.transform.position - transform.position;
+            vShove = Vector3.Normalize(vShove);
+            vShove *= 2f * Time.deltaTime;
+
+            closest.GetComponent<Rigidbody>().velocity += vShove;
+        }
+
         if(false){
             // ----------------------- Move to nearest.
             PRAC_Def_Ply[] rushers = FindObjectsOfType<PRAC_Def_Ply>();

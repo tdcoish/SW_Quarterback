@@ -1,5 +1,10 @@
 ﻿/*************************************************************************************
 Logic for pass rush.
+
+When engaged, for now they can only bull rush. They take pushes, and they receive pushes,
+but we don't apply Newtons second to their pushes, it just happens.
+
+Net acceleration is then provided by our leftover force added into our weight.
 *************************************************************************************/
 using UnityEngine;
 
@@ -8,6 +13,11 @@ public class DEF_RushLog : MonoBehaviour
     private PRAC_Ath            cAth;
     private Rigidbody           cRigid;
     private PRAC_AI_Acc         cAcc;
+
+    public float                mTopSpd = 2f;
+    public float                mWgt = 300f;
+    public float                mInternalPwr = 600f;
+    public float                mArmPwr = 600f;
 
     public bool                 mEngaged = false;
 
@@ -43,18 +53,40 @@ public class DEF_RushLog : MonoBehaviour
         // --------------------------------- Simplest implementation, offensive line just slows the rusher.
         float fSpd = cAcc.mSpd;
         if(FuncBlockerInRange(blockers, transform.position, 2f)){
+            mEngaged = true;
             fSpd *= 0.4f;
+        }else{
+            mEngaged = false;
         }
         
         // cRigid.velocity += vPush;
 
-        vDis = Vector3.Normalize(vDis);
-        Vector3 vAcc = cAcc.FCalcAccFunc(vDis, fSpd);
-        cRigid.velocity += vAcc;
-        if(cRigid.velocity.magnitude > fSpd){
-            cRigid.velocity *= fSpd/cRigid.velocity.magnitude;
+        if(!mEngaged){
+            vDis = Vector3.Normalize(vDis);
+            Vector3 vAcc = cAcc.FCalcAccFunc(vDis, fSpd);
+            cRigid.velocity += vAcc;
+            if(cRigid.velocity.magnitude > fSpd){
+                cRigid.velocity *= fSpd/cRigid.velocity.magnitude;
+            }
+            transform.forward = cRigid.velocity.normalized;
         }
-        transform.forward = cRigid.velocity.normalized;
+        else{
+            // accelerate based on what?
+            vDis = Vector3.Normalize(vDis);
+            
+
+            transform.forward = vDis;
+        }
+
+        // ---------------------------------- Have them pushing back the closest blocker
+        if(FuncBlockerInRange(blockers, transform.position, 2f)){
+            TEST_OLineObj o = FuncGetClosestBlocker(blockers, transform.position);
+            Vector3 vShove = o.transform.position - transform.position;
+            vShove = Vector3.Normalize(vShove);
+            vShove *= 5f * Time.deltaTime;          // big boy
+
+            o.GetComponent<Rigidbody>().velocity += vShove;
+        }
 
     }
 
@@ -89,5 +121,19 @@ public class DEF_RushLog : MonoBehaviour
         }
 
         return false;
+    }
+
+    private TEST_OLineObj FuncGetClosestBlocker(TEST_OLineObj[] blockers, Vector3 ourPos)
+    {
+        float fDis = Vector3.Distance(ourPos, blockers[0].transform.position);
+        int ixClose = 0;
+        for(int i=1; i<blockers.Length; i++){
+            float temp = Vector3.Distance(ourPos, blockers[i].transform.position);
+            if(temp < fDis){
+                ixClose = i;
+                fDis = temp;
+            }
+        }
+        return blockers[ixClose];
     }
 }
