@@ -46,6 +46,7 @@ public class PROFST_Pre : PROFST_St
         if(Input.GetKeyDown(KeyCode.Space))
         {
             FExit();
+            TDC_EventManager.FBroadcast(TDC_GE.GE_BallSnapped);
             cLive.FEnter();
         }
 
