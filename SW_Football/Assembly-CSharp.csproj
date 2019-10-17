@@ -194,6 +194,8 @@
      <Compile Include="Assets\Scripts\PP\PP_UI.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\AD_Prac.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\AN_OffPlayer.cs" />
+     <Compile Include="Assets\Scripts\Prac_Offense\ATH_Forces.cs" />
+     <Compile Include="Assets\Scripts\Prac_Offense\ATH_Manager.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\CAM_Football.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\COL_Tackle.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\DEF_TackLog.cs" />

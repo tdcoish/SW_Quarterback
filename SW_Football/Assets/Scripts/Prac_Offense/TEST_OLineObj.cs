@@ -7,18 +7,15 @@ using UnityEngine;
 public class TEST_OLineObj : MonoBehaviour
 {
     private Rigidbody                       cRigid;
+    private ATH_Forces                      cForces;
     private bool                            mActive = false;
     private float                           mLastShoveTime;
     public float                            mShoveIntervalTime = 0.1f;
 
-    public float                mTopSpd = 2f;
-    public float                mWgt = 200f;
-    public float                mInternalPwr = 400f;
-    public float                mArmPwr = 400f;
-
     void Start()
     {
         cRigid = GetComponent<Rigidbody>();
+        cForces = GetComponent<ATH_Forces>();
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallSnapped, E_BallSnapped);
     }
 
@@ -26,49 +23,17 @@ public class TEST_OLineObj : MonoBehaviour
     {
         if(mActive)
         {
-            PRAC_Def_Ply[] rushers = FindObjectsOfType<PRAC_Def_Ply>();
-            if(rushers.Length == 0){
-                return;
+            // ---------------------------------------------- Now we calculate our movement based on our net forces.
+            // The offensive lineman are currently always trying to get back to not moving.  
+            Vector3 vDir = cRigid.velocity.normalized;
+            vDir *= -1f;
+            Vector3 vPushForce = cForces.FFuncCalcInternalPush(vDir, cRigid.velocity, cForces.mInternalPwr, cForces.mTopSpd);
+            if(Time.time - cForces.mLastForeignPushTime < 0.1f){
+                vPushForce += cForces.mNetForces;
             }
-            PRAC_Def_Ply closest = FuncFindClosest(rushers, transform.position);
-
-            // ---------------------- Shove nearest.
-            Vector3 vShove = closest.transform.position - transform.position;
-            vShove = Vector3.Normalize(vShove);
-            vShove *= 2f * Time.deltaTime;
-
-            closest.GetComponent<Rigidbody>().velocity += vShove;
-        }
-
-        if(false){
-            // ----------------------- Move to nearest.
-            PRAC_Def_Ply[] rushers = FindObjectsOfType<PRAC_Def_Ply>();
-            if(rushers.Length == 0){
-                return;
-            }
-            PRAC_Def_Ply closest = FuncFindClosest(rushers, transform.position);
-
-            Vector3 vGoalSpot = closest.transform.position + closest.GetComponent<Rigidbody>().velocity * 0.2f;
-            Vector3 vDis = vGoalSpot - transform.position;
-            Vector3 vAcc = Vector3.Normalize(vDis) * 10f * Time.deltaTime;
+            Vector3 vAcc = vPushForce / cForces.mWgt;
+            vAcc *= Time.deltaTime;
             cRigid.velocity += vAcc;
-            if(cRigid.velocity.magnitude > 2f){
-                cRigid.velocity *= 2f / cRigid.velocity.magnitude;
-            }
-
-            // ---------------------- Shove nearest.
-            if(Time.time - mLastShoveTime > mShoveIntervalTime){
-                mLastShoveTime = Time.time;
-                Vector3 vShove = closest.transform.position - transform.position;
-                vShove = Vector3.Normalize(vShove);
-                vShove *= 2f;
-
-                closest.GetComponent<Rigidbody>().velocity += vShove;
-            }
-
-            // --------------------- And get shoved if we get really really close.
-            Vector3 vShoveAcc = FuncCalcUltraCloseSeparationForce(rushers, transform.position);
-            cRigid.velocity += vShoveAcc;
         }
     }
 

@@ -5,6 +5,9 @@ When engaged, for now they can only bull rush. They take pushes, and they receiv
 but we don't apply Newtons second to their pushes, it just happens.
 
 Net acceleration is then provided by our leftover force added into our weight.
+
+New system. We run our own rush, sure, but a player manager figures out who's pushing on whom.
+
 *************************************************************************************/
 using UnityEngine;
 
@@ -12,21 +15,14 @@ public class DEF_RushLog : MonoBehaviour
 {
     private PRAC_Ath            cAth;
     private Rigidbody           cRigid;
-    private PRAC_AI_Acc         cAcc;
-
-    public float                mTopSpd = 2f;
-    public float                mWgt = 300f;
-    public float                mInternalPwr = 600f;
-    public float                mArmPwr = 600f;
-
-    public bool                 mEngaged = false;
+    private ATH_Forces          cForces;
 
     // Maybe have this as a function that we call.
     void Start()
     {   
         cRigid = GetComponent<Rigidbody>();
         cAth = GetComponent<PRAC_Ath>();
-        cAcc = GetComponent<PRAC_AI_Acc>();
+        cForces = GetComponent<ATH_Forces>();
     }
 
     // We just straight up run to the quarterback.
@@ -49,45 +45,29 @@ public class DEF_RushLog : MonoBehaviour
 
         // ---------------------------------- Here we simulate them getting "pushed" by the sphere's I'm pretending are olineman.
         TEST_OLineObj[] blockers = FindObjectsOfType<TEST_OLineObj>();
-        // Vector3 vPush = FuncCalcPushForce(blockers, transform.position);
-        // --------------------------------- Simplest implementation, offensive line just slows the rusher.
-        float fSpd = cAcc.mSpd;
         if(FuncBlockerInRange(blockers, transform.position, 2f)){
-            mEngaged = true;
-            fSpd *= 0.4f;
-        }else{
-            mEngaged = false;
-        }
-        
-        // cRigid.velocity += vPush;
+            TEST_OLineObj b = FuncGetClosestBlocker(blockers, transform.position);
+            // now we apply a shove from them to us.
+            Vector3 vDisDif = transform.position - b.transform.position;
+            vDisDif = Vector3.Normalize(vDisDif);
+            cForces.FTakePush(b.GetComponent<ATH_Forces>().mArmPwr * vDisDif, Time.time);
 
-        if(!mEngaged){
-            vDis = Vector3.Normalize(vDis);
-            Vector3 vAcc = cAcc.FCalcAccFunc(vDis, fSpd);
-            cRigid.velocity += vAcc;
-            if(cRigid.velocity.magnitude > fSpd){
-                cRigid.velocity *= fSpd/cRigid.velocity.magnitude;
-            }
-            transform.forward = cRigid.velocity.normalized;
-        }
-        else{
-            // accelerate based on what?
-            vDis = Vector3.Normalize(vDis);
-            
-
-            transform.forward = vDis;
+            // -------------------- And apply a shove from us to them.
+            vDisDif *= -1;
+            b.GetComponent<ATH_Forces>().FTakePush(cForces.mArmPwr * vDisDif, Time.time);
         }
 
-        // ---------------------------------- Have them pushing back the closest blocker
-        if(FuncBlockerInRange(blockers, transform.position, 2f)){
-            TEST_OLineObj o = FuncGetClosestBlocker(blockers, transform.position);
-            Vector3 vShove = o.transform.position - transform.position;
-            vShove = Vector3.Normalize(vShove);
-            vShove *= 5f * Time.deltaTime;          // big boy
-
-            o.GetComponent<Rigidbody>().velocity += vShove;
+        // ---------------------------------------------- Now we calculate our movement based on our net forces.
+        vDis = rPC.transform.position - transform.position;        
+        Vector3 vPushForce = cForces.FFuncCalcInternalPush(vDis.normalized, cRigid.velocity, cForces.mInternalPwr, cForces.mTopSpd);
+        if(Time.time - cForces.mLastForeignPushTime < 0.1f){
+            vPushForce += cForces.mNetForces;
         }
+        Vector3 vAcc = vPushForce / cForces.mWgt;
+        vAcc *= Time.deltaTime;
+        cRigid.velocity += vAcc;
 
+        transform.forward = cRigid.velocity.normalized;
     }
 
     private Vector3 FuncCalcPushForce(TEST_OLineObj[] blockers, Vector3 ourPos)
