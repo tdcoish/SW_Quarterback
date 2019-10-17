@@ -31,7 +31,7 @@ public class PROFST_Live : PROFST_St
     {
         base.Start();
         TDC_EventManager.FAddHandler(TDC_GE.GE_QB_ReleaseBall, E_BallThrown);
-        TDC_EventManager.FAddHandler(TDC_GE.GE_PP_SackBallHit, E_SackBallHits);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_Sack, E_Sack);
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallCaught_Rec, E_ReceiverCatchesBall);
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallHitGround, E_BallHitsGround);
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallCaught_Int, E_DefenderCatchesBall);
@@ -73,8 +73,11 @@ public class PROFST_Live : PROFST_St
         cMan.cAud.FPlayWhistle();
     }
 
-    public void E_SackBallHits()
+    public void E_Sack()
     {
+        if(mCountdownActive){
+            return;
+        }
         mInfo.mWasSack = true;
         PROJ_Football[] footballs = FindObjectsOfType<PROJ_Football>();
         foreach(PROJ_Football f in footballs){
