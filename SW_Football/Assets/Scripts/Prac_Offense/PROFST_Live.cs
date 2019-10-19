@@ -19,9 +19,9 @@ public class PROFST_Live : PROFST_St
 {
     private bool                                mCountdownActive;
     private float                               mCountdownTimer;
-    public bool                                 mMakeCamFollowBall = false;
     private bool                                mBallThrown = false;
     public float                                mLastShotFire;
+    public bool                                 mMakeCamFollowBall = false;
 
     public PRAC_Ath[]                           rAths;
 
@@ -110,16 +110,11 @@ public class PROFST_Live : PROFST_St
 
         if(mMakeCamFollowBall){
             PROJ_Football refF = FindObjectOfType<PROJ_Football>();
-            PC_Controller refPC = FindObjectOfType<PC_Controller>();
             if(refF == null){
                 return;
             }
-            if(refPC == null){
-                return;
-            }
+
             refF.FActivateCam();
-            refPC.GetComponentInChildren<Camera>().enabled = false;
-            refPC.GetComponentInChildren<AudioListener>().enabled = false;
         }
 
         // ------------------ Destroy all the turrets projectiles.

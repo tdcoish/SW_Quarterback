@@ -10,6 +10,10 @@ New system. We run our own rush, sure, but a player manager figures out who's pu
 
 Alright, I'm stealing the easier system from 
 
+They need to rush "in their lanes" instead of straight at the QB. That means that they
+are going to sort of make a type of circle. The way to do this is to give a player a "radius"
+to rush. If they start x meters from the snap, they should rush in an arc that keeps them
+that distance from the snap. That also lets the QB step up into the pocket. 
 *************************************************************************************/
 using UnityEngine;
 using System.Collections.Generic;
@@ -25,12 +29,16 @@ public class DEF_RushLog : MonoBehaviour
     public float                mLastMoveTime;
     public float                mMoveScore = 80f;
 
+    private Vector3             rSnapSpot;
+
     // Maybe have this as a function that we call.
     void Start()
     {   
         cRigid = GetComponent<Rigidbody>();
         cAth = GetComponent<PRAC_Ath>();
         cForces = GetComponent<ATH_Forces>();
+
+        rSnapSpot = FindObjectOfType<PLY_SnapSpot>().transform.position;
     }
 
     // We just straight up run to the quarterback.
@@ -43,6 +51,15 @@ public class DEF_RushLog : MonoBehaviour
             cRigid.velocity = Vector3.zero;
             return;
         }
+        
+        // ------------------ Tackle the QB. Shouldn't work if the ball has not been thrown yet.
+        Vector3 vDis = rPC.transform.position - transform.position;
+        // Debug.DrawLine(rPC.transform.position, transform.position, Color.green);
+        if(vDis.magnitude < 1f){
+            TDC_EventManager.FBroadcast(TDC_GE.GE_Sack);        
+            return;
+        }
+
         PRAC_Off_Ply[] athlets = FindObjectsOfType<PRAC_Off_Ply>();
         List<OFF_BlockLog> blockers = new List<OFF_BlockLog>();
         foreach(PRAC_Off_Ply a in athlets){
@@ -51,16 +68,10 @@ public class DEF_RushLog : MonoBehaviour
             }
         }
         if(blockers.Count == 0){
+            RUN_FreeRun(rPC);
             return;
         }
 
-        // ------------------ Tackle the QB. Shouldn't work if the ball has not been thrown yet.
-        Vector3 vDis = rPC.transform.position - transform.position;
-        Debug.DrawLine(rPC.transform.position, transform.position, Color.green);
-        if(vDis.magnitude < 1f){
-            TDC_EventManager.FBroadcast(TDC_GE.GE_Sack);        
-            return;
-        }
 
         // ---------------- Okay, now we see if there is a guy blocking us.
         // For now just pick the closest one to us.
@@ -69,6 +80,8 @@ public class DEF_RushLog : MonoBehaviour
         bool blockerInFront = FuncBlockerInFront(transform.position, closestBlocker.transform.position, transform.forward);
         if(fDisToBlocker < mEngageDis && closestBlocker.mState != OFF_BlockLog.STATE.S_Stunned && blockerInFront){
             RUN_Engage(closestBlocker, rPC);
+        }else if (blockerInFront){
+            RUN_RushLane(rPC);
         }else{
             RUN_FreeRun(rPC);
         }
@@ -99,12 +112,24 @@ public class DEF_RushLog : MonoBehaviour
         transform.forward = Vector3.Normalize(rBlocker.transform.position - transform.position);
     }
 
+    // Now rushing in an arc.
     public void RUN_FreeRun(PC_Controller rPC)
     {
-        transform.forward = FuncAngleToPlayer(transform.position, rPC.transform.position);
+        transform.forward = FuncAngleToSpot(transform.position, rPC.transform.position);
         Vector3 vDis = rPC.transform.position - transform.position;
         vDis = Vector3.Normalize(vDis);
         cRigid.velocity = vDis;
+    }
+
+    private void RUN_RushLane(PC_Controller rPC)
+    {
+        Vector3 vDirToSnap = FuncAngleToSpot(transform.position, rSnapSpot); vDirToSnap.y = 0f;
+        Vector3 vDirToQB = FuncAngleToSpot(transform.position, rPC.transform.position); vDirToQB.y = 0f;
+        Vector3 vSnapQbCross = Vector3.Cross(vDirToSnap, vDirToQB);     // will be either straight up or straight down.
+        Vector3 vRushDir = Vector3.Cross(vDirToSnap, vSnapQbCross) * -1f;
+        // cRigid.velocity = vDirToSnap.normalized;
+        cRigid.velocity = vRushDir.normalized * 2f;
+        Debug.DrawLine(transform.position, (transform.position + vRushDir), Color.red);
     }
 
     private OFF_BlockLog FuncClosestBlocker(List<OFF_BlockLog> blockers, Vector3 ourPos)
@@ -133,9 +158,9 @@ public class DEF_RushLog : MonoBehaviour
         return false;
     }
 
-    private Vector3 FuncAngleToPlayer(Vector3 ourPos, Vector3 playerPos)
+    private Vector3 FuncAngleToSpot(Vector3 ourPos, Vector3 spot)
     {
-        Vector3 vDis = playerPos - ourPos;
+        Vector3 vDis = spot - ourPos;
         vDis = Vector3.Normalize(vDis);
         return vDis;
     }

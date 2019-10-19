@@ -312,6 +312,7 @@
      <None Include="Assets\FILE_IO\Plays\EditorCreatedPlays\Smash_01.txt" />
      <None Include="Assets\FILE_IO\OffensivePlays\1-1_4Verts1.txt" />
      <None Include="Assets\FILE_IO\Plays\EditorCreatedPlays\sdf.txt" />
+     <None Include="Assets\PLAYART_CREATION\OffensivePlays\1-0_Smash.txt" />
      <None Include="Assets\PLAYART_CREATION\Formations\2-2_Default.txt" />
      <None Include="Assets\FILE_IO\Routes\ShortSlant.txt" />
      <None Include="Assets\FILE_IO\Plays\Routes\FlatR.txt" />
@@ -325,6 +326,7 @@
      <None Include="Assets\FILE_IO\Formations\2-0_Default.txt" />
      <None Include="Assets\PLAYART_CREATION\OffensivePlays\1-1_DeepStretch.txt" />
      <None Include="Assets\FILE_IO\PitchAndCatch\EASY3.txt" />
+     <None Include="Assets\FILE_IO\OffensivePlays\1-0_Smash.txt" />
      <None Include="Assets\PLAYART_CREATION\OffensivePlays\1-1_Post.txt" />
      <None Include="Assets\FILE_IO\Routes\MidWheel.txt" />
      <None Include="Assets\FILE_IO\OffensivePlays\1-0_Mills2.txt" />
