@@ -60,6 +60,11 @@ public class PC_Controller : MonoBehaviour
     public SO_Float                 GB_MoveInaccuracy;
     public SO_Float                 GB_TotalInaccuracy;
 
+    void Awake()
+    {
+        IO_Settings.FLOAD_SETTINGS();
+    }
+
     // Start is called before the first frame update
     void Start()
     {

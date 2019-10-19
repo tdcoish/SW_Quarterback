@@ -74,7 +74,7 @@ public class DEF_ZoneLog : MonoBehaviour
             ENTER_TryCatchBall();
         }
 
-        if(dis.magnitude < 5f){
+        if(dis.magnitude < 10f){
             ENTER_ReadQBEyes();
         }
     }

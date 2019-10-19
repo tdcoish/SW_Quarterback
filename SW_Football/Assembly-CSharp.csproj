@@ -77,6 +77,10 @@
      <Compile Include="Assets\Scripts\Audio\AD_Player.cs" />
      <Compile Include="Assets\Scripts\Audio\AUD_Snd.cs" />
      <Compile Include="Assets\Scripts\Audio\AUD_TEST_MIXER.cs" />
+     <Compile Include="Assets\Scripts\BlockTest\BLOCK_Ath.cs" />
+     <Compile Include="Assets\Scripts\BlockTest\BLOCK_Block.cs" />
+     <Compile Include="Assets\Scripts\BlockTest\BLOCK_Man.cs" />
+     <Compile Include="Assets\Scripts\BlockTest\BLOCK_Rush.cs" />
      <Compile Include="Assets\Scripts\DefPlayCreator\DPC_JobAssignment.cs" />
      <Compile Include="Assets\Scripts\DefPlayCreator\DPC_Man.cs" />
      <Compile Include="Assets\Scripts\DefPlayCreator\DPC_NewPlay.cs" />
