@@ -63,6 +63,16 @@ public class PROFST_Pick : PROFST_St
                         Destroy(p.gameObject);
                     }
                 }
+            }else{          // have to shove them all back 1 yard.
+                PRAC_Def_Ply[] aths = FindObjectsOfType<PRAC_Def_Ply>();
+                foreach(PRAC_Def_Ply p in aths){
+                    if(p.mJob.mRole == "Pass Rush"){
+                        Vector3 vPos = p.transform.position;
+                        vPos.z += 2f;
+                        p.transform.position = vPos;
+                    }
+                }
+
             }
         }
         // Get rid of the QB

@@ -217,7 +217,6 @@
      <Compile Include="Assets\Scripts\Prac_Offense\PROFST_Post.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\PROFST_Pre.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\PROFST_St.cs" />
-     <Compile Include="Assets\Scripts\Prac_Offense\TEST_OLineObj.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\TRG_Catch.cs" />
      <Compile Include="Assets\Scripts\Prac_Offense\UI_PostPlay.cs" />
      <Compile Include="Assets\Scripts\Practice\CAM_PlayShowing.cs" />

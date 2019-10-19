@@ -41,7 +41,6 @@ public class PROFST_Pre : PROFST_St
         cShowPreSnapGFX.FStopShowingPlayArt();
     }
 
-
     void RUN_SnapReady(){
         if(Input.GetKeyDown(KeyCode.Space))
         {

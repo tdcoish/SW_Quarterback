@@ -52,8 +52,13 @@ public static class TDC_EventManager
     // Fires the event
     public static void FBroadcast(TDC_GE evnt)
     {
-        // Weird, it's giving me an exception when I broadcast an event no one listens to.
-        if (eventTable[evnt] != null) eventTable[evnt]();
+        if(!eventTable.ContainsKey(evnt)){
+            return;
+        }
+        
+        if (eventTable[evnt] != null){
+            eventTable[evnt]();
+        } 
     }
 }
 

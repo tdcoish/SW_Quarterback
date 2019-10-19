@@ -15,6 +15,8 @@ public class BLOCK_Block : MonoBehaviour
     public STATE                            mState;
     private float                           mStunMoment;
     public float                            mStunnedDuration = 1f;
+    public float                            mMoveDefMin = 50f;
+    public float                            mMoveDefMax = 100f;
 
     public float                            mEngageDistance = 3f;
 
@@ -22,8 +24,6 @@ public class BLOCK_Block : MonoBehaviour
 
     public ParticleSystem                   mParticles;
 
-    public float                            mMoveDefMin = 50f;
-    public float                            mMoveDefMax = 100f;
 
     void Start()
     {
