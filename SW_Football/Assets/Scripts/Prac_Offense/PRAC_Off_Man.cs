@@ -28,8 +28,7 @@ public class PRAC_Off_Man : MonoBehaviour
     public bool                                 mOlineExists = false;
     public bool                                 mDefenseExists = true;
 
-    // For now these are our "pass rushers"
-    public List<PP_Turret>                      rTurrets;    
+    public List<PRAC_Ath>                       rAths = new List<PRAC_Ath>();
 
     void Awake()
     {
@@ -93,5 +92,20 @@ public class PRAC_Off_Man : MonoBehaviour
         // refQuitUI.SetActive(true);
         Time.timeScale = 1f;
         SceneManager.LoadScene("SN_MN_Main");        
+    }
+
+    public PRAC_Ath FGetBallCarrier()
+    {
+        for(int i=0; i<rAths.Count; i++)
+        {
+            if(rAths[i].mHasBall){
+                Debug.Log("Someone has the ball");
+                return rAths[i];
+            }
+        }
+
+        Debug.Log("Num of aths: " + rAths.Count);
+
+        return null;
     }
 }

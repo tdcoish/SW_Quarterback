@@ -13,6 +13,7 @@ public class PRAC_Def_Ply : PRAC_Ath
 
     void Start()
     {
+        base.Start();
         cAth = GetComponent<PRAC_Ath>();
         cZoneLog = GetComponent<DEF_ZoneLog>();    
         cTackLog = GetComponent<DEF_TackLog>();
@@ -35,6 +36,6 @@ public class PRAC_Def_Ply : PRAC_Ath
     // Run interception logic.
     public override void FCaughtBall()
     {
-        
+        TDC_EventManager.FBroadcast(TDC_GE.GE_BallCaught_Int);   
     }
 }

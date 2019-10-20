@@ -8,16 +8,16 @@ using UnityEngine;
 public class DEF_TackLog : MonoBehaviour
 {
     private Rigidbody                                   cRigid;
+    private PRAC_Ath                                    cAth;
     private PRAC_AI_Acc                                 cAcc;
 
     public COL_Tackle                                   cTackleBox;
-
-    public PRAC_Off_Ply                                 rBallCarrier;
 
     void Start()
     {
         cRigid = GetComponent<Rigidbody>();
         cAcc = GetComponent<PRAC_AI_Acc>();
+        cAth = GetComponent<PRAC_Ath>();
 
         cTackleBox.gameObject.SetActive(false);
     }
@@ -32,7 +32,7 @@ public class DEF_TackLog : MonoBehaviour
         // Depends if they're running towards or away from me. -- MAYBE
         // Only matters when I add moves into the game. Then, if behind, always chase down full speed. 
         // But if ahead, then maybe hold up so you don't get deked out.
-
+        PRAC_Ath rBallCarrier = cAth.rMan.FGetBallCarrier();
         if(rBallCarrier == null){
             return;
         }

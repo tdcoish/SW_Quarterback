@@ -5786,7 +5786,7 @@ GameObject:
   - component: {fileID: 8139045847164804821}
   - component: {fileID: 1440958400961884236}
   - component: {fileID: 82072160}
-  - component: {fileID: 5739644312021330014}
+  - component: {fileID: 1232085374428341754}
   m_Layer: 0
   m_Name: PLY_Offender
   m_TagString: Untagged
@@ -5885,6 +5885,7 @@ MonoBehaviour:
   mStunnedDuration: 1
   mMoveDefMin: 50
   mMoveDefMax: 100
+  mEngageDistance: 1
 --- !u!114 &4848968341188075472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5938,7 +5939,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mState: 0
---- !u!114 &5739644312021330014
+--- !u!114 &1232085374428341754
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5947,15 +5948,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7000247713471046457}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d58873d6db1f94643b3a1423688ffd5b, type: 3}
+  m_Script: {fileID: 11500000, guid: fc5bb9a712ee7844baa17dbb9c76efa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mTopSpd: 2
-  mWgt: 200
-  mInternalPwr: 400
-  mArmPwr: 400
-  mNetForces: {x: 0, y: 0, z: 0}
-  mLastForeignPushTime: 0
+  mState: 0
 --- !u!1 &7244371541809469119
 GameObject:
   m_ObjectHideFlags: 0

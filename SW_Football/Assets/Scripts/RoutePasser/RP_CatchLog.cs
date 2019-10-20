@@ -1,5 +1,9 @@
 ﻿/*************************************************************************************
 Could probably be used for offensive and defensive players.
+
+Adding now a small window of time when you haven't secured the catch, and it can be knocked
+out of your hands. So now the game needs to understand that a catch isn't complete until, maybe
+0.5f seconds after.
 *************************************************************************************/
 using UnityEngine;
 
@@ -74,4 +78,6 @@ public class RP_CatchLog : MonoBehaviour
             return fTm;
         }
     }
+
+
 }

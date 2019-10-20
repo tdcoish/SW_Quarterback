@@ -20,6 +20,7 @@ public class PRAC_Off_Ply : PRAC_Ath
 
     void Start()
     {
+        base.Start();
         cRouteLog = GetComponent<OFF_RouteLog>();
         cBlockLog = GetComponent<OFF_BlockLog>();
         cCatchRadius = GetComponentInChildren<TRG_Catch>();
@@ -61,5 +62,6 @@ public class PRAC_Off_Ply : PRAC_Ath
     {
         mState = PRAC_ATH_STATE.SRUN_WITH_BALL;
         cAud.mCatch.Play();
+        TDC_EventManager.FBroadcast(TDC_GE.GE_BallCaught_Rec);
     }
 }

@@ -2,6 +2,7 @@
 
 *************************************************************************************/
 using UnityEngine;
+using System.Collections.Generic;
 
 public class PROFST_Pick : PROFST_St
 {
@@ -28,8 +29,6 @@ public class PROFST_Pick : PROFST_St
         mUI.FSetLineEnabledText(cMan.mLineExists);
         mUI.FSetDefEnabledText(cMan.mDefenseExists);
         mFrameWasted = false;
-
-        cMan.rTurrets.Clear();
     }
     public override void FRun()
     {
@@ -41,49 +40,74 @@ public class PROFST_Pick : PROFST_St
         }
     }
     public override void FExit(){
+
         Cursor.lockState = CursorLockMode.Locked;
         mUI.gameObject.SetActive(false);
         Cursor.visible = false;
 
+        // Get references to all the players in the scene.
+        PRAC_Ath[] athletes = FindObjectsOfType<PRAC_Ath>();
+        Debug.Log("Num aths: " + athletes.Length);
+        cMan.rAths.Clear();
+        foreach(PRAC_Ath a in athletes){
+            cMan.rAths.Add(a);
+        }
+
         if(!cMan.mLineExists || !cMan.mOlineExists){
-            PRAC_Off_Ply[] aths = FindObjectsOfType<PRAC_Off_Ply>();
-            foreach(PRAC_Off_Ply a in aths){
-                if(a.mRole == "BLOCK"){
-                    Destroy(a.gameObject);
+            for(int i=0; i<cMan.rAths.Count; i++){
+                PRAC_Off_Ply p = cMan.rAths[i].GetComponent<PRAC_Off_Ply>();
+                if(p != null){
+                    if(p.mRole == "BLOCK"){
+                        Destroy(p.gameObject);
+                        cMan.rAths.RemoveAt(i);
+                        i--;
+                    }
                 }
             }
         }
+        Debug.Log("Count: " + cMan.rAths.Count);
         // now defense as well.
         if(cMan.mDefenseExists){
             if(!cMan.mLineExists){
-                PRAC_Def_Ply[] aths = FindObjectsOfType<PRAC_Def_Ply>();
-                foreach(PRAC_Def_Ply p in aths)
-                {
-                    if(p.mJob.mRole == "Pass Rush"){
-                        Destroy(p.gameObject);
+                for(int i=0; i<cMan.rAths.Count; i++){
+                    PRAC_Def_Ply p = cMan.rAths[i].GetComponent<PRAC_Def_Ply>();
+                    if(p != null){
+                        if(p.mJob.mRole == "Pass Rush"){
+                            Destroy(p.gameObject);
+                            cMan.rAths.RemoveAt(i);
+                            i--;
+                        }
                     }
                 }
             }else{          // have to shove them all back 1 yard.
-                PRAC_Def_Ply[] aths = FindObjectsOfType<PRAC_Def_Ply>();
-                foreach(PRAC_Def_Ply p in aths){
-                    if(p.mJob.mRole == "Pass Rush"){
-                        Vector3 vPos = p.transform.position;
-                        vPos.z += 2f;
-                        p.transform.position = vPos;
+                for(int i=0; i<cMan.rAths.Count; i++){
+                    PRAC_Def_Ply p = cMan.rAths[i].GetComponent<PRAC_Def_Ply>();
+                    if(p != null){
+                        if(p.mJob.mRole == "Pass Rush"){
+                            Vector3 vPos = p.transform.position;
+                            vPos.z += 2f;
+                            p.transform.position = vPos;
+                        }
                     }
                 }
-
             }
         }
+        Debug.Log("Count: " + cMan.rAths.Count);
+
         // Get rid of the QB
         {
-            PRAC_Off_Ply[] aths = FindObjectsOfType<PRAC_Off_Ply>();
-            foreach(PRAC_Off_Ply a in aths){
-                if(a.mRole == "QB"){
-                    Destroy(a.gameObject);
+            for(int i=0; i<cMan.rAths.Count; i++){
+                PRAC_Off_Ply p = cMan.rAths[i].GetComponent<PRAC_Off_Ply>();
+                if(p != null){
+                    if(p.mRole == "QB"){
+                        Destroy(p.gameObject);
+                        cMan.rAths.RemoveAt(i);
+                        i--;
+                    }
                 }
             }
         }
+        Debug.Log("Count: " + cMan.rAths.Count);
 
         mFrameWasted = true;
     }

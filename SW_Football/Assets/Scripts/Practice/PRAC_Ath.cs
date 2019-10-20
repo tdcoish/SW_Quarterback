@@ -38,7 +38,11 @@ public class PRAC_Ath : MonoBehaviour
     public bool                     mHitLastFrame = false;
     public DATA_Hitter              dThingThatHitUs;
 
+    public PRAC_Off_Man             rMan;
+
     public DT_PlayerRole            mJob;
+
+    public bool                     mHasBall = false;
 
     void Awake()
     {
@@ -46,6 +50,9 @@ public class PRAC_Ath : MonoBehaviour
         cAcc = GetComponent<PRAC_AI_Acc>();
         cAud = GetComponentInChildren<AD_Athletes>();
         mState = PRAC_ATH_STATE.SPRE_SNAP;
+    }
+    protected void Start(){
+        rMan = FindObjectOfType<PRAC_Off_Man>();
     }
 
     void Update()
