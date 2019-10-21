@@ -31,100 +31,157 @@ public class EX_PL_Live : TDC_Component
     // I guess this is more like, just running the play and seeing what happens?
     public override void FRunUpdate()
     {
-        switch(cPlays.mChoice)
-        {
-            case PLAY_CHOICE.C_PASS: PlayPass(); break;
-            case PLAY_CHOICE.C_RUN: PlayRun(); break;
-            case PLAY_CHOICE.C_PUNT: PlayPunt(); break;
-            case PLAY_CHOICE.C_KICK: PlayKick(); break;
+        if(cPlays.mChoice == PLAY_CHOICE.C_PASS){
+            mResult = Pass();
+        }else if(cPlays.mChoice == PLAY_CHOICE.C_RUN){
+            mResult = Run();
+        }else if(cPlays.mChoice == PLAY_CHOICE.C_PUNT){
+            mResult = Punt();
+        }else if(cPlays.mChoice == PLAY_CHOICE.C_KICK){
+            mResult = KickFieldGoal();
         }
-    }
-
-    // Average run, 4 yards. Make it biased towards being around there.
-    // Would also need to bias towards really long runs. Do that later.
-    private void PlayRun()
-    {
-        mResult.mChoice = PLAY_CHOICE.C_RUN;
-
-        float rand = Random.Range(-1f, 1f);
-        rand = Mathf.Pow(rand, 3);
-
-        float avg = 4f;
-        float range = 10f;
-        float runDis = avg + (range*rand);
-
-        mResult.mDis = (int)runDis;
-        mResult.mTurnover = false;
-        mResult.mTimeTaken = 40f;
-
-        mResult.mInfo = "Ran for " + mResult.mDis + " yards";
-
+        
         cResult.FEnter();
     }
 
-    // yeah passing is a little bit more complicated. Let's say 30% chance incompletion. 8% chance sack. 60% chance completion. 2% chance interception
-    private void PlayPass()
+    /*****************************************************************************
+    Ultimately all these plays need to know where the ball is, since things are harder
+    in the redzone, on both sides.
+    *****************************************************************************/
+    private PLAY_RESULT Run()
     {
-        mResult.mChoice = PLAY_CHOICE.C_PASS;
+        PLAY_RESULT res = new PLAY_RESULT();
+
+        float rand1 = Random.Range(0f, 1f);
+        if(rand1 <= 0.02f){
+            // breakaway run here.
+            float avg = 30f;
+            float range = 10f;
+            float rangeRand = Random.Range(-1f, 5f);        // bias towards really long runs.      
+            float runDis = avg + rangeRand * range;
+
+            res.mDis = (int)runDis;
+            res.mTurnover = false;
+            res.mTimeTaken = 15f; 
+            res.mInfo = "Big run for: " + res.mDis + " yards";
+
+        }else if (rand1 < 0.04f){
+            res.mTurnover = true;
+            res.mDis = 5;
+            res.mTimeTaken = 10f;
+            res.mInfo = "Fumbled the ball!";
+        } else{
+            float rand = Random.Range(-1f, 1f);
+            rand = Mathf.Pow(rand, 3);
+
+            float avg = 4f;
+            float range = 10f;
+            float runDis = avg + (range*rand);
+
+            res.mDis = (int)runDis;
+            res.mTimeTaken = 30f;
+
+            res.mTurnover = false;
+            res.mInfo = "Standard run for " + res.mDis + " yards";
+        }
+
+        return res;
+    }
+
+    private PLAY_RESULT Pass()
+    {
+        PLAY_RESULT res = new PLAY_RESULT();
+        
+        res.mChoice = PLAY_CHOICE.C_PASS;
 
         float rand = Random.Range(0f, 1f);
         if(rand <= 0.08f){
             //sack.
             rand = Random.Range(0, 1f);
             float avg = -5f;
-            mResult.mDis = (int) (rand*avg);
-            mResult.mTimeTaken = 35f;
-            mResult.mTurnover = false;
-            mResult.mInfo = "Sacked for " + mResult.mDis + " yards";
+            res.mDis = (int) (rand*avg);
+            res.mTimeTaken = 35f;
+            res.mTurnover = false;
+            res.mInfo = "Sacked for " + res.mDis + " yards";
         }else if(rand <= 0.1){
             // interception.
-            mResult.mTimeTaken = 10f;
+            res.mTimeTaken = 10f;
             float avg = 0f;
             rand = Random.Range(-1f, 1f);
             float range = 20f;
             float intDis = avg * (rand*range);
-            mResult.mDis = 10;
-            mResult.mTurnover = true;
-            mResult.mInfo = "Intercepted for " + mResult.mDis + " yards";
+            res.mDis = 10;
+            res.mTurnover = true;
+            res.mInfo = "Intercepted for " + res.mDis + " yards";
         }
         else if(rand <= 0.4f){
             // incomplete.
-            mResult.mTimeTaken = 5f;
-            mResult.mDis = 0;
-            mResult.mTurnover = false;
-            mResult.mInfo = "Incomplete pass";
+            res.mTimeTaken = 5f;
+            res.mDis = 0;
+            res.mTurnover = false;
+            res.mInfo = "Incomplete pass";
         }else{
             // completion.
-            mResult.mTimeTaken = 35f;
+            res.mTimeTaken = 35f;
             float avg = 10f;
             float range = 30f;
             rand = Random.Range(-0.5f, 1f);
-            mResult.mDis = (int) (avg + rand*range);
-            mResult.mTurnover = false;
-            mResult.mInfo = "Completed pass for " + mResult.mDis + " yards";
+            res.mDis = (int) (avg + rand*range);
+            res.mTurnover = false;
+            res.mInfo = "Completed pass for " + res.mDis + " yards";
         }
+
+        return res;
+    }
+
+    /********************************************************************************
+    Previously I had failed to accurately simulate big plays. Most punts are going to 
+    be ~45 yards, give or take 20 yards. However, some smaller percentage are going to 
+    be fumbles, blocks, or big returns for touchdowns.
+    ********************************************************************************/
+    private PLAY_RESULT Punt()
+    {
+        PLAY_RESULT res = new PLAY_RESULT();
+        res.mChoice = PLAY_CHOICE.C_PUNT;
+
+        float rand1 = Random.Range(0f, 1f);
+        if(rand1 < 0.02f){
+            // fumbled, not worrying about blocked now.
+            float avg = 40f;
+            float range = 10f;
+            float rand = Random.Range(-1f, 1f);
+            res.mDis = (int) (avg + (rand*range));
+            res.mTimeTaken = 15f;
+            res.mTurnover = false;
+            res.mInfo = "Muffed Punt, Punting team gets the ball back.";
+        }else if(rand1 < 0.1f){
+            // big return
+            float avg = -10f;
+            float range = 40f;
+            float rand = Random.Range(-1f, 0.5f);
+            res.mDis = (int) (avg + (rand*range));
+            res.mTimeTaken = 20f;
+            res.mTurnover = true;
+            res.mInfo = "Big Return for: " + res.mDis + " net yards";
+        }else{
+            // normal.
+            float avg = 35f;
+            float range = 20f;
+            float rand = Random.Range(-1f, 1f);
+            res.mDis = (int) (avg + (rand*range));
+            res.mTimeTaken = 5f;
+            res.mTurnover = true;
+            res.mInfo = "Standard Punt for: " + res.mDis + " net yards";
+        }
+
+        return res;
+    }
+
+    private PLAY_RESULT KickFieldGoal()
+    {
+        PLAY_RESULT res = new PLAY_RESULT();
         
-        cResult.FEnter();
-    }
-    private void PlayPunt()
-    {
-        mResult.mChoice = PLAY_CHOICE.C_PUNT;
-
-        float avg = 35f;
-        float range = 40f;
-        float rand = Random.Range(-1f, 0.5f);
-        mResult.mDis = (int) (avg + (rand*range));
-        mResult.mTimeTaken = 15f;
-        mResult.mTurnover = true;
-        mResult.mInfo = "Punted for " + mResult.mDis + " net yards";
-
-        cResult.FEnter();
-    }
-
-    // Failure rate should be exponential. So 95% from 35 yards -> 50% from 50, or something.
-    private void PlayKick()
-    {
-        mResult.mChoice = PLAY_CHOICE.C_KICK;
+        res.mChoice = PLAY_CHOICE.C_KICK;
 
         // calc dis of the field goal.
         int dis;
@@ -153,17 +210,17 @@ public class EX_PL_Live : TDC_Component
         float chance = Random.Range(0f, 1f);
         if(chance < missProb)
         {
-            mResult.mSuccessfulFieldGoal = false;
-            mResult.mInfo = "Missed field goal from: " + dis + " yards";
+            res.mSuccessfulFieldGoal = false;
+            res.mInfo = "Missed field goal from: " + dis + " yards";
         }else{
-            mResult.mSuccessfulFieldGoal = true;
-            mResult.mInfo = "Hit field goal from: " + dis + " yards";
+            res.mSuccessfulFieldGoal = true;
+            res.mInfo = "Hit field goal from: " + dis + " yards";
         }
 
-        mResult.mTimeTaken = 5f;
-        mResult.mTurnover = false;                  // just manually handling the field goal as its own thing
-        mResult.mDis = 0;
+        res.mTimeTaken = 5f;
+        res.mTurnover = false;                  // just manually handling the field goal as its own thing
+        res.mDis = 0;
 
-        cResult.FEnter();
+        return res;
     }
 }

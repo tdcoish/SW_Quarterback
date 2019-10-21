@@ -11,6 +11,7 @@ public enum PLAY_CHOICE{
     C_RUN,
     C_PASS,
     C_PUNT,
+    C_KNEELDOWN,
     C_KICK
 }
 
