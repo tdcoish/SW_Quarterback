@@ -34,6 +34,7 @@ public class PRAC_Ath : MonoBehaviour
     private Rigidbody               cRigid;
     private PRAC_AI_Acc             cAcc;
     protected AD_Athletes           cAud;
+    protected AI_CatchHandling      cCatcher;
 
     public bool                     mHitLastFrame = false;
     public DATA_Hitter              dThingThatHitUs;
@@ -48,6 +49,7 @@ public class PRAC_Ath : MonoBehaviour
     {
         cRigid = GetComponent<Rigidbody>();
         cAcc = GetComponent<PRAC_AI_Acc>();
+        cCatcher = GetComponent<AI_CatchHandling>();
         cAud = GetComponentInChildren<AD_Athletes>();
         mState = PRAC_ATH_STATE.SPRE_SNAP;
     }
@@ -103,6 +105,16 @@ public class PRAC_Ath : MonoBehaviour
         mState = PRAC_ATH_STATE.STACKLED;
         cRigid.constraints = RigidbodyConstraints.None;
         cRigid.velocity = Vector3.up * 10f;
+
+        // if we have the ball, then we drop the ball.
+        if(mHasBall){
+            if(cCatcher.mState != AI_CatchHandling.STATE.S_CONTROLLED){
+                Debug.Log("They jarred the ball loose from me");
+                mHasBall = false;
+                cCatcher.mState = AI_CatchHandling.STATE.S_NOCATCH;
+                TDC_EventManager.FBroadcast(TDC_GE.GE_BallDropped);
+            }
+        }
     }
     protected virtual void RUN_Tackled()
     {

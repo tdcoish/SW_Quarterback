@@ -131,6 +131,7 @@
      <Compile Include="Assets\Scripts\FM_Editor\ED_FM_Square.cs" />
      <Compile Include="Assets\Scripts\FM_Editor\UI_SavedTxt.cs" />
      <Compile Include="Assets\Scripts\FX\FX_Football.cs" />
+     <Compile Include="Assets\Scripts\FX\GFX_Star.cs" />
      <Compile Include="Assets\Scripts\GameManagement\GM_Endzone.cs" />
      <Compile Include="Assets\Scripts\GameManagement\GM_Manager.cs" />
      <Compile Include="Assets\Scripts\GE_System\GE_Event.cs" />

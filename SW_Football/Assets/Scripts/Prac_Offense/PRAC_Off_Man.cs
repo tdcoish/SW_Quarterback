@@ -99,12 +99,9 @@ public class PRAC_Off_Man : MonoBehaviour
         for(int i=0; i<rAths.Count; i++)
         {
             if(rAths[i].mHasBall){
-                Debug.Log("Someone has the ball");
                 return rAths[i];
             }
         }
-
-        Debug.Log("Num of aths: " + rAths.Count);
 
         return null;
     }

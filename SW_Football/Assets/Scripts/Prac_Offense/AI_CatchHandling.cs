@@ -37,6 +37,10 @@ public class AI_CatchHandling : MonoBehaviour
 
         cAth.mHasBall = true;
         TDC_EventManager.FBroadcast(TDC_GE.GE_BallHitFingers);
+
+        // testing, make them drop it every time.
+        // cAth.mHasBall = false;
+        // TDC_EventManager.FBroadcast(TDC_GE.GE_BallDropped);
     }
     private void RUN_Controlling()
     {

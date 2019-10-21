@@ -23,6 +23,8 @@ public class PROFST_Live : PROFST_St
     public float                                mLastShotFire;
     public bool                                 mMakeCamFollowBall = false;
 
+    public GFX_Star                             PF_StarGFX;
+
     public PRAC_PlayInfo                        mInfo;
 
     public override void Start()
@@ -31,6 +33,8 @@ public class PROFST_Live : PROFST_St
         TDC_EventManager.FAddHandler(TDC_GE.GE_QB_ReleaseBall, E_BallThrown);
         TDC_EventManager.FAddHandler(TDC_GE.GE_Sack, E_Sack);
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallHitFingers, E_BallHitsFingerTips);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_BallChangesHands, E_BallChangesHands);
+        TDC_EventManager.FAddHandler(TDC_GE.GE_BallDropped, E_BallDropped);
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallCaught_Rec, E_ReceiverCatchesBall);
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallHitGround, E_BallHitsGround);
         TDC_EventManager.FAddHandler(TDC_GE.GE_BallCaught_Int, E_DefenderCatchesBall);
@@ -120,7 +124,17 @@ public class PROFST_Live : PROFST_St
         foreach(PP_Projectile b in balls){
             Destroy(b.gameObject);
         }
+    }
 
+    public void E_BallChangesHands()
+    {
+        // spawn a star on that guy.
+        PRAC_Ath athWithBall = cMan.FGetBallCarrier();
+        if(athWithBall != null){
+            Vector3 vPos = athWithBall.transform.position; vPos.y = 0.1f;
+            var clone = Instantiate(PF_StarGFX, vPos, athWithBall.transform.rotation);
+            clone.transform.SetParent(athWithBall.transform);
+        }
     }
 
     public void E_BallHitsFingerTips()
@@ -136,6 +150,21 @@ public class PROFST_Live : PROFST_St
             // shit, even I don't know who the ball carrier is.
             d.GetComponent<DEF_TackLog>().FEnter();
             d.mTimeToTackle = true;
+        }
+
+        TDC_EventManager.FBroadcast(TDC_GE.GE_BallChangesHands);
+    }
+    public void E_BallDropped()
+    {
+        Debug.Log("Dropped");
+        mInfo.mWasIncompletion = true;
+        cMan.cAud.FSacked();
+        mCountdownActive = true;
+        mCountdownTimer = 1f;
+
+        GFX_Star[] stars = FindObjectsOfType<GFX_Star>();
+        foreach(GFX_Star s in stars){
+            Destroy(s.gameObject);
         }
     }
 
@@ -163,16 +192,19 @@ public class PROFST_Live : PROFST_St
 
     public void E_RunnerTackled()
     {
-        // well shit, gonna need reference to that player.
-        PRAC_Off_Ply[] offs = FindObjectsOfType<PRAC_Off_Ply>();
-        foreach(PRAC_Off_Ply o in offs){
-            if(o.mState == PRAC_Ath.PRAC_ATH_STATE.STACKLED || o.mState == PRAC_Ath.PRAC_ATH_STATE.SRUN_WITH_BALL){
-                mInfo.mWasTackled = true;
-                mInfo.mTackleSpot = o.transform.position.z;             // should convert to field position. eg. HOME 35.
-                mInfo.mYardsGained = Mathf.Abs(cMan.rSnapSpot.transform.position.z - o.transform.position.z);
-                Debug.Log("Yards gained: " + mInfo.mYardsGained);
-            }
+        if(cMan.FGetBallCarrier() == null){
+            Debug.Log("Nobody has ball");
+            return;
         }
+        PRAC_Off_Ply guyWithBall = cMan.FGetBallCarrier().GetComponent<PRAC_Off_Ply>();
+
+        if(guyWithBall.mState == PRAC_Ath.PRAC_ATH_STATE.STACKLED || guyWithBall.mState == PRAC_Ath.PRAC_ATH_STATE.SRUN_WITH_BALL){
+            mInfo.mWasTackled = true;
+            mInfo.mTackleSpot = guyWithBall.transform.position.z;             // should convert to field position. eg. HOME 35.
+            mInfo.mYardsGained = Mathf.Abs(cMan.rSnapSpot.transform.position.z - guyWithBall.transform.position.z);
+            Debug.Log("Yards gained: " + mInfo.mYardsGained);
+        }
+
         cMan.cAud.FTackle();
         mCountdownActive = true;
         mCountdownTimer = 3f;
