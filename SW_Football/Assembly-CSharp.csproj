@@ -115,6 +115,7 @@
      <Compile Include="Assets\Scripts\Exhibition\EX_PL_Pick.cs" />
      <Compile Include="Assets\Scripts\Exhibition\EX_PL_Res.cs" />
      <Compile Include="Assets\Scripts\Exhibition\EX_Plays.cs" />
+     <Compile Include="Assets\Scripts\Exhibition\GFX_YardGainLoss.cs" />
      <Compile Include="Assets\Scripts\Exhibition\MARK_Ball.cs" />
      <Compile Include="Assets\Scripts\Exhibition\MARK_Center.cs" />
      <Compile Include="Assets\Scripts\Exhibition\MARK_DownStart.cs" />
@@ -336,6 +337,7 @@
      <None Include="Assets\FILE_IO\Plays\Routes\SlantL.txt" />
      <None Include="Assets\FILE_IO\Plays\EditorCreatedPlays\TestingAbain.txt" />
      <None Include="Assets\FILE_IO\Plays\EditorCreatedPlays\TESTINGBABY.txt" />
+     <None Include="Assets\Art\Shaders\US_YardGainLoss.shader" />
      <None Include="Assets\FILE_IO\Plays\Routes\WeirdCross.txt" />
      <None Include="Assets\FILE_IO\Routes\DeepPost.txt" />
      <None Include="Assets\Scripts\DT_Types\SO_Vec3.txt" />

@@ -19,7 +19,9 @@ public class EX_PL_Res : TDC_Component
     public MARK_Ball                            rBall;
     public MARK_DownStart                       rDownStart;
     public MARK_FirstDown                       rFirstDown;
-    public MARK_PlaySpot                        PF_PlaySpot;
+    // public MARK_PlaySpot                        PF_PlaySpot;
+
+    public GFX_YardGainLoss                     PF_YardGainLoss;
 
     public UI_PL_Res                            mUI;
 
@@ -223,11 +225,23 @@ public class EX_PL_Res : TDC_Component
         lastPos.x = mPlayNumForDrive;
         int yards = FGetRawYardDistance(cPlays.mGameData.mBallLoc, fLastPos);
 
-        // now just spawn the little nodes for each yard between them?
-        for(int i=0; i<yards; i++){
-            Vector3 iterPos = Vector3.Lerp(lastPos, curPos, (float)i/(float)yards);
-            Instantiate(PF_PlaySpot, iterPos, transform.rotation);
+
+        // ----------------------------- New way, just put down a quad in the right spot.
+        Vector3 vRot = transform.rotation.eulerAngles; vRot.x = 90;
+        Vector3 vPos = Vector3.Lerp(lastPos, curPos, 0.5f);
+        GFX_YardGainLoss g = Instantiate(PF_YardGainLoss, vPos, Quaternion.Euler(vRot));
+        g.transform.localScale = new Vector3(1f, Mathf.Abs(lastPos.z - curPos.z), 1f);
+        if(cLive.mResult.mDis >= 0){
+            g.GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
+        }else{
+            g.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
         }
+
+        // // now just spawn the little nodes for each yard between them?
+        // for(int i=0; i<yards; i++){
+        //     Vector3 iterPos = Vector3.Lerp(lastPos, curPos, (float)i/(float)yards);
+        //     Instantiate(PF_PlaySpot, iterPos, transform.rotation);
+        // }
         // ------------------------------------------
         mTime = Time.time;
     }
