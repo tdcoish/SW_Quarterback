@@ -39,6 +39,8 @@ public class EX_PL_Live : TDC_Component
             mResult = Punt();
         }else if(cPlays.mChoice == PLAY_CHOICE.C_KICK){
             mResult = KickFieldGoal();
+        }else if(cPlays.mChoice == PLAY_CHOICE.C_KNEELDOWN){
+            mResult = Kneeldown();
         }
         
         cResult.FEnter();
@@ -208,9 +210,11 @@ public class EX_PL_Live : TDC_Component
         Debug.Log("Miss Probability: " + missProb);
 
         float chance = Random.Range(0f, 1f);
+        res.mSuccessfulFieldGoal = false;
+        res.mFieldGoalMiss = false;
         if(chance < missProb)
         {
-            res.mSuccessfulFieldGoal = false;
+            res.mFieldGoalMiss = true;
             res.mInfo = "Missed field goal from: " + dis + " yards";
         }else{
             res.mSuccessfulFieldGoal = true;
@@ -220,6 +224,19 @@ public class EX_PL_Live : TDC_Component
         res.mTimeTaken = 5f;
         res.mTurnover = false;                  // just manually handling the field goal as its own thing
         res.mDis = 0;
+
+        return res;
+    }
+
+    private PLAY_RESULT Kneeldown()
+    {
+        PLAY_RESULT res = new PLAY_RESULT();
+        res.mChoice = PLAY_CHOICE.C_KNEELDOWN;
+        res.mDis = -1;
+        res.mTimeTaken = 40;
+        res.mTurnover = false;
+
+        res.mInfo = "Kneeldown";
 
         return res;
     }

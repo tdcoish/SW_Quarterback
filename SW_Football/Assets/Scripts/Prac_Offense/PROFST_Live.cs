@@ -152,6 +152,8 @@ public class PROFST_Live : PROFST_St
             d.mTimeToTackle = true;
         }
 
+        cMan.cAud.FPlayPunch();
+
         TDC_EventManager.FBroadcast(TDC_GE.GE_BallChangesHands);
     }
     public void E_BallDropped()

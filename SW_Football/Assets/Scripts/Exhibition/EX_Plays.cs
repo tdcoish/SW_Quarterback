@@ -20,8 +20,11 @@ public struct PLAY_RESULT{
     public string                       mInfo;              // eg. SACKED. Ran for 3 yards.
     public int                          mDis;
     public bool                         mTurnover;
+    public bool                         mTouchDown;
+    public bool                         mHalfTime;
     public float                        mTimeTaken;
     public bool                         mSuccessfulFieldGoal;
+    public bool                         mFieldGoalMiss;
 }
 
 public struct GAME_SCORE{
@@ -65,6 +68,7 @@ public struct GameData{
         public int                      mYardMark;
     }
     public FIELD_POS                    mBallLoc;
+    public FIELD_POS                    mLastPlayBallLoc;
     public FIELD_POS                    mDownMark;
 
     public GAME_SCORE                   mScores;
@@ -125,6 +129,8 @@ public class EX_Plays : TDC_Component
             mGameData.mBallLoc.mSide = GameData.POSSESSION.AWAY;
             mGameData.mPossession = GameData.POSSESSION.AWAY;
         }
+        mGameData.mLastPlayBallLoc = mGameData.mBallLoc;
+
         mGameData.mDownMark = FCalcNewSpot(mGameData.mBallLoc, mGameData.mPossession, 10);
         cRes.FGFX_PlaceFirstDownMarkers(mGameData.mBallLoc, mGameData.mDownMark);
         // mGameData.mMarkerDown;      

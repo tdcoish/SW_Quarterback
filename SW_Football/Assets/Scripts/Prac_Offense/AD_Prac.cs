@@ -66,6 +66,11 @@ public class AD_Prac : MonoBehaviour
     {
         FPlayClipFX("Whistle");
     }
+    
+    public void FPlayPunch()
+    {
+        FPlayClipFX("Punch");
+    }
 
     public void FPlayOver(PRAC_PlayInfo info)
     {

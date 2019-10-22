@@ -57,5 +57,11 @@ public class EX_PL_Pick : TDC_Component
         FExit();
         cLive.FEnter();
     }
+    public void BT_Kneeldown()
+    {
+        cPlays.mChoice = PLAY_CHOICE.C_KNEELDOWN;
+        FExit();
+        cLive.FEnter();
+    }
 
 }

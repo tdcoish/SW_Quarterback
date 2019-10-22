@@ -648,6 +648,8 @@ MonoBehaviour:
   mFXClips:
   - mName: Whistle
     mClip: {fileID: 8300000, guid: 36251184d6ad4124cbba9eeb7bb49218, type: 3}
+  - mName: Punch
+    mClip: {fileID: 8300000, guid: 7bfdf9a158c3feb4d87f0d9189706cc0, type: 3}
 --- !u!82 &306158093
 AudioSource:
   m_ObjectHideFlags: 0
