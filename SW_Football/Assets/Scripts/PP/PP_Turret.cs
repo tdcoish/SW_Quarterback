@@ -12,6 +12,12 @@ public class PP_Turret : MonoBehaviour
     public float                mSpreadRange = 5f;
 
     public bool                 mActive = false;
+    private AD_Turret           cAud;
+
+    void Start()
+    {
+        cAud = GetComponentInChildren<AD_Turret>();
+    }
 
     void Update()
     {
@@ -34,6 +40,8 @@ public class PP_Turret : MonoBehaviour
         Vector3 vel = dif * 4f;          // figure out the speed later.
 
         clone.GetComponent<Rigidbody>().velocity = vel;
+
+        cAud.FPlayFire();
     }
 
     // This will ruin the staggering.

@@ -6,7 +6,7 @@ using System.IO;
 
 public static class IO_PP_Dif 
 {
-    public static string                    mDif = "EASY";
+    public static string                    mDif = "HARD";
 
     public static DATA_PP_Dif FGetCurrent(string sName)
     {

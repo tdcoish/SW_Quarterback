@@ -180,6 +180,7 @@
      <Compile Include="Assets\Scripts\Plays\PLY_FirstDownMark.cs" />
      <Compile Include="Assets\Scripts\Plays\PLY_SnapSpot.cs" />
      <Compile Include="Assets\Scripts\PP\AD_PP.cs" />
+     <Compile Include="Assets\Scripts\PP\AD_Turret.cs" />
      <Compile Include="Assets\Scripts\PP\DATA_PP_Dif.cs" />
      <Compile Include="Assets\Scripts\PP\IO_PP_Dif.cs" />
      <Compile Include="Assets\Scripts\PP\PP_Arrow.cs" />

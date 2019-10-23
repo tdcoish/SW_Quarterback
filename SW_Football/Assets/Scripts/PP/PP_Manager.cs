@@ -60,6 +60,7 @@ public class PP_Manager : MonoBehaviour
 
     public float                mGameTime = 60f;
     public float                mTimeLeft;
+    private float               mLastCountdownSec;
 
     public PP_State             mState;
     public PP_GAME_STATE        mGameState;         // only care when actually running.
@@ -336,6 +337,14 @@ public class PP_Manager : MonoBehaviour
             EXIT_GAMING();
             ENTER_SCORESCREEN();
         }
+
+        if(mTimeLeft <= 10f){
+            // every 1 second, set the new countdown time.
+            if(Time.time - mLastCountdownSec >= 1f){
+                refUI.FSetCountDownText(mTimeLeft);
+                mLastCountdownSec = Time.time;
+            }
+        }
     }
 
     // This needs a looksie
@@ -345,6 +354,7 @@ public class PP_Manager : MonoBehaviour
 
         if(cTargMan.mActiveTarget == -1)
         {
+            refUI.FSetReactionText("NO RECEIVERS OPEN!");
             refUI.TXT_Instr.text = "No active receivers";
             cAud.FPlayClip(cAud.mTargetFailure);
             ChangeScore(-50);
@@ -354,6 +364,7 @@ public class PP_Manager : MonoBehaviour
         // bad way of saying "this target was hit this frame, or a frame or two ago
         if(Time.time - cTargMan.refTargets[cTargMan.mActiveTarget].mLastTimeHit < 0.1f)
         {
+            refUI.FSetReactionText("NICE!");
             refUI.TXT_Instr.text = "NICE!";
             cAud.FPlayClip(cAud.mTargetSuccess);
             ChangeScore(100);
@@ -363,6 +374,7 @@ public class PP_Manager : MonoBehaviour
 
         cAud.FPlayClip(cAud.mTargetFailure);
         ChangeScore(-50);
+        refUI.FSetReactionText("WRONG GUY!");
         refUI.TXT_Instr.text = "Hit Wrong Receiver";
         cTargMan.FDeactivateReceiver();
     }
@@ -387,9 +399,7 @@ public class PP_Manager : MonoBehaviour
         }
 
         cAud.FPlayClip(cAud.mSacked);
-        Color col = refUI.mSackedTxt.color;
-        col.a = 1f;
-        refUI.mSackedTxt.color = col;
+        refUI.FSetReactionText("SACKED!");
 
         ChangeScore(-100);
 
@@ -457,6 +467,7 @@ public class PP_Manager : MonoBehaviour
 
     public void E_BallHitGround()
     {
+        refUI.FSetReactionText("MISSED!");
         cAud.FPlayClip(cAud.mBallHitGround);
         refUI.mSackImmunityTxt.text = "Sack Immunity: NO";
         mSackImmunity = false;
