@@ -106,6 +106,8 @@
      <Compile Include="Assets\Scripts\ED_OffensePlays\ED_OP_Ply.cs" />
      <Compile Include="Assets\Scripts\ED_OffensePlays\ED_OP_Square.cs" />
      <Compile Include="Assets\Scripts\ED_RP\DT_RP_Set.cs" />
+     <Compile Include="Assets\Scripts\ED_RP\ED_RP_GFX_Rt.cs" />
+     <Compile Include="Assets\Scripts\ED_RP\ED_RP_GFXset.cs" />
      <Compile Include="Assets\Scripts\ED_RP\ED_RP_Grd.cs" />
      <Compile Include="Assets\Scripts\ED_RP\ED_RP_Man.cs" />
      <Compile Include="Assets\Scripts\ED_RP\ED_RP_Pos.cs" />

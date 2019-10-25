@@ -16,11 +16,15 @@ public struct DT_RP_Rec
 {
     public Vector3                  mStart;         // just make y = 1f;
     public string                   mTag;
-    public DATA_ORoute              mRoute;
 }
 
 public class DT_RP_Set
 {
+    public DT_RP_Set(){
+        mHoops = new List<DT_RP_Hoop>();
+        mRecs = new List<DT_RP_Rec>();
+        mRoutes = new List<DATA_ORoute>();
+    }
     public List<DT_RP_Hoop>                         mHoops;
     public List<DT_RP_Rec>                          mRecs;
     public List<DATA_ORoute>                        mRoutes;

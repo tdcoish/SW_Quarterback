@@ -14,6 +14,7 @@ public class ED_RP_Man : MonoBehaviour
         S_END
     }
     public STATE                                    mState;
+    private ED_RP_GFXset                            cGfx;
 
     private DT_RP_Set                               mSet;
 
@@ -23,15 +24,18 @@ public class ED_RP_Man : MonoBehaviour
     public ED_RP_Pos                                rPos;
     public ED_RP_Rt                                 rRtTl;
 
+    public int                                      mNumRecs = 0;
     public int                                      ixRec;
     public List<ED_RP_Rec>                          rRecs;
     public ED_RP_Rec                                PF_Receiver;
 
     void Start()
     {
+        cGfx = GetComponent<ED_RP_GFXset>();
         mState = STATE.S_BEGIN;
 
         rRecs = new List<ED_RP_Rec>();
+        mSet = new DT_RP_Set();
     }
 
     void Update()
@@ -59,10 +63,7 @@ public class ED_RP_Man : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector2.zero, 10f, mask);
             
             if(hit.collider != null){
-                Debug.Log("Hit something : " + hit.collider);
                 if(hit.collider.GetComponent<ED_RP_Rec>() != null){
-                    Debug.Log("rece");
-                    Debug.Log(hit.transform.position);
                     ED_RP_Rec p = hit.collider.GetComponent<ED_RP_Rec>();
 
                     for(int i=0; i<rRecs.Count; i++){
@@ -82,7 +83,25 @@ public class ED_RP_Man : MonoBehaviour
     private void RUN_SELECTED(){
 
     }
-    private void RUN_ROUTE_EDITING(){}
+
+    private void RUN_ROUTE_EDITING(){
+        // Every time they press down, we add a route to the route list.
+        if(Input.GetMouseButtonDown(0))
+        {
+            LayerMask mask = LayerMask.GetMask("RP_GrdSqr");
+            RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector2.zero, 10f, mask);
+            
+            if(hit.collider != null){
+                if(hit.collider.GetComponent<ED_RP_Sqr>() != null){
+                    ED_RP_Sqr s = hit.collider.GetComponent<ED_RP_Sqr>();
+                    Debug.Log("X: " + s.x + ", Y: " + s.y);
+
+                    // So now we need to put down another node
+                    rRtTl.FPlaceNode(s.x, s.y, rGrd);
+                }
+            }
+        }
+    }
 
     private void EXIT_NONE_SELECTED(){}
     private void ENTER_SELECTED(){
@@ -92,6 +111,7 @@ public class ED_RP_Man : MonoBehaviour
     }
     private void EXIT_SELECTED(){
         rPos.gameObject.SetActive(false);
+        rRtTl.gameObject.SetActive(false);
     }
 
     // Always spawn a new receiver right in the middle?
@@ -101,7 +121,14 @@ public class ED_RP_Man : MonoBehaviour
         r.mIxX = 10;
         r.mIxY = 5;
         r.transform.SetParent(rGrd.transform);
+        r.mTag = "WR" + mNumRecs; mNumRecs++;
         rRecs.Add(r);
+    }
+
+    public void BT_NewRoute()
+    {
+        mState = STATE.S_ROUTE_EDITING;
+        rRtTl.FPlaceFirst(rRecs[ixRec].mIxX, rRecs[ixRec].mIxY, rGrd);
     }
 
     public void BT_NewSet()
@@ -116,6 +143,7 @@ public class ED_RP_Man : MonoBehaviour
             return;
         }
 
+        Debug.Log("Owner should be: " + rRecs[ixRec].mTag);
         DATA_ORoute r = rRtTl.FReturnActiveRoute(rRecs[ixRec].mTag, rRecs[ixRec].mIxX, rRecs[ixRec].mIxY, 2);        
 
         // ------------------------------- Now save that route in the play itself.
@@ -130,7 +158,10 @@ public class ED_RP_Man : MonoBehaviour
         mSet.mRoutes.Add(r);
 
         Debug.Log("Number of routes: " + mSet.mRoutes.Count);
-
+        
+        // clear the existing nodes.
+        rRtTl.FClear();
+        cGfx.FRenderSet(mSet.mRoutes, rRecs, 2, rGrd);
         // RouteStopEdit();
     }
 

@@ -25,6 +25,7 @@ public class ED_RP_Grd : MonoBehaviour
 
                 mSquares[x,y] = Instantiate(PF_Square, v, transform.rotation);
                 mSquares[x,y].transform.SetParent(transform);
+                mSquares[x,y].x = x; mSquares[x,y].y = y;
             }
         }  
 

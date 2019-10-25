@@ -8,6 +8,10 @@ public struct TDC_IntVec{
         x = inX;
         y = inY;
     }
+    public TDC_IntVec(float inX, float inY){
+        x = (int)inX;
+        y = (int)inY;
+    }
     public int                  x;
     public int                  y;
 }
