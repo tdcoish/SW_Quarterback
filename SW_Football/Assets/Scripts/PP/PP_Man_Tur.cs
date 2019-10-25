@@ -17,8 +17,12 @@ public class PP_Man_Tur : MonoBehaviour
         refTurrets = FindObjectsOfType<PP_Turret>();    
     }
 
-    public void FHandleTurrets()
+    public void FHandleTurrets(bool ballInAir)
     {
+        if(ballInAir){
+            return;
+        }
+
         if(Time.time - mLastShotFire > cPPMan.lDifData.mTurretFireRate)
         {
             int ind = Random.Range(0, refTurrets.Length);

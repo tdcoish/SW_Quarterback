@@ -62,6 +62,7 @@ public class PP_Manager : MonoBehaviour
     public float                mTimeLeft;
     private float               mLastCountdownSec;
 
+    private bool                mBallInAir = false;
     public PP_State             mState;
     public PP_GAME_STATE        mGameState;         // only care when actually running.
 
@@ -270,7 +271,7 @@ public class PP_Manager : MonoBehaviour
 
         refUI.mScoreTxt.text = "Score: " + mScore;
         cTargMan.FHandleSwitchingReceiverIfTimeRunsOut();
-        cTurMan.FHandleTurrets();
+        cTurMan.FHandleTurrets(mBallInAir);
 
         // if the user presses m, then they bring up the pause menu.
         if(Input.GetKeyDown(KeyCode.M))
@@ -350,6 +351,7 @@ public class PP_Manager : MonoBehaviour
     // This needs a looksie
     public void E_TargetHit()
     {
+        mBallInAir = false;
         DestroyFootballs();
 
         if(cTargMan.mActiveTarget == -1)
@@ -377,6 +379,7 @@ public class PP_Manager : MonoBehaviour
         refUI.FSetReactionText("WRONG GUY!");
         refUI.TXT_Instr.text = "Hit Wrong Receiver";
         cTargMan.FDeactivateReceiver();
+
     }
 
     public void E_StepOutOfPocket()
@@ -463,6 +466,8 @@ public class PP_Manager : MonoBehaviour
         }
         mSackImmunity = true;
         refUI.mSackImmunityTxt.text = "Sack Immunity: YES";
+
+        mBallInAir = true;
     }
 
     public void E_BallHitGround()
@@ -474,6 +479,8 @@ public class PP_Manager : MonoBehaviour
         DestroyFootballs();
         cTargMan.FDeactivateReceiver();
         ChangeScore(-25);
+
+        mBallInAir = false;
     }
 
     // we factor in streak right here.
@@ -498,6 +505,9 @@ public class PP_Manager : MonoBehaviour
             if(affectStreak){
                 mStreak++;
             }
+        }
+        if(mScore < 0){
+            mScore = 0;
         }
 
         mStreakBonus = mStreak+1;
