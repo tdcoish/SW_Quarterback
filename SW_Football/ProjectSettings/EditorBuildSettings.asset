@@ -62,4 +62,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SN_Exhibition.unity
     guid: 06f12e37685e00244922db735ea33331
+  - enabled: 1
+    path: Assets/Scenes/ED_RP.unity
+    guid: 2fc3dba825161c94eaf9fbbfff1b8684
   m_configObjects: {}

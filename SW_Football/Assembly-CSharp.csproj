@@ -71,6 +71,7 @@
      <Compile Include="Assets\Scripts\AI\AI_TakesShove.cs" />
      <Compile Include="Assets\Scripts\AI\AI_Target.cs" />
      <Compile Include="Assets\Scripts\AI\AI_ZoneDefence.cs" />
+     <Compile Include="Assets\Scripts\Animations\AN_Turret.cs" />
      <Compile Include="Assets\Scripts\Audio\AD_Athletes.cs" />
      <Compile Include="Assets\Scripts\Audio\AD_Exhibition.cs" />
      <Compile Include="Assets\Scripts\Audio\AD_Manager.cs" />

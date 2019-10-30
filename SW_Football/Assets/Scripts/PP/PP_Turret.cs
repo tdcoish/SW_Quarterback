@@ -13,10 +13,12 @@ public class PP_Turret : MonoBehaviour
 
     public bool                 mActive = false;
     private AD_Turret           cAud;
+    private AN_Turret           cAnim;
 
     void Start()
     {
         cAud = GetComponentInChildren<AD_Turret>();
+        cAnim = GetComponent<AN_Turret>();
     }
 
     void Update()
@@ -42,6 +44,7 @@ public class PP_Turret : MonoBehaviour
         clone.GetComponent<Rigidbody>().velocity = vel;
 
         cAud.FPlayFire();
+        cAnim.FPlayFireAnim();
     }
 
     // This will ruin the staggering.
