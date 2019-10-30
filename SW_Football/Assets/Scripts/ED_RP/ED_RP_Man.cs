@@ -23,7 +23,12 @@ public class ED_RP_Man : MonoBehaviour
     public ED_RP_Grd                                rGrd;
     public ED_RP_Pos                                rPos;
     public ED_RP_Rt                                 rRtTl;
+    public ED_RP_Tag                                rTagger;
 
+    public int                                      mNumHoops = 0;
+    public int                                      ixHoop;
+    public List<ED_RP_Hp>                           rHoops;
+    public ED_RP_Hp                                 PF_Hoop;
     public int                                      mNumRecs = 0;
     public int                                      ixRec;
     public List<ED_RP_Rec>                          rRecs;
@@ -55,6 +60,9 @@ public class ED_RP_Man : MonoBehaviour
 
         mState = STATE.S_NONE_SELECTED;
     }
+    private void ENTER_NONE_SELECTED(){
+        mState = STATE.S_NONE_SELECTED;
+    }
     private void RUN_NONE_SELECTED(){
 
         if(Input.GetMouseButtonDown(0))
@@ -77,11 +85,13 @@ public class ED_RP_Man : MonoBehaviour
                     }
                 }
             }
-
         }
     }
     private void RUN_SELECTED(){
-
+        if(Input.GetMouseButtonDown(1)){
+            EXIT_SELECTED();
+            ENTER_NONE_SELECTED();
+        }
     }
 
     private void RUN_ROUTE_EDITING(){
@@ -108,10 +118,13 @@ public class ED_RP_Man : MonoBehaviour
         mState = STATE.S_SELECTED_PLAYER;
         rPos.gameObject.SetActive(true);
         rRtTl.gameObject.SetActive(true);
+        rTagger.gameObject.SetActive(true);
+        rTagger.FSetCurTag(rRecs[ixRec].mTag);
     }
     private void EXIT_SELECTED(){
         rPos.gameObject.SetActive(false);
         rRtTl.gameObject.SetActive(false);
+        rTagger.gameObject.SetActive(false);
     }
 
     // Always spawn a new receiver right in the middle?
@@ -123,6 +136,16 @@ public class ED_RP_Man : MonoBehaviour
         r.transform.SetParent(rGrd.transform);
         r.mTag = "WR" + mNumRecs; mNumRecs++;
         rRecs.Add(r);
+    }
+
+    public void BT_NewHoop()
+    {
+        ED_RP_Hp h = Instantiate(PF_Hoop, rGrd.mSquares[13, 15].transform.position, transform.rotation);
+        h.mIxX = 13;
+        h.mIxY = 15;
+        h.transform.SetParent(rGrd.transform);
+        h.mTag = "WR" + mNumHoops; mNumHoops++;
+        rHoops.Add(h);
     }
 
     public void BT_NewRoute()
@@ -162,7 +185,7 @@ public class ED_RP_Man : MonoBehaviour
         // clear the existing nodes.
         rRtTl.FClear();
         cGfx.FRenderSet(mSet.mRoutes, rRecs, 2, rGrd);
-        // RouteStopEdit();
+        mState = STATE.S_NONE_SELECTED;
     }
 
     public void BT_MainMenu()

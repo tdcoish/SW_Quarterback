@@ -109,12 +109,14 @@
      <Compile Include="Assets\Scripts\ED_RP\ED_RP_GFX_Rt.cs" />
      <Compile Include="Assets\Scripts\ED_RP\ED_RP_GFXset.cs" />
      <Compile Include="Assets\Scripts\ED_RP\ED_RP_Grd.cs" />
+     <Compile Include="Assets\Scripts\ED_RP\ED_RP_Hp.cs" />
      <Compile Include="Assets\Scripts\ED_RP\ED_RP_Man.cs" />
      <Compile Include="Assets\Scripts\ED_RP\ED_RP_Pos.cs" />
      <Compile Include="Assets\Scripts\ED_RP\ED_RP_Rec.cs" />
      <Compile Include="Assets\Scripts\ED_RP\ED_RP_Rt.cs" />
      <Compile Include="Assets\Scripts\ED_RP\ED_RP_Snap.cs" />
      <Compile Include="Assets\Scripts\ED_RP\ED_RP_Sqr.cs" />
+     <Compile Include="Assets\Scripts\ED_RP\ED_RP_Tag.cs" />
      <Compile Include="Assets\Scripts\Environment\EN_FieldGround.cs" />
      <Compile Include="Assets\Scripts\Exhibition\CAM_Sim.cs" />
      <Compile Include="Assets\Scripts\Exhibition\EX_CoinToss.cs" />
