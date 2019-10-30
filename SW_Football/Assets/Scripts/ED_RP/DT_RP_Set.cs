@@ -24,8 +24,10 @@ public class DT_RP_Set
         mHoops = new List<DT_RP_Hoop>();
         mRecs = new List<DT_RP_Rec>();
         mRoutes = new List<DATA_ORoute>();
+        mName = "NAME ME";
     }
     public List<DT_RP_Hoop>                         mHoops;
     public List<DT_RP_Rec>                          mRecs;
     public List<DATA_ORoute>                        mRoutes;
+    public string                                   mName;
 }

@@ -1,5 +1,6 @@
 ﻿/*************************************************************************************
 The positioner.
+Ugh. Having to make this work with either the hoops or the receivers is a bitch.
 *************************************************************************************/
 using UnityEngine;
 
@@ -27,51 +28,49 @@ public class ED_RP_Pos : MonoBehaviour
 
     public void BT_LeftHard()
     {
-        TDC_IntVec v = FuncGetNewPos(cMan.rRecs[cMan.ixRec].mIxX, cMan.rRecs[cMan.ixRec].mIxY, -5, 0, 50);
-        cMan.rRecs[cMan.ixRec].mIxX = v.x; cMan.rRecs[cMan.ixRec].mIxY = v.y;
-        cMan.rRecs[cMan.ixRec].transform.position = cMan.rGrd.mSquares[cMan.rRecs[cMan.ixRec].mIxX, cMan.rRecs[cMan.ixRec].mIxY].transform.position;
+        MoveSelectedEntity(-5, 0, cMan.mState);
     }
     public void BT_Left()
     {
-        TDC_IntVec v = FuncGetNewPos(cMan.rRecs[cMan.ixRec].mIxX, cMan.rRecs[cMan.ixRec].mIxY, -1, 0, cMan.rGrd.mAxLth);
-        cMan.rRecs[cMan.ixRec].mIxX = v.x; cMan.rRecs[cMan.ixRec].mIxY = v.y;
-        cMan.rRecs[cMan.ixRec].transform.position = cMan.rGrd.mSquares[cMan.rRecs[cMan.ixRec].mIxX, cMan.rRecs[cMan.ixRec].mIxY].transform.position;
+        MoveSelectedEntity(-1, 0, cMan.mState);
     }
     public void BT_UpHard()
     {
-        TDC_IntVec v = FuncGetNewPos(cMan.rRecs[cMan.ixRec].mIxX, cMan.rRecs[cMan.ixRec].mIxY, 0, 5, cMan.rGrd.mAxLth);
-        cMan.rRecs[cMan.ixRec].mIxX = v.x; cMan.rRecs[cMan.ixRec].mIxY = v.y;
-        cMan.rRecs[cMan.ixRec].transform.position = cMan.rGrd.mSquares[cMan.rRecs[cMan.ixRec].mIxX, cMan.rRecs[cMan.ixRec].mIxY].transform.position;
+        MoveSelectedEntity(0, 5, cMan.mState);
     }
     public void BT_Up()
     {
-        TDC_IntVec v = FuncGetNewPos(cMan.rRecs[cMan.ixRec].mIxX, cMan.rRecs[cMan.ixRec].mIxY, 0, 1, cMan.rGrd.mAxLth);
-        cMan.rRecs[cMan.ixRec].mIxX = v.x; cMan.rRecs[cMan.ixRec].mIxY = v.y;
-        cMan.rRecs[cMan.ixRec].transform.position = cMan.rGrd.mSquares[cMan.rRecs[cMan.ixRec].mIxX, cMan.rRecs[cMan.ixRec].mIxY].transform.position;
+        MoveSelectedEntity(0, 1, cMan.mState);
     }
     public void BT_RightHard()
     {
-        TDC_IntVec v = FuncGetNewPos(cMan.rRecs[cMan.ixRec].mIxX, cMan.rRecs[cMan.ixRec].mIxY, 5, 0, cMan.rGrd.mAxLth);
-        cMan.rRecs[cMan.ixRec].mIxX = v.x; cMan.rRecs[cMan.ixRec].mIxY = v.y;
-        cMan.rRecs[cMan.ixRec].transform.position = cMan.rGrd.mSquares[cMan.rRecs[cMan.ixRec].mIxX, cMan.rRecs[cMan.ixRec].mIxY].transform.position;
+        MoveSelectedEntity(5, 0, cMan.mState);
     }
     public void BT_Right()
     {
-        TDC_IntVec v = FuncGetNewPos(cMan.rRecs[cMan.ixRec].mIxX, cMan.rRecs[cMan.ixRec].mIxY, 1, 0, cMan.rGrd.mAxLth);
-        cMan.rRecs[cMan.ixRec].mIxX = v.x; cMan.rRecs[cMan.ixRec].mIxY = v.y;
-        cMan.rRecs[cMan.ixRec].transform.position = cMan.rGrd.mSquares[cMan.rRecs[cMan.ixRec].mIxX, cMan.rRecs[cMan.ixRec].mIxY].transform.position;
+        MoveSelectedEntity(1, 0, cMan.mState);
     }
     public void BT_DownHard()
     {
-        TDC_IntVec v = FuncGetNewPos(cMan.rRecs[cMan.ixRec].mIxX, cMan.rRecs[cMan.ixRec].mIxY, 0, -5, cMan.rGrd.mAxLth);
-        cMan.rRecs[cMan.ixRec].mIxX = v.x; cMan.rRecs[cMan.ixRec].mIxY = v.y;
-        cMan.rRecs[cMan.ixRec].transform.position = cMan.rGrd.mSquares[cMan.rRecs[cMan.ixRec].mIxX, cMan.rRecs[cMan.ixRec].mIxY].transform.position;
+        MoveSelectedEntity(0, -5, cMan.mState);
     }
     public void BT_Down()
     {
-        TDC_IntVec v = FuncGetNewPos(cMan.rRecs[cMan.ixRec].mIxX, cMan.rRecs[cMan.ixRec].mIxY, 0, -1, cMan.rGrd.mAxLth);
-        cMan.rRecs[cMan.ixRec].mIxX = v.x; cMan.rRecs[cMan.ixRec].mIxY = v.y;
-        cMan.rRecs[cMan.ixRec].transform.position = cMan.rGrd.mSquares[cMan.rRecs[cMan.ixRec].mIxX, cMan.rRecs[cMan.ixRec].mIxY].transform.position;
+        MoveSelectedEntity(0, -1, cMan.mState);
+    }
+
+    // Massive side effects, but it's worth it for readibility. Passing in state to make it more obvious.
+    private void MoveSelectedEntity(int wd, int ht, ED_RP_Man.STATE state)
+    {
+        if(state == ED_RP_Man.STATE.S_SELECTED_PLAYER){
+            TDC_IntVec v = FuncGetNewPos(cMan.rRecs[cMan.ixRec].mIxX, cMan.rRecs[cMan.ixRec].mIxY, wd, ht, cMan.rGrd.mAxLth);
+            cMan.rRecs[cMan.ixRec].mIxX = v.x; cMan.rRecs[cMan.ixRec].mIxY = v.y;
+            cMan.rRecs[cMan.ixRec].transform.position = cMan.rGrd.mSquares[cMan.rRecs[cMan.ixRec].mIxX, cMan.rRecs[cMan.ixRec].mIxY].transform.position;
+        }else if(state == ED_RP_Man.STATE.S_SELECTED_HOOP){
+            TDC_IntVec v = FuncGetNewPos(cMan.rHoops[cMan.ixHoop].mIxX, cMan.rHoops[cMan.ixHoop].mIxY, wd, ht, cMan.rGrd.mAxLth);
+            cMan.rHoops[cMan.ixHoop].mIxX = v.x; cMan.rHoops[cMan.ixHoop].mIxY = v.y;
+            cMan.rHoops[cMan.ixHoop].transform.position = cMan.rGrd.mSquares[cMan.rHoops[cMan.ixHoop].mIxX, cMan.rHoops[cMan.ixHoop].mIxY].transform.position;
+        }
     }
 
     private TDC_IntVec FuncGetNewPos(int curX, int curY, int wd, int ht, int axLngth)

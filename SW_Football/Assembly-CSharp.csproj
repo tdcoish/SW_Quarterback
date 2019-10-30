@@ -153,6 +153,7 @@
      <Compile Include="Assets\Scripts\GE_System\GE_Manager.cs" />
      <Compile Include="Assets\Scripts\IO_Formations.cs" />
      <Compile Include="Assets\Scripts\IO_OffensivePlays.cs" />
+     <Compile Include="Assets\Scripts\IO_RP.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_Manager.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_Play_LOAD.cs" />
      <Compile Include="Assets\Scripts\Menus\MN_PP_Dif.cs" />
@@ -413,6 +414,7 @@
      <None Include="Assets\FILE_IO\Routes\MidPost.txt" />
      <None Include="Assets\PLAYART_CREATION\Formations\0-1_Trips.txt" />
      <None Include="Assets\FILE_IO\OffensivePlays\1-1_ModifiedSmash.txt" />
+     <None Include="Assets\FILE_IO\RoutePasser\adsf.txt" />
      <None Include="Assets\FILE_IO\OffensivePlays\1-1_Sail01.txt" />
      <None Include="Assets\PLAYART_CREATION\OffensivePlays\1-1_BaseCrash.txt" />
      <None Include="Assets\FILE_IO\Formations\1-2_Default.txt" />
@@ -518,6 +520,7 @@
      <None Include="Assets\FILE_IO\Routes\MidHook.txt" />
      <None Include="Assets\FILE_IO\Plays\EditorCreatedPlays\Testsdl.txt" />
      <None Include="Assets\FILE_IO\Formations\1-2_2WideRBWide.txt" />
+     <None Include="Assets\FILE_IO\RoutePasser\First.txt" />
      <None Include="Assets\FILE_IO\Routes\MidCross.txt" />
      <None Include="Assets\FILE_IO\OffensivePlays\1-1_Hawk.txt" />
      <None Include="Assets\PLAYART_CREATION\OffensivePlays\1-1_Stick.txt" />
