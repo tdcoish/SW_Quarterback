@@ -98,7 +98,6 @@ public static class IO_RP
                 for(int j=0; j<numRoutes; j++){
                     DATA_ORoute r = new DATA_ORoute();
                     r.mOwner = sLines[ix++];
-                    ix++;       // skip over NUM SPOTS line
                     int numSpots = int.Parse(sLines[ix++]);
                     r.mSpots = new List<Vector2>();
                     for(int k=0; k<numSpots; k++){

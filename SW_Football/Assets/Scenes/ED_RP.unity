@@ -6835,8 +6835,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PF_Square: {fileID: 2215815360616855208, guid: 0438667be140a0f429966b215af18443,
     type: 3}
-  mAxLth: 25
-  mSqrPixSz: 20
+  mAxLth: 50
+  mSqrPixSz: 10
   rGridStart: {fileID: 1765507378}
 --- !u!114 &1226555121
 MonoBehaviour:
@@ -9298,7 +9298,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -336, y: -237}
+  m_AnchoredPosition: {x: -322.04, y: -265.5}
   m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1765507380
@@ -11427,12 +11427,12 @@ PrefabInstance:
     - target: {fileID: 6693575461159228524, guid: c5900891224d7144fab7e06b5096f925,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6693575461159228524, guid: c5900891224d7144fab7e06b5096f925,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6693575461159228524, guid: c5900891224d7144fab7e06b5096f925,
         type: 3}
@@ -11675,12 +11675,12 @@ PrefabInstance:
     - target: {fileID: 8909393625162785916, guid: 0438667be140a0f429966b215af18443,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8909393625162785916, guid: 0438667be140a0f429966b215af18443,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8909393625162785916, guid: 0438667be140a0f429966b215af18443,
         type: 3}

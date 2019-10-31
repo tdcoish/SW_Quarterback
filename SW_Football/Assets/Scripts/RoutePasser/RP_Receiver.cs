@@ -6,13 +6,13 @@ using System.Collections.Generic;
 
 public class RP_Receiver : MonoBehaviour
 {
-    public string                   mRoute;
     public string                   mTag;
     private RP_Manager              rManager;
 
     private Rigidbody               cRigid;
     private OFF_RouteLog            cRouteLog;
     private RP_CatchLog             cCatchLog;
+    private PRAC_Ath                cAth;               // super irritating and shitty.
 
     public enum STATE{
         SPRE_SNAP,
@@ -25,14 +25,14 @@ public class RP_Receiver : MonoBehaviour
     //     S_BREAK_ON_BALL
     // }
 
-    void Start()
+    void Awake()
     {
+        cAth = GetComponent<PRAC_Ath>();
         cRouteLog = GetComponent<OFF_RouteLog>();
         cCatchLog = GetComponent<RP_CatchLog>();
         cRigid = GetComponent<Rigidbody>();
         rManager = FindObjectOfType<RP_Manager>();
         mState = STATE.SPRE_SNAP;
-        SetUpRoute();
     }
 
     void Update()
@@ -47,62 +47,44 @@ public class RP_Receiver : MonoBehaviour
 
     private void RUN_PreSnap()
     {
-        cRigid.constraints = RigidbodyConstraints.FreezeAll;
+        // cRigid.constraints = RigidbodyConstraints.FreezeAll;
         cRigid.velocity = Vector3.zero;
     }
 
     public void FENTER_PRE_SNAP()
     {
+        cAth.mState = PRAC_Ath.PRAC_ATH_STATE.SPRE_SNAP;
         mState = STATE.SPRE_SNAP;
         cRouteLog.mState = OFF_RouteLog.STATE.S_BLIND;
-        SetUpRoute();
     }
-
+    public void FEnterRunJob()
+    {
+        cAth.mState = PRAC_Ath.PRAC_ATH_STATE.SDOING_JOB;
+        mState = STATE.SDOING_JOB;
+    }
     private void RUN_Job()
     {
-        cRigid.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezePositionY;
-
-        RP_Manager rpMan = FindObjectOfType<RP_Manager>();
-        if(rpMan.mBallThrown)
-        {
-            // ---------------------------- Get the spot to move to
-            Vector3 vSpot = cCatchLog.FCalcInterceptSpot();
-            Vector3 vDir = vSpot - transform.position; vDir.y = 0f;
-            vDir = Vector3.Normalize(vDir);
-            // ---------------------------- Find out if we're going to overrun it. If so, accelerate in the opposite direction.
-            // But that gets complicated if we're at a weird angle, so only do this if we're basically going straight there.
-            bool isOverrunning = false;
-            if(Vector3.Dot(vDir, Vector3.Normalize(cRigid.velocity)) > 0.98f){
-                Vector3 vProjectedSpot = transform.position + (cRigid.velocity.magnitude * vDir);
-                if(Vector3.Dot(vSpot - vProjectedSpot, vDir) < 0f){
-                    // Debug.Log("Overrunning");
-                    isOverrunning = true;
-                    GetComponent<PRAC_AI_Acc>().FCalcAcc(Vector3.Normalize(-vDir));
-                }
-            }
-            if(!isOverrunning){
-                GetComponent<PRAC_AI_Acc>().FCalcAcc(Vector3.Normalize(vDir));
-            }
-        }else{
-            cRouteLog.FRunRoute();
-        }
+        // cRigid.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezePositionY;
+        Debug.Log("Before2" + cRigid.velocity);
+        cRouteLog.FRunRoute();
+        Debug.Log("After2" + cRigid.velocity);
     }
 
     // Again, nothing. Eventually some animations or something.
     private void RUN_PostPlay()
     {
         cRigid.velocity = Vector3.zero;
-        cRigid.constraints = RigidbodyConstraints.FreezeAll;
+        // cRigid.constraints = RigidbodyConstraints.FreezeAll;
     }
 
-    private void SetUpRoute()
+    public void FSetUpRoute(DATA_ORoute rt)
     {
-        DATA_Route rt = IO_RouteList.FLOAD_ROUTE_BY_NAME(mRoute);
         cRouteLog.mRouteSpots = new List<Vector3>();
-        for(int i=0; i<rt.mSpots.Length; i++)
+        for(int i=0; i<rt.mSpots.Count; i++)
         {
             Vector3 rtSpot = UT_VecConversion.ConvertVec2(rt.mSpots[i]);
             rtSpot += transform.position;
+            Debug.Log(rtSpot);
             cRouteLog.mRouteSpots.Add(rtSpot);
         }
     }

@@ -329,6 +329,7 @@
      <None Include="Assets\FILE_IO\Plays\Routes\MHitchR.txt" />
      <None Include="Assets\FILE_IO\OffensivePlays\1-1_CreaseSmash.txt" />
      <None Include="Assets\PLAYART_CREATION\Formations\1-1_Trips.txt" />
+     <None Include="Assets\FILE_IO\RoutePasser\Slants.txt" />
      <None Include="Assets\FILE_IO\OffensivePlays\1-1_ChinaPost.txt" />
      <None Include="Assets\FILE_IO\Settings\Settings.txt" />
      <None Include="Assets\PLAYART_CREATION\OffensivePlays\1-1_BaseLevels.txt" />
@@ -375,6 +376,7 @@
      <None Include="Assets\FILE_IO\Plays\Routes\SCrossR.txt" />
      <None Include="Assets\FILE_IO\Plays\Routes\OutR.txt" />
      <None Include="Assets\FILE_IO\Routes\ShortIn.txt" />
+     <None Include="Assets\FILE_IO\RoutePasser\test2.txt" />
      <None Include="Assets\FILE_IO\Formations\1-2_2Wide.txt" />
      <None Include="Assets\FILE_IO\Routes\MidHitch.txt" />
      <None Include="Assets\FILE_IO\Plays\Priorities\Defenders.txt" />

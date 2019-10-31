@@ -61,7 +61,8 @@ public class ED_RP_Man : MonoBehaviour
 
     private void RUN_BEGIN(){
         // need to place the snap at the correct point?
-        rSnap = Instantiate(PF_Snap, rGrd.mSquares[12,5].transform.position, transform.rotation);
+        rSnap = Instantiate(PF_Snap, rGrd.mSquares[rGrd.mAxLth/2,5].transform.position, transform.rotation);
+        rSnap.mIxX = rGrd.mAxLth/2; rSnap.mIxY = 5;
         rSnap.transform.SetParent(rGrd.transform);
 
         mState = STATE.S_NONE_SELECTED;
@@ -206,7 +207,6 @@ public class ED_RP_Man : MonoBehaviour
 
         Debug.Log("Owner should be: " + rRecs[ixRec].mTag);
         DATA_ORoute r = rRtTl.FReturnActiveRoute(rRecs[ixRec].mTag, rRecs[ixRec].mIxX, rRecs[ixRec].mIxY, 2);        
-        Debug.Log("Route Tag: " + r.mOwner);
         // ------------------------------- Now save that route in the play itself.
         // ------------------------------- Remove existing route if there is one.
         for(int i=0; i<mSet.mRoutes.Count; i++){
@@ -239,7 +239,7 @@ public class ED_RP_Man : MonoBehaviour
             dh.mSize = 1f;
             Vector3 vStart = new Vector3(); vStart.y = 1f;
             vStart.x = h.mIxX - rSnap.mIxX;
-            vStart.y = h.mIxY - rSnap.mIxY;
+            vStart.z = h.mIxY - rSnap.mIxY;
             // convert grid coordinates to starting position...
             dh.mStart = vStart; 
             mSet.mHoops.Add(dh);
@@ -250,7 +250,7 @@ public class ED_RP_Man : MonoBehaviour
             dr.mTag = r.mTag;
             Vector3 vStart = new Vector3(); vStart.y = 1f;
             vStart.x = r.mIxX - rSnap.mIxX;
-            vStart.y = r.mIxY - rSnap.mIxY;
+            vStart.z = r.mIxY - rSnap.mIxY;
             // convert grid coordinates to starting position...
             dr.mStart = vStart; 
             mSet.mRecs.Add(dr);

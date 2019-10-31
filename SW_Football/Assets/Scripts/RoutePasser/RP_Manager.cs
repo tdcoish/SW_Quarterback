@@ -48,6 +48,7 @@ public class RP_Manager : MonoBehaviour
     private List<RP_Receiver>       rRecs;
     private RP_ThrowSpot            rPocket;
     private List<RP_Hoop>           rHoops;
+    public PLY_SnapSpot             rSnap;
 
     // -------------------------------- 
     public string               sRingHit;           // set this to "NA" before every frame.
@@ -59,7 +60,7 @@ public class RP_Manager : MonoBehaviour
     public float                mTimer;             // for now, always start at 5 seconds or something.
 
     // ---------------------------------
-    public DATA_RP_Set          mActiveSet;
+    public DT_RP_Set            mSet;
     public List<string>         mCompletions;
 
     // --------------------------------
@@ -78,10 +79,7 @@ public class RP_Manager : MonoBehaviour
         mUI = GetComponent<RP_UI>();
         cRouteDrawer = GetComponent<RP_DrawRoutes>();
 
-        // IO_RP_Diff.FLoadSet("EASY1");
-        IO_RP_Dif.FSaveSet(mActiveSet);
-        mActiveSet = IO_RP_Dif.FLoadSet("EASY4");
-        // IO_RP_Dif.FSaveSet(mActiveSet);
+        mSet = IO_RP.FLoadSet("Slants");
         
         // Unfortunately, the destroyed receivers and hoops are still around, so we can't get references this frame.
         // Instead, do this on exitIntro.
@@ -133,22 +131,32 @@ public class RP_Manager : MonoBehaviour
             Destroy(h.gameObject);
         }
 
-        // ------------------- And spawn in our receivers and hoops.
+        // ------------------- Spawn in our receivers and hoops.
         rRecs = new List<RP_Receiver>();
         rHoops = new List<RP_Hoop>();
-        foreach(DATA_RP_Receiver r in mActiveSet.mReceiverData){
-            RP_Receiver clone = Instantiate(PF_Receiver, r.mStartPos, transform.rotation);
+        foreach(DT_RP_Rec r in mSet.mRecs){
+            // TODO: Change the starting position relative to the snap.
+            Vector3 vPos = rSnap.transform.position;
+            vPos += r.mStart; vPos.y = 1f;
+            RP_Receiver clone = Instantiate(PF_Receiver, vPos, transform.rotation);
             clone.mTag = r.mTag;
-            clone.mRoute = r.mRoute;
+            foreach(DATA_ORoute rt in mSet.mRoutes){
+                if(rt.mOwner == clone.mTag){
+                    clone.FSetUpRoute(rt);
+                }
+            }
+
             rRecs.Add(clone);
         }
-        foreach(DATA_RP_Ring r in mActiveSet.mRingData){
-            RP_Hoop clone = Instantiate(PF_Ring, r.mStartPos, Quaternion.Euler(r.mDir));
-            clone.mWRTag = r.mTag;
-            clone.transform.localScale = r.mScale;
-            clone.mStartRot = r.mDir;
+        foreach(DT_RP_Hoop h in mSet.mHoops){
+            Vector3 vPos = rSnap.transform.position;
+            vPos += h.mStart; vPos.y = 1f;
+            RP_Hoop clone = Instantiate(PF_Ring, vPos, transform.rotation);
+            clone.mWRTag = h.mTag;
+            // TODO: Stuff about height and size.
             rHoops.Add(clone);
         }
+
         Debug.Log("Receivers Instantiated: " + rRecs.Count);
         Debug.Log("Hoops Instantiated: " + rHoops.Count);
     }
@@ -160,15 +168,16 @@ public class RP_Manager : MonoBehaviour
 
         mUI.rPreSnapCanvas.gameObject.SetActive(true);
         rPC.mState = PC_Controller.PC_STATE.SPRE_SNAP;
-        rPC.transform.position = mActiveSet.mPCSpot;
+        Vector3 vPCPos = rSnap.transform.position; vPCPos.z -= 5f; vPCPos.y = 1f;
+        rPC.transform.position = vPCPos;
         foreach(RP_Receiver rec in rRecs)
         {
-            rec.transform.position = FGetRecStartingSpot(rec.mTag);
+            rec.transform.position = FGetRecStartingSpot(rec.mTag, rSnap.transform.position);
             rec.FENTER_PRE_SNAP();
         }
         foreach(RP_Hoop hoop in rHoops)
         {
-            hoop.transform.position = FGetRingStartingSpot(hoop.mWRTag);
+            hoop.transform.position = FGetRingStartingSpot(hoop.mWRTag, rSnap.transform.position);
             // hoop.transform.LookAt(rPocket.transform.position);
         }
     }
@@ -181,13 +190,14 @@ public class RP_Manager : MonoBehaviour
         rPC.mState = PC_Controller.PC_STATE.SACTIVE;
         foreach(RP_Receiver rec in rRecs)
         {
-            rec.mState = RP_Receiver.STATE.SDOING_JOB;
+            rec.FEnterRunJob();
         }
 
         sRingHit = "NA";
         mBallCaught = false;
 
-        mTimer = mActiveSet.mTimeToThrow;
+        // TODO: Make this not so horrible.
+        mTimer = 5f;
 
         mUI.FMakeQBUIVisible();
     }
@@ -395,13 +405,16 @@ public class RP_Manager : MonoBehaviour
     }
 
 
-    public Vector3 FGetRecStartingSpot(string wrTag)
+    public Vector3 FGetRecStartingSpot(string wrTag, Vector3 vSnapPos)
     {
-        foreach(DATA_RP_Receiver r in mActiveSet.mReceiverData){
+        foreach(DT_RP_Rec r in mSet.mRecs){
 
             if(r.mTag == wrTag)
             {
-                return r.mStartPos;
+                Vector3 vPos = vSnapPos;
+                vPos += r.mStart;
+                vPos.y = 1f;
+                return vPos;
             }
         }
 
@@ -409,11 +422,16 @@ public class RP_Manager : MonoBehaviour
         return Vector3.zero;
     }
 
-    public Vector3 FGetRingStartingSpot(string ringTag)
+    public Vector3 FGetRingStartingSpot(string ringTag, Vector3 vSnapPos)
     {
-        foreach(DATA_RP_Ring r in mActiveSet.mRingData){
+        foreach(DT_RP_Hoop r in mSet.mHoops){
             if(r.mTag == ringTag){
-                return r.mStartPos;
+                Vector3 vPos = vSnapPos;
+                vPos += r.mStart;
+                vPos.y = 1f;
+                // HACK: Adjusting for the incorrect pivot point
+                vPos.y -= 5f;
+                return vPos;
             }
         }
         

@@ -2,6 +2,7 @@
 Sort of like the practice play art, except just for the routes.
 *************************************************************************************/
 using UnityEngine;
+using System.Collections.Generic;
 
 public class RP_DrawRoutes : MonoBehaviour
 {
@@ -12,7 +13,8 @@ public class RP_DrawRoutes : MonoBehaviour
         RP_Receiver[] recs = FindObjectsOfType<RP_Receiver>();
         foreach(RP_Receiver r in recs)
         {
-            RenderRoute(r.transform.position, r.mRoute);
+            // TODO: FIx this.
+            RenderRoute(r.GetComponent<OFF_RouteLog>().mRouteSpots);
         }
     }
 
@@ -26,17 +28,14 @@ public class RP_DrawRoutes : MonoBehaviour
     }
 
     // I've settled on the first prototype being a trail of evenly spaced VERY small dots.
-    private void RenderRoute(Vector3 vRecPos, string sRoute)
+    private void RenderRoute(List<Vector3> spots)
     {
-        Vector3 vPos = vRecPos;
-        vPos.y = 1f;
 
-        DATA_Route rt = IO_RouteList.FLOAD_ROUTE_BY_NAME(sRoute);
-        for(int i=0; i+1<rt.mSpots.Length; i++)
+        for(int i=1; i<spots.Count; i++)
         {
             // render a bunch of spots, along the path from a -> b.
-            Vector3 vStartPos = vPos + UT_VecConversion.ConvertVec2(rt.mSpots[i]);
-            Vector3 vFinalPos = vPos + UT_VecConversion.ConvertVec2(rt.mSpots[i+1]);
+            Vector3 vStartPos = spots[i];
+            Vector3 vFinalPos = spots[i-1];
             
             Vector3 vIterPos = vStartPos;
             Vector3 vDir = Vector3.Normalize(vFinalPos - vStartPos);

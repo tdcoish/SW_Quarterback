@@ -258,6 +258,7 @@ GameObject:
   - component: {fileID: 6188296413336188217}
   - component: {fileID: 6188296413336188218}
   - component: {fileID: 8497306960134077365}
+  - component: {fileID: 492918666}
   m_Layer: 11
   m_Name: RP_Receiver
   m_TagString: Untagged
@@ -353,10 +354,10 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 36
+  m_Constraints: 4
   m_CollisionDetection: 0
 --- !u!114 &6188296413336188216
 MonoBehaviour:
@@ -370,7 +371,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 860f7fca1214a224cb9527b9f525f677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mRoute: Go
   mTag: WR2
   mState: 0
 --- !u!114 &6188296413336188217
@@ -399,8 +399,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 263f7ce9d97e3e641a71cc9698fd93a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mAcc: 8
-  mSpd: 8
+  mAcc: 3
+  mSpd: 3
 --- !u!114 &8497306960134077365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,6 +415,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PF_SpotGFX: {fileID: 4239476542710410117, guid: 62c5b4165d8a82c4caeeb6184887b80a,
     type: 3}
+--- !u!114 &492918666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8568107204541653420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 943567598db65c848854599502d43f30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mState: 0
+  mHitLastFrame: 0
+  dThingThatHitUs:
+    mWgt: 0
+    mVel: {x: 0, y: 0, z: 0}
+    mPos: {x: 0, y: 0, z: 0}
+  rMan: {fileID: 0}
+  mJob:
+    mTag: 
+    mRole: 
+    mDetail: 
+    mStart: {x: 0, y: 0}
+  mHasBall: 0
 --- !u!1 &8602365136652515373
 GameObject:
   m_ObjectHideFlags: 0
