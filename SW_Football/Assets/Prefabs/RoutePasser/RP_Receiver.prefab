@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 6188296413336188218}
   - component: {fileID: 8497306960134077365}
   - component: {fileID: 492918666}
+  - component: {fileID: 1272913485899579669}
   m_Layer: 11
   m_Name: RP_Receiver
   m_TagString: Untagged
@@ -440,6 +441,19 @@ MonoBehaviour:
     mDetail: 
     mStart: {x: 0, y: 0}
   mHasBall: 0
+--- !u!114 &1272913485899579669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8568107204541653420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc5bb9a712ee7844baa17dbb9c76efa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mState: 0
 --- !u!1 &8602365136652515373
 GameObject:
   m_ObjectHideFlags: 0

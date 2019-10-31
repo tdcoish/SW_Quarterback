@@ -65,9 +65,7 @@ public class RP_Receiver : MonoBehaviour
     private void RUN_Job()
     {
         // cRigid.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezePositionY;
-        Debug.Log("Before2" + cRigid.velocity);
         cRouteLog.FRunRoute();
-        Debug.Log("After2" + cRigid.velocity);
     }
 
     // Again, nothing. Eventually some animations or something.

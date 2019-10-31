@@ -50,7 +50,6 @@ public class OFF_RouteLog : MonoBehaviour
 
     private void RUN_BlindlyFollowing()
     {
-        Debug.Log("Again" + cRigid.velocity);
 
         // If they've made the last move, and are decently close to the destination.
         if(mRouteSpots.Count <= 1){
@@ -59,15 +58,12 @@ public class OFF_RouteLog : MonoBehaviour
                 return;
             }
         }
-        Debug.Log("Num Spots: " + mRouteSpots.Count);
 
         Vector3 dis = mRouteSpots[0] - transform.position;
         dis.y = 0f;
         dis = Vector3.Normalize(dis);
         Vector3 vAcc = cAcc.FCalcAccFunc(dis, cAcc.mSpd);
-        Debug.Log("Before" + cRigid.velocity);
         cRigid.velocity += vAcc;
-        Debug.Log("After: " + cRigid.velocity);
         if(cRigid.velocity.magnitude > cAcc.mSpd){
             cRigid.velocity *= cAcc.mSpd/cRigid.velocity.magnitude;
         }
@@ -77,7 +73,6 @@ public class OFF_RouteLog : MonoBehaviour
             Debug.Log("Removing");
             mRouteSpots.RemoveAt(0);
         }
-        Debug.Log("Again" + cRigid.velocity);
     }
 
     private void ENTER_CanReactToThrow()

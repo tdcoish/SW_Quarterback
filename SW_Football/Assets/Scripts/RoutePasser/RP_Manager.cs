@@ -173,6 +173,11 @@ public class RP_Manager : MonoBehaviour
         foreach(RP_Receiver rec in rRecs)
         {
             rec.transform.position = FGetRecStartingSpot(rec.mTag, rSnap.transform.position);
+            foreach(DATA_ORoute rt in mSet.mRoutes){
+                if(rt.mOwner == rec.mTag){
+                    rec.FSetUpRoute(rt);
+                }
+            }
             rec.FENTER_PRE_SNAP();
         }
         foreach(RP_Hoop hoop in rHoops)
